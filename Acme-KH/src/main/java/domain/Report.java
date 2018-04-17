@@ -40,11 +40,11 @@ public class Report extends DomainEntity {
 	 * 
 	 * @return devuelve si se esta reportando un bug o falso, si lo que se quiere es una asistencia técnica personalizada
 	 */
-	public boolean isBug() {
+	public boolean getIsBug() {
 		return this.isBug;
 	}
 
-	public void setBug(final boolean isBug) {
+	public void setIsBug(final boolean isBug) {
 		this.isBug = isBug;
 	}
 	/**
