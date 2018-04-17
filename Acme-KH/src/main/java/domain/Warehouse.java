@@ -3,6 +3,9 @@ package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -24,6 +27,10 @@ public class Warehouse extends Building {
 	 * Devuelve cuanto aumenta los materiales que se pueden tener
 	 */
 	@Valid
+	@AttributeOverrides({
+		@AttributeOverride(name = "munny", column = @Column(name = "munnySlots")), @AttributeOverride(name = "mytrhil", column = @Column(name = "mytrhilSlots")), @AttributeOverride(name = "gummiCoal", column = @Column(name = "gummiCoalSlots"))
+
+	})
 	public Materials getMaterialsSlots() {
 		return this.materialsSlots;
 	}

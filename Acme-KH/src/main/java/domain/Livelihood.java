@@ -3,9 +3,14 @@ package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 import javax.validation.Valid;
+
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -22,17 +27,22 @@ public class Livelihood extends Building {
 	 * Materiales que recolecta este edificio una vez acabe el tiempo
 	 */
 	@Valid
+	@AttributeOverrides({
+		@AttributeOverride(name = "munny", column = @Column(name = "collectedMunny")), @AttributeOverride(name = "mytrhil", column = @Column(name = "collectedMytrhil")), @AttributeOverride(name = "gummiCoal", column = @Column(name = "collectedGummiCoal"))
+
+	})
 	public Materials getMaterials() {
 		return this.materials;
 	}
 
-	public void setMaterialsPerMinute(final Materials materials) {
+	public void setMaterials(final Materials materials) {
 		this.materials = materials;
 	}
 	/**
 	 * 
 	 * Devuelve el extra de materiales que dará por cada nivel, <b>SIEMPRE</b> se aplica al de nivel 1.
 	 */
+	@Range(min = 0, max = 1)
 	public Double getExtraMaterialsPerLvl() {
 		return this.extraMaterialsPerLvl;
 	}
