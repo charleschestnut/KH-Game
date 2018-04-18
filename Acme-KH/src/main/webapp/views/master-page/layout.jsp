@@ -57,6 +57,30 @@
 	}
 </script>
 
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+      <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+      <script>
+         window.addEventListener("load", function(){
+         window.cookieconsent.initialise({
+           "palette": {
+             "popup": {
+               "background":"rgba(0, 0, 0, 0.8)",
+               "text": "#ffffff"
+             },
+             "button": {
+               "background": "#b8d8ff"
+             }
+           },
+           "theme": "classic",
+           "content": {
+             "message": "<spring:message code='master.page.cookiesMessage'/>",
+             "dismiss": "<spring:message code='master.page.cookiesOk'/>",
+             "link": "<spring:message code='master.page.cookiesPage'/>",
+             "href":"legaltext/index.do"
+           }
+         })});
+      </script>
+
 </head>
 
 <body>

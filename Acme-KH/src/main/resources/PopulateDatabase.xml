@@ -31,6 +31,28 @@
 	</bean>
 
 	
-	<!-- Other domain beans come here -->	
+	<!-- Other domain beans come here -->
+	
+	<!-- LEGALTEXT -->
+	<bean id="legalText1" class="domain.LegalText">
+		<property name="type" value="TERMS"/>
+		<property name="codeLanguage" value="es"/>
+		<property name="body" value="Los articulos no pueden contener palabras malsonantes"/>
+	</bean>
+	<bean id="legalText2" class="domain.LegalText">
+		<property name="type" value="TERMS"/>
+		<property name="codeLanguage" value="en"/>
+		<property name="body" value="Articles can not have bad words"/>
+	</bean>
+	<bean id="legalText3" class="domain.LegalText">
+		<property name="type" value="COOKIES"/>
+		<property name="codeLanguage" value="es"/>
+		<property name="body" value="Esta web usa cookies para su mejor funcionamiento"/>
+	</bean>
+	<bean id="legalText4" class="domain.LegalText">
+		<property name="type" value="COOKIES"/>
+		<property name="codeLanguage" value="en"/>
+		<property name="body" value="This web uses cookies in order to improve its funcionallity"/>
+	</bean>
 	
 </beans>
