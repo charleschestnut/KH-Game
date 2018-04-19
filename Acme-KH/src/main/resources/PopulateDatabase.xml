@@ -29,9 +29,109 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount2" class="security.UserAccount">
+		<property name="username" value="gamemaster1" />
+		<property name="password" value="b1551983481358e829a23be83e85ccdc" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="GM" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount3" class="security.UserAccount">
+		<property name="username" value="manager1" />
+		<property name="password" value="c240642ddef994358c96da82c0361a58" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MANAGER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="player1" />
+		<property name="password" value="5d2bbc279b5ce75815849d5e3f0533ec" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="PLAYER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="player2" />
+		<property name="password" value="88e77ff74930f37010370c296d14737b" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="PLAYER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	
 	<!-- Other domain beans come here -->
+	
+	<!-- ADMIN -->
+	
+	<bean id="admin" class="domain.Administrator">
+		<property name="name" value="Administrador" />
+		<property name="surname" value="Sistema" />
+		<property name="nickname" value="Avenida de la Paz" />
+		<property name="phone" value="549592823" />
+		<property name="email" value="admin@gmail.com" />
+		<property name="userAccount" ref="userAccount1" />
+		<property name="hasConfirmedTerms" value="true" />
+		<property name="confirmMoment" value="20/02/2016 00:00" />
+	</bean>
+	
+	<!-- CONTENT MANAGER -->
+	
+	<bean id="manager1" class="domain.ContentManager">
+		<property name="name" value="Content" />
+		<property name="surname" value="Manager" />
+		<property name="nickname" value="Avenida de la Paz" />
+		<property name="phone" value="549592823" />
+		<property name="email" value="manager1@gmail.com" />
+		<property name="userAccount" ref="userAccount3" />
+		<property name="hasConfirmedTerms" value="true" />
+		<property name="confirmMoment" value="20/02/2016 00:00" />
+	</bean>
+	
+	<!-- GAME MASTER -->
+	
+	<bean id="gm1" class="domain.GameMaster">
+		<property name="name" value="Game" />
+		<property name="surname" value="Master" />
+		<property name="nickname" value="Avenida de la Paz" />
+		<property name="phone" value="549592823" />
+		<property name="email" value="gm1@gmail.com" />
+		<property name="userAccount" ref="userAccount2" />
+		<property name="hasConfirmedTerms" value="true" />
+		<property name="confirmMoment" value="20/02/2016 00:00" />
+	</bean>
+	
+	<!-- KEYBLADE WIELDER -->
+	
+	<!-- <bean id="player1" class="domain.KeybladeWielder">
+		<property name="name" value="Keyblade" />
+		<property name="surname" value="Wielder" />
+		<property name="nickname" value="Avenida de la Paz" />
+		<property name="phone" value="549592823" />
+		<property name="email" value="keybladewielder@gmail.com" />
+		<property name="userAccount" ref="userAccount4" />
+		<property name="lastConnection" ref="30/07/2017 12:32" />
+	</bean> -->
+	
 	
 	<!-- LEGALTEXT -->
 	<bean id="legalText1" class="domain.LegalText">

@@ -52,8 +52,8 @@ public class KeybladeWielder extends Actor {
 	 */
 	@NotNull
 	@Past
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getLastConnection() {
 		return this.lastConnection;
 	}
