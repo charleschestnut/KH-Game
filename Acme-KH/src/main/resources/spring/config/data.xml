@@ -37,7 +37,7 @@
 	<!-- JPA -->
 
 	<bean id="persistenceUnit" class="java.lang.String">
-		<constructor-arg value="Sample" />
+		<constructor-arg value="hackathon" />
 	</bean>
 
 	<bean id="sqlDialect" class="java.lang.String">
