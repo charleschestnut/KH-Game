@@ -46,9 +46,12 @@ public class Invitation extends DomainEntity {
 		return this.date;
 	}
 
+	
 	public void setDate(final Date date) {
 		this.date = date;
 	}
+	
+	
 	/**
 	 * 
 	 * @return pending (Mandada) , cancelled (rechazada por el jugador que la recibe), accepted (aceptada por el jugador que la recibe).
@@ -59,9 +62,12 @@ public class Invitation extends DomainEntity {
 		return this.invitationStatus;
 	}
 
+	
 	public void setInvitationStatus(final InvitationStatus invitationStatus) {
 		this.invitationStatus = invitationStatus;
 	}
+	
+	
 	/**
 	 * 
 	 * @return Master (jefe, puede editar la organización, cambiar rangos e invitar jugadores), Officer (puede invitar gente), Guest.
@@ -72,9 +78,12 @@ public class Invitation extends DomainEntity {
 		return this.orgRange;
 	}
 
+	
 	public void setOrgRange(final OrgRange orgRange) {
 		this.orgRange = orgRange;
 	}
+	
+	
 	/**
 	 * 
 	 * @return Mensaje para intentar reclutar al jugador.
@@ -84,18 +93,24 @@ public class Invitation extends DomainEntity {
 		return this.content;
 	}
 
+	
 	public void setContent(final String content) {
 		this.content = content;
 	}
+	
+	
 	@Valid
 	@ManyToOne(optional = false)
 	public Actor getKeybladeWielder() {
 		return this.keybladeWielder;
 	}
 
+	
 	public void setKeybladeWielder(final Actor keybladeWielder) {
 		this.keybladeWielder = keybladeWielder;
 	}
+	
+	
 	@Valid
 	@ManyToOne(optional = false)
 	public Organization getOrganization() {

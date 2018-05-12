@@ -28,17 +28,23 @@ public class Organization extends DomainEntity {
 		return this.name;
 	}
 
+	
 	public void setName(final String name) {
 		this.name = name;
 	}
+	
+	
 	@NotBlank
 	public String getDescription() {
 		return this.description;
 	}
 
+	
 	public void setDescription(final String description) {
 		this.description = description;
 	}
+	
+	
 	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)

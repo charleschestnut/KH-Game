@@ -9,6 +9,7 @@ import org.springframework.util.Assert;
 
 import repositories.KeybladeWielderRepository;
 import domain.KeybladeWielder;
+import domain.Organization;
 
 @Service
 @Transactional
@@ -18,6 +19,12 @@ public class KeybladeWielderService {
 
 	@Autowired
 	private KeybladeWielderRepository KeybladeWielderRepository;
+	
+	@Autowired
+	private OrganizationService organizationService;
+	
+	@Autowired
+	private ActorService actorService;
 
 	// CRUD methods
 	
@@ -61,6 +68,21 @@ public class KeybladeWielderService {
 		Assert.notNull(KeybladeWielder);
 		
 		KeybladeWielderRepository.delete(KeybladeWielder);
+	}
+	
+	
+	public Collection<KeybladeWielder> findMembersOfOrganization(int organizationId){
+		Collection<KeybladeWielder> members = this.KeybladeWielderRepository.findMembersOfOrganization(organizationId);
+		return members;
+	}
+	
+	public Boolean getTieneOrganizacion(){
+		Boolean res = true;
+		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
+		Organization org = this.organizationService.findOrganizationByPlayer(actual.getId());
+		if(org == null)
+			res = false;
+		return res;
 	}
 
 }

@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.OrganizationRepository;
+import security.LoginService;
+import domain.Invitation;
+import domain.KeybladeWielder;
 import domain.Organization;
 
 @Service
@@ -17,12 +21,22 @@ public class OrganizationService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private OrganizationRepository OrganizationRepository;
+	private OrganizationRepository organizationRepository;
+	
+	@Autowired
+	private KeybladeWielderService keybladeWielderService;
+	
+	@Autowired
+	private ActorService actorService;
+	
+	@Autowired
+	private InvitationService invitationService;
 
 	// CRUD methods
 	
 	public Organization create(){
 		Organization Organization;
+		//Sólo puede crearla si no pertenece a ninguna organizacion.
 		
 		Organization = new Organization();
 		
@@ -33,18 +47,21 @@ public class OrganizationService {
 		Assert.notNull(Organization);
 		
 		Organization saved;
-		
-		saved = OrganizationRepository.save(Organization);
+	
+		saved = organizationRepository.save(Organization);
+		//Tengo que crear una invitación aceptada automáticamente para mí.
+		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
+		this.invitationService.createForOrganizationCreation(actual.getId(), saved.getId());
 		
 		return saved;
 	}
 	
-	public Organization findOne(int OrganizationId){
-		Assert.notNull(OrganizationId);
+	public Organization findOne(int organizationId){
+		Assert.notNull(organizationId);
 		
 		Organization Organization;
 		
-		Organization = OrganizationRepository.findOne(OrganizationId);
+		Organization = organizationRepository.findOne(organizationId);
 		
 		return Organization;
 	}
@@ -52,15 +69,51 @@ public class OrganizationService {
 	public Collection<Organization> findAll(){
 		Collection<Organization> Organizations;
 		
-		Organizations = OrganizationRepository.findAll();
+		Organizations = organizationRepository.findAll();
 		
 		return Organizations;
 	}
 	
-	public void delete(Organization Organization){
-		Assert.notNull(Organization);
+	public void delete(Organization organization){
+		Assert.notNull(organization);
+		//Sólo puede hacerlo el admin o si se queda sin gente.
+		//Query que me devuelva los keywielders conectados a esa organización.
+		Collection<KeybladeWielder> members = this.keybladeWielderService.findMembersOfOrganization(organization.getId()); //TODO
+		Assert.isTrue(members.size() == 0 || LoginService.getPrincipal().isAuthority("ADMIN"));
 		
-		OrganizationRepository.delete(Organization);
+		this.organizationRepository.delete(organization);
 	}
 
+	public Boolean keybladeWielderHasOrganization(int playerId){ //TODO
+		Boolean res = true;
+		
+		//Llamamos al repositorio.
+		Organization actual = new Organization();
+		if(actual ==null)
+			res = false;
+		
+		return res;
+	}
+	
+	public void leaveOrganization(int organizationId){ //Cuando dejo la organización, borro la invitación aceptada que tengo.
+		
+		Organization organization = this.findOne(organizationId);
+		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
+		
+		Invitation invitationActual = this.invitationService.findInvitationByKeybladeWielderId(actual.getId());
+		
+		this.invitationService.delete(invitationActual);
+		
+		//Query que me devuelva los keywielders conectados a esa organización.
+		Collection<KeybladeWielder> members = this.keybladeWielderService.findMembersOfOrganization(organizationId);
+		if(members.size() == 0)
+			this.delete(organization);
+		
+	}
+	
+	public Organization findOrganizationByPlayer (int playerId){
+		
+		Organization res = this.organizationRepository.findOrganizationByPlayer(playerId);
+		return res;
+	}
 }
