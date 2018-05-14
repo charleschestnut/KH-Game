@@ -5,6 +5,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -123,6 +124,21 @@ public class Building extends DomainEntity {
 
 	public void setContentManager(final ContentManager contentManager) {
 		this.contentManager = contentManager;
+	}
+	@Transient
+	public Materials getTotalMaterials(final Integer currentLvL) {
+		final Materials res = new Materials();
+
+		final Integer munny = this.getCost().getMunny();
+		final Integer mythril = this.getCost().getMytrhil();
+		final Integer coal = this.getCost().getGummiCoal();
+
+		res.setMunny((int) (munny + this.extraCostPerLvl * munny * (currentLvL - 1)));
+		res.setMytrhil((int) (mythril + this.extraCostPerLvl * mythril * (currentLvL - 1)));
+		res.setGummiCoal((int) (coal + this.extraCostPerLvl * coal * (currentLvL - 1)));
+
+		return res;
+
 	}
 
 }

@@ -51,4 +51,19 @@ public class Materials {
 		return res;
 
 	}
+
+	@Transient
+	public Materials substract(final Materials materials) {
+		final Integer munny = this.getMunny() - materials.getMunny();
+		final Integer gummi = this.getGummiCoal() - materials.getGummiCoal();
+		final Integer mythril = this.getMytrhil() - materials.getMytrhil();
+
+		final Materials res = new Materials();
+		res.setMunny(munny);
+		res.setGummiCoal(gummi);
+		res.setMytrhil(mythril);
+
+		return res;
+
+	}
 }

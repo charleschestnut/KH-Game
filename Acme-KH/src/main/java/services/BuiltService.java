@@ -12,8 +12,13 @@ import org.springframework.util.Assert;
 import repositories.BuiltRepository;
 import domain.Building;
 import domain.Built;
+import domain.GummiShip;
 import domain.KeybladeWielder;
+import domain.Livelihood;
 import domain.Materials;
+import domain.Prize;
+import domain.Recruiter;
+import domain.Troop;
 
 @Service
 @Transactional
@@ -29,17 +34,23 @@ public class BuiltService {
 	private ConfigurationService	configurationService;
 	@Autowired
 	private RequirementService		requirementService;
+	@Autowired
+	private LivelihoodService		livelihoodService;
+	@Autowired
+	private RecruiterService		recruiterService;
+	@Autowired
+	private PrizeService			prizeService;
+	@Autowired
+	private KeybladeWielderService	keybladeWielderService;
 
 
 	// CRUD methods
-
-	//TODO:metodos collect o recruit, start to collect or start to recruit
 
 	public Built create(final Building b) {
 		Built built;
 
 		built = new Built();
-		built.setLvl(1);
+		built.setLvl(0);
 		built.setBuilding(b);
 		built.setKeybladeWielder((KeybladeWielder) this.actorService.findByPrincipal());
 		built.setCreationDate(new Date(System.currentTimeMillis() - 1000));
@@ -60,7 +71,42 @@ public class BuiltService {
 
 		saved = this.BuiltRepository.save(built);
 
+		final Materials myOldMaterials = player.getMaterials();
+		final Materials myNewMaterials = myOldMaterials.substract(built.getBuilding().getCost());
+
+		player.setMaterials(myNewMaterials);
+		this.keybladeWielderService.save(player);
+
 		return saved;
+	}
+	public void upgrade(final Built built) {
+		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+		final Date today = new Date(System.currentTimeMillis() - 100);
+
+		Assert.notNull(built);
+		Assert.isTrue(built.getKeybladeWielder().equals(player), "error.message.built.creator");
+		Assert.isTrue(built.getLvl() < built.getBuilding().getMaxLvl(), "error.message.built.maxLvL");
+
+		if (built.getLvl() == 0) {
+
+			final Long time1 = today.getTime() - built.getCreationDate().getTime();
+			final Long time2 = (long) (built.getBuilding().getTimeToConstruct() * 60 * 1000);
+
+			Assert.isTrue(time1 >= time2, "error.message.built.working");
+		} else {
+
+			final Materials myOldMaterials = player.getMaterials();
+
+			Assert.isTrue(myOldMaterials.isHigherThan(built.getBuilding().getTotalMaterials(built.getLvl())), "error.message.built.materials");
+
+			final Materials myNewMaterials = myOldMaterials.substract(built.getBuilding().getTotalMaterials(built.getLvl()));
+
+			player.setMaterials(myNewMaterials);
+			this.keybladeWielderService.save(player);
+
+		}
+		built.setLvl(built.getLvl() + 1);
+		this.BuiltRepository.save(built);
 	}
 	public Built findOne(final int BuiltId) {
 		Assert.notNull(BuiltId);
@@ -87,6 +133,87 @@ public class BuiltService {
 		this.BuiltRepository.delete(built);
 	}
 
+	public void startToCollect(final Built b) {
+		final Livelihood l = this.livelihoodService.findOne(b.getBuilding().getId());
+
+		Assert.notNull(l, "error.message.built.noBuilding");
+		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
+		Assert.isTrue(b.getLvl() > 0, "error.message.built.unbuilt");
+		Assert.isNull(b.getActivationDate(), "error.message.built.alreadyInUse");
+
+		b.setActivationDate(new Date(System.currentTimeMillis()));
+
+		this.BuiltRepository.save(b);
+	}
+	public void startToRecruitTroop(final Built b, final Troop t) {
+		final Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
+
+		Assert.notNull(r, "error.message.built.noBuilding");
+		Assert.isNull(b.getActivationDate(), "error.message.built.alreadyInUse");
+		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
+		Assert.isTrue(t.getRecruiter().equals(b.getBuilding()), "error.message.built.recruit");
+		Assert.isTrue(b.getLvl() > 0, "error.message.built.unbuilt");
+
+		b.setActivationDate(new Date(System.currentTimeMillis()));
+		b.setTroop(t);
+
+		this.BuiltRepository.save(b);
+	}
+
+	public void startToRecruitGummiShip(final Built b, final GummiShip g) {
+		final Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
+
+		Assert.notNull(r, "error.message.built.noBuilding");
+		Assert.isNull(b.getActivationDate(), "error.message.built.alreadyInUse");
+		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
+		Assert.isTrue(g.getRecruiter().equals(b.getBuilding()), "error.message.built.recruit");
+		Assert.isTrue(b.getLvl() > 0, "error.message.built.unbuilt");
+
+		b.setActivationDate(new Date(System.currentTimeMillis()));
+		b.setGummiShip(g);
+
+		this.BuiltRepository.save(b);
+	}
+
+	public void collect(final Built b) {
+		final Livelihood l = this.livelihoodService.findOne(b.getBuilding().getId());
+		final Date today = new Date(System.currentTimeMillis() - 1000);
+		final Long time1 = today.getTime() - b.getActivationDate().getTime();
+		final Long time2 = (long) (l.getTimeToRecollect() * 60 * 1000);
+
+		Assert.notNull(l, "error.message.built.noBuilding");
+		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
+		Assert.notNull(b.getActivationDate(), "error.message.built.notInUse");
+		Assert.isTrue(time1 >= time2, "error.message.built.working");
+
+		final Prize p = new Prize();
+		p.setDate(today);
+		p.setDescription("built.prize.defaultDescription");
+		p.setKeybladeWielder((KeybladeWielder) this.actorService.findByPrincipal());
+		p.setMaterials(l.getTotalMaterials(b.getLvl()));
+
+		this.prizeService.save(p);
+
+	}
+
+	public void recruit(final Built b) {
+		final Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
+		final Date today = new Date(System.currentTimeMillis() - 1000);
+		final Long time1 = today.getTime() - b.getActivationDate().getTime();
+		Long time2;
+		if (b.getTroop() != null)
+			time2 = (long) (b.getTroop().getTimeToRecruit() * 60 * 1000);
+		else
+			time2 = (long) (b.getGummiShip().getTimeToRecruit() * 60 * 1000);
+
+		Assert.notNull(r, "error.message.built.noBuilding");
+		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
+		Assert.notNull(b.getActivationDate(), "error.message.built.notInUse");
+		Assert.isTrue(time1 >= time2, "error.message.built.working");
+
+		//TODO: Falta crear el recruited
+
+	}
 	//other methods
 	public Collection<Built> getMyBuilts() {
 		return this.BuiltRepository.getMyBuildings(this.actorService.findByPrincipal().getId());
@@ -114,4 +241,5 @@ public class BuiltService {
 
 		return materials;
 	}
+
 }
