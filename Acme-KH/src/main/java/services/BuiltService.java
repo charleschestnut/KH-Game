@@ -147,30 +147,46 @@ public class BuiltService {
 	}
 	public void startToRecruitTroop(final Built b, final Troop t) {
 		final Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
+		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 
 		Assert.notNull(r, "error.message.built.noBuilding");
 		Assert.isNull(b.getActivationDate(), "error.message.built.alreadyInUse");
 		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
 		Assert.isTrue(t.getRecruiter().equals(b.getBuilding()), "error.message.built.recruit");
 		Assert.isTrue(b.getLvl() > 0, "error.message.built.unbuilt");
+		Assert.isTrue(player.getMaterials().isHigherThan(t.getCost()), "error.message.built.materials");
 
 		b.setActivationDate(new Date(System.currentTimeMillis()));
 		b.setTroop(t);
+
+		final Materials myOldMaterials = player.getMaterials();
+		final Materials myNewMaterials = myOldMaterials.substract(t.getCost());
+
+		player.setMaterials(myNewMaterials);
+		this.keybladeWielderService.save(player);
 
 		this.BuiltRepository.save(b);
 	}
 
 	public void startToRecruitGummiShip(final Built b, final GummiShip g) {
 		final Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
+		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 
 		Assert.notNull(r, "error.message.built.noBuilding");
 		Assert.isNull(b.getActivationDate(), "error.message.built.alreadyInUse");
 		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
 		Assert.isTrue(g.getRecruiter().equals(b.getBuilding()), "error.message.built.recruit");
 		Assert.isTrue(b.getLvl() > 0, "error.message.built.unbuilt");
+		Assert.isTrue(player.getMaterials().isHigherThan(g.getCost()), "error.message.built.materials");
 
 		b.setActivationDate(new Date(System.currentTimeMillis()));
 		b.setGummiShip(g);
+
+		final Materials myOldMaterials = player.getMaterials();
+		final Materials myNewMaterials = myOldMaterials.substract(g.getCost());
+
+		player.setMaterials(myNewMaterials);
+		this.keybladeWielderService.save(player);
 
 		this.BuiltRepository.save(b);
 	}
