@@ -1,7 +1,9 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.util.Assert;
 
 import repositories.ChattyRepository;
 import domain.Chatty;
+import domain.Configuration;
 import domain.KeybladeWielder;
 import domain.Organization;
 
@@ -30,6 +33,9 @@ public class ChattyService {
 	
 	@Autowired
 	private OrganizationService organizationService;
+	
+	@Autowired
+	private ConfigurationService configurationService;
 
 	// CRUD methods
 	
@@ -88,4 +94,20 @@ public class ChattyService {
 		chattyRepository.delete(chatty);
 	}
 
+	
+	public Collection<Chatty> getChattyFromAnOrganization(int organizationId){
+		List<Chatty> all = (List<Chatty>) this.chattyRepository.getChattyFromAnOrganization(organizationId);
+		Integer chattyLimit = this.configurationService.getConfiguration().getOrgMessages();
+		Collection<Chatty> availables = new ArrayList<Chatty>();
+		
+		if(all.size() >= chattyLimit){
+			availables = all.subList(0, chattyLimit-1);
+			List<Chatty> toDelete= all.subList(chattyLimit, all.size());
+			
+			for(Chatty c : toDelete){
+				this.chattyRepository.delete(c);
+			}
+		}
+		return availables;
+	}
 }

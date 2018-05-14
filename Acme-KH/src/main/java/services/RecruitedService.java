@@ -38,24 +38,24 @@ public class RecruitedService {
 
 	// CRUD methods
 	
-	public Recruited createRecruitedTroop(int troopId, int recruiterId){
+	public Recruited createRecruitedTroop(int troopId, int wareHouseId){
 		Recruited recruited;
 		recruited = new Recruited();
 		Troop troop = this.troopService.findOne(troopId);
 		
-		Built building = this.builtService.findOne(recruiterId);
+		Built building = this.builtService.findOne(wareHouseId);
 		recruited.setStorageBuilding(building);
 		recruited.setTroop(troop);
 		
 		return recruited;
 	}
 	
-	public Recruited createRecruitedGummiShip(int gummiShipId, int recruiterId){
+	public Recruited createRecruitedGummiShip(int gummiShipId, int wareHouseId){
 		Recruited recruited;
 		recruited = new Recruited();
 		GummiShip gummiShip= this.gummiShipService.findOne(gummiShipId);
 		
-		Built building = this.builtService.findOne(recruiterId);
+		Built building = this.builtService.findOne(wareHouseId);
 		recruited.setStorageBuilding(building);
 		recruited.setGummiShip(gummiShip);
 		
@@ -65,7 +65,6 @@ public class RecruitedService {
 	
 	
 	public Recruited save(Recruited recruited){
-		Boolean ambosNull = false;
 		Assert.notNull(recruited);
 		Assert.notNull(recruited.getStorageBuilding());
 		
