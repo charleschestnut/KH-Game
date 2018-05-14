@@ -69,22 +69,15 @@ public class RecruitedService {
 		Assert.notNull(recruited);
 		Assert.notNull(recruited.getStorageBuilding());
 		
-		if(recruited.getGummiShip() == null && recruited.getTroop() == null)
-			ambosNull = true;
-		
-		Assert.isTrue(!ambosNull);
+		Assert.isTrue(!(recruited.getGummiShip() == null && recruited.getTroop() == null));
 		
 		
-		if(recruited.getGummiShip() == null ){ 		// Miramos que sea el mismo recruiter y el nivel sea el permitido o superior.
-			
-			Assert.isTrue(recruited.getStorageBuilding().equals(recruited.getTroop().getRecruiter()));
+		if(recruited.getGummiShip() == null )	// Miramos que el nivel sea el permitido o superior.
 			Assert.isTrue(recruited.getGummiShip().getRecruiterRequiredLvl() >= recruited.getStorageBuilding().getLvl());
 		
-		}else{ 		// Miramos que sea el mismo recruiter y el nivel sea el permitido o superior.
-
-			Assert.isTrue(recruited.getStorageBuilding().equals(recruited.getGummiShip().getRecruiter()));
+		else	// Miramos que el nivel sea el permitido o superior.
 			Assert.isTrue(recruited.getTroop().getRecruiterRequiredLvl() >= recruited.getStorageBuilding().getLvl());
-		}
+		
 		
 		// Tenemos que ver que el BUILT pertenece al principal.
 		Collection<Built> builts = this.builtService.getMyBuilts();
