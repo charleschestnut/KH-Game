@@ -4,6 +4,7 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -42,4 +43,12 @@ public class Materials {
 		this.gummiCoal = gummiCoal;
 	}
 
+	@Transient
+	public Boolean isHigherThan(final Materials materials) {
+		Boolean res = false;
+		if (this.getGummiCoal() > materials.getGummiCoal() && this.getMunny() > materials.getMunny() && this.getMytrhil() > materials.getMytrhil())
+			res = true;
+		return res;
+
+	}
 }

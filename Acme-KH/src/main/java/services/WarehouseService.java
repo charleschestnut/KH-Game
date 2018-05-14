@@ -45,6 +45,9 @@ public class WarehouseService {
 	public Warehouse save(final Warehouse Warehouse) {
 		Assert.notNull(Warehouse);
 		Assert.isTrue(Warehouse.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
+		Assert.notNull(Warehouse.getMaterialsSlots().getGummiCoal(), "error.message.warehouse.nullMaterials");
+		Assert.notNull(Warehouse.getMaterialsSlots().getMunny(), "error.message.warehouse.nullMaterials");
+		Assert.notNull(Warehouse.getMaterialsSlots().getMytrhil(), "error.message.warehouse.nullMaterials");
 
 		Warehouse saved;
 
@@ -52,7 +55,6 @@ public class WarehouseService {
 
 		return saved;
 	}
-
 	public Warehouse findOne(final int WarehouseId) {
 		Assert.notNull(WarehouseId);
 
