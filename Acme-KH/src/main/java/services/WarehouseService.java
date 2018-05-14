@@ -31,8 +31,6 @@ public class WarehouseService {
 	private ActorService		actorService;
 
 
-	//TODO: IDEA: para seleccionar mis slots recorrerse mis builts cuyos buildings esten en esta lista.
-
 	// CRUD methods
 
 	public Warehouse create() {
