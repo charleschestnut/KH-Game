@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -17,50 +18,51 @@ public class BuiltService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private BuiltRepository BuiltRepository;
+	private BuiltRepository	BuiltRepository;
+
 
 	// CRUD methods
-	
-	public Built create(){
-		Built Built;
-		
-		Built = new Built();
-		
-		return Built;
+
+	public Built create() {
+		Built built;
+
+		built = new Built();
+
+		return built;
 	}
-	
-	public Built save(Built Built){
+
+	public Built save(final Built Built) {
 		Assert.notNull(Built);
-		
+
 		Built saved;
-		
-		saved = BuiltRepository.save(Built);
-		
+
+		saved = this.BuiltRepository.save(Built);
+
 		return saved;
 	}
-	
-	public Built findOne(int BuiltId){
+
+	public Built findOne(final int BuiltId) {
 		Assert.notNull(BuiltId);
-		
+
 		Built Built;
-		
-		Built = BuiltRepository.findOne(BuiltId);
-		
+
+		Built = this.BuiltRepository.findOne(BuiltId);
+
 		return Built;
 	}
-	
-	public Collection<Built> findAll(){
+
+	public Collection<Built> findAll() {
 		Collection<Built> Builts;
-		
-		Builts = BuiltRepository.findAll();
-		
+
+		Builts = this.BuiltRepository.findAll();
+
 		return Builts;
 	}
-	
-	public void delete(Built Built){
+
+	public void delete(final Built Built) {
 		Assert.notNull(Built);
-		
-		BuiltRepository.delete(Built);
+
+		this.BuiltRepository.delete(Built);
 	}
 
 }

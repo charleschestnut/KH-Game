@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -8,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.BuildingRepository;
+import security.LoginService;
 import domain.Building;
+import domain.ContentManager;
 
 @Service
 @Transactional
@@ -17,50 +20,66 @@ public class BuildingService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private BuildingRepository BuildingRepository;
+	private BuildingRepository	BuildingRepository;
+	@Autowired
+	private ActorService		actorService;
+
 
 	// CRUD methods
-	
-	public Building create(){
-		Building Building;
-		
-		Building = new Building();
-		
-		return Building;
+
+	public Building create() {
+		Building building;
+
+		building = new Building();
+		building.setContentManager((ContentManager) this.actorService.findByPrincipal());
+		building.setIsFinal(false);
+
+		return building;
 	}
-	
-	public Building save(Building Building){
-		Assert.notNull(Building);
-		
+	public Building save(final Building building) {
+		Assert.notNull(building);
+		Assert.isTrue(building.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
+
 		Building saved;
-		
-		saved = BuildingRepository.save(Building);
-		
+
+		saved = this.BuildingRepository.save(building);
+
 		return saved;
 	}
-	
-	public Building findOne(int BuildingId){
+
+	public Building findOne(final int BuildingId) {
 		Assert.notNull(BuildingId);
-		
+
 		Building Building;
-		
-		Building = BuildingRepository.findOne(BuildingId);
-		
+
+		Building = this.BuildingRepository.findOne(BuildingId);
+
 		return Building;
 	}
-	
-	public Collection<Building> findAll(){
+
+	public Collection<Building> findAll() {
 		Collection<Building> Buildings;
-		
-		Buildings = BuildingRepository.findAll();
-		
+
+		Buildings = this.BuildingRepository.findAll();
+
 		return Buildings;
 	}
-	
-	public void delete(Building Building){
-		Assert.notNull(Building);
-		
-		BuildingRepository.delete(Building);
+
+	public void delete(final Building building) {
+		Assert.notNull(building);
+		Assert.isTrue(building.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
+		Assert.isTrue(!building.getIsFinal(), "error.message.building.final");
+
+		this.BuildingRepository.delete(building);
 	}
 
+	//other methods
+
+	public Collection<Building> getMyCreatedBuildings() {
+		return this.BuildingRepository.getMyCreatedBuildings(this.actorService.findByPrincipal().getId());
+	}
+
+	public Collection<Building> getAvailableBuildings() {
+		return this.BuildingRepository.getAvailableBuildings();
+	}
 }
