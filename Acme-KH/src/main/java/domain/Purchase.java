@@ -25,6 +25,7 @@ public class Purchase extends DomainEntity {
 	//relations
 
 	private Item	item;
+	private KeybladeWielder player;
 
 
 	/**
@@ -65,5 +66,16 @@ public class Purchase extends DomainEntity {
 	public void setItem(final Item item) {
 		this.item = item;
 	}
+
+	@ManyToOne(optional=false)
+	public KeybladeWielder getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(KeybladeWielder player) {
+		this.player = player;
+	}
+	
+	
 
 }
