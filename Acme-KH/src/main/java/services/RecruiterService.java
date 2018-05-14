@@ -107,7 +107,7 @@ public class RecruiterService {
 
 	}
 
-	public Recruiter reconstruct(final Recruiter recruiter, final BindingResult binding) {
+	public Recruiter reconstruct(Recruiter recruiter, final BindingResult binding) {
 		final Recruiter original = this.findOne(recruiter.getId());
 
 		if (recruiter.getId() == 0) {
@@ -116,12 +116,13 @@ public class RecruiterService {
 			recruiter.setContentManager((ContentManager) this.actorService.findByPrincipal());
 			recruiter.setIsFinal(false);
 
-		} else {
+		} else if (!original.getIsFinal()) {
 			recruiter.setGummiShips(original.getGummiShips());
 			recruiter.setTroops(original.getTroops());
 			recruiter.setContentManager(original.getContentManager());
-			recruiter.setIsFinal(original.getIsFinal());
-		}
+
+		} else
+			recruiter = original;
 
 		this.validator.validate(recruiter, binding);
 
