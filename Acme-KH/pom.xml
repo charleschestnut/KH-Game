@@ -311,6 +311,14 @@
 		    <version>1.7.4</version>
 		</dependency>
 		
+		<!-- URL Validator -->
+
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.6</version>
+		</dependency>
+		
 	</dependencies>
 
 </project> 

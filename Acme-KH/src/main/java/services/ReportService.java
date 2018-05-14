@@ -1,7 +1,10 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
+import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,24 +20,45 @@ public class ReportService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private ReportRepository ReportRepository;
+	private ReportRepository reportRepository;
+	@Autowired
+	private ActorService		actorService;
 
 	// CRUD methods
 	
 	public Report create(){
-		Report Report;
+		Report report;
 		
-		Report = new Report();
+		report = new Report();
 		
-		return Report;
+		report.setPhotos(new ArrayList<String>());
+		
+		return report;
 	}
 	
-	public Report save(Report Report){
-		Assert.notNull(Report);
+	public Report save(Report report){
+		Assert.notNull(report);
 		
 		Report saved;
 		
-		saved = ReportRepository.save(Report);
+		if(report.getId() == 0){
+			Assert.isTrue(actorService.getPrincipalAuthority().equals("PLAYER"));
+			
+			if(report.getPhotos() != null){
+				
+				UrlValidator urlValidator = new UrlValidator(UrlValidator.ALLOW_LOCAL_URLS);
+				
+				for(String url : report.getPhotos()){
+					Assert.isTrue(urlValidator.isValid(url), "org.hibernate.validator.constraints.URL.message");
+				}
+			}
+			
+			report.setDate(new Date(System.currentTimeMillis()-1000));
+			
+			
+		}
+		
+		saved = reportRepository.save(report);
 		
 		return saved;
 	}
@@ -44,7 +68,7 @@ public class ReportService {
 		
 		Report Report;
 		
-		Report = ReportRepository.findOne(ReportId);
+		Report = reportRepository.findOne(ReportId);
 		
 		return Report;
 	}
@@ -52,15 +76,15 @@ public class ReportService {
 	public Collection<Report> findAll(){
 		Collection<Report> Reports;
 		
-		Reports = ReportRepository.findAll();
+		Reports = reportRepository.findAll();
 		
 		return Reports;
 	}
 	
-	public void delete(Report Report){
-		Assert.notNull(Report);
+	public void delete(Report report){
+		Assert.notNull(report);
 		
-		ReportRepository.delete(Report);
+		reportRepository.delete(report);
 	}
 
 }
