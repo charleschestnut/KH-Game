@@ -28,6 +28,21 @@
 		<value>/views/profile/tiles.xml</value>
 		
 		<value>/views/legaltext/tiles.xml</value>
+		
+		<!-- CARLOS -->
+		
+		<!-- ÁNGEL PÉREZ -->
+		
+		<!-- ÁNGEL LOZANO -->
+		
+		<!-- SERGIO -->
+		
+		<!-- CAMILA -->
+		
+		<value>/views/report/tiles.xml</value>
+		
+		<!-- ISMAEL -->
+		
 	</util:list>
 
 </beans>

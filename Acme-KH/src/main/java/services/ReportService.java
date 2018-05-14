@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ReportRepository;
+import domain.KeybladeWielder;
 import domain.Report;
+import domain.ReportStatus;
 
 @Service
 @Transactional
@@ -32,6 +34,9 @@ public class ReportService {
 		report = new Report();
 		
 		report.setPhotos(new ArrayList<String>());
+		report.setDate(new Date(System.currentTimeMillis()-1000));
+		report.setKeybladeWielder((KeybladeWielder) actorService.findByPrincipal());
+		report.setStatus(ReportStatus.ONHOLD);
 		
 		return report;
 	}
@@ -43,6 +48,7 @@ public class ReportService {
 		
 		if(report.getId() == 0){
 			Assert.isTrue(actorService.getPrincipalAuthority().equals("PLAYER"));
+			Assert.isTrue(report.getStatus().equals(ReportStatus.ONHOLD));
 			
 			if(report.getPhotos() != null){
 				
@@ -52,11 +58,13 @@ public class ReportService {
 					Assert.isTrue(urlValidator.isValid(url), "org.hibernate.validator.constraints.URL.message");
 				}
 			}
-			
-			report.setDate(new Date(System.currentTimeMillis()-1000));
-			
+		}else{
+			Assert.isTrue(actorService.getPrincipalAuthority().equals("PLAYER") || actorService.getPrincipalAuthority().equals("GM"));
+			Assert.isTrue(report.getStatus()!=ReportStatus.ONHOLD);
 			
 		}
+		
+		
 		
 		saved = reportRepository.save(report);
 		
