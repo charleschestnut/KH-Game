@@ -210,6 +210,9 @@ public class BuiltService {
 
 		this.prizeService.save(p);
 
+		b.setActivationDate(null);
+		this.BuiltRepository.save(b);
+
 	}
 
 	public void recruit(final Built b) {
@@ -228,6 +231,9 @@ public class BuiltService {
 		Assert.isTrue(time1 >= time2, "error.message.built.working");
 
 		//TODO: Falta crear el recruited
+
+		b.setActivationDate(null);
+		this.BuiltRepository.save(b);
 
 	}
 	//other methods
