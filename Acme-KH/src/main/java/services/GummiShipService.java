@@ -9,6 +9,8 @@ import org.springframework.util.Assert;
 
 import repositories.GummiShipRepository;
 import domain.GummiShip;
+import domain.Materials;
+import domain.Recruiter;
 
 @Service
 @Transactional
@@ -21,12 +23,24 @@ public class GummiShipService {
 
 	// CRUD methods
 	
-	public GummiShip create(){
-		GummiShip GummiShip;
+	public GummiShip create(Recruiter recruiter){
+		GummiShip gummiShip;
+		Materials cost = new Materials();
 		
-		GummiShip = new GummiShip();
+		gummiShip = new GummiShip();
+		gummiShip.setSlots(0);
+		gummiShip.setName("");
+		gummiShip.setTimeToRecruit(0);
+		gummiShip.setRecruiterRequiredLvl(0);
+		gummiShip.setRecruiter(recruiter);
 		
-		return GummiShip;
+		cost.setGummiCoal(0);
+		cost.setMunny(0);
+		cost.setMytrhil(0);
+		
+		gummiShip.setCost(cost);
+		
+		return gummiShip;
 	}
 	
 	public GummiShip save(GummiShip GummiShip){

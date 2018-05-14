@@ -1,6 +1,6 @@
 package services;
 
-import java.util.ArrayList;
+
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +88,7 @@ public class OrganizationService {
 		Boolean res = true;
 		
 		//Llamamos al repositorio.
-		Organization actual = new Organization();
+		Organization actual = this.organizationRepository.findOrganizationByPlayer(playerId);
 		if(actual ==null)
 			res = false;
 		
@@ -100,7 +100,7 @@ public class OrganizationService {
 		Organization organization = this.findOne(organizationId);
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 		
-		Invitation invitationActual = this.invitationService.findInvitationByKeybladeWielderId(actual.getId());
+		Invitation invitationActual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(actual.getId(), organizationId);
 		
 		this.invitationService.delete(invitationActual);
 		
@@ -113,7 +113,6 @@ public class OrganizationService {
 	
 	public Organization findOrganizationByPlayer (int playerId){
 		
-		Organization res = this.organizationRepository.findOrganizationByPlayer(playerId);
-		return res;
+		return this.organizationRepository.findOrganizationByPlayer(playerId);
 	}
 }

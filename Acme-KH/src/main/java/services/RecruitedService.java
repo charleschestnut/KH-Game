@@ -8,7 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.RecruitedRepository;
+import domain.Built;
+import domain.GummiShip;
+import domain.KeybladeWielder;
 import domain.Recruited;
+import domain.Recruiter;
+import domain.Troop;
 
 @Service
 @Transactional
@@ -18,23 +23,75 @@ public class RecruitedService {
 
 	@Autowired
 	private RecruitedRepository RecruitedRepository;
+	
+	@Autowired
+	private ActorService actorService;
+	
+	@Autowired
+	private TroopService troopService;
+	
+	@Autowired
+	private GummiShipService gummiShipService;
+	
+	@Autowired
+	private BuiltService builtService;
 
 	// CRUD methods
 	
-	public Recruited create(){
-		Recruited Recruited;
+	public Recruited createRecruitedTroop(int troopId, int recruiterId){
+		Recruited recruited;
+		recruited = new Recruited();
+		Troop troop = this.troopService.findOne(troopId);
 		
-		Recruited = new Recruited();
+		Built building = this.builtService.findOne(recruiterId);
+		recruited.setStorageBuilding(building);
+		recruited.setTroop(troop);
 		
-		return Recruited;
+		return recruited;
 	}
 	
-	public Recruited save(Recruited Recruited){
-		Assert.notNull(Recruited);
+	public Recruited createRecruitedGummiShip(int gummiShipId, int recruiterId){
+		Recruited recruited;
+		recruited = new Recruited();
+		GummiShip gummiShip= this.gummiShipService.findOne(gummiShipId);
+		
+		Built building = this.builtService.findOne(recruiterId);
+		recruited.setStorageBuilding(building);
+		recruited.setGummiShip(gummiShip);
+		
+		return recruited;
+	}
+	
+	
+	
+	public Recruited save(Recruited recruited){
+		Boolean ambosNull = false;
+		Assert.notNull(recruited);
+		Assert.notNull(recruited.getStorageBuilding());
+		
+		if(recruited.getGummiShip() == null && recruited.getTroop() == null)
+			ambosNull = true;
+		
+		Assert.isTrue(!ambosNull);
+		
+		
+		if(recruited.getGummiShip() == null ){ 		// Miramos que sea el mismo recruiter y el nivel sea el permitido o superior.
+			
+			Assert.isTrue(recruited.getStorageBuilding().equals(recruited.getTroop().getRecruiter()));
+			Assert.isTrue(recruited.getGummiShip().getRecruiterRequiredLvl() >= recruited.getStorageBuilding().getLvl());
+		
+		}else{ 		// Miramos que sea el mismo recruiter y el nivel sea el permitido o superior.
+
+			Assert.isTrue(recruited.getStorageBuilding().equals(recruited.getGummiShip().getRecruiter()));
+			Assert.isTrue(recruited.getTroop().getRecruiterRequiredLvl() >= recruited.getStorageBuilding().getLvl());
+		}
+		
+		// Tenemos que ver que el BUILT pertenece al principal.
+		Collection<Built> builts = this.builtService.getMyBuilts();
+		Assert.isTrue(builts.contains(recruited.getStorageBuilding()));
 		
 		Recruited saved;
-		
-		saved = RecruitedRepository.save(Recruited);
+		saved = RecruitedRepository.save(recruited);
 		
 		return saved;
 	}

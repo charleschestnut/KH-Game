@@ -22,7 +22,7 @@ public class InvitationService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private InvitationRepository InvitationRepository;
+	private InvitationRepository invitationRepository;
 	
 	@Autowired
 	private KeybladeWielderService keybladeWielderService;
@@ -71,7 +71,7 @@ public class InvitationService {
 		invitation.setDate(new Date(System.currentTimeMillis() -1000));
 		
 		
-		Invitation saved = InvitationRepository.save(invitation);
+		Invitation saved = invitationRepository.save(invitation);
 		
 		return saved;
 	}
@@ -81,7 +81,7 @@ public class InvitationService {
 		
 		Invitation Invitation;
 		
-		Invitation = InvitationRepository.findOne(InvitationId);
+		Invitation = invitationRepository.findOne(InvitationId);
 		
 		return Invitation;
 	}
@@ -89,7 +89,7 @@ public class InvitationService {
 	public Collection<Invitation> findAll(){
 		Collection<Invitation> Invitations;
 		
-		Invitations = InvitationRepository.findAll();
+		Invitations = invitationRepository.findAll();
 		
 		return Invitations;
 	}
@@ -97,7 +97,7 @@ public class InvitationService {
 	public void delete(Invitation Invitation){
 		Assert.notNull(Invitation);
 		
-		InvitationRepository.delete(Invitation);
+		invitationRepository.delete(Invitation);
 	}
 	
 	
@@ -115,14 +115,20 @@ public class InvitationService {
 		Organization nueva = this.organizationService.findOne(organizationId);
 		invitation.setOrganization(nueva);
 		
-		Invitation saved = InvitationRepository.save(invitation);
+		Invitation saved = invitationRepository.save(invitation);
 		
 		return saved;
 	}
 
-	public Invitation findInvitationByKeybladeWielderId(int playerId) { //TODO
-		Invitation actual = this.InvitationRepository.findInvitationByKeybladeWielderId(playerId);
+	public Collection<Invitation> findInvitationsByKeybladeWielderId(int playerId) { 
+		Collection<Invitation> actual = this.invitationRepository.findInvitationsByKeybladeWielderId(playerId);
+		
 		return actual;
+	}
+	
+	public Invitation findInvitationByKeybladeWielderInAnOrganization(int playerId, int organizationId) { 
+		
+		return this.invitationRepository.findInvitationOfKeywielderInAnOrganization(playerId, organizationId);
 	}
 
 }
