@@ -53,6 +53,7 @@ public class RecruiterService {
 	public Recruiter save(final Recruiter Recruiter) {
 		Assert.notNull(Recruiter);
 		Assert.isTrue(Recruiter.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
+		Assert.isTrue(!Recruiter.getIsFinal() || Recruiter.getTroops().size() > 0 || Recruiter.getGummiShips().size() > 0, "error.message.recruiter.empty");
 
 		Recruiter saved;
 
@@ -60,7 +61,6 @@ public class RecruiterService {
 
 		return saved;
 	}
-
 	public Recruiter findOne(final int RecruiterId) {
 		Assert.notNull(RecruiterId);
 
