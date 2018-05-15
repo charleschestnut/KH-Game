@@ -29,7 +29,9 @@
 		<value>/views/legaltext/messages</value>
 		
 		<!-- CARLOS -->
-		
+		<value>/views/chatty/messages</value>
+		<value>/views/invitation/messages</value>
+		<value>/views/organization/messages</value>
 		<!-- ÁNGEL PÉREZ -->
 		<value>/views/building/messages</value>
 		<value>/views/built/messages</value>

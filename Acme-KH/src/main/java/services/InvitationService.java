@@ -58,15 +58,21 @@ public class InvitationService {
 	public Invitation save(Invitation invitation){
 		Assert.notNull(invitation);
 		Assert.notNull(invitation.getInvitationStatus());
+		Assert.isTrue(invitation.getOrgRange().equals(OrgRange.MASTER) && invitation.getId()!=0, "error.message.invitation.notBeMaster");
+		KeybladeWielder principal = (KeybladeWielder) this.actorService.findByPrincipal();
+		
+		// QUERY DONDE COGEMOS LA ORGANIZACIÓN DEL USUARIO ACTAL
+		Organization actual = this.organizationService.findOrganizationByPlayer(principal.getId());
+		Boolean tieneOrganizacion = this.organizationService.keybladeWielderHasOrganization(invitation.getKeybladeWielder().getId());
 		
 		
-		//QUERY DONDE COGEMOS LA ORGANIZACIÓN DEL USUARIO ACTUAL
-		Organization actual = new Organization();
-		Boolean noTieneOrganizacion = this.organizationService.keybladeWielderHasOrganization(invitation.getKeybladeWielder().getId());
+		// Es la misma organización que la organización actual del jugador y el invitado no tiene invitación.
+		Assert.isTrue(invitation.getOrganization().equals(actual), "error.message.chatty.sameOrganization");
+		Assert.isTrue(!tieneOrganizacion, "error.message.invitation.hasOrganization");
 		
-		//Es la misma organización que la organización actual del jugador y el invitado no tiene invitación.
-		Assert.isTrue(invitation.getOrganization().equals(actual));
-		Assert.isTrue(noTieneOrganizacion);
+		// El creador de la invitación debe ser MASTER u OFFICER
+				Invitation invitPrincipal = this.findInvitationByKeybladeWielderInAnOrganization(principal.getId(), invitation.getOrganization().getId());
+				Assert.isTrue(invitPrincipal.getOrgRange().equals(OrgRange.MASTER) || invitPrincipal.getOrgRange().equals(OrgRange.OFFICER), "error.message.notMasterOrOfficer");
 		
 		invitation.setDate(new Date(System.currentTimeMillis() -1000));
 		
@@ -121,7 +127,14 @@ public class InvitationService {
 	}
 
 	public Collection<Invitation> findInvitationsByKeybladeWielderId(int playerId) { 
-		Collection<Invitation> actual = this.invitationRepository.findInvitationsByKeybladeWielderId(playerId);
+		Collection<Invitation> actual = this.invitationRepository.findCorrectInvitationsByKeybladeWielder(playerId);
+		
+		Collection<Invitation> toDelete = this.invitationRepository.findDeleteableInvitationsByKeybladeWielder(playerId);
+		
+		for(Invitation i : toDelete){
+			this.invitationRepository.delete(i);
+		}
+		
 		
 		return actual;
 	}
@@ -129,6 +142,23 @@ public class InvitationService {
 	public Invitation findInvitationByKeybladeWielderInAnOrganization(int playerId, int organizationId) { 
 		
 		return this.invitationRepository.findInvitationOfKeywielderInAnOrganization(playerId, organizationId);
+	}
+
+	
+	public void chageRange(int invitationId, OrgRange range) {
+		Invitation toEdit = this.findOne(invitationId);
+		toEdit.setOrgRange(range);
+		this.invitationRepository.save(toEdit);
+	}
+	
+	
+	public Collection<Invitation> findOfficersInOrganization(int organizationId){
+		return this.invitationRepository.findOfficersInOrganization(organizationId);
+	}
+
+	
+	Collection<Invitation> findGuestsInOrganization(int organizationId){
+		return this.invitationRepository.findGuestsInOrganization(organizationId);
 	}
 
 }

@@ -55,16 +55,17 @@ public class ChattyService {
 	
 	public Chatty save(Chatty chatty){
 		Assert.notNull(chatty);
-		Assert.notNull(chatty.getInvitation());
+		Assert.notNull(chatty.getInvitation(), "error.message.chatty.invitation");
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 		Organization org = this.organizationService.findOrganizationByPlayer(actual.getId());
 		
-		Assert.isTrue(org.equals(chatty.getInvitation().getOrganization())); // Deben ser de la misma organización.
+		Assert.isTrue(org.equals(chatty.getInvitation().getOrganization()), "error.message.chatty.sameOrganization"); // Deben ser de la misma organización.
 		chatty.setDate(new Date(System.currentTimeMillis()-1000));
 		
 		Chatty saved;
 		
 		saved = chattyRepository.save(chatty);
+		this.deleteExtraChattyFromAnOrganization(chatty.getInvitation().getOrganization().getId());
 		
 		return saved;
 	}
@@ -109,5 +110,14 @@ public class ChattyService {
 			}
 		}
 		return availables;
+	}
+	
+	public void deleteExtraChattyFromAnOrganization(int organizationId){
+		List<Chatty> all = (List<Chatty>) this.chattyRepository.getChattyFromAnOrganization(organizationId);
+		Integer chattyLimit = this.configurationService.getConfiguration().getOrgMessages();
+		
+		if(all.size() >= chattyLimit){
+			this.chattyRepository.delete(all.get(chattyLimit));
+		}
 	}
 }

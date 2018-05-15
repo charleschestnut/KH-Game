@@ -45,7 +45,15 @@
 		<security:intercept-url pattern="/legaltext/administrator/save.do" access="hasRole('ADMIN')" /> 
 		
 		<!-- CARLOS -->
+		<security:intercept-url pattern="/organization/list.do" access="hasAnyRole('PLAYER', 'ADMIN')" /> 
+		<security:intercept-url pattern="/organization/membersList.do" access="hasAnyRole('PLAYER', 'ADMIN')" />
+		<security:intercept-url pattern="/organization/edit.do" access="hasAnyRole('PLAYER', 'ADMIN')" />
 		
+		<security:intercept-url pattern="/organization/chatty/list.do" access="hasAnyRole('PLAYER')" />
+		<security:intercept-url pattern="/organization/chatty/edit.do" access="hasRole('PLAYER')" />
+		
+		<security:intercept-url pattern="/organization/invitation/list.do" access="hasRole('PLAYER')" />
+		<security:intercept-url pattern="/organization/invitation/edit.do" access="hasRole('PLAYER')" />
 		<!-- ÁNGEL PÉREZ -->
 		
 		<security:intercept-url pattern="/building/list.do" access="isAuthenticated()" /> 

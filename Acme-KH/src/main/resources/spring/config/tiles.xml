@@ -29,7 +29,11 @@
 		
 		<value>/views/legaltext/tiles.xml</value>
 		
-		<!-- CARLOS -->
+		<!-- CARLOS --> 
+		<value>/views/chatty/tiles.xml</value>
+		<value>/views/invitation/tiles.xml</value>
+		<value>/views/organization/tiles.xml</value>
+		
 		
 		<!-- ÁNGEL PÉREZ -->
 		<value>/views/building/tiles.xml</value>

@@ -2,6 +2,7 @@ package services;
 
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import repositories.OrganizationRepository;
 import security.LoginService;
 import domain.Invitation;
 import domain.KeybladeWielder;
+import domain.OrgRange;
 import domain.Organization;
 
 @Service
@@ -43,12 +45,26 @@ public class OrganizationService {
 		return Organization;
 	}
 	
-	public Organization save(Organization Organization){
-		Assert.notNull(Organization);
-		
+	public Organization save(Organization organization){
+		Assert.notNull(organization);
+		Assert.notNull(organization.getName());
+		Assert.notNull(organization.getDescription());
 		Organization saved;
-	
-		saved = organizationRepository.save(Organization);
+		
+		if(organization.getId()!=0){  // Si quiere editar la organización, debe ser MASTER de esa organización
+			
+			Invitation actual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(this.actorService.findByPrincipal().getId(), organization.getId());
+			Assert.isTrue(actual.getOrgRange().equals(OrgRange.MASTER) && actual.getOrganization().equals(organization), "error.message.invitation.notMaster");
+			saved = organizationRepository.save(organization);
+		
+		}else{  //Si está creando una organización, el principal no debe tener organización.
+			
+			Boolean tieneOrganizacion = this.keybladeWielderHasOrganization(this.actorService.findByPrincipal().getId());
+			Assert.isTrue(!tieneOrganizacion, "error.message.invitation.hasOrganization");
+			saved = organizationRepository.save(organization);
+			this.invitationService.createForOrganizationCreation(this.actorService.findByPrincipal().getId(), saved.getId());
+		}
+		
 		//Tengo que crear una invitación aceptada automáticamente para mí.
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 		this.invitationService.createForOrganizationCreation(actual.getId(), saved.getId());
@@ -84,7 +100,7 @@ public class OrganizationService {
 		this.organizationRepository.delete(organization);
 	}
 
-	public Boolean keybladeWielderHasOrganization(int playerId){ //TODO
+	public Boolean keybladeWielderHasOrganization(int playerId){ 
 		Boolean res = true;
 		
 		//Llamamos al repositorio.
@@ -99,9 +115,26 @@ public class OrganizationService {
 		
 		Organization organization = this.findOne(organizationId);
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
-		
 		Invitation invitationActual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(actual.getId(), organizationId);
 		
+		if(this.keybladeWielderService.findMembersOfOrganization(organizationId).size()==1){ // Si sólo queda él, se borra la organización también.
+			this.invitationService.delete(invitationActual);
+			this.organizationRepository.delete(organization);
+		}else{
+			List<Invitation> allOfficers = (List<Invitation>) this.invitationService.findOfficersInOrganization(organizationId);
+			if(allOfficers.size()!=0)
+				this.invitationService.chageRange(allOfficers.get(0).getId(), OrgRange.MASTER);
+			else{
+				List<Invitation> allGuests = (List<Invitation>) this.invitationService.findGuestsInOrganization(organizationId);
+				this.invitationService.chageRange(allGuests.get(0).getId(), OrgRange.MASTER);
+			}
+				
+		}
+
+		if(invitationActual.getOrgRange().equals(OrgRange.MASTER)){
+			
+			
+		}
 		this.invitationService.delete(invitationActual);
 		
 		//Query que me devuelva los keywielders conectados a esa organización.
