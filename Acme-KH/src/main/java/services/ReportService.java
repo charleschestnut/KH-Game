@@ -51,7 +51,7 @@ public class ReportService {
 			Assert.isTrue(report.getStatus().equals(ReportStatus.ONHOLD));
 			
 			if(report.getPhotos() != null){
-				
+				Assert.isTrue(report.getPhotos().size() <= 5, "error.message.photos.limit");
 				UrlValidator urlValidator = new UrlValidator(UrlValidator.ALLOW_LOCAL_URLS);
 				
 				for(String url : report.getPhotos()){
@@ -93,6 +93,12 @@ public class ReportService {
 		Assert.notNull(report);
 		
 		reportRepository.delete(report);
+	}
+	
+	//Other business methods
+	
+	public Collection<Report> findReportsByPlayer(int playerId){
+		return reportRepository.findReportsByPlayer(playerId);
 	}
 
 }

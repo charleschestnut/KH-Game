@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import domain.Report;
 
+import security.Authority;
+import services.ActorService;
 import services.ReportService;
 
 @Controller()
@@ -23,6 +25,9 @@ public class ReportController extends AbstractController {
 	
 	@Autowired
 	private ReportService	reportService;
+	
+	@Autowired
+	private ActorService		actorService;
 
 	// Listing ----------------------------------------------------------------
 
@@ -37,10 +42,22 @@ public class ReportController extends AbstractController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/player/list", method = RequestMethod.GET)
+	public ModelAndView playerList() {
+		ModelAndView result;
+		Collection<Report> reports;
+
+		reports = reportService.findReportsByPlayer(actorService.findByPrincipal().getId());
+		result = new ModelAndView("report/list");
+		result.addObject("reports", reports);
+
+		return result;
+	}
 
 	// Creation ---------------------------------------------------------------
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/player/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
 		Report report;
@@ -67,17 +84,29 @@ public class ReportController extends AbstractController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Report report, BindingResult binding) {
-		ModelAndView result;
+		ModelAndView result = null;
 
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(report);
 		} else {
 			try {
 				reportService.save(report);
-				result = new ModelAndView("redirect:list.do");
+				if(actorService.getPrincipalAuthority().equals(Authority.PLAYER)){
+					result = new ModelAndView("redirect:player/list.do");
+					result.addObject("requestURI", "player/list.do");
+				}else if(actorService.getPrincipalAuthority().equals(Authority.GM)){
+					result = new ModelAndView("redirect:gm/list.do");
+					result.addObject("requestURI", "gm/list.do");
+				}
+				
 			} catch (Throwable oops) {
-				result = createEditModelAndView(report,
-						"bulletin.commit.error");
+				String message = "error.commit";
+				
+				if(oops.getMessage().contains("error.message") || oops.getMessage().contains("org.hibernate.validator")){
+					message = oops.getMessage();
+				}
+				
+				result = createEditModelAndView(report, message);
 			}
 		}
 
@@ -112,7 +141,7 @@ public class ReportController extends AbstractController {
 			String message) {
 		ModelAndView result;
 
-		result = new ModelAndView("bulletin/edit");
+		result = new ModelAndView("report/edit");
 		result.addObject("report", report);
 		result.addObject("message", message);
 

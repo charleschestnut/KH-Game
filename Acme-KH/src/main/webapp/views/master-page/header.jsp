@@ -30,6 +30,10 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('PLAYER')">
+					<li><a href="report/player/create.do"><spring:message code="report.create" /></a></li>
+		</security:authorize>
+		
 		<security:authorize access="hasRole('CUSTOMER')">
 			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
 				<ul>

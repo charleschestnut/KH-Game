@@ -18,10 +18,27 @@
 	">
 
 	<util:list id="converters">
-		<!-- 
-			Add your own converters using entries of the following form: 
-			<bean class="converters.Class1ToClass2" /> 
-		-->
+	
+	<!-- CARLOS -->
+		
+	<!-- ÁNGEL PÉREZ -->
+	
+	<!-- ÁNGEL LOZANO -->
+	
+	<!-- SERGIO -->
+	
+	<!-- CAMILA -->
+		<bean class="converters.KeybladeWielderToStringConverter" /> 
+		<bean class="converters.StringToKeybladeWielderConverter" /> 
+		
+		<bean class="converters.ReportToStringConverter" /> 
+		<bean class="converters.StringToReportConverter" /> 
+		
+		<bean class="converters.ReportUpdateToStringConverter" /> 
+		<bean class="converters.StringToReportUpdateConverter" /> 
+		
+	<!-- ISMAEL -->
+
 	</util:list>
 	
 </beans>

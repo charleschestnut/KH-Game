@@ -21,25 +21,28 @@
 
 <!-- Listing grid -->
 
-<display:table name="report" id="row" 
-    requestURI="report/gm/list.do" 
+<display:table name="reports" id="row" 
+    requestURI="${requestURI}" 
     pagesize="5" class="displaytag">
 	
-	<display:column>
-		<jstl:out value="${row.isBug}" /> <br />
-		<jstl:out value="${row.author}" />, <fmt:formatDate value="${row.moment}" pattern="dd/MM/yy HH:mm" /> <br /> 
-		<jstl:out value="${row.text}" /> <br />					
-		<a href="bulletin/customer/edit.do?bulletinId=${row.id}">
-			<spring:message	code="bulletin.edit" />
-		</a>		
+	<spring:message code="report.title" var="title" />
+	<display:column title="${title}" property="title" />
+	
+	<spring:message code="report.date" var="date" />
+	<display:column title="${date}" property="date" />
+	
+	<spring:message code="master.page.view" var="display" />
+	<display:column title="${display}">
+	<a href="display.do?reportId=<jstl:out value="row.id" />" ><jstl:out value="${display}" /></a>
 	</display:column>
+
 
 </display:table>
 
 <!-- Action links -->
 
 <div>
-	<a href="bulletin/customer/create.do"> 
-		<spring:message code="bulletin.create" />
+	<a href="report/player/create.do"> 
+		<spring:message code="report.create" />
 	</a>
 </div>

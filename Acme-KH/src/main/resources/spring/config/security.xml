@@ -55,6 +55,7 @@
 		<!-- CAMILA -->
 		
 		<security:intercept-url pattern="/report/gm/**" access="hasRole('GM')" /> 
+		<security:intercept-url pattern="/report/player/**" access="hasRole('PLAYER')" /> 
 		<security:intercept-url pattern="/report/**" access="hasAnyRole('GM', 'PLAYER')"  /> 
 		
 		<!-- ISMAEL -->
