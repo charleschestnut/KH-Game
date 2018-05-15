@@ -31,8 +31,20 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('PLAYER')">
+			<li><a class="fNiv"><spring:message	code="master.page.player" /></a>
+				<ul>
 					<li><a href="report/player/list.do"><spring:message code="report.list" /></a></li>
 					<li><a href="report/player/create.do"><spring:message code="report.create" /></a></li>
+				</ul>
+			</li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('MANAGER')">
+			<li><a class="fNiv"><spring:message	code="master.page.manager" /></a>
+				<ul>
+					<li><a href="building/contentManager/myList.do"><spring:message code="master.page.myBuilding" /></a></li>
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('GM')">
@@ -51,9 +63,7 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="profile/action-1.do"><spring:message code="master.page.profile.action.1" /></a></li>
-					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
-					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>					
+					<li><a href="building/list.do"> <spring:message code="master.page.availableBuilding"></spring:message></a>  </li>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
