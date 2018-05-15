@@ -230,7 +230,28 @@ public class BuildingManagerController extends AbstractController {
 
 		return res;
 	}
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam final Integer buildingId) {
+		ModelAndView res;
 
+		final Building building = this.buildingService.findOne(buildingId);
+
+		try {
+			Assert.notNull(building, "error.message.building.noExist");
+			this.buildingService.delete(building);
+			res = new ModelAndView("redirect:myList.do");
+		} catch (final Throwable oops) {
+			final String msg = this.getErrorMessage(oops);
+			final Collection<Building> buildings = this.buildingService.getMyCreatedBuildings();
+
+			res = new ModelAndView("building/list");
+			res.addObject("buildings", buildings);
+			res.addObject("requestURI", "building/contentManager/myList.do");
+			res.addObject("message", msg);
+		}
+
+		return res;
+	}
 	protected ModelAndView createEditModelAndView(final Defense defense, final Recruiter recruiter, final Warehouse warehouse, final Livelihood livelihood, final String buildingType) {
 		return this.createEditModelAndView(defense, recruiter, warehouse, livelihood, buildingType, null);
 	}

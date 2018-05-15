@@ -64,6 +64,12 @@
 				</jstl:choose>
 			</jstl:if>
 			</display:column>
+			<spring:message code="master.page.delete" var="deleteHeader"></spring:message>
+			<display:column title="${deleteHeader }">
+				<jstl:if test="${!row.isFinal }">
+					<a href="building/contentManager/delete.do?buildingId=${row.id}" style="color:red;"> <jstl:out value="${deleteHeader}"></jstl:out></a>
+				</jstl:if>
+			</display:column>
 		</jstl:if>
 	</security:authorize>
 	
