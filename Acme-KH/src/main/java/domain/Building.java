@@ -108,6 +108,7 @@ public class Building extends DomainEntity {
 	 * 
 	 * EN MINUTOS
 	 */
+	@NotNull
 	@Range(min = 0)
 	public Integer getTimeToConstruct() {
 		return this.timeToConstruct;

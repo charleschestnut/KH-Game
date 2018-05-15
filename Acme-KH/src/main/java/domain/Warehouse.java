@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -42,6 +43,7 @@ public class Warehouse extends Building {
 	 * 
 	 * Cuantas tropas puede almacenar
 	 */
+	@NotNull
 	@Range(min = 0)
 	public Integer getTroopSlots() {
 		return this.troopSlots;
@@ -54,6 +56,7 @@ public class Warehouse extends Building {
 	 * 
 	 * Cuantas naves puede almacenar
 	 */
+	@NotNull
 	@Range(min = 0)
 	public Integer getGummiSlots() {
 		return this.gummiSlots;
@@ -62,6 +65,7 @@ public class Warehouse extends Building {
 	public void setGummiSlots(final Integer gummiSlots) {
 		this.gummiSlots = gummiSlots;
 	}
+	@NotNull
 	@Range(min = 0, max = 1)
 	public Double getExtraSlotsPerLvl() {
 		return this.extraSlotsPerLvl;
@@ -76,6 +80,7 @@ public class Warehouse extends Building {
 	 * 
 	 * @return Cuantos materiales puede almacenar en total el edificio de nivel "lvl"
 	 */
+	@Override
 	@Transient
 	public Materials getTotalMaterials(final Integer lvl) {
 		final Materials res = new Materials();

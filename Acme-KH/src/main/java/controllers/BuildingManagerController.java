@@ -5,7 +5,9 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -114,4 +116,59 @@ public class BuildingManagerController extends AbstractController {
 
 		return res;
 	}
+
+	@RequestMapping(value = "/edit", params = "savedefense", method = RequestMethod.POST)
+	public ModelAndView saveDefense(final Defense defense, final BindingResult binding) {
+		ModelAndView res;
+
+		this.defenseService.reconstruct(defense, binding);
+
+		if (binding.hasErrors())
+			res = this.createEditModelAndView(defense, null, null, null, "defense");
+		else
+			try {
+				this.defenseService.save(defense);
+				res = new ModelAndView("redirect:myList.do");
+
+			} catch (final Throwable oops) {
+				final String msg = this.getErrorMessage(oops);
+				res = this.createEditModelAndView(defense, null, null, null, "defense", msg);
+
+			}
+
+		return res;
+	}
+
+	protected ModelAndView createEditModelAndView(final Defense defense, final Recruiter recruiter, final Warehouse warehouse, final Livelihood livelihood, final String buildingType) {
+		return this.createEditModelAndView(defense, recruiter, warehouse, livelihood, buildingType, null);
+	}
+	protected ModelAndView createEditModelAndView(final Defense defense, final Recruiter recruiter, final Warehouse warehouse, final Livelihood livelihood, final String buildingType, final String message) {
+		final ModelAndView res;
+
+		res = new ModelAndView("building/edit");
+
+		switch (buildingType) {
+		case "defense":
+			res.addObject("buildingType", "defense");
+			res.addObject("defense", defense);
+			break;
+		case "recruiter":
+			res.addObject("buildingType", "recruiter");
+			res.addObject("recruiter", recruiter);
+			break;
+		case "livelihood":
+			res.addObject("buildingType", "livelihood");
+			res.addObject("livelihood", livelihood);
+			break;
+		default:
+			res.addObject("buildingType", "warehouse");
+			res.addObject("warehouse", warehouse);
+			break;
+		}
+
+		res.addObject("message", message);
+
+		return res;
+	}
+
 }

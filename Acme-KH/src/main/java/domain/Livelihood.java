@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -42,6 +43,7 @@ public class Livelihood extends Building {
 	 * 
 	 * Devuelve el extra de materiales que dará por cada nivel, <b>SIEMPRE</b> se aplica al de nivel 1.
 	 */
+	@NotNull
 	@Range(min = 0, max = 1)
 	public Double getExtraMaterialsPerLvl() {
 		return this.extraMaterialsPerLvl;
@@ -54,6 +56,7 @@ public class Livelihood extends Building {
 	 * 
 	 * Devuelve el tiempo <b>EN MINUTOS</b> que hay que esperar para recolectar todos los materiales que consiga el edificio
 	 */
+	@NotNull
 	public Integer getTimeToRecollect() {
 		return this.timeToRecollect;
 	}
@@ -65,6 +68,7 @@ public class Livelihood extends Building {
 	 * 
 	 * Devuelve cuanto se reducirá el tiempo de recolección cada vez que se sube el nivel
 	 */
+	@NotNull
 	public Double getLessTimePerLvl() {
 		return this.LessTimePerLvl;
 	}
@@ -78,6 +82,7 @@ public class Livelihood extends Building {
 	 * 
 	 * @return Los materiales totales este edificio de nivel "lvl" recolecta
 	 */
+	@Override
 	@Transient
 	public Materials getTotalMaterials(final Integer lvl) {
 		final Materials res = new Materials();

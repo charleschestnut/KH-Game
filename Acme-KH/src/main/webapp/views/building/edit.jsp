@@ -133,7 +133,7 @@
 	
 
 
-	<acme:submit name="save" code="master.page.save"/>
+	<acme:submit name="save${buildingType}" code="master.page.save"/>
 	<acme:submit name="saveFinal" code="building.finalSave"/>
 	<acme:cancel url="building/contentManager/edit.do" code="master.page.cancel"/>
 </form:form>

@@ -5,6 +5,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -16,6 +17,7 @@ public class Defense extends Building {
 	private Double	extraDefensePerLvl;
 
 
+	@NotNull
 	@Range(min = 0)
 	public Integer getDefense() {
 		return this.defense;
@@ -24,6 +26,7 @@ public class Defense extends Building {
 	public void setDefense(final Integer defense) {
 		this.defense = defense;
 	}
+	@NotNull
 	@Range(min = 0, max = 1)
 	public Double getExtraDefensePerLvl() {
 		return this.extraDefensePerLvl;
