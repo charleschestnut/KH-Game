@@ -96,6 +96,7 @@ public class Building extends DomainEntity {
 	 * 
 	 * Cuanto más cuesta mejorar un edificio<b> SIEMPRE </b>se aplica al de nivel 1
 	 */
+	@NotNull
 	@Range(min = 0, max = 1)
 	public Double getExtraCostPerLvl() {
 		return this.extraCostPerLvl;

@@ -36,7 +36,7 @@ public class AbstractController {
 	public String getErrorMessage(final Throwable oops) {
 		String res = oops.getMessage();
 
-		if (!res.contains("error.message."))
+		if (res == null || !res.contains("error.message."))
 			res = "master.page.commit.error";
 
 		return res;

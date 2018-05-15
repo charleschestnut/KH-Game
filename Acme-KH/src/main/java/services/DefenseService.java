@@ -84,8 +84,11 @@ public class DefenseService {
 			defense.setContentManager((ContentManager) this.actorService.findByPrincipal());
 			defense.setIsFinal(false);
 
-		} else if (!original.getIsFinal())
+		} else if (!original.getIsFinal()) {
 			defense.setContentManager(original.getContentManager());
+			if (defense.getIsFinal() == null)
+				defense.setIsFinal(false);
+		}
 
 		else
 			defense = original;

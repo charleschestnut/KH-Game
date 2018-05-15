@@ -5,12 +5,14 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.BuildingService;
 import services.DefenseService;
 import services.LivelihoodService;
@@ -66,21 +68,29 @@ public class BuildingManagerController extends AbstractController {
 			switch (buildingType) {
 			case "defense":
 				defense = this.defenseService.findOne(buildingId);
+				if (defense.getIsFinal() || !defense.getContentManager().getUserAccount().equals(LoginService.getPrincipal()))
+					res = new ModelAndView("redirect:myList.do");
 				res.addObject("buildingType", "defense");
 				res.addObject("defense", defense);
 				break;
 			case "recruiter":
 				recruiter = this.recruiterService.findOne(buildingId);
+				if (recruiter.getIsFinal() || !recruiter.getContentManager().getUserAccount().equals(LoginService.getPrincipal()))
+					res = new ModelAndView("redirect:myList.do");
 				res.addObject("buildingType", "recruiter");
 				res.addObject("recruiter", recruiter);
 				break;
 			case "livelihood":
 				livelihood = this.livelihoodService.findOne(buildingId);
+				if (livelihood.getIsFinal() || !livelihood.getContentManager().getUserAccount().equals(LoginService.getPrincipal()))
+					res = new ModelAndView("redirect:myList.do");
 				res.addObject("buildingType", "livelihood");
 				res.addObject("livelihood", livelihood);
 				break;
 			case "warehouse":
 				warehouse = this.warehouseService.findOne(buildingId);
+				if (warehouse.getIsFinal() || !warehouse.getContentManager().getUserAccount().equals(LoginService.getPrincipal()))
+					res = new ModelAndView("redirect:myList.do");
 				res.addObject("buildingType", "warehouse");
 				res.addObject("warehouse", warehouse);
 				break;
@@ -118,7 +128,7 @@ public class BuildingManagerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", params = "savedefense", method = RequestMethod.POST)
-	public ModelAndView saveDefense(final Defense defense, final BindingResult binding) {
+	public ModelAndView saveDefense(final Defense defense, final BindingResult binding, final Boolean saveFinal) {
 		ModelAndView res;
 
 		this.defenseService.reconstruct(defense, binding);
@@ -127,6 +137,10 @@ public class BuildingManagerController extends AbstractController {
 			res = this.createEditModelAndView(defense, null, null, null, "defense");
 		else
 			try {
+				if (defense.getId() != 0)
+					Assert.isTrue(!this.defenseService.findOne(defense.getId()).getIsFinal(), "error.message.building.final");
+				if (saveFinal != null && saveFinal)
+					defense.setIsFinal(true);
 				this.defenseService.save(defense);
 				res = new ModelAndView("redirect:myList.do");
 
@@ -138,7 +152,6 @@ public class BuildingManagerController extends AbstractController {
 
 		return res;
 	}
-
 	protected ModelAndView createEditModelAndView(final Defense defense, final Recruiter recruiter, final Warehouse warehouse, final Livelihood livelihood, final String buildingType) {
 		return this.createEditModelAndView(defense, recruiter, warehouse, livelihood, buildingType, null);
 	}

@@ -5,6 +5,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -17,6 +18,7 @@ public class Materials {
 	private Integer	gummiCoal;
 
 
+	@NotNull
 	@Range(min = 0)
 	public Integer getMunny() {
 		return this.munny;
@@ -25,7 +27,7 @@ public class Materials {
 	public void setMunny(final Integer munny) {
 		this.munny = munny;
 	}
-
+	@NotNull
 	@Range(min = 0)
 	public Integer getMytrhil() {
 		return this.mytrhil;
@@ -34,6 +36,7 @@ public class Materials {
 	public void setMytrhil(final Integer mytrhil) {
 		this.mytrhil = mytrhil;
 	}
+	@NotNull
 	@Range(min = 0)
 	public Integer getGummiCoal() {
 		return this.gummiCoal;
