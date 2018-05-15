@@ -36,7 +36,9 @@ public class DefenseService {
 	public Defense create() {
 		Defense Defense;
 
-		Defense = (domain.Defense) this.buildingService.create();
+		Defense = new Defense();
+		Defense.setContentManager((ContentManager) this.actorService.findByPrincipal());
+		Defense.setIsFinal(false);
 
 		return Defense;
 	}

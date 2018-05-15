@@ -36,7 +36,9 @@ public class LivelihoodService {
 	public Livelihood create() {
 		Livelihood Livelihood;
 
-		Livelihood = (domain.Livelihood) this.buildingService.create();
+		Livelihood = new Livelihood();
+		Livelihood.setContentManager((ContentManager) this.actorService.findByPrincipal());
+		Livelihood.setIsFinal(false);
 
 		return Livelihood;
 	}

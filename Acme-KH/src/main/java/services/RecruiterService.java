@@ -43,9 +43,11 @@ public class RecruiterService {
 	public Recruiter create() {
 		Recruiter recruiter;
 
-		recruiter = (domain.Recruiter) this.buildingService.create();
+		recruiter = new Recruiter();
 		recruiter.setGummiShips(new ArrayList<GummiShip>());
 		recruiter.setTroops(new ArrayList<Troop>());
+		recruiter.setContentManager((ContentManager) this.actorService.findByPrincipal());
+		recruiter.setIsFinal(false);
 
 		return recruiter;
 	}

@@ -87,7 +87,7 @@ public class BuildingManagerController extends AbstractController {
 				break;
 			}//========== FIN EDITANDO ========================
 		//============CREANDO DESDE 0 =============
-		else if (buildingType.equals("defense") || buildingType.equals("recruiter") || buildingType.equals("livelihood") || buildingType.equals("warehouse"))
+		else if (buildingType != null && (buildingType.equals("defense") || buildingType.equals("recruiter") || buildingType.equals("livelihood") || buildingType.equals("warehouse")))
 			switch (buildingType) {
 			case "defense":
 				defense = this.defenseService.create();

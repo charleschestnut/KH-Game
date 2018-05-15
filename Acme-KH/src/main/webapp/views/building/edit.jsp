@@ -49,7 +49,7 @@
 	<fieldset>
 		<legend title="<spring:message code='building.miscelaneous'/>"></legend>
 		<acme:textbox code="building.name" path="name"/>
-		<acme:textbox code="building.description" path="descripion"/>
+		<acme:textbox code="building.descritpion" path="description"/>
 		<acme:textbox code="building.photo" path="photo"/>
 	</fieldset>
 	<br>
@@ -62,7 +62,7 @@
 	</fieldset>
 	<fieldset>
 		<legend title="<spring:message code='building.onGameOptions'/>"></legend>
-		<acme:textbox code="building.maxLvL" path="maxLvL"/>
+		<acme:textbox code="building.maxLvL" path="maxLvl"/>
 		<acme:textbox code="building.extraCostPerLvl" path="extraCostPerLvl"/>
 		<acme:textbox code="building.timeToConstruct" path="timeToConstruct"/>
 	</fieldset>

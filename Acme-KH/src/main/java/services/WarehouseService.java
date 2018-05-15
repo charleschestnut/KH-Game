@@ -36,7 +36,9 @@ public class WarehouseService {
 	public Warehouse create() {
 		Warehouse Warehouse;
 
-		Warehouse = (domain.Warehouse) this.buildingService.create();
+		Warehouse = new Warehouse();
+		Warehouse.setContentManager((ContentManager) this.actorService.findByPrincipal());
+		Warehouse.setIsFinal(false);
 
 		return Warehouse;
 	}
