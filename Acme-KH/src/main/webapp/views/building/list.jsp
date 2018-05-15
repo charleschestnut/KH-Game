@@ -21,8 +21,8 @@
 
 	<spring:message code="building.name" var="nameHeader"></spring:message>
 	<display:column property="name" title="${nameHeader}"></display:column>
-	
-	<spring:message code="building.description" var="descriptionHeader"></spring:message>
+						  
+	<spring:message code="building.descritpion" var="descriptionHeader"></spring:message>
 	<display:column title="${descriptionHeader}">
 		<jstl:out value="${row.getReduceDescription()}"></jstl:out>
 	</display:column>
