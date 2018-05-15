@@ -26,10 +26,8 @@
 	
 	
 	<acme:textbox code="master.page.name" path="name" />
-	<form:errors cssClss="error" path="name"/>
 	<br>
 	<acme:textbox code="master.page.description" path="description" />
-	<form:errors cssClss="error" path="description"/>
 	<br>
 		
 	

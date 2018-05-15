@@ -12,6 +12,8 @@ package controllers;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -95,7 +97,7 @@ public class OrganizationController extends AbstractController {
 	}
 		
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Organization organization, BindingResult binding) {
+	public ModelAndView save(@Valid Organization organization, BindingResult binding) {
 		ModelAndView result;
 		
 		if(binding.hasErrors()){
@@ -103,7 +105,7 @@ public class OrganizationController extends AbstractController {
 		}else{
 			try{
 				organization = this.organizationService.save(organization);
-				result = new ModelAndView("redirect: /organization/membersList");
+				result = new ModelAndView("redirect: organization/membersList");
 				result.addObject("members", this.keybladeWielderService.findMembersOfOrganization(organization.getId()));
 			}catch(Throwable oops){
 				result = createEditModelAndView(organization, "organization.commit.error");

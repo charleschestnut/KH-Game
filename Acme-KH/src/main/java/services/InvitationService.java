@@ -107,7 +107,7 @@ public class InvitationService {
 	}
 	
 	
-	public Invitation createForOrganizationCreation(int keybladeWielderId, int organizationId){
+	public void createForOrganizationCreation(int keybladeWielderId, int organizationId){
 		Invitation invitation;
 		
 		invitation = new Invitation();
@@ -123,7 +123,6 @@ public class InvitationService {
 		
 		Invitation saved = invitationRepository.save(invitation);
 		
-		return saved;
 	}
 
 	public Collection<Invitation> findInvitationsByKeybladeWielderId(int playerId) { 

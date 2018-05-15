@@ -2,6 +2,7 @@ package services;
 
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,13 @@ public class OrganizationService {
 	// CRUD methods
 	
 	public Organization create(){
-		Organization Organization;
+		Organization organization;
 		//Sólo puede crearla si no pertenece a ninguna organizacion.
 		
-		Organization = new Organization();
+		organization = new Organization();
+		organization.setCreationDate(new Date(System.currentTimeMillis()-1000));
 		
-		return Organization;
+		return organization;
 	}
 	
 	public Organization save(Organization organization){
@@ -59,11 +61,12 @@ public class OrganizationService {
 		
 		}else{  //Si está creando una organización, el principal no debe tener organización.
 			
+			organization.setCreationDate(new Date(System.currentTimeMillis()-1000));
 			Boolean tieneOrganizacion = this.keybladeWielderHasOrganization(this.actorService.findByPrincipal().getId());
 			Assert.isTrue(!tieneOrganizacion, "error.message.invitation.hasOrganization");
 			//Tengo que crear una invitación aceptada automáticamente para mí.
 			saved = organizationRepository.save(organization);
-			this.invitationService.createForOrganizationCreation(this.actorService.findByPrincipal().getId(), saved.getId());
+			this.invitationService.createForOrganizationCreation(this.actorService.findByPrincipal().getId(), saved.getId()); //TODO Me peta en el save y no sé xq.
 		}
 		
 		//Tengo que crear una invitación aceptada automáticamente para mí.

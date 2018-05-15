@@ -12,6 +12,8 @@ package controllers;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -84,7 +86,7 @@ public class ChattyController extends AbstractController {
 	}
 		
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Chatty chatty, BindingResult binding) {
+	public ModelAndView save(@Valid Chatty chatty, BindingResult binding) {
 		ModelAndView result;
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 		if(binding.hasErrors()){
