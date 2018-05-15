@@ -84,8 +84,11 @@ public class LivelihoodService {
 			l.setContentManager((ContentManager) this.actorService.findByPrincipal());
 			l.setIsFinal(false);
 
-		} else if (!original.getIsFinal())
+		} else if (!original.getIsFinal()) {
 			l.setContentManager(original.getContentManager());
+			if (l.getIsFinal() == null)
+				l.setIsFinal(false);
+		}
 
 		else
 			l = original;

@@ -86,8 +86,11 @@ public class WarehouseService {
 			w.setContentManager((ContentManager) this.actorService.findByPrincipal());
 			w.setIsFinal(false);
 
-		} else if (!original.getIsFinal())
+		} else if (!original.getIsFinal()) {
 			w.setContentManager(original.getContentManager());
+			if (w.getIsFinal() == null)
+				w.setIsFinal(false);
+		}
 
 		else
 			w = original;

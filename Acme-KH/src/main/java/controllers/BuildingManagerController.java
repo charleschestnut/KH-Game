@@ -152,6 +152,85 @@ public class BuildingManagerController extends AbstractController {
 
 		return res;
 	}
+
+	@RequestMapping(value = "/edit", params = "saverecruiter", method = RequestMethod.POST)
+	public ModelAndView saveRecruiter(final Recruiter recruiter, final BindingResult binding, final Boolean saveFinal) {
+		ModelAndView res;
+
+		this.recruiterService.reconstruct(recruiter, binding);
+
+		if (binding.hasErrors())
+			res = this.createEditModelAndView(null, recruiter, null, null, "recruiter");
+		else
+			try {
+				if (recruiter.getId() != 0)
+					Assert.isTrue(!this.recruiterService.findOne(recruiter.getId()).getIsFinal(), "error.message.building.final");
+				if (saveFinal != null && saveFinal)
+					recruiter.setIsFinal(true);
+				this.recruiterService.save(recruiter);
+				res = new ModelAndView("redirect:myList.do");
+
+			} catch (final Throwable oops) {
+				final String msg = this.getErrorMessage(oops);
+				res = this.createEditModelAndView(null, recruiter, null, null, "recruiter", msg);
+
+			}
+
+		return res;
+	}
+
+	@RequestMapping(value = "/edit", params = "savewarehouse", method = RequestMethod.POST)
+	public ModelAndView saveWarehouse(final Warehouse warehouse, final BindingResult binding, final Boolean saveFinal) {
+		ModelAndView res;
+
+		this.warehouseService.reconstruct(warehouse, binding);
+
+		if (binding.hasErrors())
+			res = this.createEditModelAndView(null, null, warehouse, null, "warehouse");
+		else
+			try {
+				if (warehouse.getId() != 0)
+					Assert.isTrue(!this.warehouseService.findOne(warehouse.getId()).getIsFinal(), "error.message.building.final");
+				if (saveFinal != null && saveFinal)
+					warehouse.setIsFinal(true);
+				this.warehouseService.save(warehouse);
+				res = new ModelAndView("redirect:myList.do");
+
+			} catch (final Throwable oops) {
+				final String msg = this.getErrorMessage(oops);
+				res = this.createEditModelAndView(null, null, warehouse, null, "warehouse", msg);
+
+			}
+
+		return res;
+	}
+
+	@RequestMapping(value = "/edit", params = "savelivelihood", method = RequestMethod.POST)
+	public ModelAndView saveLivelihood(final Livelihood livelihood, final BindingResult binding, final Boolean saveFinal) {
+		ModelAndView res;
+
+		this.livelihoodService.reconstruct(livelihood, binding);
+
+		if (binding.hasErrors())
+			res = this.createEditModelAndView(null, null, null, livelihood, "livelihood");
+		else
+			try {
+				if (livelihood.getId() != 0)
+					Assert.isTrue(!this.livelihoodService.findOne(livelihood.getId()).getIsFinal(), "error.message.building.final");
+				if (saveFinal != null && saveFinal)
+					livelihood.setIsFinal(true);
+				this.livelihoodService.save(livelihood);
+				res = new ModelAndView("redirect:myList.do");
+
+			} catch (final Throwable oops) {
+				final String msg = this.getErrorMessage(oops);
+				res = this.createEditModelAndView(null, null, null, livelihood, "livelihood", msg);
+
+			}
+
+		return res;
+	}
+
 	protected ModelAndView createEditModelAndView(final Defense defense, final Recruiter recruiter, final Warehouse warehouse, final Livelihood livelihood, final String buildingType) {
 		return this.createEditModelAndView(defense, recruiter, warehouse, livelihood, buildingType, null);
 	}

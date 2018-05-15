@@ -122,6 +122,8 @@ public class RecruiterService {
 			recruiter.setGummiShips(original.getGummiShips());
 			recruiter.setTroops(original.getTroops());
 			recruiter.setContentManager(original.getContentManager());
+			if (recruiter.getIsFinal() == null)
+				recruiter.setIsFinal(false);
 
 		} else
 			recruiter = original;
