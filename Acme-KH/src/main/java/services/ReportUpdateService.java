@@ -1,6 +1,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ReportUpdateRepository;
+import domain.Actor;
+import domain.Administrator;
+import domain.GameMaster;
+import domain.Report;
+import domain.ReportStatus;
 import domain.ReportUpdate;
 
 @Service
@@ -18,23 +24,48 @@ public class ReportUpdateService {
 
 	@Autowired
 	private ReportUpdateRepository ReportUpdateRepository;
+	@Autowired
+	private ActorService		actorService;
+	@Autowired
+	private ReportService		reportService;
 
 	// CRUD methods
 	
 	public ReportUpdate create(){
-		ReportUpdate ReportUpdate;
+		ReportUpdate reportUpdate;
+		Actor actor;
 		
-		ReportUpdate = new ReportUpdate();
+		reportUpdate = new ReportUpdate();
+		actor = actorService.findByPrincipal();
 		
-		return ReportUpdate;
+		reportUpdate.setDate(new Date(System.currentTimeMillis()-1000));
+		
+		if(actorService.getPrincipalAuthority().equals("ADMIN")){
+			reportUpdate.setAdministrator((Administrator) actor);
+			reportUpdate.setGameMaster(null);
+		}else if(actorService.getPrincipalAuthority().equals("GM")){
+			reportUpdate.setGameMaster((GameMaster) actor);
+			reportUpdate.setAdministrator(null);
+		}
+		
+		return reportUpdate;
 	}
 	
-	public ReportUpdate save(ReportUpdate ReportUpdate){
-		Assert.notNull(ReportUpdate);
+	public ReportUpdate save(ReportUpdate reportUpdate, Integer reportId, ReportStatus status){
+		Assert.notNull(reportUpdate);
+		Report report;
+		
 		
 		ReportUpdate saved;
 		
-		saved = ReportUpdateRepository.save(ReportUpdate);
+		saved = ReportUpdateRepository.save(reportUpdate);
+		
+		report = reportService.findOne(reportId);
+		report.getReportUpdates().add(saved);
+		report.setStatus(status);
+		
+		reportService.save(report);
+		
 		
 		return saved;
 	}

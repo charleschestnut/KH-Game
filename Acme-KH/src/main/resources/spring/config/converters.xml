@@ -37,6 +37,12 @@
 		<bean class="converters.ReportUpdateToStringConverter" /> 
 		<bean class="converters.StringToReportUpdateConverter" /> 
 		
+		<bean class="converters.AdministratorToStringConverter" /> 
+		<bean class="converters.StringToAdministratorConverter" /> 
+		
+		<bean class="converters.GameMasterToStringConverter" /> 
+		<bean class="converters.StringToGameMasterConverter" /> 
+		
 	<!-- ISMAEL -->
 
 	</util:list>

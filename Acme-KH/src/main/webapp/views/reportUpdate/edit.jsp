@@ -20,52 +20,37 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="report/edit.do" modelAttribute="report">
+<form:form action="reportUpdate/edit.do" modelAttribute="reportUpdate">
 
 <spring:message code="report.asistence" var="asistence"/>
 	
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="date" />
-	<form:hidden path="keybladeWielder" />
-	
-	<security:authorize access="hasRole('PLAYER')">
-	<form:hidden path="status" />
-	
-	
-	<form:label path="isBug">
-		<spring:message code="report.type" />
-	</form:label>	
-	<form:select id="${id}" path="isBug">
-		<form:option value="true" label="Bug" />		
-		<form:option value="false" label="${asistence}" />		
-	</form:select>
-	<form:errors path="isBug" cssClass="error" /><br/><br/>
-	
-	<acme:textbox code="report.title" path="title"/><br/>
-	<acme:textarea code="report.content" path="content"/><br/>
-	<acme:textbox code="report.photos" path="photos"/><br/>
-	
-	</security:authorize>
 	
 	<security:authorize access="hasRole('GM')">
-	<form:hidden path="isBug" />
-	<form:hidden path="title" />
-	<form:hidden path="content" />
-	<form:hidden path="photos" />
-	
-	<form:label path="status">
-		<spring:message code="report.status" />
-	</form:label>	
-	<form:select path="status">
-		<form:option value="WORKING" label="WORKING" />		
-		<form:option value="RESOLVED" label="RESOLVED" />		
-		<form:option value="IRRESOLVABLE" label="IRRESOLVABLE" />		
-		<form:option value="SUSPICIOUS" label="SUSPICIOUS" />		
-	</form:select>
-	<form:errors path="status" cssClass="error" /><br/><br/>
-	
+	<form:hidden path="administrator" value="0"/>
+	<form:hidden path="gameMaster" />
 	</security:authorize>
+	
+	<security:authorize access="hasRole('ADMIN')">
+	<form:hidden path="administrator" />
+	<form:hidden path="gameMaster" value="0"/>
+	</security:authorize>
+	
+	<input type="hidden" name="reportId" value="${reportId}"/>
+	
+	<label for="status">
+		<spring:message code="report.status" />
+	</label>	
+	<select name="status" >
+		<option value="WORKING" label="WORKING" />		
+		<option value="RESOLVED" label="RESOLVED" />		
+		<option value="IRRESOLVABLE" label="IRRESOLVABLE" />		
+		<option value="SUSPICIOUS" label="SUSPICIOUS" />		
+	</select>
+	
+	<acme:textarea code="report.content" path="content"/><br/>
 	
 	<acme:submit code="master.page.save"  name="save" />
 	<acme:cancel code="master.page.return" url="/report/gm/list.do" />

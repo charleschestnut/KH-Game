@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -34,6 +35,7 @@ public class Report extends DomainEntity {
 	//relations
 
 	private KeybladeWielder		keybladeWielder;
+	private Collection<ReportUpdate>		reportUpdate;
 
 
 	/**
@@ -117,5 +119,17 @@ public class Report extends DomainEntity {
 	public void setKeybladeWielder(final KeybladeWielder keybladeWielder) {
 		this.keybladeWielder = keybladeWielder;
 	}
+
+	@Valid
+	@OneToMany
+	public Collection<ReportUpdate> getReportUpdates() {
+		return reportUpdate;
+	}
+
+	public void setReportUpdates(Collection<ReportUpdate> reportUpdate) {
+		this.reportUpdate = reportUpdate;
+	}
+	
+	
 
 }

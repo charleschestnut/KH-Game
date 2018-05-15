@@ -46,6 +46,7 @@
 		<!-- CAMILA -->
 		
 		<value>/views/report/tiles.xml</value>
+		<value>/views/reportUpdate/tiles.xml</value>
 		
 		<!-- ISMAEL -->
 		

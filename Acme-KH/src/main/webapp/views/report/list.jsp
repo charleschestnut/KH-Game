@@ -31,10 +31,25 @@
 	<spring:message code="report.date" var="date" />
 	<display:column title="${date}" property="date" />
 	
+	<spring:message code="report.status" var="status" />
+	<display:column title="${status}" property="status"/>
+	
 	<spring:message code="master.page.view" var="display" />
 	<display:column title="${display}">
-	<a href="display.do?reportId=<jstl:out value="row.id" />" ><jstl:out value="${display}" /></a>
+	<a href="report/display.do?reportId=<jstl:out value="${row.id}" />" ><jstl:out value="${display}" /></a>
 	</display:column>
+	
+	<security:authorize access="hasRole('GM')">
+	<spring:message code="report.change.status" var="changeStatus" />
+	<display:column title="${changeStatus}">
+	<a href="report/edit.do?reportId=<jstl:out value="${row.id}" />" ><jstl:out value="${changeStatus}" /></a>
+	</display:column>
+	
+	<spring:message code="reportUpdate.create" var="createUpdate" />
+	<display:column title="${createUpdate}">
+	<a href="reportUpdate/create.do?reportId=<jstl:out value="${row.id}" />" ><jstl:out value="${createUpdate}" /></a>
+	</display:column>
+	</security:authorize>
 
 
 </display:table>

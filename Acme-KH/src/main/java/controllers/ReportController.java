@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Report;
-
 import security.Authority;
 import services.ActorService;
 import services.ReportService;
+import domain.Actor;
+import domain.Report;
 
 @Controller()
 @RequestMapping("/report")
@@ -52,6 +52,26 @@ public class ReportController extends AbstractController {
 		result = new ModelAndView("report/list");
 		result.addObject("reports", reports);
 
+		return result;
+	}
+	
+	// Display ----------------------------------------------------------------
+	@RequestMapping(value = "display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam(required = false) Integer reportId) {
+		ModelAndView result;
+		Report report;
+		String auth;
+		
+		auth = actorService.getPrincipalAuthority();
+		Assert.isTrue(auth.equals("PLAYER") || auth.equals("GM"));
+
+		report = reportService.findOne(reportId);
+		
+		result = new ModelAndView("report/display");
+		
+		
+		result.addObject("report",report);
+		
 		return result;
 	}
 
