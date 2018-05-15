@@ -56,6 +56,7 @@ public class OrganizationController extends AbstractController {
 		
 		result = new ModelAndView("organization/list");
 		result.addObject("organizations", all);
+		result.addObject("requestURI", "organization/list.do");
 
 		return result;
 	}
@@ -70,6 +71,7 @@ public class OrganizationController extends AbstractController {
 		
 		result = new ModelAndView("organization/membersList");
 		result.addObject("organizationId", orgId);
+		result.addObject("requestURI", "organization/membersList.do?organizationId="+organizationId);
 		result.addObject("members", members);
 		
 		return result;
@@ -101,13 +103,12 @@ public class OrganizationController extends AbstractController {
 		}else{
 			try{
 				organization = this.organizationService.save(organization);
-				result = new ModelAndView("/organization/membersList");
+				result = new ModelAndView("redirect: /organization/membersList");
 				result.addObject("members", this.keybladeWielderService.findMembersOfOrganization(organization.getId()));
 			}catch(Throwable oops){
 				result = createEditModelAndView(organization, "organization.commit.error");
 			}
 		}
-		result = new ModelAndView("/memberList");
 		return result;
 	}
 	

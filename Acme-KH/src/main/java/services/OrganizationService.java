@@ -47,8 +47,8 @@ public class OrganizationService {
 	
 	public Organization save(Organization organization){
 		Assert.notNull(organization);
-		Assert.notNull(organization.getName());
-		Assert.notNull(organization.getDescription());
+		Assert.isTrue(!organization.getName().isEmpty());
+		Assert.isTrue(!organization.getDescription().isEmpty());
 		Organization saved;
 		
 		if(organization.getId()!=0){  // Si quiere editar la organización, debe ser MASTER de esa organización
@@ -61,13 +61,12 @@ public class OrganizationService {
 			
 			Boolean tieneOrganizacion = this.keybladeWielderHasOrganization(this.actorService.findByPrincipal().getId());
 			Assert.isTrue(!tieneOrganizacion, "error.message.invitation.hasOrganization");
+			//Tengo que crear una invitación aceptada automáticamente para mí.
 			saved = organizationRepository.save(organization);
 			this.invitationService.createForOrganizationCreation(this.actorService.findByPrincipal().getId(), saved.getId());
 		}
 		
 		//Tengo que crear una invitación aceptada automáticamente para mí.
-		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
-		this.invitationService.createForOrganizationCreation(actual.getId(), saved.getId());
 		
 		return saved;
 	}
