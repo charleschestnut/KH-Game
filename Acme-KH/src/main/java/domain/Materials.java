@@ -66,4 +66,10 @@ public class Materials {
 		return res;
 
 	}
+
+	@Override
+	public String toString() {
+		return "Munny=" + this.munny + ", Mytrhil=" + this.mytrhil + ", Gummi Coal=" + this.gummiCoal;
+	}
+
 }

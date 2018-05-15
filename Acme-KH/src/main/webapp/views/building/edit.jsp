@@ -17,7 +17,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<jstl:if test="${buildingType!=defense && buildingType!=recruiter  && buildingType!=livelihood && buildingType!=warehouse }">
+<jstl:if test="${buildingType!='defense' && buildingType!='recruiter'  && buildingType!='livelihood' && buildingType!='warehouse' }">
 
 <form:form action="building/contentManager/edit.do">
 	<select id="buildingType" name="buildingType">
@@ -37,7 +37,7 @@
 
 
 
-<jstl:if test="${buildingType==defense || buildingType==recruiter || buildingType==livelihood || buildingType==warehouse }">
+<jstl:if test="${buildingType=='defense' || buildingType=='recruiter' || buildingType=='livelihood' || buildingType=='warehouse' }">
 
 
 <form:form action="building/contentManager/edit.do" modelAttribute="${buildingType}">
@@ -67,7 +67,7 @@
 		<acme:textbox code="building.timeToConstruct" path="timeToConstruct"/>
 	</fieldset>
 	
-	<jstl:if test="${buildingType==defense}">
+	<jstl:if test="${buildingType=='defense'}">
 	
 	<fieldset>
 		<legend title="<spring:message code='building.defense'/>"></legend>
@@ -78,7 +78,7 @@
 	
 	</jstl:if>
 	
-	<jstl:if test="${buildingType==recruiter}">
+	<jstl:if test="${buildingType=='recruiter'}">
 	
 	<fieldset>
 		<legend title="<spring:message code='building.recruiter'/>"></legend>
@@ -88,7 +88,7 @@
 	
 	</jstl:if>
 	
-	<jstl:if test="${buildingType==warehouse}">
+	<jstl:if test="${buildingType=='warehouse'}">
 	
 	<fieldset>
 		<legend title="<spring:message code='building.warehouse'/>"></legend>
@@ -110,7 +110,7 @@
 	</jstl:if>
 	
 	
-	<jstl:if test="${buildingType==livelihood}">
+	<jstl:if test="${buildingType=='livelihood'}">
 	
 	<fieldset>
 		<legend title="<spring:message code='building.livelihood'/>"></legend>

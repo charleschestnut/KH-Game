@@ -140,5 +140,15 @@ public class Building extends DomainEntity {
 		return res;
 
 	}
+	@Transient
+	public String getReduceDescription() {
+		String res = this.getDescription();
+		if (res.length() > 105) {
+			res = res.substring(0, 100);
+			res = res + "...";
+		}
+
+		return res;
+	}
 
 }
