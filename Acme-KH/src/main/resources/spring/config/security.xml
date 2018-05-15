@@ -48,6 +48,9 @@
 		
 		<!-- ÁNGEL PÉREZ -->
 		
+		<security:intercept-url pattern="building/list.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="building/display.do" access="isAuthenticated()" /> 
+		
 		<!-- ÁNGEL LOZANO -->
 		
 		<!-- SERGIO -->
