@@ -16,6 +16,10 @@ import services.RecruiterService;
 import services.RequirementService;
 import services.WarehouseService;
 import domain.Building;
+import domain.Defense;
+import domain.Livelihood;
+import domain.Recruiter;
+import domain.Warehouse;
 
 @Controller
 @RequestMapping("/building/contentManager")
@@ -49,12 +53,65 @@ public class BuildingManagerController extends AbstractController {
 
 	@RequestMapping("/edit")
 	public ModelAndView edit(@RequestParam(required = false) final Integer buildingId, @RequestParam(required = false) final String buildingType) {
-		final ModelAndView res = new ModelAndView("building/edit");
-		//============= EDITANDO UNO EXISTENTE ==============
-		if (buildingId != null) {
+		ModelAndView res = new ModelAndView("building/edit");
+		Defense defense;
+		Recruiter recruiter;
+		Livelihood livelihood;
+		final Warehouse warehouse;
 
-		}
-		//========== FIN EDITANDO ========================
+		//============= EDITANDO UNO EXISTENTE ==============
+		if (buildingId != null)
+			switch (buildingType) {
+			case "defense":
+				defense = this.defenseService.findOne(buildingId);
+				res.addObject("buildingType", "defense");
+				res.addObject("defense", defense);
+				break;
+			case "recruiter":
+				recruiter = this.recruiterService.findOne(buildingId);
+				res.addObject("buildingType", "recruiter");
+				res.addObject("recruiter", recruiter);
+				break;
+			case "livelihood":
+				livelihood = this.livelihoodService.findOne(buildingId);
+				res.addObject("buildingType", "livelihood");
+				res.addObject("livelihood", livelihood);
+				break;
+			case "warehouse":
+				warehouse = this.warehouseService.findOne(buildingId);
+				res.addObject("buildingType", "warehouse");
+				res.addObject("warehouse", warehouse);
+				break;
+			default:
+				res = new ModelAndView("redirect:edit.do");
+				break;
+			}//========== FIN EDITANDO ========================
+		//============CREANDO DESDE 0 =============
+		else if (buildingType.equals("defense") || buildingType.equals("recruiter") || buildingType.equals("livelihood") || buildingType.equals("warehouse"))
+			switch (buildingType) {
+			case "defense":
+				defense = this.defenseService.create();
+				res.addObject("buildingType", "defense");
+				res.addObject("defense", defense);
+				break;
+			case "recruiter":
+				recruiter = this.recruiterService.create();
+				res.addObject("buildingType", "recruiter");
+				res.addObject("recruiter", recruiter);
+				break;
+			case "livelihood":
+				livelihood = this.livelihoodService.create();
+				res.addObject("buildingType", "livelihood");
+				res.addObject("livelihood", livelihood);
+				break;
+			default:
+				warehouse = this.warehouseService.create();
+				res.addObject("buildingType", "warehouse");
+				res.addObject("warehouse", warehouse);
+				break;
+			} // ======== FIN DEL CREATE DESDE 0 =========
+		// EN OTRO CASO SE IRÁ AL FORMULARIO PARA SELECCIONAR LO QUE SER
+
 		return res;
 	}
 }
