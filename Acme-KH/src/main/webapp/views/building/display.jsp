@@ -20,14 +20,14 @@
 <spring:message code="building.name"></spring:message>: 
 <jstl:out value="${building.name }"></jstl:out><br>
 
-<spring:message code="building.description"></spring:message>: 
+<spring:message code="building.descritpion"></spring:message>: 
 <jstl:out value="${building.description }"></jstl:out><br>
 
 <spring:message code="building.cost"></spring:message>: 
 <jstl:out value="${building.cost }"></jstl:out><br>
 
 <spring:message code="building.maxLvL"></spring:message>: 
-<jstl:out value="${building.maxLvL }"></jstl:out><br>
+<jstl:out value="${building.maxLvl }"></jstl:out><br>
 
 <spring:message code="building.timeToConstruct"></spring:message>: 
 <jstl:out value="${building.timeToConstruct }"></jstl:out><br>
