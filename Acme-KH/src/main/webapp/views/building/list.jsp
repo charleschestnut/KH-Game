@@ -43,16 +43,36 @@
 	</display:column>
 	
 	<security:authorize access="hasRole('MANAGER')">
-		<jstl:if test="${requestURI=='building/contentManager/myList.do' && !row.isFinal}">
+		<jstl:if test="${requestURI=='building/contentManager/myList.do'}">
 			<spring:message code="master.page.edit" var="editHeader"></spring:message>
 			<display:column title="${editHeader}">
-				<a href="building/contentManager/edit.do?buildingId=${row.id}"><jstl:out value="${editHeader}"></jstl:out></a>
+			<jstl:if test="${!row.isFinal }">
+				
+				<jstl:choose>
+					<jstl:when test="${row.getClass()=='class domain.Defense' }">
+						<a href="building/contentManager/edit.do?buildingId=${row.id}&buildingType=defense"><jstl:out value="${editHeader}"></jstl:out></a>
+					</jstl:when>
+					<jstl:when test="${row.getClass()=='class domain.Recruiter' }">
+						<a href="building/contentManager/edit.do?buildingId=${row.id}&buildingType=recruiter"><jstl:out value="${editHeader}"></jstl:out></a>
+					</jstl:when>
+					<jstl:when test="${row.getClass()=='class domain.Warehouse' }">
+						<a href="building/contentManager/edit.do?buildingId=${row.id}&buildingType=warehouse"><jstl:out value="${editHeader}"></jstl:out></a>
+					</jstl:when>
+					<jstl:otherwise>
+							<a href="building/contentManager/edit.do?buildingId=${row.id}&buildingType=livelihood"><jstl:out value="${editHeader}"></jstl:out></a>
+					</jstl:otherwise>
+				</jstl:choose>
+			</jstl:if>
 			</display:column>
 		</jstl:if>
 	</security:authorize>
+	
+	
 
 
 </display:table>
 
-<acme:cancel url="building/contentManager/edit.do" code="master.page.create"/>
+<jstl:if test="${requestURI=='building/contentManager/myList.do'}">
+	<acme:cancel url="building/contentManager/edit.do" code="master.page.create"/>
+</jstl:if>
 
