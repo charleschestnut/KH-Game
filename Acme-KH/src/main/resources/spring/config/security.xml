@@ -81,6 +81,9 @@
 		<security:intercept-url pattern="/reportUpdate/**" access="hasAnyRole('GM', 'ADMIN')"  /> 
 		
 		<!-- ISMAEL -->
+		<security:intercept-url pattern="/item/player/**" access="hasRole('PLAYER')" /> 
+		
+		
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

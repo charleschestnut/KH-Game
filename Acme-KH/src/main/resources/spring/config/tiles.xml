@@ -50,6 +50,7 @@
 		<value>/views/reportUpdate/tiles.xml</value>
 		
 		<!-- ISMAEL -->
+		<value>/views/item/tiles.xml</value>
 		
 	</util:list>
 
