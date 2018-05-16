@@ -21,6 +21,8 @@ public class Purchase extends DomainEntity {
 
 	private Date	purchaseDate;
 	private Date	activationDate;
+	
+	private Date	expirationDate;
 
 	//relations
 
@@ -74,6 +76,14 @@ public class Purchase extends DomainEntity {
 
 	public void setPlayer(KeybladeWielder player) {
 		this.player = player;
+	}
+
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 	
 	

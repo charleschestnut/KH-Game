@@ -1,6 +1,5 @@
 package controllers;
 
-import java.awt.RenderingHints.Key;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,23 +41,7 @@ public class ItemController extends AbstractController{
 		return result;
 	}
 	
-	// Listar los objetos que he comprado y puedo usar
-	@RequestMapping(value = "/ownedItemsList", method = RequestMethod.GET)
-	public ModelAndView avaibleList() {
-		ModelAndView result;
-		Collection<Item> items;
-		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
-		
-		//AQUI TENGO QUE BUSCAR LOS OBJETOS QUE HE COMPRADO Y NO HAN EXPIRADO. PROTOTIPO DE QUERY EN PAPEL EN LA MOCHILA
-		// LE TENGO QUE PASAR EL USUARIO QUE ESTA LOGEADO
-		items = null;
 
-		result = new ModelAndView("item/player/ownedItemsList");
-		result.addObject("items", items);
-		result.addObject("requestURI", "item/player/ownedItemsList.do");
-		return result;
-	}
-	
 	// Comprar un item de la tienda
 	@RequestMapping(value = "/buy", method = RequestMethod.GET)
 	public ModelAndView buyItem(@RequestParam(value = "itemId", required = true) int itemId) {
@@ -69,6 +52,21 @@ public class ItemController extends AbstractController{
 		this.itemService.buyItem(item);
 
 		result = new ModelAndView("redirect:/item/player/shopItemsList.do");
+		
+		return result;
+	}
+	
+	// Listar los items que tengo comprados (y no estan caducados) para usarlos
+	@RequestMapping(value = "/ownedItemsList", method = RequestMethod.GET)
+	public ModelAndView myItemsList() {
+		ModelAndView result;
+		Collection<Item> items;
+
+		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+		items = this.itemService.myItems(player.getId());
+
+		result = new ModelAndView("item/player/ownedItemsList");
+		result.addObject("items", items);
 		
 		return result;
 	}

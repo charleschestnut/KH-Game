@@ -36,6 +36,9 @@
 					<li><a href="report/player/list.do"><spring:message code="report.list" /></a></li>
 					<li><a href="report/player/create.do"><spring:message code="report.create" /></a></li>
 					<li><a href="built/list.do"><spring:message code="master.page.myBuilding" /></a></li>
+					<li><a href="item/player/shopItemsList.do"><spring:message code="master.page.shop" /></a></li>
+					<li><a href="item/player/ownedItemsList.do"><spring:message code="master.page.myItems" /></a></li>
+					
 				</ul>
 			</li>
 		</security:authorize>
