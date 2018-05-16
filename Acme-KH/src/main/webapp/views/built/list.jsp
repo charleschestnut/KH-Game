@@ -74,12 +74,32 @@
 	
 	</display:column>
 	
-	<display:column property="building.class" title="probando"></display:column>
+	<display:column property="building.maxLvl" title="probando">
+	
+	
+	</display:column>
+	
+	<spring:message code="built.upgrade" var="upgradeHeader"></spring:message>	
+	<display:column title="${upgradeHeader }">
+		<jstl:choose >
+			<jstl:when test="${row.lvl==0 }">
+				<spring:message code="built.in.cosntruction"></spring:message>
+			</jstl:when>
+			<jstl:when test="${row.lvl==row.building.maxLvl }">
+				<spring:message code="built.max"></spring:message>
+			</jstl:when>
+			<jstl:otherwise>
+				<a href="built/upgrade.do?builtId=${row.id }" title="${row.building.getTotalMaterials(row.lvl) }"><spring:message code="built.upgrade"></spring:message></a>
+			</jstl:otherwise>
+		</jstl:choose>
+		
+		
+	</display:column>
+		
+	
 	
 	
 
 </display:table>
 
 <acme:cancel url="built/create.do" code="master.page.create"/>
-	
-	
