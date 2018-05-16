@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.BuildingService;
 import services.DefenseService;
 import services.LivelihoodService;
@@ -58,38 +59,48 @@ public class BuildingController extends AbstractController {
 		Warehouse warehouse = null;
 		Livelihood livelihood = null;
 
-		final Defense defense = this.defenseService.findOne(buildingId);
-		if (defense != null) {
-			res.addObject("defense", true);
-			res.addObject("building", defense);
-		} else {
+		final Building b = this.buildingService.findOne(buildingId);
+		try {
+			//Si no existe el edificio o no es final y no soy el dueño pa fuera
+			if (b == null || (!b.getIsFinal() && !b.getContentManager().getUserAccount().equals(LoginService.getPrincipal())))
+				res = new ModelAndView("redirect:list.do");
+			else {
 
-			recruiter = this.recruiterService.findOne(buildingId);
-			if (recruiter != null) {
-				res.addObject("recruiter", true);
-				res.addObject("building", recruiter);
-				//TODO: añadir query para las tropas y gummi ships
-
-			} else {
-				livelihood = this.livelihoodService.findOne(buildingId);
-				if (livelihood != null) {
-					res.addObject("livelihood", true);
-					res.addObject("building", livelihood);
-
+				final Defense defense = this.defenseService.findOne(buildingId);
+				if (defense != null) {
+					res.addObject("defense", true);
+					res.addObject("building", defense);
 				} else {
-					warehouse = this.warehouseService.findOne(buildingId);
-					res.addObject("warehouse", true);
-					res.addObject("building", warehouse);
 
+					recruiter = this.recruiterService.findOne(buildingId);
+					if (recruiter != null) {
+						res.addObject("recruiter", true);
+						res.addObject("building", recruiter);
+						//TODO: añadir query para las tropas y gummi ships
+
+					} else {
+						livelihood = this.livelihoodService.findOne(buildingId);
+						if (livelihood != null) {
+							res.addObject("livelihood", true);
+							res.addObject("building", livelihood);
+
+						} else {
+							warehouse = this.warehouseService.findOne(buildingId);
+							res.addObject("warehouse", true);
+							res.addObject("building", warehouse);
+
+						}
+
+					}
 				}
 
 			}
+
+		} catch (final Throwable oops) {
+			res = new ModelAndView("redirect:list.do");
 		}
 
-		if (warehouse == null && defense == null && recruiter == null && livelihood == null)
-			res = new ModelAndView("redirect:list.do");
-		else
-			res.addObject("requirements", this.requirementService.getRequirementsByBuilding(buildingId));
+		res.addObject("requirements", this.requirementService.getRequirementsByBuilding(buildingId));
 
 		return res;
 	}
