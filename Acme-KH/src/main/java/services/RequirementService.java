@@ -44,6 +44,8 @@ public class RequirementService {
 		Assert.isTrue(Requirement.getMainBuilding().getContentManager().equals(this.actorService.findByPrincipal()), "error.message.req.creator");
 		Assert.isTrue(!Requirement.getMainBuilding().getIsFinal(), "error.message.req.final");
 		Assert.isTrue(!Requirement.getMainBuilding().equals(Requirement.getRequiredBuilding()), "error.message.req.sameBuilding");
+		Assert.isTrue(Requirement.getRequiredBuilding().getIsFinal(), "error.message.req.final2");
+		Assert.isTrue(Requirement.getId() == 0, "error.message.req.edit");
 		Requirement saved;
 
 		saved = this.RequirementRepository.save(Requirement);
