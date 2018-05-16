@@ -64,6 +64,8 @@
 		<security:intercept-url pattern="/building/contentManager/delete.do " access="hasRole('MANAGER')" />
 			
 		<security:intercept-url pattern="/requirement/contentManager/edit.do " access="hasRole('MANAGER')" />
+		
+		<security:intercept-url pattern="/built/list.do " access="hasRole('PLAYER')" />
 			 
 		
 		<!-- ÁNGEL LOZANO -->
