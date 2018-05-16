@@ -32,9 +32,10 @@
 		
 		<security:authorize access="hasRole('PLAYER')">
 			<li><a class="fNiv"><spring:message	code="master.page.player" /></a>
-				<ul>
+				<ul>	
 					<li><a href="report/player/list.do"><spring:message code="report.list" /></a></li>
 					<li><a href="report/player/create.do"><spring:message code="report.create" /></a></li>
+					<li><a href="built/list.do"><spring:message code="master.page.myBuilding" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
