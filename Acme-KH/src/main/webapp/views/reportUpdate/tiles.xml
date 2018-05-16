@@ -16,9 +16,19 @@
        
 <tiles-definitions>
 
+	<definition name="reportUpdate/list" extends="master.page">	
+		<put-attribute name="title" value="Updates list" />
+		<put-attribute name="body" value="/views/reportUpdate/list.jsp" />
+	</definition>
+
 	<definition name="reportUpdate/edit" extends="master.page">	
 		<put-attribute name="title" value="Update report" />
 		<put-attribute name="body" value="/views/reportUpdate/edit.jsp" />
+	</definition>
+	
+	<definition name="reportUpdate/display" extends="master.page">	
+		<put-attribute name="title" value="Display actualización" />
+		<put-attribute name="body" value="/views/reportUpdate/display.jsp" />
 	</definition>
 	
 </tiles-definitions>

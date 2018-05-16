@@ -34,8 +34,8 @@ public class Report extends DomainEntity {
 
 	//relations
 
-	private KeybladeWielder		keybladeWielder;
-	private Collection<ReportUpdate>		reportUpdate;
+	private KeybladeWielder		            keybladeWielder;
+	private Collection<ReportUpdate>		reportUpdates;
 
 
 	/**
@@ -123,11 +123,11 @@ public class Report extends DomainEntity {
 	@Valid
 	@OneToMany
 	public Collection<ReportUpdate> getReportUpdates() {
-		return reportUpdate;
+		return reportUpdates;
 	}
 
-	public void setReportUpdates(Collection<ReportUpdate> reportUpdate) {
-		this.reportUpdate = reportUpdate;
+	public void setReportUpdates(Collection<ReportUpdate> reportUpdates) {
+		this.reportUpdates = reportUpdates;
 	}
 	
 	

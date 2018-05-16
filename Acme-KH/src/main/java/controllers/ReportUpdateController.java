@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.Authority;
 import services.ActorService;
+import services.ReportService;
 import services.ReportUpdateService;
+import domain.Report;
 import domain.ReportStatus;
 import domain.ReportUpdate;
 
@@ -24,23 +27,25 @@ public class ReportUpdateController extends AbstractController {
 	
 	@Autowired
 	private ReportUpdateService	reportUpdateService;
-	
+	@Autowired
+	private ReportService	    reportService;
 	@Autowired
 	private ActorService		actorService;
 
 	// Listing ----------------------------------------------------------------
 
-//	@RequestMapping(value = "/gm/list", method = RequestMethod.GET)
-//	public ModelAndView list() {
-//		ModelAndView result;
-//		Collection<Report> reports;
-//
-//		reports = reportService.findAll();
-//		result = new ModelAndView("report/list");
-//		result.addObject("reports", reports);
-//
-//		return result;
-//	}
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list(@RequestParam int reportId) {
+		ModelAndView result;
+		Collection<ReportUpdate> reports;
+
+		reports = reportUpdateService.getReportUpdatesByReportId(reportId);
+		result = new ModelAndView("reportUpdate/list");
+		result.addObject("reportUpdates", reports);
+		result.addObject("reportId", reportId);
+
+		return result;
+	}
 //	
 //	@RequestMapping(value = "/player/list", method = RequestMethod.GET)
 //	public ModelAndView playerList() {
@@ -55,24 +60,27 @@ public class ReportUpdateController extends AbstractController {
 //	}
 	
 	// Display ----------------------------------------------------------------
-//	@RequestMapping(value = "display", method = RequestMethod.GET)
-//	public ModelAndView display(@RequestParam(required = false) Integer reportId) {
-//		ModelAndView result;
-//		Report report;
+	@RequestMapping(value = "display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam(required = false) Integer reportUpdateId,
+			@RequestParam(required = false) Integer reportId) {
+		ModelAndView result;
+		ReportUpdate reportUpdate;
+		Report report;
 //		String auth;
-//		
+		
 //		auth = actorService.getPrincipalAuthority();
 //		Assert.isTrue(auth.equals("PLAYER") || auth.equals("GM"));
-//
-//		report = reportService.findOne(reportId);
-//		
-//		result = new ModelAndView("report/display");
-//		
-//		
-//		result.addObject("report",report);
-//		
-//		return result;
-//	}
+
+		reportUpdate = reportUpdateService.findOne(reportUpdateId);
+		report = reportService.findOne(reportId);
+		
+		result = new ModelAndView("reportUpdate/display");
+		
+		result.addObject("reportUpdate",reportUpdate);
+		result.addObject("report",report);
+		
+		return result;
+	}
 
 	// Creation ---------------------------------------------------------------
 

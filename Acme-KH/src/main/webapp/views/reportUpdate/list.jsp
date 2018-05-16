@@ -21,40 +21,39 @@
 
 <!-- Listing grid -->
 
-<display:table name="reports" id="row" 
+<display:table name="reportUpdates" id="row" 
     requestURI="${requestURI}" 
     pagesize="5" class="displaytag">
 	
-	<spring:message code="report.title" var="title" />
-	<display:column title="${title}" property="title" />
+	<%-- <spring:message code="report" var="reportH" />
+	<display:column title="${reportH}">
+	<jstl:out value="${report.title}"/>
+	</display:column>
+	
+	<spring:message code="report.status" var="status" />
+	<display:column title="${report.status}" property="status"/> --%>
+	
+	<spring:message code="report.content" var="title" />
+	<display:column title="${title}" property="content" />
 	
 	<spring:message code="report.date" var="date" />
 	<display:column title="${date}" property="date" />
 	
-	<spring:message code="report.status" var="status" />
-	<display:column title="${status}" property="status"/>
-	
-	<spring:message code="master.page.view" var="display" />
-	<display:column title="${display}">
-	<a href="report/display.do?reportId=<jstl:out value="${row.id}" />" ><jstl:out value="${display}" /></a>
+	<spring:message code="master.page.display" var="display" />
+	<display:column title="${display}" >
+	<a href="reportUpdate/display.do?reportUpdateId=${row.id}&reportId=${reportId}">${display}</a>
 	</display:column>
 	
-	<security:authorize access="hasRole('GM')">
+	<%-- <spring:message code="report.creator" var="status" />
+	<display:column title="${row.getCreator()}" property="status"/> --%>
+	
+	<%-- <security:authorize access="hasRole('GM')">
 	<spring:message code="report.seeUpdates" var="seeUpdates" />
 	<display:column title="${seeUpdates}">
 	<a href="reportUpdate/list.do?reportId=<jstl:out value="${row.id}" />" ><jstl:out value="${seeUpdates}" /></a>
 	</display:column>
+	</security:authorize> --%>
 	
-	<spring:message code="reportUpdate.create" var="createUpdate" />
-	<display:column title="${createUpdate}">
-	<jstl:if test="${row.status == 'RESOLVED'}">
-	<spring:message code="reportUpdate.noUpdate"/>	
-	</jstl:if>
-	<jstl:if test="${row.status != 'RESOLVED'}">
-	<a href="reportUpdate/create.do?reportId=<jstl:out value="${row.id}" />" ><jstl:out value="${createUpdate}" /></a>
-	</jstl:if>
-	</display:column>
-	</security:authorize>
 
 
 </display:table>
@@ -62,7 +61,7 @@
 <!-- Action links -->
 
 <div>
-	<a href="report/player/create.do"> 
-		<spring:message code="report.create" />
+	<a href="reportUpdate/create.do?reportId=${reportId}"> 
+		<spring:message code="reportUpdate.create" />
 	</a>
 </div>

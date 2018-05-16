@@ -54,13 +54,13 @@ public class ReportUpdateService {
 	public ReportUpdate save(ReportUpdate reportUpdate, Integer reportId, ReportStatus status){
 		Assert.notNull(reportUpdate);
 		Report report;
-		
-		
 		ReportUpdate saved;
+		
+		report = reportService.findOne(reportId);
+		Assert.isTrue(report.getStatus() != ReportStatus.RESOLVED, "error.message.noUpdate");
 		
 		saved = ReportUpdateRepository.save(reportUpdate);
 		
-		report = reportService.findOne(reportId);
 		report.getReportUpdates().add(saved);
 		report.setStatus(status);
 		
@@ -92,6 +92,12 @@ public class ReportUpdateService {
 		Assert.notNull(ReportUpdate);
 		
 		ReportUpdateRepository.delete(ReportUpdate);
+	}
+	
+	//Other business methods
+	
+	public Collection<ReportUpdate> getReportUpdatesByReportId(int reportId){
+		return ReportUpdateRepository.getReportUpdatesByReportId(reportId);
 	}
 
 }

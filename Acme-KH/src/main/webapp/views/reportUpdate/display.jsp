@@ -11,10 +11,11 @@
 
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
+<fieldset>
+<legend><spring:message code="report"></spring:message></legend>
 <ul style="list-style-type: disc">
 
-			
-	<li><b><spring:message code="report.title"></spring:message></b>
+	<li><b><spring:message code="report.title"></spring:message></b>hi
 		<jstl:out value="${report.title}" /></li>
 
 	<li><b><spring:message code="report.content"></spring:message></b>
@@ -26,6 +27,23 @@
 	<li><b><spring:message code="report.creator"></spring:message></b>
 		<jstl:out value="${report.keybladeWielder.nickname}" /></li>
 
-	<acme:goback/>
-
 </ul>
+</fieldset>
+
+<fieldset>
+<legend><spring:message code="reportUpdate"></spring:message></legend>
+<ul style="list-style-type: disc">
+
+	<li><b><spring:message code="report.creator"></spring:message></b>
+		<jstl:out value="${reportUpdate.getCreator().nickname}" /></li>
+
+	<li><b><spring:message code="report.date"></spring:message></b>
+		<jstl:out value="${reportUpdate.date}" /></li>
+		
+	<li><b><spring:message code="report.content"></spring:message></b>
+		<jstl:out value="${reportUpdate.content}" /></li>
+			
+</ul>
+</fieldset>
+
+<acme:goback/>
