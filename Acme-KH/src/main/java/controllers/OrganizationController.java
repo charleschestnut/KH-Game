@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Invitation;
 import domain.KeybladeWielder;
 import domain.Organization;
 
 import services.ActorService;
+import services.InvitationService;
 import services.KeybladeWielderService;
 import services.OrganizationService;
 
@@ -39,6 +41,9 @@ public class OrganizationController extends AbstractController {
 	
 	@Autowired
 	private OrganizationService organizationService;
+	
+	@Autowired
+	private InvitationService invitationService;
 	
 	@Autowired
 	private ActorService actorService;
@@ -65,16 +70,17 @@ public class OrganizationController extends AbstractController {
 
 	// Action-2 ---------------------------------------------------------------		
 
-	@RequestMapping("/memberList")
+	@RequestMapping("/membersList")
 	public ModelAndView membersList(@RequestParam String organizationId) {
 		ModelAndView result;
 		int orgId = Integer.parseInt(organizationId);
-		Collection<KeybladeWielder> members = this.keybladeWielderService.findMembersOfOrganization(orgId);
+
+		Collection<Invitation> membersInvitations = this.invitationService.findAllMembersOfOrganization(orgId);
 		
 		result = new ModelAndView("organization/membersList");
 		result.addObject("organizationId", orgId);
 		result.addObject("requestURI", "organization/membersList.do?organizationId="+organizationId);
-		result.addObject("members", members);
+		result.addObject("membersInvitations", membersInvitations);
 		
 		return result;
 	}
@@ -97,15 +103,19 @@ public class OrganizationController extends AbstractController {
 	}
 		
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Organization organization, BindingResult binding) {
+	public ModelAndView save(Organization organization, BindingResult binding) {
 		ModelAndView result;
+		Organization org = this.organizationService.reconstruct(organization, binding);
 		
 		if(binding.hasErrors()){
 			result = createEditModelAndView(organization);
 		}else{
 			try{
-				organization = this.organizationService.save(organization);
-				result = new ModelAndView("redirect: organization/membersList");
+				Organization toSave = org;
+				
+				toSave = this.organizationService.save(org);
+				
+				result = new ModelAndView("redirect:/organization/membersList.do?organizationId="+toSave.getId());
 				result.addObject("members", this.keybladeWielderService.findMembersOfOrganization(organization.getId()));
 			}catch(Throwable oops){
 				result = createEditModelAndView(organization, "organization.commit.error");

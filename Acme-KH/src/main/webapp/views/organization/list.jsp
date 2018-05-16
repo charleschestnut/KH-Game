@@ -31,9 +31,9 @@
 		<jstl:out value="${row.description}"/> 
 	</display:column>
 	
-	<spring:message code="master.page.date" var="dateH" />
-	<display:column property="date" title="${dateH}">
-		<jstl:out value="${row.date}"/> 
+	<spring:message code="master.page.creationDate" var="dateH" />
+	<display:column property="creationDate" title="${dateH}">
+		<jstl:out value="${row.creationDate}"/> 
 	</display:column>
 	
 	<spring:message code="organization.members" var="membersH" />

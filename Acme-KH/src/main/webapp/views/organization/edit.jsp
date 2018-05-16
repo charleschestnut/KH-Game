@@ -33,6 +33,6 @@
 	
 	
 	<acme:submit name="save" code="master.page.save"/>
-	<acme:cancel url="building/contentManager/myList.do" code="master.page.cancel"/>
+	<acme:cancel url="organization/list.do" code="master.page.cancel"/>
 
 </form:form>

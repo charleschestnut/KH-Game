@@ -26,4 +26,8 @@ public interface InvitationRepository extends JpaRepository<Invitation, Integer>
 
 	@Query("select i from Invitation i where (i.invitationStatus='ACCEPTED' and i.organization.id=?1 and i.orgRange='GUEST') order by i.date DESC")
 	Collection<Invitation> findGuestsInOrganization(int organizationId);
+
+	@Query("select i from Invitation i where (i.invitationStatus='ACCEPTED' and i.organization.id=?1)")
+	Collection<Invitation> findAllMembersOfOrganization(int orgId);
+	
 }

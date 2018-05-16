@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.OrganizationRepository;
 import security.LoginService;
@@ -34,6 +36,9 @@ public class OrganizationService {
 	
 	@Autowired
 	private InvitationService invitationService;
+	
+	@Autowired
+	Validator						validator;
 
 	// CRUD methods
 	
@@ -66,7 +71,7 @@ public class OrganizationService {
 			Assert.isTrue(!tieneOrganizacion, "error.message.invitation.hasOrganization");
 			//Tengo que crear una invitación aceptada automáticamente para mí.
 			saved = organizationRepository.save(organization);
-			this.invitationService.createForOrganizationCreation(this.actorService.findByPrincipal().getId(), saved.getId()); //TODO Me peta en el save y no sé xq.
+			//this.invitationService.createForOrganizationCreation(this.actorService.findByPrincipal().getId(), saved.getId()); //TODO Me peta en el save y no sé xq.
 		}
 		
 		//Tengo que crear una invitación aceptada automáticamente para mí.
@@ -150,4 +155,24 @@ public class OrganizationService {
 		
 		return this.organizationRepository.findOrganizationByPlayer(playerId);
 	}
+	// ------ RECONTRUCT -----
+	public Organization reconstruct(Organization o, BindingResult binding) {
+		Organization result;
+		final Organization original = this.organizationRepository.findOne(o.getId());
+		
+		if (o.getId() == 0) {
+			result = o;
+			result.setCreationDate(new Date(System.currentTimeMillis()));
+		} else {
+			//Aquí van los atributos hidden
+			result = o;
+			result.setCreationDate(original.getCreationDate());
+			
+		}
+		this.validator.validate(result, binding);
+
+		return result;
+
+	}
+	
 }

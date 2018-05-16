@@ -160,4 +160,8 @@ public class InvitationService {
 		return this.invitationRepository.findGuestsInOrganization(organizationId);
 	}
 
+	public Collection<Invitation> findAllMembersOfOrganization(int orgId) {
+		return this.invitationRepository.findAllMembersOfOrganization(orgId);
+	}
+
 }
