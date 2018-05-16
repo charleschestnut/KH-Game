@@ -38,7 +38,7 @@
 	<display:column property="munnyCost" title="${munnyCostHeader}" />
 	
 	<display:column>
-	<a href="item/player/useItem.do?itemId=${row.id}"><spring:message code="item.use"/></a>
+	<a href="item/player/activeItem.do?itemId=${row.id}"><spring:message code="item.use"/></a>
 	</display:column>
 
 

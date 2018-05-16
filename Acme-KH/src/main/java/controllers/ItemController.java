@@ -1,6 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import domain.Item;
 import domain.KeybladeWielder;
+import domain.Purchase;
 
 import services.ActorService;
 import services.ItemService;
+import services.PurchaseService;
 
 @Controller
 @RequestMapping("/item/player")
@@ -23,6 +27,8 @@ public class ItemController extends AbstractController{
 	private ItemService itemService;
 	@Autowired
 	private ActorService actorService;
+	@Autowired
+	private PurchaseService purchaseService;
 	
 	// Listar los objetos que se pueden comprar en la tienda
 	@RequestMapping(value = "/shopItemsList", method = RequestMethod.GET)
@@ -67,6 +73,22 @@ public class ItemController extends AbstractController{
 
 		result = new ModelAndView("item/player/ownedItemsList");
 		result.addObject("items", items);
+		
+		return result;
+	}
+	
+	// Activar un item
+	@RequestMapping(value = "/activeItem", method = RequestMethod.GET)
+	public ModelAndView activeItem(@RequestParam(value = "itemId", required = true) int itemId) {
+		ModelAndView result;
+		Collection<Purchase> purchases;
+		List<Purchase> purchasesList = new ArrayList<>();
+		
+		purchases = this.purchaseService.noActivePurchases(itemId);
+		purchasesList.addAll(purchases);
+		this.purchaseService.activeItem(purchasesList.get(0));
+		
+		result = new ModelAndView("redirect:/item/player/ownedItemsList.do");
 		
 		return result;
 	}

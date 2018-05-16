@@ -1,12 +1,15 @@
 
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
@@ -33,6 +36,7 @@ public class Item extends DomainEntity {
 	//relations
 
 	private ContentManager	contentManager;
+//	private Collection<Purchase> purchases;
 
 
 	/**
@@ -130,5 +134,17 @@ public class Item extends DomainEntity {
 	public void setContentManager(final ContentManager contentManager) {
 		this.contentManager = contentManager;
 	}
+
+//	@Valid
+//	@OneToMany
+//	public Collection<Purchase> getPurchases() {
+//		return purchases;
+//	}
+//
+//	public void setPurchases(Collection<Purchase> purchases) {
+//		this.purchases = purchases;
+//	}
+//	
+	
 
 }

@@ -1,6 +1,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,50 +18,63 @@ public class PurchaseService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private PurchaseRepository PurchaseRepository;
+	private PurchaseRepository purchaseRepository;
 
 	// CRUD methods
 	
 	public Purchase create(){
-		Purchase Purchase;
+		Purchase purchase;
 		
-		Purchase = new Purchase();
+		purchase = new Purchase();
 		
-		return Purchase;
+		return purchase;
 	}
 	
-	public Purchase save(Purchase Purchase){
-		Assert.notNull(Purchase);
+	public Purchase save(Purchase purchase){
+		Assert.notNull(purchase);
 		
 		Purchase saved;
 		
-		saved = PurchaseRepository.save(Purchase);
+		saved = purchaseRepository.save(purchase);
 		
 		return saved;
 	}
 	
-	public Purchase findOne(int PurchaseId){
-		Assert.notNull(PurchaseId);
+	public Purchase findOne(int purchaseId){
+		Assert.notNull(purchaseId);
 		
-		Purchase Purchase;
+		Purchase purchase;
 		
-		Purchase = PurchaseRepository.findOne(PurchaseId);
+		purchase = purchaseRepository.findOne(purchaseId);
 		
-		return Purchase;
+		return purchase;
 	}
 	
 	public Collection<Purchase> findAll(){
-		Collection<Purchase> Purchases;
+		Collection<Purchase> purchases;
 		
-		Purchases = PurchaseRepository.findAll();
+		purchases = purchaseRepository.findAll();
 		
-		return Purchases;
+		return purchases;
 	}
 	
-	public void delete(Purchase Purchase){
-		Assert.notNull(Purchase);
+	public void delete(Purchase purchase){
+		Assert.notNull(purchase);
 		
-		PurchaseRepository.delete(Purchase);
+		purchaseRepository.delete(purchase);
+	}
+	
+	// OTROS METODOS -----------
+	
+	// Activar un item
+	public void activeItem(Purchase purchase) {
+		purchase.setActivationDate(new Date());
+		this.save(purchase);
+	}
+	
+	// Lista de purchases sobre un item concreto que no estan activados
+	public Collection<Purchase> noActivePurchases(int itemId) {
+		return this.purchaseRepository.noActivePurchases(itemId);
 	}
 
 }
