@@ -9,7 +9,7 @@ import domain.Recruited;
 
 @Component
 @Transactional
-public class RecuitedToStringConverter implements Converter<Recruited, String> {
+public class RecruitedToStringConverter implements Converter<Recruited, String> {
 
 	@Override
 	public String convert(final Recruited o) {

@@ -116,10 +116,11 @@ public class InvitationService {
 		invitation.setKeybladeWielder(invited);
 		invitation.setInvitationStatus(InvitationStatus.ACCEPTED);
 		invitation.setOrgRange(OrgRange.MASTER); //Como crea el la organización, es un MASTER.
-		
+		invitation.setContent("Organization");
 		
 		Organization nueva = this.organizationService.findOne(organizationId);
 		invitation.setOrganization(nueva);
+		invitation.setDate(nueva.getCreationDate());
 		
 		Invitation saved = invitationRepository.save(invitation);
 		

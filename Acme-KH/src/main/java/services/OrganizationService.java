@@ -71,7 +71,7 @@ public class OrganizationService {
 			Assert.isTrue(!tieneOrganizacion, "error.message.invitation.hasOrganization");
 			//Tengo que crear una invitación aceptada automáticamente para mí.
 			saved = organizationRepository.save(organization);
-			//this.invitationService.createForOrganizationCreation(this.actorService.findByPrincipal().getId(), saved.getId()); //TODO Me peta en el save y no sé xq.
+			this.invitationService.createForOrganizationCreation(this.actorService.findByPrincipal().getId(), saved.getId()); //TODO Me peta en el save y no sé xq.
 		}
 		
 		//Tengo que crear una invitación aceptada automáticamente para mí.
