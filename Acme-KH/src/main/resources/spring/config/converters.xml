@@ -23,6 +23,9 @@
 		
 	<!-- ÁNGEL PÉREZ -->
 	
+		<bean class="converters.BuildingToStringConverter" /> 
+		<bean class="converters.StringToBuildingConverter" /> 
+	
 	<!-- ÁNGEL LOZANO -->
 	
 	<!-- SERGIO -->

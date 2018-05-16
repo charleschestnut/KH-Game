@@ -70,6 +70,12 @@
 					<a href="building/contentManager/delete.do?buildingId=${row.id}" style="color:red;"> <jstl:out value="${deleteHeader}"></jstl:out></a>
 				</jstl:if>
 			</display:column>
+			<spring:message code="building.addRequirements" var="addHeader"></spring:message>
+			<display:column title="${addHeader }">
+				<jstl:if test="${!row.isFinal }">
+					<a href="requirement/contentManager/edit.do?buildingId=${row.id}" > <jstl:out value="${addHeader}"></jstl:out></a>
+				</jstl:if>
+			</display:column>
 		</jstl:if>
 	</security:authorize>
 	

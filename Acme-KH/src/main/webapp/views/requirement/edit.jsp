@@ -30,14 +30,17 @@
 	
 	<spring:message code="req.requiredBuilding"></spring:message>
 	<form:select path="requiredBuilding">
-		<form:options items="buildings" itemValue="id" itemLabel="name"/>
+		<form:options items="${buildings}" itemValue="id" itemLabel="name"/>
 	</form:select>
 	<br>
 	<acme:textbox code="req.lvl" path="lvl"/>
 	<br>
-
-	<acme:submit name="save" code="master.page.save"/>
-	<acme:submit name="delete" code="master.page.delete"/>
+	<jstl:if test="${requirement.id==0 }">
+		<acme:submit name="save" code="master.page.save"/>
+	</jstl:if>
+	<jstl:if test="${requirement.id!=0 }">
+		<acme:submit name="delete" code="master.page.delete"/>
+	</jstl:if>
 	<acme:cancel url="building/display.do?buildingId=${requirement.mainBuilding.id }" code="master.page.cancel"/>
 
 </form:form>

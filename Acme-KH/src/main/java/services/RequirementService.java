@@ -46,6 +46,7 @@ public class RequirementService {
 		Assert.isTrue(!Requirement.getMainBuilding().equals(Requirement.getRequiredBuilding()), "error.message.req.sameBuilding");
 		Assert.isTrue(Requirement.getRequiredBuilding().getIsFinal(), "error.message.req.final2");
 		Assert.isTrue(Requirement.getId() == 0, "error.message.req.edit");
+		Assert.isTrue(Requirement.getLvl() <= Requirement.getRequiredBuilding().getMaxLvl(), "error.message.req.maxLvl");
 		Requirement saved;
 
 		saved = this.RequirementRepository.save(Requirement);
