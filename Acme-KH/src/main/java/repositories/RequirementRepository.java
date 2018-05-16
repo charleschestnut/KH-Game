@@ -16,7 +16,7 @@ public interface RequirementRepository extends JpaRepository<Requirement, Intege
 	@Query("select count(b) from Built b where b.building.id=?1 AND b.lvl>=?2 AND b.keybladeWielder=?3")
 	Integer getIsTrueRequirement(Integer buildingId, Integer lvl, int playerId);
 
-	@Query("select 1.0*(count(r)/(select count(z) from Requirement z where z.mainBuilding.id=?1)) from Requirement r where r.mainBuilding.id=?1 AND r.requiredBuilding in (select b.building from Built b where b.keybladeWielder=?2 AND b.lvl>=r.lvl)")
+	@Query("select 1.0*(count(r)/(select count(z) from Requirement z where z.mainBuilding.id=?1)) from Requirement r where r.mainBuilding.id=?1 AND r.requiredBuilding in (select b.building from Built b where b.keybladeWielder.id=?2 AND b.lvl>=r.lvl)")
 	Integer getBuildingFulfillsReqs(Integer buildingId, Integer playerId);
 
 }
