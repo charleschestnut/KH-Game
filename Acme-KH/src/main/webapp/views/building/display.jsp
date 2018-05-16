@@ -92,7 +92,9 @@
 	<display:table name="requirements" id="row" pagesize="5" requestURI="building/display.do">
 	
 		<spring:message code="building.building" var="buildingHeader"></spring:message>
-		<display:column property="requiredBuilding.name" title="${buildingHeader}"></display:column>
+		<display:column title="${buildingHeader}">
+			<a href="requirement/contentManager/edit.do?requirementId=${row.id }"><jstl:out value="${row.requiredBuilding.name }"></jstl:out></a>
+		</display:column>
 		
 		<spring:message code="building.lvl" var="lvlHeader"></spring:message>
 		<display:column property="lvl" title="${lvlHeader}"></display:column>
