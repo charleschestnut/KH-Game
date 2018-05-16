@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 
 import repositories.ChattyRepository;
 import domain.Chatty;
@@ -55,6 +56,7 @@ public class ChattyService {
 	
 	public Chatty save(Chatty chatty){
 		Assert.notNull(chatty);
+		Assert.isTrue(chatty.getId()==0);
 		Assert.notNull(chatty.getInvitation(), "error.message.chatty.invitation");
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 		Organization org = this.organizationService.findOrganizationByPlayer(actual.getId());
@@ -108,8 +110,11 @@ public class ChattyService {
 			for(Chatty c : toDelete){
 				this.chattyRepository.delete(c);
 			}
+			return availables;
+		}else{
+			return all;
 		}
-		return availables;
+		
 	}
 	
 	public void deleteExtraChattyFromAnOrganization(int organizationId){

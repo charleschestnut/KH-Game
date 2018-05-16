@@ -61,7 +61,7 @@ public class ChattyController extends AbstractController {
 		int orgId = Integer.parseInt(organizationId);
 		Collection<Chatty> all = this.chattyService.getChattyFromAnOrganization(orgId);
 		
-		result = new ModelAndView("organization/list");
+		result = new ModelAndView("organization/chatty/list");
 		result.addObject("chattys", all);
 		result.addObject("organizationId", orgId);
 
@@ -81,6 +81,7 @@ public class ChattyController extends AbstractController {
 		Chatty c = this.chattyService.create();
 		result = new ModelAndView("organization/chatty/edit");
 		result.addObject("chatty", c);
+		result.addObject("organizationId", this.organizationService.findOrganizationByPlayer(actual.getId()).getId());
 		
 		return result;
 	}
@@ -89,19 +90,19 @@ public class ChattyController extends AbstractController {
 	public ModelAndView save(@Valid Chatty chatty, BindingResult binding) {
 		ModelAndView result;
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
+		Organization org = this.organizationService.findOrganizationByPlayer(actual.getId());
 		if(binding.hasErrors()){
 			result = createEditModelAndView(chatty);
 		}else{
 			try{				
 				chatty = this.chattyService.save(chatty);
-				result = new ModelAndView("/organization/chatty/list");
+				result = new ModelAndView("redirect:/organization/chatty/list.do?organizationId="+org.getId());
 				result.addObject("organizationId", this.organizationService.findOrganizationByPlayer(actual.getId()));
 				
 			}catch(Throwable oops){
 				result = createEditModelAndView(chatty, "organization.commit.error");
 			}
 		}
-		result = new ModelAndView("/memberList");
 		return result;
 	}
 	

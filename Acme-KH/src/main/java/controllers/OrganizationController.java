@@ -93,7 +93,7 @@ public class OrganizationController extends AbstractController {
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 		
 		if(this.organizationService.keybladeWielderHasOrganization(actual.getId()))
-			return new ModelAndView("organization/list");
+			return new ModelAndView("redirect:/organization/list.do");
 		
 		Organization o = this.organizationService.create();
 		result = new ModelAndView("organization/edit");
@@ -108,6 +108,7 @@ public class OrganizationController extends AbstractController {
 		Organization org = this.organizationService.reconstruct(organization, binding);
 		
 		if(binding.hasErrors()){
+			System.out.println(binding.getAllErrors());
 			result = createEditModelAndView(organization);
 		}else{
 			try{

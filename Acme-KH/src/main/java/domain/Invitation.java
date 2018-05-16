@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -89,6 +91,7 @@ public class Invitation extends DomainEntity {
 	 * @return Mensaje para intentar reclutar al jugador.
 	 */
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getContent() {
 		return this.content;
 	}

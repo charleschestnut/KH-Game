@@ -47,7 +47,7 @@ public class OrganizationService {
 		//Sólo puede crearla si no pertenece a ninguna organizacion.
 		
 		organization = new Organization();
-		organization.setCreationDate(new Date(System.currentTimeMillis()-1000));
+		organization.setCreationDate(new Date(System.currentTimeMillis()-10000));
 		
 		return organization;
 	}

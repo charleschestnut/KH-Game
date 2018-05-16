@@ -18,25 +18,18 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
-<display:table pagesize="${pageSize}" class="displaytag" 
-	name="membersInvitations" requestURI="${requestURI}" id="row">
-
-	<spring:message code="master.page.name" var="nameH" />
-	<display:column title="${nameH}">
-		<jstl:out value="${row.keybladeWielder.worldName}"/> 
-	</display:column>
+<form:form action="organization/chatty/edit.do" modelAttribute="chatty">
 	
-	<spring:message code="invitation.orgRange" var="orgRangeH" />
-	<display:column title="${orgRangeH}" sortable="true">
-		<jstl:out value="${row.orgRange}"/> 
-	</display:column>
+	<form:hidden path="version" />
+	<form:hidden path="id" />
+	<form:hidden path="date" />
+	<form:hidden path="invitation" />
 	
-	<spring:message code="master.page.actions" var="actionsH" />
-	<display:column title="${actionsH}">
-		<acme:action code="invitation.changeRange" url=""/>
-		<acme:action code="master.page.profile"  url=""/> 
-	</display:column>
 	
+	<acme:textbox code="master.page.content" path="content" />
+	<br>
+		
+	<acme:submit name="save" code="master.page.save"/>
+	<acme:cancel url="organization/chatty/list.do?organizationId=${organizationId}" code="master.page.cancel"/>
 
-</display:table>
-
+</form:form>

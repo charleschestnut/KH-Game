@@ -18,25 +18,12 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
-<display:table pagesize="${pageSize}" class="displaytag" 
-	name="membersInvitations" requestURI="${requestURI}" id="row">
-
-	<spring:message code="master.page.name" var="nameH" />
-	<display:column title="${nameH}">
-		<jstl:out value="${row.keybladeWielder.worldName}"/> 
-	</display:column>
-	
-	<spring:message code="invitation.orgRange" var="orgRangeH" />
-	<display:column title="${orgRangeH}" sortable="true">
-		<jstl:out value="${row.orgRange}"/> 
-	</display:column>
-	
-	<spring:message code="master.page.actions" var="actionsH" />
-	<display:column title="${actionsH}">
-		<acme:action code="invitation.changeRange" url=""/>
-		<acme:action code="master.page.profile"  url=""/> 
-	</display:column>
-	
-
-</display:table>
-
+<jstl:forEach var="chatty" items="${chattys}" >
+	<fieldset>
+		<legend title="${chatty.invitation.keybladeWielder.worldName }"><jstl:out value="${chatty.invitation.keybladeWielder.worldName }"/></legend>
+		<jstl:out value="${chatty.content }"></jstl:out>
+	</fieldset>
+</jstl:forEach>
+<br><br>
+<acme:action code="organization.members"  url="organization/membersList.do?organizationId=${organizationId}"/>
+<acme:action code="chatty.create"  url="organization/chatty/edit.do"/>
