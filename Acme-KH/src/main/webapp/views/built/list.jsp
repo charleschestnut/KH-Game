@@ -18,3 +18,66 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
+<script>
+		
+		function comparaFechaCreacion(year,month,day,hour,minutes,seconds,time,id){
+			var hoy= new Date();
+			var anho= parseInt(year) + 1900;
+			var min= parseInt(minutes)+ parseInt(time);
+			var fecha= new Date(anho,month,day,hour,min,seconds);
+			
+			
+			if(hoy<fecha){
+				
+				document.getElementById(id).innerHTML ='<a href="built/upgrade.do?builtId='+id+'"><spring:message code="built.finish.cosntruct"></spring:message></a>';	
+			}
+			else{
+				document.getElementById(id).innerHTML ='<spring:message code="built.in.cosntruction"></spring:message>';	
+			}
+		
+			
+		}
+		
+		
+		
+	
+	</script>
+
+<display:table name="builts" id="row" pagesize="5" requestURI="built/list.do">
+
+	<spring:message code="building.name" var="nameHeader"></spring:message>
+	<display:column property="building.name" title="${nameHeader}"></display:column>
+	
+	<spring:message code="built.lvl" var="lvlHeader"></spring:message>
+	<display:column property="lvl" title="${lvlHeader}"></display:column>
+	
+	<spring:message code="built.state" var="stateHeader"></spring:message>
+	<display:column title="${stateHeader }" >
+	<jstl:if test="${row.lvl==0 }">
+	
+		<div id="${row.id }">
+			<script>
+				comparaFechaCreacion('${row.creationDate.getYear()}','${row.creationDate.getMonth()}','${row.creationDate.getDate()}','${row.creationDate.getHours()}','${row.creationDate.getMinutes()}', '${row.creationDate.getSeconds()}','${row.building.timeToConstruct}','${row.id }');
+			</script>
+	
+		
+		</div>
+	</jstl:if>
+	<jstl:if test="${row.lvl>0 }">
+		<spring:message code="built.constructed"></spring:message>
+		
+	</jstl:if>
+		
+		
+	
+	</display:column>
+	
+	<display:column property="building.class" title="probando"></display:column>
+	
+	
+
+</display:table>
+
+
+	
+	
