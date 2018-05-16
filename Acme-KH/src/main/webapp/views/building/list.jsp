@@ -30,12 +30,7 @@
 	<spring:message code="building.cost" var="costHeader"></spring:message>
 	<display:column property="cost" title="${costHeader}"></display:column>
 	
-	<security:authorize access="hasRole('PLAYER')">
-		<spring:message code="building.build" var="buildHeader"></spring:message>
-		<display:column title="${buildHeader}">
-			<a href="built/player/edit.do?buildingId=${row.id}"><jstl:out value="${buildHeader}"></jstl:out></a>
-		</display:column>
-	</security:authorize>
+	
 	
 	<spring:message code="master.page.display" var="displayHeader"></spring:message>
 	<display:column title="${displayHeader}">

@@ -111,10 +111,13 @@ public class RequirementService {
 	}
 
 	public Boolean fulfillsRequirements(final Integer buildingId) {
-		final Integer i = this.RequirementRepository.getBuildingFulfillsReqs(buildingId, this.actorService.findByPrincipal().getId());
 		Boolean res = true;
-		if (i == null || i < 1)
-			res = false;
+		if (this.getRequirementsByBuilding(buildingId).size() > 0) {
+			final Integer i = this.RequirementRepository.getBuildingFulfillsReqs(buildingId, this.actorService.findByPrincipal().getId());
+
+			if (i == null || i < 1)
+				res = false;
+		}
 		return res;
 	}
 

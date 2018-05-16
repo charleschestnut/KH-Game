@@ -17,3 +17,29 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+
+<form:form action="built/create.do" modelAttribute="builtForm">
+	
+<form:select path="building"  >
+	
+	<form:option value="0" label="----"></form:option>
+	<form:options itemLabel="name" itemValue="id"  items="${buildings}"  />
+	</form:select>
+	<form:errors path="building" cssClass="error"></form:errors>
+	<br>
+
+	
+	
+	<acme:submit name="save" code="master.page.save"/>
+	<acme:cancel url="built/list.do" code="master.page.cancel"/>
+
+
+<div id=description>
+	
+	
+</div>
+
+
+
+</form:form>
+

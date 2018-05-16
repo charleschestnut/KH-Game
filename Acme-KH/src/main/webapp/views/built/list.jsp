@@ -24,10 +24,12 @@
 			var hoy= new Date();
 			var anho= parseInt(year) + 1900;
 			var min= parseInt(minutes)+ parseInt(time);
-			var fecha= new Date(anho,month,day,hour,min,seconds);
+			var fechaFin= new Date(anho,month,day,hour,min,seconds);
 			
 			
-			if(hoy<fecha){
+			//document.getElementById(id).innerHTML =hoy + ' ================= '+ fecha +' ========='+ res;	
+			
+			if(hoy>fechaFin){
 				
 				document.getElementById(id).innerHTML ='<a href="built/upgrade.do?builtId='+id+'"><spring:message code="built.finish.cosntruct"></spring:message></a>';	
 			}
@@ -78,6 +80,6 @@
 
 </display:table>
 
-
+<acme:cancel url="built/create.do" code="master.page.create"/>
 	
 	
