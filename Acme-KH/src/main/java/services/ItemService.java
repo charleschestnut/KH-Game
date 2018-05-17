@@ -80,7 +80,7 @@ public class ItemService {
 		// Solo lo podremos comprar si disponemos del Munny que cuesta el item
 		Assert.isTrue(item.getMunnyCost() <= player.getMaterials().getMunny());
 		Purchase p = this.purchaseService.create();
-		Date currentDate = new Date();
+		Date currentDate = new Date(System.currentTimeMillis()-100);
 
 		p.setPlayer(player);
 		p.setPurchaseDate(currentDate);

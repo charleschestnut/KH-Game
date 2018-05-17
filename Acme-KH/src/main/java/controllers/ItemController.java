@@ -66,27 +66,24 @@ public class ItemController extends AbstractController{
 	@RequestMapping(value = "/ownedItemsList", method = RequestMethod.GET)
 	public ModelAndView myItemsList() {
 		ModelAndView result;
-		Collection<Item> items;
+		Collection<Purchase> purchases;
 
 		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
-		items = this.itemService.myItems(player.getId());
+		purchases = this.purchaseService.noActivePurchasesByPlayer(player.getId());
 
 		result = new ModelAndView("item/player/ownedItemsList");
-		result.addObject("items", items);
+		result.addObject("purchases", purchases);
 		
 		return result;
 	}
 	
 	// Activar un item
 	@RequestMapping(value = "/activeItem", method = RequestMethod.GET)
-	public ModelAndView activeItem(@RequestParam(value = "itemId", required = true) int itemId) {
+	public ModelAndView activeItem(@RequestParam(value = "purchaseId", required = true) int purchaseId) {
 		ModelAndView result;
-		Collection<Purchase> purchases;
-		List<Purchase> purchasesList = new ArrayList<>();
+		Purchase purchase = this.purchaseService.findOne(purchaseId);
 		
-		purchases = this.purchaseService.noActivePurchases(itemId);
-		purchasesList.addAll(purchases);
-		this.purchaseService.activeItem(purchasesList.get(0));
+		this.purchaseService.activeItem(purchase);
 		
 		result = new ModelAndView("redirect:/item/player/ownedItemsList.do");
 		

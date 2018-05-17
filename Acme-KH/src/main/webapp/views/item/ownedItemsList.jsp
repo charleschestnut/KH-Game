@@ -12,33 +12,33 @@
 <!-- Listing grid -->
 
 
-<display:table name="items" id="row" 
+<display:table name="purchases" id="row" 
     requestURI="item/player/ownedItemsList.do" 
     pagesize="5" class="displaytag">
-	
+    
 	<spring:message code="item.name" var="nameHeader" />
-	<display:column property="name" title="${nameHeader}" />
+	<display:column property="item.name" title="${nameHeader}" />
 
 	<spring:message code="item.description" var="descriptionHeader" />
-	<display:column property="description" title="${descriptionHeader}" />
+	<display:column property="item.description" title="${descriptionHeader}" />
 
 	<spring:message code="item.type" var="typeHeader" />
-	<display:column property="type" title="${typeHeader}" />
+	<display:column property="item.type" title="${typeHeader}" />
 	
 	<spring:message code="item.duration" var="durationHeader" />
-	<display:column property="duration" title="${durationHeader}" />
+	<display:column property="item.duration" title="${durationHeader}" />
 	
 	<spring:message code="item.expiration" var="expirationHeader" />
-	<display:column property="expiration" title="${expirationHeader}" />
+	<display:column property="item.expiration" title="${expirationHeader}" />
 	
 	<spring:message code="item.extra" var="extraHeader" />
-	<display:column property="extra" title="${extraHeader}" />
+	<display:column property="item.extra" title="${extraHeader}" />
 	
 	<spring:message code="item.munnyCost" var="munnyCostHeader" />
-	<display:column property="munnyCost" title="${munnyCostHeader}" />
+	<display:column property="item.munnyCost" title="${munnyCostHeader}" />
 	
 	<display:column>
-	<a href="item/player/activeItem.do?itemId=${row.id}"><spring:message code="item.use"/></a>
+	<a href="item/player/activeItem.do?purchaseId=${row.id}"><spring:message code="item.use"/></a>
 	</display:column>
 
 

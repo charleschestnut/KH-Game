@@ -68,13 +68,17 @@ public class PurchaseService {
 	
 	// Activar un item
 	public void activeItem(Purchase purchase) {
-		purchase.setActivationDate(new Date());
+		purchase.setActivationDate(new Date(System.currentTimeMillis()-100));
 		this.save(purchase);
 	}
 	
 	// Lista de purchases sobre un item concreto que no estan activados
 	public Collection<Purchase> noActivePurchases(int itemId) {
 		return this.purchaseRepository.noActivePurchases(itemId);
+	}
+	
+	public Collection<Purchase> noActivePurchasesByPlayer(int playerId) {
+		return this.purchaseRepository.noActivePurchasesByPlayer(playerId);
 	}
 
 }
