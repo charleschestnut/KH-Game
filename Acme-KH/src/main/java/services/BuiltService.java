@@ -17,6 +17,7 @@ import domain.KeybladeWielder;
 import domain.Livelihood;
 import domain.Materials;
 import domain.Prize;
+import domain.Recruited;
 import domain.Recruiter;
 import domain.Troop;
 import domain.Warehouse;
@@ -41,6 +42,8 @@ public class BuiltService {
 	private WarehouseService		warehouseService;
 	@Autowired
 	private RecruiterService		recruiterService;
+	@Autowired
+	private RecruitedService		recruitedService;
 	@Autowired
 	private PrizeService			prizeService;
 	@Autowired
@@ -134,6 +137,25 @@ public class BuiltService {
 		Assert.isTrue(built.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
 
 		final Warehouse w = this.warehouseService.findOne(built.getBuilding().getId());
+
+		if (w != null) {
+			final Collection<Recruited> recruiteds = this.recruitedService.getMyRecruited(built.getId());
+			for (final Recruited r : recruiteds)
+				this.recruitedService.delete(r);
+
+			final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+			final Materials extra = this.extraMaterials();
+			final Materials base = this.configurationService.getConfiguration().getBaseMaterials();
+			final Materials esteWarehouse = w.getTotalSlotsMaterials(built.getLvl());
+			final Materials tengo = player.getMaterials();
+			Materials total = base.add(extra);
+			total = total.substract(esteWarehouse);
+
+			if (tengo.isHigherThan(total)) {
+				player.setMaterials(total);
+				this.keybladeWielderService.save(player);
+			}
+		}
 
 		this.BuiltRepository.delete(built);
 	}
