@@ -56,13 +56,10 @@
 	<spring:message code="built.state" var="stateHeader"></spring:message>
 	<display:column title="${stateHeader }" >
 	<jstl:if test="${row.lvl==0 }">
-	
 		<div id="${row.id }">
 			<script>
 				comparaFechaCreacion('${row.creationDate.getYear()}','${row.creationDate.getMonth()}','${row.creationDate.getDate()}','${row.creationDate.getHours()}','${row.creationDate.getMinutes()}', '${row.creationDate.getSeconds()}','${row.building.timeToConstruct}','${row.id }');
 			</script>
-	
-		
 		</div>
 	</jstl:if>
 	<jstl:if test="${row.lvl>0 }">
@@ -91,9 +88,14 @@
 			<jstl:otherwise>
 				<a href="built/upgrade.do?builtId=${row.id }" title="${row.building.getTotalMaterials(row.lvl) }"><spring:message code="built.upgrade"></spring:message></a>
 			</jstl:otherwise>
-		</jstl:choose>
-		
-		
+		</jstl:choose>	
+	</display:column>
+	
+	<spring:message code="master.page.display" var="displayHeader"></spring:message>	
+	<display:column title="${displayHeader}">
+		<jstl:if test="${row.lvl>0 }">
+			<a href="built/display.do?builtId=${row.id}"></a>
+		</jstl:if>
 	</display:column>
 		
 	

@@ -17,3 +17,68 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<spring:message code="building.name"></spring:message>: 
+<jstl:out value="${built.building.name }"></jstl:out><br>
+
+<spring:message code="building.descritpion"></spring:message>: 
+<jstl:out value="${built.building.description }"></jstl:out><br>
+
+<spring:message code="built.cost"></spring:message>: 
+<jstl:out value="${built.building.getTotalMaterials(built.lvl)}"></jstl:out><br>
+
+<spring:message code="built.lvl"></spring:message>: 
+<jstl:out value="${built.lvl }"></jstl:out>/<jstl:out value="${built.building.maxLvl }"></jstl:out><br>
+
+<jstl:if test="${defense}">
+	<spring:message code="building.defense.defense"></spring:message>: 
+	<jstl:out value="${built.building.getTotalDefense(built.lvl) }"></jstl:out><br>
+	
+</jstl:if>
+
+<jstl:if test="${recruiter}">
+	<jstl:if test="${troops != null && troops.size()>0 }">
+	
+		<display:table name="troops" id="row" pagesize="5" requestURI="built/display.do">
+	
+				<!-- TODO: tabla de troops disponibles para crear-->
+		
+		</display:table>
+	
+	</jstl:if>
+	
+	<jstl:if test="${gummiShips != null && gummiShips.size()>0 }">
+	
+		<display:table name="gummiShips" id="row" pagesize="5" requestURI="built/display.do">
+	
+				<!-- TODO: tabla de gummi ships  disponibles para crear-->
+		
+		</display:table>
+	
+	</jstl:if>
+	
+</jstl:if>
+
+<jstl:if test="${warehouse}">
+	
+	<spring:message code="building.warehouse.materialsSlots"></spring:message>: 
+	<jstl:out value="${built.building.getTotalMaterials(built.lvl)}"></jstl:out><br>
+	
+	<spring:message code="building.warehouse.troopSlots"></spring:message>: 
+	<jstl:out value="${built.building.getTotalTroopSlots(built.lvl)}"></jstl:out><br>
+	
+	<spring:message code="building.warehouse.gummiSlots"></spring:message>: 
+	<jstl:out value="${built.building.getTotalGummiSlots(built.lvl) }"></jstl:out><br>
+
+
+</jstl:if>
+
+
+<jstl:if test="${livelihood}">
+	
+	<spring:message code="building.livelihood.timeToRecollect"></spring:message>: 
+	<jstl:out value="${built.building.getTotalTime(built.lvl) }"></jstl:out><br>
+	
+	<spring:message code="building.livelihood.materials"></spring:message>: 
+	<jstl:out value="${built.building.getTotalMaterials(built.lvl) }"></jstl:out><br>
+
+</jstl:if>

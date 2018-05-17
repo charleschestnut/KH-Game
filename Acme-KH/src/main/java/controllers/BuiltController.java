@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.BuildingService;
 import services.BuiltService;
 import services.DefenseService;
@@ -20,6 +22,10 @@ import services.RequirementService;
 import services.WarehouseService;
 import domain.Building;
 import domain.Built;
+import domain.Defense;
+import domain.Livelihood;
+import domain.Recruiter;
+import domain.Warehouse;
 import form.BuiltForm;
 
 @Controller
@@ -85,6 +91,75 @@ public class BuiltController extends AbstractController {
 
 		return res;
 	}
+
+	@RequestMapping("/upgrade")
+	public ModelAndView update(@RequestParam final Integer builtId) {
+		ModelAndView res;
+		final Built b = this.builtService.findOne(builtId);
+		if (b == null)
+			res = new ModelAndView("redirect:list.do");
+		else
+			try {
+				this.builtService.upgrade(b);
+				res = new ModelAndView("redirect:list.do");
+			} catch (final Throwable oops) {
+				final String msg = this.getErrorMessage(oops);
+				res = this.createListModelAndView(msg);
+			}
+		return res;
+	}
+
+	@RequestMapping("/display")
+	public ModelAndView display(@RequestParam final Integer builtId) {
+		ModelAndView res = new ModelAndView("built/display");
+		Recruiter recruiter = null;
+		Warehouse warehouse = null;
+		Livelihood livelihood = null;
+
+		final Built b = this.builtService.findOne(builtId);
+		final Integer buildingId = b.getBuilding().getId();
+
+		if (!b.getKeybladeWielder().getUserAccount().equals(LoginService.getPrincipal()) || b.getLvl() == 0)
+			res = new ModelAndView("redirect:list.do");
+
+		final Defense defense = this.defenseService.findOne(buildingId);
+		if (defense != null)
+			res.addObject("defense", true);
+		else {
+
+			recruiter = this.recruiterService.findOne(buildingId);
+			if (recruiter != null)
+				res.addObject("recruiter", true);
+			//TODO: añadir query para las tropas y gummi ships disponibles dentro del if
+			else {
+				livelihood = this.livelihoodService.findOne(buildingId);
+				if (livelihood != null)
+					res.addObject("livelihood", true);
+				else {
+					warehouse = this.warehouseService.findOne(buildingId);
+					if (warehouse != null)
+						res.addObject("warehouse", true);
+
+				}
+
+			}
+		}
+
+		res.addObject("built", b);
+
+		return res;
+	}
+	protected ModelAndView createListModelAndView(final String msg) {
+		final ModelAndView res;
+		final Collection<Built> builts = this.builtService.getMyBuilts();
+
+		res = new ModelAndView("built/list");
+		res.addObject("builts", builts);
+		res.addObject("message", msg);
+
+		return res;
+	}
+
 	protected ModelAndView createEditModelAndView(final BuiltForm form) {
 		return this.createEditModelAndView(form, null);
 
