@@ -75,6 +75,7 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="profile/actor/display.do"> <spring:message code="master.page.myprofile"></spring:message></a>  </li>
 					<li><a href="building/list.do"> <spring:message code="master.page.availableBuilding"></spring:message></a>  </li>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>

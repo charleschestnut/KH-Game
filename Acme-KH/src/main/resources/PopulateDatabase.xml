@@ -92,6 +92,7 @@
 		<property name="userAccount" ref="userAccount1" />
 		<property name="hasConfirmedTerms" value="true" />
 		<property name="confirmMoment" value="20/02/2016 00:00" />
+		<property name="avatar" value="https://i.pinimg.com/236x/e9/21/9f/e9219f8ef2a76ed643bc2ade7c64c929--dearly-beloved-tv-anime.jpg"/>
 	</bean>
 	
 	<!-- CONTENT MANAGER -->

@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -21,7 +22,8 @@ public class ActorService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private ActorRepository actorRepository;
+	private ActorRepository	actorRepository;
+
 
 	// CRUD methods
 
@@ -30,7 +32,9 @@ public class ActorService {
 
 		Actor actor;
 
-		actor = actorRepository.findOne(actorId);
+		actor = this.actorRepository.findOne(actorId);
+
+		Assert.notNull(actor);
 
 		return actor;
 	}
@@ -42,24 +46,24 @@ public class ActorService {
 		Actor actor;
 
 		userAccount = LoginService.getPrincipal();
-		actor = actorRepository.findByUserAccountId(userAccount.getId());
+		actor = this.actorRepository.findByUserAccountId(userAccount.getId());
 
 		return actor;
 	}
-	
-	public Actor findByUserAccountUsername(String username){
+
+	public Actor findByUserAccountUsername(String username) {
 		Assert.notNull(username);
-		Actor actor = actorRepository.findByUserAccountUsername(username);
-		
+		Assert.isTrue(username.length() >= 3 && username.length() <= 32);
+		Actor actor = this.actorRepository.findByUserAccountUsername(username);
+		Assert.notNull(actor);
 		return actor;
 	}
-	
-	public String getPrincipalAuthority(){
+	public String getPrincipalAuthority() {
 		Actor actor;
-		
+
 		actor = this.findByPrincipal();
-		List<Authority> authorities =  new ArrayList<>(actor.getUserAccount().getAuthorities());
-		
+		List<Authority> authorities = new ArrayList<>(actor.getUserAccount().getAuthorities());
+
 		return authorities.get(0).getAuthority();
 	}
 

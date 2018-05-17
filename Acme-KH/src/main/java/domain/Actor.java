@@ -11,13 +11,16 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import security.UserAccount;
@@ -35,8 +38,8 @@ public class Actor extends DomainEntity {
 	private String	email;
 	private String	phone;
 	private Boolean	hasConfirmedTerms;
-	private Date confirmMoment;
-
+	private Date	confirmMoment;
+	private String	avatar;
 
 
 	@NotBlank
@@ -80,7 +83,7 @@ public class Actor extends DomainEntity {
 	public void setPhone(final String phone) {
 		this.phone = phone;
 	}
-	
+
 	public Boolean getHasConfirmedTerms() {
 		return this.hasConfirmedTerms;
 	}
@@ -99,11 +102,22 @@ public class Actor extends DomainEntity {
 	public void setConfirmMoment(final Date confirmMoment) {
 		this.confirmMoment = confirmMoment;
 	}
-	
+
+	@URL
+	@Pattern(regexp = ".+.(jpg|jpeg|gif|png)", message = "(jpg, jpeg, gif, png)")
+	public String getAvatar() {
+		return this.avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+
 	// RELATIONSHIPS ----------------------------------------------------------
 
+	private UserAccount	userAccount;
 
-	private UserAccount userAccount;
 
 	@NotNull
 	@Valid
@@ -114,6 +128,21 @@ public class Actor extends DomainEntity {
 
 	public void setUserAccount(UserAccount userAccount) {
 		this.userAccount = userAccount;
+	}
+
+	// TRANSIENTS ----------------------------------------------------------
+	@Transient
+	public String getActorTypeName() {
+		if (this instanceof KeybladeWielder)
+			return "KEYBLADEWIELDER";
+		else if (this instanceof Administrator)
+			return "ADMINISTRATOR";
+		else if (this instanceof GameMaster)
+			return "GAME MASTER";
+		else if (this instanceof ContentManager)
+			return "CONTENT MANAGER";
+		else
+			return "UNKNOW";
 	}
 
 }
