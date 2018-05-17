@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -134,4 +135,15 @@ public class Built extends DomainEntity {
 		this.building = building;
 	}
 
+	@Transient
+	public Boolean haTerminado(final Integer minutos) {
+		Boolean res = false;
+		final Date ahora = new Date(System.currentTimeMillis());
+		final Date fechaFin = new Date(this.getActivationDate().getTime() + minutos * 60 * 1000);
+
+		if (ahora.after(fechaFin))
+			res = true;
+
+		return res;
+	}
 }

@@ -71,10 +71,15 @@
 	
 	</display:column>
 	
-	<display:column property="building.maxLvl" title="probando">
-	
-	
-	</display:column>
+	<display:column  title="probando">
+		<jstl:if test="${row.building.getClass()=='class domain.Livelihood'}">
+		${row.haTerminado(row.building.getTotalTime(row.lvl))} <br> =====
+		<br>
+		${row.building.getTotalTime(row.lvl)}
+		<br>
+		${row.lvl}
+		</jstl:if>
+		</display:column>
 	
 	<spring:message code="built.upgrade" var="upgradeHeader"></spring:message>	
 	<display:column title="${upgradeHeader }">
@@ -96,6 +101,31 @@
 		<jstl:if test="${row.lvl>0 }">
 			<a href="built/display.do?builtId=${row.id}"><jstl:out value="${displayHeader }"></jstl:out></a>
 		</jstl:if>
+	</display:column>
+	
+	<spring:message code="master.page.actions" var="actionHeader"></spring:message>
+	<spring:message code="built.recruit" var="recruit"></spring:message>
+	<spring:message code="built.working" var="working"></spring:message>
+	<spring:message code="built.start.recruit" var="startRecruit"></spring:message>
+	<spring:message code="built.collect" var="collect"></spring:message>
+	<spring:message code="built.start.collect" var="startCollect"></spring:message>
+	<display:column title="${actionHeader}">
+	
+		<jstl:choose>
+					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate!=null && row.haTerminado(row.building.getTotalTime(row.lvl))}">
+						<a href="built/collect.do?builtId=${row.id}"><jstl:out value="${collect}"></jstl:out></a>
+					</jstl:when>
+					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate!=null && !row.haTerminado(row.building.getTotalTime(row.lvl)) }">
+						<jstl:out value="${working }"></jstl:out>
+					</jstl:when>
+					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate==null }">
+						<a href="built/collect.do?builtId=${row.id}"><jstl:out value="${startCollect}"></jstl:out></a>
+					</jstl:when>
+					<jstl:otherwise>
+							----
+					</jstl:otherwise>
+				</jstl:choose>
+	
 	</display:column>
 		
 	
