@@ -109,7 +109,6 @@ public class OrganizationService {
 
 	public Boolean keybladeWielderHasOrganization(int playerId){ 
 		Boolean res = true;
-		
 		//Llamamos al repositorio.
 		Organization actual = this.organizationRepository.findOrganizationByPlayer(playerId);
 		if(actual ==null)

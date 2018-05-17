@@ -10,14 +10,42 @@
 
 package controllers;
 
+import java.util.Collection;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import domain.Invitation;
+import domain.InvitationStatus;
+import domain.KeybladeWielder;
+import domain.Organization;
+
+import services.ActorService;
+import services.InvitationService;
+import services.OrganizationService;
 
 @Controller
 @RequestMapping("/organization/invitation")
 public class InvitationController extends AbstractController {
 
+	// SERVICES -----------------------------------------------
+	@Autowired
+	private ActorService actorService;
+	
+	@Autowired
+	private OrganizationService organizationService;
+	
+	@Autowired
+	private InvitationService invitationService;
+	
+	
 	// Constructors -----------------------------------------------------------
 
 	public InvitationController() {
@@ -26,23 +54,117 @@ public class InvitationController extends AbstractController {
 
 	// Action-1 ---------------------------------------------------------------		
 
-	@RequestMapping("/action-1")
+	@RequestMapping("/list")
 	public ModelAndView action1() {
 		ModelAndView result;
-
-		result = new ModelAndView("customer/action-1");
+		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
+		Collection<Invitation> all = this.invitationService.findInvitationsByKeybladeWielderId(actual.getId());
+		Boolean hasOrganization =this.organizationService.keybladeWielderHasOrganization(actual.getId());
+		
+		result = new ModelAndView("organization/invitation/list");
+		result.addObject("invitations",all);
+		result.addObject("hasOrganization", hasOrganization);
 
 		return result;
 	}
 
 	// Action-2 ---------------------------------------------------------------		
-
-	@RequestMapping("/action-2")
-	public ModelAndView action2() {
+	@RequestMapping("/edit")
+	public ModelAndView action2(@RequestParam String username) {
 		ModelAndView result;
-
-		result = new ModelAndView("customer/action-2");
+		KeybladeWielder invited = (KeybladeWielder) this.actorService.findByUserAccountUsername(username);
+		Boolean hasOrganization = this.organizationService.keybladeWielderHasOrganization(invited.getId());
+		
+		if(hasOrganization){
+			return new ModelAndView("redirect:profile/actor/display.do?username="+username);
+		}
+		
+		Invitation i = this.invitationService.create(invited.getId());
+		
+		result = new ModelAndView("organization/invitation/edit");
+		result.addObject("invitation", i);
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid Invitation invitation, BindingResult binding) {
+		ModelAndView result;
+		//Organization org = this.invitationService.reconstruct(invitation, binding);
+		
+		if(binding.hasErrors()){
+			System.out.println(binding.getAllErrors());
+			result = createEditModelAndView(invitation);
+		}else{
+			try{
+				Invitation toSave = invitation;
+				
+				toSave = this.invitationService.save(invitation);
+				
+				result = new ModelAndView("redirect:/organization/invitation/list.do");
+			}catch(Throwable oops){
+				result = createEditModelAndView(invitation, "invitation.commit.error");
+			}
+		}
+		return result;
+	}
+	
+	private ModelAndView createEditModelAndView(Invitation invitation) {
+		
+		return createEditModelAndView(invitation, null);
+	}
+
+	private ModelAndView createEditModelAndView(Invitation invitation, String msg) {
+		ModelAndView result;
+		result = new ModelAndView("organization/invitation/edit");
+
+		result.addObject("invitation", invitation);
+		result.addObject("message", msg);
+		return result;
+	}
+	
+	
+	
+
+	//  ------- ACCEPT INVITATION  -------
+	@RequestMapping("/accept")
+	public ModelAndView accept(@RequestParam String invitationId) {
+		Integer id = Integer.parseInt(invitationId);
+		Invitation inv = this.invitationService.findOne(id);
+		
+		//TODO Comprobar que el actual de verdad tiene Organización y es la del parámetro. 
+		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
+		if(this.organizationService.keybladeWielderHasOrganization(actual.getId()) || !inv.getInvitationStatus().equals(InvitationStatus.PENDING)){
+			return new ModelAndView("redirect:/organization/invitation/list.do");
+		}
+		if(inv.getKeybladeWielder().getUserAccount().equals(actual.getUserAccount())){
+			this.invitationService.AcceptInvitation(id);
+			return new ModelAndView("redirect:/organization/membersList.do?organizationId="+inv.getOrganization().getId());
+		}else{
+			return new ModelAndView("redirect:/organization/invitation/list.do");
+		}
+	}
+	
+	
+//  ------- DECLINE INVITATION  -------
+	@RequestMapping("/decline")
+	public ModelAndView decline(@RequestParam String invitationId) {
+		Integer id = Integer.parseInt(invitationId);
+		Invitation inv = this.invitationService.findOne(id);
+		
+		//TODO Comprobar que el actual de verdad tiene Organización y es la del parámetro. 
+		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
+		
+		if(this.organizationService.keybladeWielderHasOrganization(actual.getId()) ||!inv.getInvitationStatus().equals(InvitationStatus.PENDING)){
+			
+			return new ModelAndView("redirect:/organization/invitation/list.do");
+		}else{
+			
+			if(inv.getKeybladeWielder().getUserAccount().equals(actual.getUserAccount())){
+				this.invitationService.declineInvitation(id);
+		}
+			return new ModelAndView("redirect:/organization/invitation/list.do");
+		}
+	}
+	
 }

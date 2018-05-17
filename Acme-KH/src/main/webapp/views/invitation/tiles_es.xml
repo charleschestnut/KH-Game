@@ -16,13 +16,13 @@
       
 <tiles-definitions>
 
-	<definition name="chatty/list" extends="master.page">	
+	<definition name="organization/invitation/list" extends="master.page">	
 		<put-attribute name="title" value="Invitaciones recibidas" />
 		<put-attribute name="body" value="/views/invitation/list.jsp" />
 	</definition>
 	
 	
-	<definition name="chatty/edit" extends="master.page">	
+	<definition name="organization/invitation/edit" extends="master.page">	
 		<put-attribute name="title" value="Editar invitación" />
 		<put-attribute name="body" value="/views/invitation/edit.jsp" />
 	</definition>

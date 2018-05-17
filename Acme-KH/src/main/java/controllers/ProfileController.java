@@ -49,6 +49,7 @@ public class ProfileController extends AbstractController {
 		if (actor instanceof KeybladeWielder) {
 			KeybladeWielder user = (KeybladeWielder) actor;
 			result.addObject("user", user);
+			result.addObject("usernameInvitation", user.getUserAccount().getUsername());
 		} else
 			result.addObject("user", actor);
 

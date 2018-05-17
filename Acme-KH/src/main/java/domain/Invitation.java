@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -122,6 +123,11 @@ public class Invitation extends DomainEntity {
 
 	public void setOrganization(final Organization organization) {
 		this.organization = organization;
+	}
+	
+	@Transient
+	public Boolean isPending(){
+		return this.invitationStatus.equals(InvitationStatus.PENDING);
 	}
 
 }

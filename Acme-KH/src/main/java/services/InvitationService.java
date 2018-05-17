@@ -44,7 +44,8 @@ public class InvitationService {
 		invitation.setKeybladeWielder(invited);
 		invitation.setInvitationStatus(InvitationStatus.PENDING);
 		invitation.setOrgRange(OrgRange.GUEST); //Ponemos GUEST por defecto y luego podemos elegir el que queramos.
-		
+		invitation.setDate(new Date(System.currentTimeMillis()-1000));
+		invitation.setContent("");
 		//QUERY DONDE COGEMOS LA ORGANIZACIÓN DEL USUARIO ACTUAL
 		KeybladeWielder playerActual = (KeybladeWielder) this.actorService.findByPrincipal();
 		Organization actual = this.organizationService.findOrganizationByPlayer(playerActual.getId());
@@ -58,25 +59,22 @@ public class InvitationService {
 	public Invitation save(Invitation invitation){
 		Assert.notNull(invitation);
 		Assert.notNull(invitation.getInvitationStatus());
-		Assert.isTrue(invitation.getOrgRange().equals(OrgRange.MASTER) && invitation.getId()!=0, "error.message.invitation.notBeMaster");
+		Assert.isTrue(!invitation.getOrgRange().equals(OrgRange.MASTER), "error.message.invitation.notBeMaster");
 		KeybladeWielder principal = (KeybladeWielder) this.actorService.findByPrincipal();
 		
-		// QUERY DONDE COGEMOS LA ORGANIZACIÓN DEL USUARIO ACTAL
+		// QUERY DONDE COGEMOS LA ORGANIZACIÓN DEL USUARIO ACTUAL
 		Organization actual = this.organizationService.findOrganizationByPlayer(principal.getId());
 		Boolean tieneOrganizacion = this.organizationService.keybladeWielderHasOrganization(invitation.getKeybladeWielder().getId());
-		
 		
 		// Es la misma organización que la organización actual del jugador y el invitado no tiene invitación.
 		Assert.isTrue(invitation.getOrganization().equals(actual), "error.message.chatty.sameOrganization");
 		Assert.isTrue(!tieneOrganizacion, "error.message.invitation.hasOrganization");
 		
 		// El creador de la invitación debe ser MASTER u OFFICER
-				Invitation invitPrincipal = this.findInvitationByKeybladeWielderInAnOrganization(principal.getId(), invitation.getOrganization().getId());
-				Assert.isTrue(invitPrincipal.getOrgRange().equals(OrgRange.MASTER) || invitPrincipal.getOrgRange().equals(OrgRange.OFFICER), "error.message.notMasterOrOfficer");
+		Invitation invitPrincipal = this.findInvitationByKeybladeWielderInAnOrganization(principal.getId(), invitation.getOrganization().getId());
+		Assert.isTrue(invitPrincipal.getOrgRange().equals(OrgRange.MASTER) || invitPrincipal.getOrgRange().equals(OrgRange.OFFICER), "error.message.notMasterOrOfficer");
 		
 		invitation.setDate(new Date(System.currentTimeMillis() -1000));
-		
-		
 		Invitation saved = invitationRepository.save(invitation);
 		
 		return saved;
@@ -140,7 +138,6 @@ public class InvitationService {
 	}
 	
 	public Invitation findInvitationByKeybladeWielderInAnOrganization(int playerId, int organizationId) { 
-		
 		return this.invitationRepository.findInvitationOfKeywielderInAnOrganization(playerId, organizationId);
 	}
 
@@ -148,6 +145,18 @@ public class InvitationService {
 	public void chageRange(int invitationId, OrgRange range) {
 		Invitation toEdit = this.findOne(invitationId);
 		toEdit.setOrgRange(range);
+		this.invitationRepository.save(toEdit);
+	}
+	
+	public void declineInvitation(int invitationId) {
+		Invitation toEdit = this.findOne(invitationId);
+		toEdit.setInvitationStatus(InvitationStatus.CANCELLED);
+		this.invitationRepository.save(toEdit);
+	}
+	
+	public void AcceptInvitation(int invitationId) {
+		Invitation toEdit = this.findOne(invitationId);
+		toEdit.setInvitationStatus(InvitationStatus.ACCEPTED);
 		this.invitationRepository.save(toEdit);
 	}
 	
