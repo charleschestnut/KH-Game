@@ -19,6 +19,7 @@ import domain.Materials;
 import domain.Prize;
 import domain.Recruiter;
 import domain.Troop;
+import domain.Warehouse;
 
 @Service
 @Transactional
@@ -36,6 +37,8 @@ public class BuiltService {
 	private RequirementService		requirementService;
 	@Autowired
 	private LivelihoodService		livelihoodService;
+	@Autowired
+	private WarehouseService		warehouseService;
 	@Autowired
 	private RecruiterService		recruiterService;
 	@Autowired
@@ -130,9 +133,10 @@ public class BuiltService {
 		Assert.notNull(built);
 		Assert.isTrue(built.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
 
+		final Warehouse w = this.warehouseService.findOne(built.getBuilding().getId());
+
 		this.BuiltRepository.delete(built);
 	}
-
 	public void startToCollect(final Built b) {
 		final Livelihood l = this.livelihoodService.findOne(b.getBuilding().getId());
 

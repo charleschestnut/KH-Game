@@ -1,12 +1,9 @@
 
 package domain;
 
-import java.util.Collection;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -22,18 +19,30 @@ import org.hibernate.validator.constraints.Range;
 @Access(AccessType.PROPERTY)
 public class Battle extends DomainEntity {
 
-	private Double					luckAttacker;
-	private Double					luckDeffender;
-	private Boolean					isWon;
-	private Boolean					attackerOwner;
-	private Materials				wonOrLostMaterials;
+	private Double			luckAttacker;
+	private Double			luckDeffender;
+	private Boolean			isWon;
+	private Boolean			attackerOwner;
+	private Materials		wonOrLostMaterials;
+	private String			balance;
 
 	//relations
 
-	private KeybladeWielder			attacker;
-	private KeybladeWielder			deffender;
-	private Collection<Recruited>	recruiteds;
+	private KeybladeWielder	attacker;
+	private KeybladeWielder	deffender;
 
+
+	/**
+	 * 
+	 * @return Indicará un poco las tropas que se enviaron a la batalla y las que se perdieron
+	 */
+	public String getBalance() {
+		return this.balance;
+	}
+
+	public void setBalance(final String balance) {
+		this.balance = balance;
+	}
 
 	/**
 	 * 
@@ -124,20 +133,6 @@ public class Battle extends DomainEntity {
 
 	public void setDeffender(final KeybladeWielder deffender) {
 		this.deffender = deffender;
-	}
-	/**
-	 * <b>IMPORTANTE:</b> esta relación tiene mucha logica de negocio detras que habrá que controlar en servicio antes de guardar la batalla, por ejemplo, tiene que haber minimo una nave y solo pueden ir tantas tropas como slots tengan las naves.
-	 * 
-	 * @return las tropas y naves que han ido a la batalla
-	 */
-	@Valid
-	@ManyToMany
-	public Collection<Recruited> getRecruiteds() {
-		return this.recruiteds;
-	}
-
-	public void setRecruiteds(final Collection<Recruited> recruiteds) {
-		this.recruiteds = recruiteds;
 	}
 
 }

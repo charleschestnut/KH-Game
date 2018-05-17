@@ -121,14 +121,26 @@
 					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate==null }">
 						<a href="built/collect.do?builtId=${row.id}"><jstl:out value="${startCollect}"></jstl:out></a>
 					</jstl:when>
+					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.haTerminado(row.building.getTotalTime(row.lvl))}">
+						<a href="TODO: Enlace para crear los recruited pasandole un builtId"><jstl:out value="${recruit}"></jstl:out></a>
+					</jstl:when>
+					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && !row.haTerminado(row.building.getTotalTime(row.lvl)) }">
+						<jstl:out value="${working }"></jstl:out>
+					</jstl:when>
+					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate==null }">
+						<a href="built/recruit.do?builtId=${row.id}"><jstl:out value="${startRecruit}"></jstl:out></a>
+					</jstl:when>
 					<jstl:otherwise>
 							----
 					</jstl:otherwise>
 				</jstl:choose>
 	
 	</display:column>
-		
 	
+	<spring:message code="built.unbuild" var="unbuildHeader"></spring:message>
+	<display:column title="${unbuildHeader }">
+		<a href="built/delete.do?builtId=${row.id}"><jstl:out value="${unbuildHeader }"></jstl:out></a>
+	</display:column>
 	
 	
 

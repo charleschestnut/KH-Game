@@ -149,6 +149,20 @@ public class BuiltController extends AbstractController {
 
 		return res;
 	}
+	@RequestMapping("/delete")
+	public ModelAndView delete(@RequestParam final Integer builtId) {
+		ModelAndView res;
+		final Built built = this.builtService.findOne(builtId);
+
+		try {
+			this.builtService.delete(built);
+			res = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			final String msg = this.getErrorMessage(oops);
+			res = this.createListModelAndView(msg);
+		}
+		return res;
+	}
 	protected ModelAndView createListModelAndView(final String msg) {
 		final ModelAndView res;
 		final Collection<Built> builts = this.builtService.getMyBuilts();
