@@ -19,6 +19,7 @@
 
 <jstl:if test="${canChat}">
 	<acme:action code="organization.chat"  url="organization/chatty/list.do?organizationId=${organizationId}"/>
+	<acme:action code="organization.leave"  url="organization/leaveOrganization.do"/>
 </jstl:if>
 
 <display:table pagesize="${pageSize}" class="displaytag" 

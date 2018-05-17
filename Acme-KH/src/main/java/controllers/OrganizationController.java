@@ -72,6 +72,26 @@ public class OrganizationController extends AbstractController {
 		}
 		return result;
 	}
+	
+	
+	@RequestMapping("/leaveOrganization")
+	public ModelAndView leave() {
+		ModelAndView result;
+		
+		//TODO Comprobar que el actual de verdad tiene Organización y es la del parámetro. 
+		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
+		if(this.organizationService.keybladeWielderHasOrganization(actual.getId())){
+			int orgId = this.organizationService.findOrganizationByPlayer(actual.getId()).getId();
+			this.organizationService.leaveOrganization(orgId);
+		}
+		Collection<Organization> all = this.organizationService.findAll();
+		
+		result = new ModelAndView("redirect:/organization/list.do");
+		result.addObject("organizations", all);
+		result.addObject("requestURI", "organization/list.do");
+		result.addObject("hasOrganization", false);
+		return result;
+	}
 
 	// Action-2 ---------------------------------------------------------------		
 

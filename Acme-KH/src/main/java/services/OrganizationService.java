@@ -129,25 +129,17 @@ public class OrganizationService {
 			this.organizationRepository.delete(organization);
 		}else{
 			List<Invitation> allOfficers = (List<Invitation>) this.invitationService.findOfficersInOrganization(organizationId);
-			if(allOfficers.size()!=0)
-				this.invitationService.chageRange(allOfficers.get(0).getId(), OrgRange.MASTER);
-			else{
-				List<Invitation> allGuests = (List<Invitation>) this.invitationService.findGuestsInOrganization(organizationId);
-				this.invitationService.chageRange(allGuests.get(0).getId(), OrgRange.MASTER);
-			}
+			List<Invitation> allGuests = (List<Invitation>) this.invitationService.findGuestsInOrganization(organizationId);
+			
+			if(invitationActual.getOrgRange().equals(OrgRange.MASTER) ){ //Si se va el MASTER, le pasa el rango al OFFICER más antiguo, si no, al GUEST. Luego se borra la invitación.
 				
+				if(allOfficers.size()!=0)
+					this.invitationService.chageRange(allOfficers.get(0).getId(), OrgRange.MASTER);
+				else
+					this.invitationService.chageRange(allGuests.get(0).getId(), OrgRange.MASTER);
+			}
+			this.invitationService.delete(invitationActual);
 		}
-
-		if(invitationActual.getOrgRange().equals(OrgRange.MASTER)){
-			
-			
-		}
-		this.invitationService.delete(invitationActual);
-		
-		//Query que me devuelva los keywielders conectados a esa organización.
-		Collection<KeybladeWielder> members = this.keybladeWielderService.findMembersOfOrganization(organizationId);
-		if(members.size() == 0)
-			this.delete(organization);
 		
 	}
 	
