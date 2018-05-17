@@ -56,10 +56,12 @@
 
 <div>
 	<security:authorize access="hasRole('GM')">
-		<a href="reportUpdate/create.do?reportId=${reportId}"> <spring:message
+	<jstl:if test="${report.status ne 'RESOLVED'}">
+		<a href="reportUpdate/create.do?reportId=${report.id}"> <spring:message
 				code="reportUpdate.create" />
 		</a>
 		<br />
+	</jstl:if>
 	</security:authorize>
 	<acme:goback />
 </div>

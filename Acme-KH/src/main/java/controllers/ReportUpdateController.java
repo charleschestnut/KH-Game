@@ -38,11 +38,14 @@ public class ReportUpdateController extends AbstractController {
 	public ModelAndView list(@RequestParam int reportId) {
 		ModelAndView result;
 		Collection<ReportUpdate> reports;
+		Report report;
+		
+		report = reportService.findOne(reportId);
 
 		reports = reportUpdateService.getReportUpdatesByReportId(reportId);
 		result = new ModelAndView("reportUpdate/list");
 		result.addObject("reportUpdates", reports);
-		result.addObject("reportId", reportId);
+		result.addObject("report", report);
 
 		return result;
 	}
@@ -77,15 +80,18 @@ public class ReportUpdateController extends AbstractController {
 		ModelAndView result;
 		ReportUpdate reportUpdate;
 		Report report;
+		Boolean ownUpdate = false;
 		
 		report = reportService.findReportsByReportUpdate(reportUpdateId);
-
 		reportUpdate = reportUpdateService.findOne(reportUpdateId);
-		
 		result = new ModelAndView("reportUpdate/display");
+		if(reportUpdate.getCreator().equals(actorService.findByPrincipal())){
+			ownUpdate = true;
+		}
 		
 		result.addObject("reportUpdate",reportUpdate);
 		result.addObject("report",report);
+		result.addObject("ownUpdate",ownUpdate);
 		
 		return result;
 	}
@@ -96,9 +102,14 @@ public class ReportUpdateController extends AbstractController {
 	public ModelAndView create(@RequestParam int reportId) {
 		ModelAndView result;
 		ReportUpdate reportUpdate;
-
+		Report report;
+		
 		reportUpdate = reportUpdateService.create();
 		result = createEditModelAndView(reportUpdate);
+		report = reportService.findOne(reportId);
+		
+		Assert.isTrue(report.getStatus() != ReportStatus.RESOLVED);
+		
 		result.addObject("reportId",reportId);
 
 		return result;
@@ -111,7 +122,7 @@ public class ReportUpdateController extends AbstractController {
 		ModelAndView result;
 		ReportUpdate report;
 
-		report = reportUpdateService.findOne(reportUpdateId);
+		report = reportUpdateService.findOneToEdit(reportUpdateId);
 		Assert.notNull(report);
 		result = createEditModelAndView(report);
 		result.addObject("reportId",reportId);
@@ -124,7 +135,8 @@ public class ReportUpdateController extends AbstractController {
 			) {
 		ModelAndView result = null;
 		
-		this.reportUpdateService.reconstruct(reportUpdate, binding);
+		try{
+			this.reportUpdateService.reconstruct(reportUpdate, binding);
 
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(reportUpdate);
@@ -142,6 +154,16 @@ public class ReportUpdateController extends AbstractController {
 				
 				result = createEditModelAndView(reportUpdate, message);
 			}
+		}
+		
+		} catch (Throwable oops) {
+			String message = "error.commit";
+			
+			if(oops.getMessage().contains("error.message") || oops.getMessage().contains("org.hibernate.validator")){
+				message = oops.getMessage();
+			}
+			
+			result = createEditModelAndView(reportUpdate, message);
 		}
 
 		return result;
@@ -166,10 +188,13 @@ public class ReportUpdateController extends AbstractController {
 			@RequestParam(required = true) int reportId) {
 		ModelAndView result = null;
 		ReportUpdate reportUpdate;
+		Report report;
 		
 		reportUpdate = reportUpdateService.findOne(reportUpdateId);
+		report = reportService.findOne(reportId);
 		
 		try{
+			Assert.isTrue(report.getStatus() != ReportStatus.RESOLVED, "error.message.suspicious");
 			reportUpdateService.markSuspicious(reportUpdate);
 			result = new ModelAndView("redirect:/reportUpdate/display.do?reportUpdateId=" +reportUpdateId + "&reportId=" + reportId);
 		} catch (Throwable oops) {

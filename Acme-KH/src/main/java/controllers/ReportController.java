@@ -51,6 +51,7 @@ public class ReportController extends AbstractController {
 
 		reports = reportService.findReportsByPlayer(actorService.findByPrincipal().getId());
 		result = new ModelAndView("report/list");
+		result.addObject("requestURI", "report/player/list.do");
 		result.addObject("reports", reports);
 
 		return result;

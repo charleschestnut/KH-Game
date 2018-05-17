@@ -23,6 +23,9 @@
 		
 	<li><b><spring:message code="report.status"></spring:message></b>
 		<jstl:out value="${report.status}" /></li>
+		
+	<li><b><spring:message code="report.date"></spring:message></b>
+		<jstl:out value="${report.date}" /></li>
 			
 	<li><b><spring:message code="report.creator"></spring:message></b>
 		<jstl:out value="${report.keybladeWielder.nickname}" /></li>
@@ -61,10 +64,10 @@
 <br/>
 </jstl:if>
 
-<security:authorize access="hasRole('ADMIN')">
+<jstl:if test="${report.status ne 'RESOLVED' and ownUpdate eq true}">
+<br/>
+<br/>
 <a href="reportUpdate/edit.do?reportUpdateId=<jstl:out value="${reportUpdate.id}" />&reportId=<jstl:out value="${report.id}" />" ><spring:message code="master.page.edit"/></a>
-</security:authorize>
+</jstl:if>
 
-<br/>
-<br/>
 <acme:goback/>

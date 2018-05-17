@@ -45,7 +45,7 @@
 	<a href="reportUpdate/list.do?reportId=<jstl:out value="${row.id}" />" ><jstl:out value="${seeUpdates}" /></a>
 	</display:column>
 	
-	<security:authorize access="hasRole('GM')">
+	<security:authorize access="hasRole('GM') or hasRole('ADMIN')">
 	<spring:message code="reportUpdate.create" var="createUpdate" />
 	<display:column title="${createUpdate}">
 	<jstl:if test="${row.status == 'RESOLVED'}">

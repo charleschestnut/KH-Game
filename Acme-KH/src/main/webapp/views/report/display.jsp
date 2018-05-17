@@ -13,7 +13,6 @@
 
 <ul style="list-style-type: disc">
 
-			
 	<li><b><spring:message code="report.title"></spring:message></b>
 		<jstl:out value="${report.title}" /></li>
 
@@ -22,9 +21,16 @@
 		
 	<li><b><spring:message code="report.status"></spring:message></b>
 		<jstl:out value="${report.status}" /></li>
+		
+	<li><b><spring:message code="report.date"></spring:message></b>
+		<jstl:out value="${report.date}" /></li>
 			
 	<li><b><spring:message code="report.creator"></spring:message></b>
-		<jstl:out value="${report.keybladeWielder.nickname}" /></li>
+		<jstl:out value="${report.keybladeWielder.nickname}" /></li><br/>
+		
+	<jstl:forEach items="${report.photos}" var="photo">
+	<img src="${photo}"/><br/>
+	</jstl:forEach>
 
 	<acme:goback/>
 
