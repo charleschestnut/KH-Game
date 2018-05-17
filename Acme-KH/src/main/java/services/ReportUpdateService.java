@@ -7,10 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ReportUpdateRepository;
+import security.Authority;
 import domain.Actor;
 import domain.Administrator;
+import domain.ContentManager;
+import domain.Defense;
 import domain.GameMaster;
 import domain.Report;
 import domain.ReportStatus;
@@ -28,26 +33,15 @@ public class ReportUpdateService {
 	private ActorService		actorService;
 	@Autowired
 	private ReportService		reportService;
+	@Autowired
+	private Validator			validator;
 
 	// CRUD methods
 	
 	public ReportUpdate create(){
 		ReportUpdate reportUpdate;
-		Actor actor;
 		
 		reportUpdate = new ReportUpdate();
-		actor = actorService.findByPrincipal();
-		
-		reportUpdate.setDate(new Date(System.currentTimeMillis()-1000));
-		reportUpdate.setIsSuspicious(false);
-		
-		if(actorService.getPrincipalAuthority().equals("ADMIN")){
-			reportUpdate.setAdministrator((Administrator) actor);
-			reportUpdate.setGameMaster(null);
-		}else if(actorService.getPrincipalAuthority().equals("GM")){
-			reportUpdate.setGameMaster((GameMaster) actor);
-			reportUpdate.setAdministrator(null);
-		}
 		
 		return reportUpdate;
 	}
@@ -62,11 +56,15 @@ public class ReportUpdateService {
 		
 		saved = ReportUpdateRepository.save(reportUpdate);
 		
-		report.getReportUpdates().add(saved);
+		
+		
+		
+		if(reportUpdate.getId() == 0){
+			report.getReportUpdates().add(saved);
+		}
+		
 		report.setStatus(saved.getStatus());
-		
 		reportService.save(report);
-		
 		
 		return saved;
 	}
@@ -106,6 +104,49 @@ public class ReportUpdateService {
 		
 		reportUpdate.setIsSuspicious(true);
 		ReportUpdateRepository.save(reportUpdate);
+	}
+	
+	public Collection<ReportUpdate> getSuspiciousReportUpdates(){
+		Assert.isTrue(actorService.getPrincipalAuthority().equals(Authority.ADMIN));
+		
+		return ReportUpdateRepository.getSuspiciousReportUpdates();
+	}
+	
+	public ReportUpdate reconstruct(ReportUpdate reportUpdate, final BindingResult binding) {
+		final ReportUpdate original = this.findOne(reportUpdate.getId());
+		Actor actor;
+		
+		actor = actorService.findByPrincipal();
+		
+		if (reportUpdate.getId() == 0) {
+			if(actorService.getPrincipalAuthority().equals("ADMIN")){
+				reportUpdate.setAdministrator((Administrator) actor);
+				reportUpdate.setGameMaster(null);
+			}else if(actorService.getPrincipalAuthority().equals("GM")){
+				reportUpdate.setGameMaster((GameMaster) actor);
+				reportUpdate.setAdministrator(null);
+			}
+			
+			reportUpdate.setIsSuspicious(false);
+
+		} else {
+			if(original.getGameMaster() != null){
+				reportUpdate.setGameMaster(original.getGameMaster());
+				reportUpdate.setAdministrator(null);
+			}else if(original.getAdministrator() != null){
+				reportUpdate.setAdministrator(original.getAdministrator());
+				reportUpdate.setGameMaster(null);
+			}
+			
+			reportUpdate.setIsSuspicious(original.getIsSuspicious());
+			
+		}
+		
+		reportUpdate.setDate(new Date(System.currentTimeMillis()-1000));
+		
+		this.validator.validate(reportUpdate, binding);
+
+		return reportUpdate;
 	}
 
 }

@@ -32,7 +32,7 @@ public class ReportController extends AbstractController {
 
 	// Listing ----------------------------------------------------------------
 
-	@RequestMapping(value = "/gm/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Report> reports;
@@ -64,7 +64,7 @@ public class ReportController extends AbstractController {
 		String auth;
 		
 		auth = actorService.getPrincipalAuthority();
-		Assert.isTrue(auth.equals("PLAYER") || auth.equals("GM"));
+		Assert.isTrue(auth.equals("PLAYER") || auth.equals("GM") || auth.equals("ADMIN"));
 
 		report = reportService.findOne(reportId);
 		

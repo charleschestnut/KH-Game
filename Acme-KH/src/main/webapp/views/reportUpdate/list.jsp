@@ -46,19 +46,8 @@
 	<spring:message code="master.page.display" var="display" />
 	<display:column title="${display}">
 		<a
-			href="reportUpdate/display.do?reportUpdateId=${row.id}&reportId=${reportId}">${display}</a>
+			href="reportUpdate/display.do?reportUpdateId=${row.id}">${display}</a>
 	</display:column>
-
-	<%-- <spring:message code="report.creator" var="status" />
-	<display:column title="${row.getCreator()}" property="status"/> --%>
-
-	<%-- <security:authorize access="hasRole('GM')">
-	<spring:message code="report.seeUpdates" var="seeUpdates" />
-	<display:column title="${seeUpdates}">
-	<a href="reportUpdate/list.do?reportId=<jstl:out value="${row.id}" />" ><jstl:out value="${seeUpdates}" /></a>
-	</display:column>
-	</security:authorize> --%>
-
 
 
 </display:table>

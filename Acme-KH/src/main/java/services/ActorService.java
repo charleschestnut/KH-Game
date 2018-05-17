@@ -60,11 +60,17 @@ public class ActorService {
 	}
 	public String getPrincipalAuthority() {
 		Actor actor;
-
-		actor = this.findByPrincipal();
-		List<Authority> authorities = new ArrayList<>(actor.getUserAccount().getAuthorities());
-
-		return authorities.get(0).getAuthority();
+		String auth;
+		
+		try{
+			actor = this.findByPrincipal();
+			List<Authority> authorities =  new ArrayList<>(actor.getUserAccount().getAuthorities());
+		    auth = authorities.get(0).getAuthority();
+		}catch (Throwable o){ //Exception catched when user is not authenticated
+			auth = "NONE";
+		}
+		
+		return auth;
 	}
 
 }

@@ -46,6 +46,18 @@ public class ReportUpdateController extends AbstractController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "admin/listSuspicious", method = RequestMethod.GET)
+	public ModelAndView listSuspicious() {
+		ModelAndView result;
+		Collection<ReportUpdate> reports;
+
+		reports = reportUpdateService.getSuspiciousReportUpdates();
+		result = new ModelAndView("reportUpdate/list");
+		result.addObject("reportUpdates", reports);
+
+		return result;
+	}
 //	
 //	@RequestMapping(value = "/player/list", method = RequestMethod.GET)
 //	public ModelAndView playerList() {
@@ -61,18 +73,14 @@ public class ReportUpdateController extends AbstractController {
 	
 	// Display ----------------------------------------------------------------
 	@RequestMapping(value = "display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam(required = false) Integer reportUpdateId,
-			@RequestParam(required = false) Integer reportId) {
+	public ModelAndView display(@RequestParam(required = false) Integer reportUpdateId) {
 		ModelAndView result;
 		ReportUpdate reportUpdate;
 		Report report;
-//		String auth;
 		
-//		auth = actorService.getPrincipalAuthority();
-//		Assert.isTrue(auth.equals("PLAYER") || auth.equals("GM"));
+		report = reportService.findReportsByReportUpdate(reportUpdateId);
 
 		reportUpdate = reportUpdateService.findOne(reportUpdateId);
-		report = reportService.findOne(reportId);
 		
 		result = new ModelAndView("reportUpdate/display");
 		
@@ -99,28 +107,31 @@ public class ReportUpdateController extends AbstractController {
 	// Edition ----------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int reportId) {
+	public ModelAndView edit(@RequestParam int reportUpdateId, @RequestParam int reportId) {
 		ModelAndView result;
 		ReportUpdate report;
 
-		report = reportUpdateService.findOne(reportId);
+		report = reportUpdateService.findOne(reportUpdateId);
 		Assert.notNull(report);
 		result = createEditModelAndView(report);
+		result.addObject("reportId",reportId);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid ReportUpdate report, BindingResult binding, @ModelAttribute("reportId") String reportId
+	public ModelAndView save(ReportUpdate reportUpdate, BindingResult binding, @ModelAttribute("reportId") String reportId
 			) {
 		ModelAndView result = null;
+		
+		this.reportUpdateService.reconstruct(reportUpdate, binding);
 
 		if (binding.hasErrors()) {
-			result = createEditModelAndView(report);
+			result = createEditModelAndView(reportUpdate);
 		} else {
 			try {
-				reportUpdateService.save(report,new Integer(reportId));
-				result = new ModelAndView("redirect:/report/gm/list.do");
+				reportUpdateService.save(reportUpdate,new Integer(reportId));
+				result = new ModelAndView("redirect:/reportUpdate/list.do?reportId=" +reportId);
 				
 			} catch (Throwable oops) {
 				String message = "error.commit";
@@ -129,7 +140,7 @@ public class ReportUpdateController extends AbstractController {
 					message = oops.getMessage();
 				}
 				
-				result = createEditModelAndView(report, message);
+				result = createEditModelAndView(reportUpdate, message);
 			}
 		}
 

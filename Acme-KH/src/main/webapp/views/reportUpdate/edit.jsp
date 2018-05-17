@@ -26,10 +26,8 @@
 	
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="date" />
-	<form:hidden path="isSuspicious" />
 	
-	<security:authorize access="hasRole('GM')">
+	<%-- <security:authorize access="hasRole('GM')">
 	<form:hidden path="administrator" value="0"/>
 	<form:hidden path="gameMaster" />
 	</security:authorize>
@@ -37,7 +35,7 @@
 	<security:authorize access="hasRole('ADMIN')">
 	<form:hidden path="administrator" />
 	<form:hidden path="gameMaster" value="0"/>
-	</security:authorize>
+	</security:authorize> --%>
 	
 	<input type="hidden" name="reportId" value="${reportId}"/>
 	
@@ -48,7 +46,6 @@
 		<form:option value="WORKING" label="WORKING" />		
 		<form:option value="RESOLVED" label="RESOLVED" />		
 		<form:option value="IRRESOLVABLE" label="IRRESOLVABLE" />		
-		<form:option value="SUSPICIOUS" label="SUSPICIOUS" />		
 	</form:select>
 	<form:errors path="status" cssClass="error" /><br/><br/>
 	

@@ -12,5 +12,8 @@ public interface ReportUpdateRepository extends JpaRepository<ReportUpdate, Inte
 	@Query("select ru from ReportUpdate ru where ru IN (select rupd from Report r join r.reportUpdates rupd where r.id=?1)")
 	Collection<ReportUpdate> getReportUpdatesByReportId(int reportId);
 	
+	@Query("select ru from ReportUpdate ru where ru.isSuspicious = true")
+	Collection<ReportUpdate> getSuspiciousReportUpdates();
+	
 
 }

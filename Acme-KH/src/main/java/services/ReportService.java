@@ -59,7 +59,8 @@ public class ReportService {
 				}
 			}
 		}else{
-			Assert.isTrue(actorService.getPrincipalAuthority().equals("PLAYER") || actorService.getPrincipalAuthority().equals("GM"));
+			Assert.isTrue(actorService.getPrincipalAuthority().equals("PLAYER") || actorService.getPrincipalAuthority().equals("GM")
+					|| actorService.getPrincipalAuthority().equals("ADMIN"));
 			Assert.isTrue(report.getStatus()!=ReportStatus.ONHOLD);
 			
 		}
@@ -99,6 +100,10 @@ public class ReportService {
 	
 	public Collection<Report> findReportsByPlayer(int playerId){
 		return reportRepository.findReportsByPlayer(playerId);
+	}
+	
+	public Report findReportsByReportUpdate(int reportUpdateId){
+		return reportRepository.findReportsByReportUpdate(reportUpdateId);
 	}
 
 }
