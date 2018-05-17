@@ -206,7 +206,7 @@ public class BuiltService {
 		p.setDate(today);
 		p.setDescription("built.prize.defaultDescription");
 		p.setKeybladeWielder((KeybladeWielder) this.actorService.findByPrincipal());
-		p.setMaterials(l.getTotalMaterials(b.getLvl()));
+		p.setMaterials(l.getTotalCollectMaterials(b.getLvl()));
 
 		this.prizeService.save(p);
 

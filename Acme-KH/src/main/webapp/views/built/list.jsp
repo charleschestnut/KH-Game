@@ -94,7 +94,7 @@
 	<spring:message code="master.page.display" var="displayHeader"></spring:message>	
 	<display:column title="${displayHeader}">
 		<jstl:if test="${row.lvl>0 }">
-			<a href="built/display.do?builtId=${row.id}"></a>
+			<a href="built/display.do?builtId=${row.id}"><jstl:out value="${displayHeader }"></jstl:out></a>
 		</jstl:if>
 	</display:column>
 		

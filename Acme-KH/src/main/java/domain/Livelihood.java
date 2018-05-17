@@ -82,9 +82,8 @@ public class Livelihood extends Building {
 	 * 
 	 * @return Los materiales totales este edificio de nivel "lvl" recolecta
 	 */
-	@Override
 	@Transient
-	public Materials getTotalMaterials(final Integer lvl) {
+	public Materials getTotalCollectMaterials(final Integer lvl) {
 		final Materials res = new Materials();
 
 		final Integer munny = this.getMaterials().getMunny();

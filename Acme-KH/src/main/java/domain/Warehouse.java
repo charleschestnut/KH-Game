@@ -80,9 +80,8 @@ public class Warehouse extends Building {
 	 * 
 	 * @return Cuantos materiales puede almacenar en total el edificio de nivel "lvl"
 	 */
-	@Override
 	@Transient
-	public Materials getTotalMaterials(final Integer lvl) {
+	public Materials getTotalSlotsMaterials(final Integer lvl) {
 		final Materials res = new Materials();
 
 		final Integer munny = this.getMaterialsSlots().getMunny();
