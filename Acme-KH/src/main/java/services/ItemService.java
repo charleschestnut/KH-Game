@@ -25,6 +25,8 @@ public class ItemService {
 	private ActorService actorService;
 	@Autowired
 	private PurchaseService purchaseService;
+	@Autowired
+	private KeybladeWielderService keybladeWielderService;
 
 	// CRUD methods
 
@@ -94,6 +96,7 @@ public class ItemService {
 		p.setExpirationDate(expirationDate);
 
 		this.purchaseService.save(p);
+		this.keybladeWielderService.save(player);
 
 		return p;
 

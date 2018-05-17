@@ -38,7 +38,7 @@
 					<li><a href="built/list.do"><spring:message code="master.page.myBuilding" /></a></li>
 					<li><a href="item/player/shopItemsList.do"><spring:message code="master.page.shop" /></a></li>
 					<li><a href="item/player/ownedItemsList.do"><spring:message code="master.page.myItems" /></a></li>
-					
+					<li><a href="item/player/activeItemsList.do"><spring:message code="master.page.activeItems" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

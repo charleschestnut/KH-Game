@@ -68,7 +68,7 @@ public class PurchaseService {
 	
 	// Activar un item
 	public void activeItem(Purchase purchase) {
-		purchase.setActivationDate(new Date(System.currentTimeMillis()-100));
+		purchase.setActivationDate(new Date(System.currentTimeMillis() + purchase.getItem().getDuration()*60*1000));
 		this.save(purchase);
 	}
 	
@@ -79,6 +79,11 @@ public class PurchaseService {
 	
 	public Collection<Purchase> noActivePurchasesByPlayer(int playerId) {
 		return this.purchaseRepository.noActivePurchasesByPlayer(playerId);
+	}
+	
+	// Lista de items que estan activos
+	public Collection<Purchase> activePurchasesByPlayer(int playerId) {
+		return this.purchaseRepository.activePurchasesByPlayer(playerId);
 	}
 
 }

@@ -47,9 +47,8 @@ public class Purchase extends DomainEntity {
 	}
 	/**
 	 * 
-	 * usada para controlar el tiempo de activación, null si no se ha utilizado aún
+	 * usada para controlar el tiempo de activación, es hasta cuando dura el item, null si no se ha utilizado aún
 	 */
-	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getActivationDate() {

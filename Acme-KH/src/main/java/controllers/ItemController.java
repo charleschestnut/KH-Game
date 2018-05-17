@@ -1,9 +1,6 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -86,6 +83,21 @@ public class ItemController extends AbstractController{
 		this.purchaseService.activeItem(purchase);
 		
 		result = new ModelAndView("redirect:/item/player/ownedItemsList.do");
+		
+		return result;
+	}
+	
+	// Listar items que estan activos
+	@RequestMapping(value = "/activeItemsList", method = RequestMethod.GET)
+	public ModelAndView activeItemsList() {
+		ModelAndView result;
+		Collection<Purchase> purchases;
+		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+		
+		purchases = this.purchaseService.activePurchasesByPlayer(player.getId());
+		
+		result = new ModelAndView("item/player/activeItemsList");
+		result.addObject("purchases", purchases);
 		
 		return result;
 	}
