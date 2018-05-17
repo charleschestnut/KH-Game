@@ -18,7 +18,7 @@ import services.PurchaseService;
 
 @Controller
 @RequestMapping("/item/player")
-public class ItemController extends AbstractController{
+public class ItemUserController extends AbstractController{
 	
 	@Autowired
 	private ItemService itemService;

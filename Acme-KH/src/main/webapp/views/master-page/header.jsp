@@ -57,6 +57,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.manager" /></a>
 				<ul>
 					<li><a href="building/contentManager/myList.do"><spring:message code="master.page.myBuilding" /></a></li>
+					<li><a href="item/manager/create.do"><spring:message code="master.page.createItem" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

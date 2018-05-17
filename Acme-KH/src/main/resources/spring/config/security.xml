@@ -94,7 +94,7 @@
 		
 		<!-- ISMAEL -->
 		<security:intercept-url pattern="/item/player/**" access="hasRole('PLAYER')" /> 
-		
+		<security:intercept-url pattern="/item/manager/**" access="hasRole('MANAGER')" />
 		
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />

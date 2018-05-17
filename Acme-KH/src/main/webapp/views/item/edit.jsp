@@ -20,24 +20,28 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="report/edit.do" modelAttribute="report">
+<form:form action="item/manager/edit.do" modelAttribute="item">
 	
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	
-	<form:label path="isBug">
-		<spring:message code="report.type" />
-	</form:label>	
-	<form:select id="${id}" path="isBug">
-		<form:option value="0" label="----" />		
-		<form:option value="true" label="<spring:message code="report.bug" />" />		
-		<form:option value="false" label="<spring:message code="report.asistence" />" />		
-	</form:select>
-	<form:errors path="isBug" cssClass="error" /><br/>
+	<acme:textbox code="item.name" path="name"/>
+	<acme:textarea code="item.description" path="description"/>
+	<acme:textbox code="item.duration" path="duration"/>
+	<acme:textbox code="item.expiration" path="expiration"/>
+	<acme:textbox code="item.extra" path="extra"/>
+	<acme:textbox code="item.munnyCost" path="munnyCost"/>
 	
-	<acme:textbox code="report.title" path="title"/><br/>
-	<acme:textbox code="report.content" path="content"/><br/>
-	<acme:textbox code="report.photos" path="photos"/><br/>
+	<form:select path="type">
+                <form:option value="ATTACKBOOST"><spring:message code="item.attackBoost" /></form:option>
+                <form:option value="DEFENSEBOOST"><spring:message code="item.defenseBoost" /></form:option>
+                <form:option value="RESOURCEBOOST"><spring:message code="item.resourceBoost" /></form:option>
+                <form:option value="SHIELD"><spring:message code="item.shield" /></form:option>
+            </form:select>
+	
+	<form:checkbox path="onSell" value="true" />
+	<spring:message code="item.onSell" />
+	
 	
 	<acme:submit code="master.page.save"  name="save" />
 	<acme:cancel code="master.page.return" url="/" />
