@@ -28,6 +28,7 @@
 				</bean>
 			</list>
 		</property>
+		<property name="enabled" value="true" />
 	</bean>
 	
 	<bean id="userAccount2" class="security.UserAccount">
@@ -40,6 +41,7 @@
 				</bean>
 			</list>
 		</property>
+		<property name="enabled" value="true" />
 	</bean>
 	
 	<bean id="userAccount3" class="security.UserAccount">
@@ -52,6 +54,7 @@
 				</bean>
 			</list>
 		</property>
+		<property name="enabled" value="true" />
 	</bean>
 	
 	<bean id="userAccount4" class="security.UserAccount">
@@ -64,6 +67,7 @@
 				</bean>
 			</list>
 		</property>
+		<property name="enabled" value="true" />
 	</bean>
 	
 	<bean id="userAccount5" class="security.UserAccount">
@@ -76,6 +80,7 @@
 				</bean>
 			</list>
 		</property>
+		<property name="enabled" value="true" />
 	</bean>
 
 	
