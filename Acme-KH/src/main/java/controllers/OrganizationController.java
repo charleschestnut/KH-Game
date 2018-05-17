@@ -60,11 +60,16 @@ public class OrganizationController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Organization> all = this.organizationService.findAll();
+		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
+		Boolean hasOrganization = this.organizationService.keybladeWielderHasOrganization(actual.getId());
 		
 		result = new ModelAndView("organization/list");
 		result.addObject("organizations", all);
 		result.addObject("requestURI", "organization/list.do");
-
+		result.addObject("hasOrganization", hasOrganization);
+		if(hasOrganization){
+			result.addObject("organizationId", this.organizationService.findOrganizationByPlayer(actual.getId()).getId());
+		}
 		return result;
 	}
 
@@ -76,11 +81,14 @@ public class OrganizationController extends AbstractController {
 		int orgId = Integer.parseInt(organizationId);
 
 		Collection<Invitation> membersInvitations = this.invitationService.findAllMembersOfOrganization(orgId);
+		Invitation actual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(this.actorService.findByPrincipal().getId(), orgId);
+		Boolean canChat = membersInvitations.contains(actual);
 		
 		result = new ModelAndView("organization/membersList");
 		result.addObject("organizationId", orgId);
 		result.addObject("requestURI", "organization/membersList.do?organizationId="+organizationId);
 		result.addObject("membersInvitations", membersInvitations);
+		result.addObject("canChat", canChat);
 		
 		return result;
 	}

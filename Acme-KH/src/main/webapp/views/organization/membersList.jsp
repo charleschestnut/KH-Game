@@ -17,6 +17,9 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<jstl:if test="${canChat}">
+	<acme:action code="organization.chat"  url="organization/chatty/list.do?organizationId=${organizationId}"/>
+</jstl:if>
 
 <display:table pagesize="${pageSize}" class="displaytag" 
 	name="membersInvitations" requestURI="${requestURI}" id="row">

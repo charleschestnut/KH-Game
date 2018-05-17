@@ -43,6 +43,14 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('PLAYER')">
+			<li><a class="fNiv"><spring:message	code="master.page.organization" /></a>
+				<ul>	
+					<li><a href="organization/list.do"><spring:message code="organization.list" /></a></li>
+				</ul>
+			</li>
+		</security:authorize>
+		
 		<security:authorize access="hasRole('MANAGER')">
 			<li><a class="fNiv"><spring:message	code="master.page.manager" /></a>
 				<ul>
