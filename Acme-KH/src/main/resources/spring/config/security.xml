@@ -68,6 +68,7 @@
 		<security:intercept-url pattern="/built/list.do " access="hasRole('PLAYER')" />
 		<security:intercept-url pattern="/built/create.do " access="hasRole('PLAYER')" />
 		<security:intercept-url pattern="/built/upgrade.do " access="hasRole('PLAYER')" />
+				<security:intercept-url pattern="/built/display.do " access="hasRole('PLAYER')" />
 			 
 		
 		<!-- ÁNGEL LOZANO -->
