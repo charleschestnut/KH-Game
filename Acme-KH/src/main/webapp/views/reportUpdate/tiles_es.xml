@@ -31,5 +31,6 @@
 		<put-attribute name="body" value="/views/reportUpdate/display.jsp" />
 	</definition>
 	
+	<definition name="reportUpdate/table" template="/views/reportUpdate/reportUpdateTable.jsp" /> 
 	
 </tiles-definitions>

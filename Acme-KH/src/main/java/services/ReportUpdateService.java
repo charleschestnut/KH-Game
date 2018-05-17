@@ -30,7 +30,7 @@ public class ReportUpdateService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private ReportUpdateRepository ReportUpdateRepository;
+	private ReportUpdateRepository reportUpdateRepository;
 	@Autowired
 	private ActorService actorService;
 	@Autowired
@@ -61,7 +61,7 @@ public class ReportUpdateService {
 			Assert.isTrue(report.getReportUpdates().contains(reportUpdate),
 					"error.message.distincReport");
 		}
-		saved = ReportUpdateRepository.save(reportUpdate);
+		saved = reportUpdateRepository.save(reportUpdate);
 
 		if (reportUpdate.getId() == 0) {
 			report.getReportUpdates().add(saved);
@@ -78,7 +78,7 @@ public class ReportUpdateService {
 
 		ReportUpdate ReportUpdate;
 
-		ReportUpdate = ReportUpdateRepository.findOne(reportUpdateId);
+		ReportUpdate = reportUpdateRepository.findOne(reportUpdateId);
 
 		return ReportUpdate;
 	}
@@ -94,7 +94,7 @@ public class ReportUpdateService {
 		
 		ReportUpdate reportUpdate;
 
-		reportUpdate = ReportUpdateRepository.findOne(reportUpdateId);
+		reportUpdate = reportUpdateRepository.findOne(reportUpdateId);
 		
 		Assert.isTrue(reportUpdate.getCreator().equals(actorService.findByPrincipal()),"error.message.notOwnUpdate");
 
@@ -104,7 +104,7 @@ public class ReportUpdateService {
 	public Collection<ReportUpdate> findAll() {
 		Collection<ReportUpdate> ReportUpdates;
 
-		ReportUpdates = ReportUpdateRepository.findAll();
+		ReportUpdates = reportUpdateRepository.findAll();
 
 		return ReportUpdates;
 	}
@@ -112,27 +112,27 @@ public class ReportUpdateService {
 	public void delete(ReportUpdate ReportUpdate) {
 		Assert.notNull(ReportUpdate);
 
-		ReportUpdateRepository.delete(ReportUpdate);
+		reportUpdateRepository.delete(ReportUpdate);
 	}
 
 	// Other business methods
 
 	public Collection<ReportUpdate> getReportUpdatesByReportId(int reportId) {
-		return ReportUpdateRepository.getReportUpdatesByReportId(reportId);
+		return reportUpdateRepository.getReportUpdatesByReportId(reportId);
 	}
 
 	public void markSuspicious(ReportUpdate reportUpdate) {
 		Assert.notNull(reportUpdate);
 
 		reportUpdate.setIsSuspicious(true);
-		ReportUpdateRepository.save(reportUpdate);
+		reportUpdateRepository.save(reportUpdate);
 	}
 
 	public Collection<ReportUpdate> getSuspiciousReportUpdates() {
 		Assert.isTrue(actorService.getPrincipalAuthority().equals(
 				Authority.ADMIN));
 
-		return ReportUpdateRepository.getSuspiciousReportUpdates();
+		return reportUpdateRepository.getSuspiciousReportUpdates();
 	}
 
 	public ReportUpdate reconstruct(ReportUpdate reportUpdate,
@@ -173,6 +173,14 @@ public class ReportUpdateService {
 		this.validator.validate(reportUpdate, binding);
 
 		return reportUpdate;
+	}
+	
+	public Collection<ReportUpdate> getReportUpdatesByActorId(int reportId, int actorId){
+		return reportUpdateRepository.getReportUpdatesByActorId(reportId, actorId);
+	}
+	
+	public Collection<ReportUpdate> getResolvedReportUpdates(int reportId){
+		return reportUpdateRepository.getResolvedReportUpdates(reportId);
 	}
 
 }

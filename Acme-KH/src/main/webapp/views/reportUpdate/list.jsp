@@ -23,16 +23,26 @@
 
 <!-- Listing grid -->
 
+<script type="text/javascript">
+	function reloadTable(event, reportId) {
+		var type = $('select#type').val();
+		var div = $('#container');
+		var path = "reportUpdate/listByType.do?reportId=" + reportId + "&type=" + type;
+		event.preventDefault();
+		div.load(path);
+		return false;
+	}
+</script>
+
+<select id="type" onchange="javascript: reloadTable(event, ${report.id})">
+	<option value="all"><spring:message code="reportUpdate.showAll"/></option>
+	<option value="mine"><spring:message code="reportUpdate.showMine"/></option>
+	<option value="resolved"><spring:message code="reportUpdate.showResolved"/></option>
+</select>
+
+<div id="container">
 <display:table name="reportUpdates" id="row" requestURI="${requestURI}"
 	pagesize="5" class="displaytag">
-
-	<%-- <spring:message code="report" var="reportH" />
-	<display:column title="${reportH}">
-	<jstl:out value="${report.title}"/>
-	</display:column>
-	
-	<spring:message code="report.status" var="status" />
-	<display:column title="${report.status}" property="status"/> --%>
 
 	<spring:message code="report.status" var="status" />
 	<display:column title="${status}" property="status" />
@@ -48,10 +58,8 @@
 		<a
 			href="reportUpdate/display.do?reportUpdateId=${row.id}">${display}</a>
 	</display:column>
-
-
 </display:table>
-
+</div>
 <!-- Action links -->
 
 <div>
