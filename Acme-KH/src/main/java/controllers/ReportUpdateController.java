@@ -111,15 +111,15 @@ public class ReportUpdateController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid ReportUpdate report, BindingResult binding, @ModelAttribute("reportId") String reportId,
-			@ModelAttribute("status") String status) {
+	public ModelAndView save(@Valid ReportUpdate report, BindingResult binding, @ModelAttribute("reportId") String reportId
+			) {
 		ModelAndView result = null;
 
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(report);
 		} else {
 			try {
-				reportUpdateService.save(report,new Integer(reportId),ReportStatus.valueOf(status));
+				reportUpdateService.save(report,new Integer(reportId));
 				result = new ModelAndView("redirect:/report/gm/list.do");
 				
 			} catch (Throwable oops) {
@@ -149,6 +149,24 @@ public class ReportUpdateController extends AbstractController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/player/markSuspicious", method = RequestMethod.GET)
+	public ModelAndView markSuspicious(@RequestParam(required = true) int reportUpdateId,
+			@RequestParam(required = true) int reportId) {
+		ModelAndView result = null;
+		ReportUpdate reportUpdate;
+		
+		reportUpdate = reportUpdateService.findOne(reportUpdateId);
+		
+		try{
+			reportUpdateService.markSuspicious(reportUpdate);
+			result = new ModelAndView("redirect:/reportUpdate/display.do?reportUpdateId=" +reportUpdateId + "&reportId=" + reportId);
+		} catch (Throwable oops) {
+			result = createEditModelAndViewList(reportUpdate, "bulletin.commit.error");
+		}
+		
+		return result;
+	}
 
 	// Ancillary methods ------------------------------------------------------
 
@@ -170,5 +188,17 @@ public class ReportUpdateController extends AbstractController {
 
 		return result;
 	}
+	
+	protected ModelAndView createEditModelAndViewList(ReportUpdate reportUpdate,
+			String message) {
+		ModelAndView result;
+
+		result = new ModelAndView("reportUpdate/list");
+		result.addObject("reportUpdate", reportUpdate);
+		result.addObject("message", message);
+
+		return result;
+	}
+
 
 }

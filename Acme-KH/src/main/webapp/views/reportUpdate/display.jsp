@@ -40,10 +40,26 @@
 	<li><b><spring:message code="report.date"></spring:message></b>
 		<jstl:out value="${reportUpdate.date}" /></li>
 		
+	<li><b><spring:message code="report.status"></spring:message></b>
+		<jstl:out value="${reportUpdate.status}" /></li>
+		
 	<li><b><spring:message code="report.content"></spring:message></b>
 		<jstl:out value="${reportUpdate.content}" /></li>
 			
 </ul>
 </fieldset>
 
+<security:authorize access="hasRole('PLAYER')">
+<jstl:if test="${reportUpdate.isSuspicious eq false}">
+<a href="reportUpdate/player/markSuspicious.do?reportUpdateId=${reportUpdate.id}&reportId=${report.id}"><spring:message code="reportUpdate.mark.suspicious"/></a>
+</jstl:if>
+
+<br/>
+<jstl:if test="${reportUpdate.isSuspicious eq true}">
+<spring:message code="reportUpdate.marked.suspicious"/>
+</jstl:if>
+</security:authorize>
+
+<br/>
+<br/>
 <acme:goback/>

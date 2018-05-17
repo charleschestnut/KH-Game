@@ -39,6 +39,7 @@ public class ReportUpdateService {
 		actor = actorService.findByPrincipal();
 		
 		reportUpdate.setDate(new Date(System.currentTimeMillis()-1000));
+		reportUpdate.setIsSuspicious(false);
 		
 		if(actorService.getPrincipalAuthority().equals("ADMIN")){
 			reportUpdate.setAdministrator((Administrator) actor);
@@ -51,7 +52,7 @@ public class ReportUpdateService {
 		return reportUpdate;
 	}
 	
-	public ReportUpdate save(ReportUpdate reportUpdate, Integer reportId, ReportStatus status){
+	public ReportUpdate save(ReportUpdate reportUpdate, Integer reportId){
 		Assert.notNull(reportUpdate);
 		Report report;
 		ReportUpdate saved;
@@ -62,7 +63,7 @@ public class ReportUpdateService {
 		saved = ReportUpdateRepository.save(reportUpdate);
 		
 		report.getReportUpdates().add(saved);
-		report.setStatus(status);
+		report.setStatus(saved.getStatus());
 		
 		reportService.save(report);
 		
@@ -98,6 +99,13 @@ public class ReportUpdateService {
 	
 	public Collection<ReportUpdate> getReportUpdatesByReportId(int reportId){
 		return ReportUpdateRepository.getReportUpdatesByReportId(reportId);
+	}
+	
+	public void markSuspicious(ReportUpdate reportUpdate){
+		Assert.notNull(reportUpdate);
+		
+		reportUpdate.setIsSuspicious(true);
+		ReportUpdateRepository.save(reportUpdate);
 	}
 
 }

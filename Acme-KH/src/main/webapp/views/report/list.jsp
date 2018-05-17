@@ -39,12 +39,13 @@
 	<a href="report/display.do?reportId=<jstl:out value="${row.id}" />" ><jstl:out value="${display}" /></a>
 	</display:column>
 	
-	<security:authorize access="hasRole('GM')">
+	
 	<spring:message code="report.seeUpdates" var="seeUpdates" />
 	<display:column title="${seeUpdates}">
 	<a href="reportUpdate/list.do?reportId=<jstl:out value="${row.id}" />" ><jstl:out value="${seeUpdates}" /></a>
 	</display:column>
 	
+	<security:authorize access="hasRole('GM')">
 	<spring:message code="reportUpdate.create" var="createUpdate" />
 	<display:column title="${createUpdate}">
 	<jstl:if test="${row.status == 'RESOLVED'}">
@@ -60,9 +61,10 @@
 </display:table>
 
 <!-- Action links -->
-
+<security:authorize access="hasRole('PLAYER')">
 <div>
 	<a href="report/player/create.do"> 
 		<spring:message code="report.create" />
 	</a>
 </div>
+</security:authorize>

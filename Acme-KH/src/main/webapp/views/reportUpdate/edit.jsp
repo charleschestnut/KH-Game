@@ -27,6 +27,7 @@
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="date" />
+	<form:hidden path="isSuspicious" />
 	
 	<security:authorize access="hasRole('GM')">
 	<form:hidden path="administrator" value="0"/>
@@ -40,15 +41,16 @@
 	
 	<input type="hidden" name="reportId" value="${reportId}"/>
 	
-	<label for="status">
+	<form:label path="status">
 		<spring:message code="report.status" />
-	</label>	
-	<select name="status" >
-		<option value="WORKING" label="WORKING" />		
-		<option value="RESOLVED" label="RESOLVED" />		
-		<option value="IRRESOLVABLE" label="IRRESOLVABLE" />		
-		<option value="SUSPICIOUS" label="SUSPICIOUS" />		
-	</select>
+	</form:label>	
+	<form:select path="status">
+		<form:option value="WORKING" label="WORKING" />		
+		<form:option value="RESOLVED" label="RESOLVED" />		
+		<form:option value="IRRESOLVABLE" label="IRRESOLVABLE" />		
+		<form:option value="SUSPICIOUS" label="SUSPICIOUS" />		
+	</form:select>
+	<form:errors path="status" cssClass="error" /><br/><br/>
 	
 	<acme:textarea code="report.content" path="content"/><br/>
 	

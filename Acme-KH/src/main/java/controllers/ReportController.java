@@ -18,6 +18,7 @@ import services.ActorService;
 import services.ReportService;
 import domain.Actor;
 import domain.Report;
+import domain.ReportStatus;
 
 @Controller()
 @RequestMapping("/report")
@@ -110,6 +111,7 @@ public class ReportController extends AbstractController {
 			result = createEditModelAndView(report);
 		} else {
 			try {
+				
 				reportService.save(report);
 				if(actorService.getPrincipalAuthority().equals(Authority.PLAYER)){
 					result = new ModelAndView("redirect:player/list.do");
@@ -146,7 +148,7 @@ public class ReportController extends AbstractController {
 
 		return result;
 	}
-
+	
 	// Ancillary methods ------------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(Report report) {
