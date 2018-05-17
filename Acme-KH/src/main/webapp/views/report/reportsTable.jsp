@@ -1,13 +1,3 @@
-<%--
- * list.jsp
- *
- * Copyright (C) 2017 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- --%>
-
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -19,33 +9,6 @@
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<script type="text/javascript">
-	function reloadTable(event, usertype) {
-		var type = $('select#type').val();
-		var div = $('#container');
-		var path = "";
-		if(usertype === 'all'){
-			path = "report/listByStatus.do?status=" + type;
-		}else{
-			path = "report/player/listByStatus.do?status=" + type;
-		}
-		event.preventDefault();
-		div.load(path);
-		return false;
-	}
-</script>
-
-<select id="type" onchange="javascript: reloadTable(event, '${user}')">
-	<option value="ONHOLD"><spring:message code="report.onhold"/></option>
-	<option value="WORKING"><spring:message code="report.working"/></option>
-	<option value="RESOLVED"><spring:message code="report.resolved"/></option>
-	<option value="IRRESOLVABLE"><spring:message code="report.irresolvable"/></option>
-	<option value="SUSPICIOUS"><spring:message code="report.suspicious"/></option>
-</select>
-
-<!-- Listing grid -->
-
-<div id="container">
 <display:table name="reports" id="row" 
     requestURI="${requestURI}" 
     pagesize="5" class="displaytag">
@@ -84,12 +47,3 @@
 
 
 </display:table>
-</div>
-<!-- Action links -->
-<security:authorize access="hasRole('PLAYER')">
-<div>
-	<a href="report/player/create.do"> 
-		<spring:message code="report.create" />
-	</a>
-</div>
-</security:authorize>

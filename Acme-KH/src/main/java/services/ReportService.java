@@ -105,5 +105,13 @@ public class ReportService {
 	public Report findReportsByReportUpdate(int reportUpdateId){
 		return reportRepository.findReportsByReportUpdate(reportUpdateId);
 	}
+	
+	public Collection<Report> getReportsByStatus(ReportStatus status){
+		return reportRepository.getReportsByStatus(status);
+	}
+	
+	public Collection<Report> getReportsByStatusAndPlayer(ReportStatus status, int playerId){
+		return reportRepository.getReportsByStatusAndPlayer(status, playerId);
+	}
 
 }

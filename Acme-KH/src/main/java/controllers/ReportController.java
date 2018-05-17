@@ -40,6 +40,25 @@ public class ReportController extends AbstractController {
 		reports = reportService.findAll();
 		result = new ModelAndView("report/list");
 		result.addObject("reports", reports);
+		result.addObject("user", "all");
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/listByStatus", method = RequestMethod.GET)
+	public ModelAndView listByStatus(@RequestParam (required = false) String status) {
+		ModelAndView result;
+		Collection<Report> reports;
+
+		if(status != null){
+			reports = reportService.getReportsByStatus(ReportStatus.valueOf(status));
+		}else{
+			reports = reportService.findAll();
+		}
+		
+		result = new ModelAndView("report/table");
+		result.addObject("reports", reports);
+		result.addObject("user", "all");
 
 		return result;
 	}
@@ -53,6 +72,21 @@ public class ReportController extends AbstractController {
 		result = new ModelAndView("report/list");
 		result.addObject("requestURI", "report/player/list.do");
 		result.addObject("reports", reports);
+		result.addObject("user", "player");
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/player/listByStatus", method = RequestMethod.GET)
+	public ModelAndView playerListByStatus(@RequestParam (required = false) String status) {
+		ModelAndView result;
+		Collection<Report> reports;
+
+		reports = reportService.getReportsByStatusAndPlayer(ReportStatus.valueOf(status), actorService.findByPrincipal().getId());
+		result = new ModelAndView("report/table");
+		result.addObject("requestURI", "report/player/list.do");
+		result.addObject("reports", reports);
+		result.addObject("user", "player");
 
 		return result;
 	}
