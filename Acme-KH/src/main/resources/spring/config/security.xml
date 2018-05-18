@@ -88,12 +88,14 @@
 		<security:intercept-url pattern="/report/list.do" access="hasAnyRole('GM','ADMIN')" /> 
 		<security:intercept-url pattern="/report/gm/**" access="hasRole('GM')" /> 
 		<security:intercept-url pattern="/report/player/**" access="hasRole('PLAYER')" /> 
-		<security:intercept-url pattern="/report/**" access="hasAnyRole('GM', 'PLAYER','ADMIN')"  /> 
-		<security:intercept-url pattern="/report/display/**" access="hasAnyRole('GM', 'PLAYER','ADMIN')"  /> 
+		<security:intercept-url pattern="/report/listByStatus.do" access="hasAnyRole('GM', 'PLAYER','ADMIN')"  /> 
+		<security:intercept-url pattern="/report/display/**" access="hasAnyRole('GM', 'PLAYER','ADMIN')"  />
+		 
 		<security:intercept-url pattern="/reportUpdate/list.do" access="hasAnyRole('GM', 'ADMIN','PLAYER')"  /> 
 		<security:intercept-url pattern="/reportUpdate/display.do" access="hasAnyRole('GM', 'ADMIN','PLAYER')"  /> 
 		<security:intercept-url pattern="/reportUpdate/player/**" access="hasRole('PLAYER')"  /> 
 		<security:intercept-url pattern="/reportUpdate/admin/**" access="hasRole('ADMIN')"  /> 
+		<security:intercept-url pattern="/reportUpdate/listByType.do" access="hasAnyRole('GM', 'ADMIN','PLAYER')"  /> 
 		<security:intercept-url pattern="/reportUpdate/**" access="hasAnyRole('GM', 'ADMIN')"  /> 
 		
 		<!-- ISMAEL -->
