@@ -84,9 +84,72 @@ public class Materials {
 
 	}
 
+	@Transient
+	public Materials removeExcess(final Materials max) {
+		final Materials res = new Materials();
+		final Integer munny = this.getMunny();
+		final Integer coal = this.getGummiCoal();
+		final Integer mytrhil = this.getMytrhil();
+
+		if (munny <= max.getMunny())
+			res.setMunny(munny);
+		else
+			res.setMunny(max.getMunny());
+
+		if (coal <= max.getGummiCoal())
+			res.setGummiCoal(coal);
+		else
+			res.setGummiCoal(max.getGummiCoal());
+
+		if (mytrhil <= max.getMytrhil())
+			res.setMytrhil(mytrhil);
+		else
+			res.setMytrhil(max.getMytrhil());
+
+		return res;
+
+	}
+	@Transient
 	@Override
 	public String toString() {
 		return "Munny=" + this.munny + ", Mytrhil=" + this.mytrhil + ", Gummi Coal=" + this.gummiCoal;
+	}
+	@Transient
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.gummiCoal == null) ? 0 : this.gummiCoal.hashCode());
+		result = prime * result + ((this.munny == null) ? 0 : this.munny.hashCode());
+		result = prime * result + ((this.mytrhil == null) ? 0 : this.mytrhil.hashCode());
+		return result;
+	}
+	@Transient
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (this.getClass() != obj.getClass())
+			return false;
+		final Materials other = (Materials) obj;
+		if (this.gummiCoal == null) {
+			if (other.gummiCoal != null)
+				return false;
+		} else if (!this.gummiCoal.equals(other.gummiCoal))
+			return false;
+		if (this.munny == null) {
+			if (other.munny != null)
+				return false;
+		} else if (!this.munny.equals(other.munny))
+			return false;
+		if (this.mytrhil == null) {
+			if (other.mytrhil != null)
+				return false;
+		} else if (!this.mytrhil.equals(other.mytrhil))
+			return false;
+		return true;
 	}
 
 }

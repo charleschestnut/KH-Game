@@ -147,14 +147,16 @@ public class BuiltService {
 			final Materials extra = this.extraMaterials();
 			final Materials base = this.configurationService.getConfiguration().getBaseMaterials();
 			final Materials esteWarehouse = w.getTotalSlotsMaterials(built.getLvl());
-			final Materials tengo = player.getMaterials();
+			final Materials tenia = player.getMaterials();
 			Materials total = base.add(extra);
 			total = total.substract(esteWarehouse);
+			final Materials tengo = tenia.removeExcess(total);
 
-			if (tengo.isHigherThan(total)) {
-				player.setMaterials(total);
+			if (!tengo.equals(tenia)) {
+				player.setMaterials(tengo);
 				this.keybladeWielderService.save(player);
 			}
+
 		}
 
 		this.BuiltRepository.delete(built);

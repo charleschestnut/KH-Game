@@ -121,10 +121,16 @@
 					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate==null }">
 						<a href="built/collect.do?builtId=${row.id}"><jstl:out value="${startCollect}"></jstl:out></a>
 					</jstl:when>
-					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.haTerminado(row.building.getTotalTime(row.lvl))}">
-						<a href="TODO: Enlace para crear los recruited pasandole un builtId"><jstl:out value="${recruit}"></jstl:out></a>
+					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.troop!=null && row.haTerminado(row.troop.timeToRecruit)}">
+						<a href="TODO: Enlace para crear los recruited con una tropa pasandole un builtId"><jstl:out value="${recruit}"></jstl:out></a>
 					</jstl:when>
-					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && !row.haTerminado(row.building.getTotalTime(row.lvl)) }">
+					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.troop!=null && !row.haTerminado(row.troop.timeToRecruit) }">
+						<jstl:out value="${working }"></jstl:out>
+					</jstl:when>
+					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.gummiShip!=null && row.haTerminado(row.gummiShip.timeToRecruit)}">
+						<a href="TODO: Enlace para crear los recruited con una nave pasandole un builtId. Si el mismo que el anterior poner el mismo enlace aqui"><jstl:out value="${recruit}"></jstl:out></a>
+					</jstl:when>
+					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.gummiShip!=null && !row.haTerminado(row.gummiShip.timeToRecruit) }">
 						<jstl:out value="${working }"></jstl:out>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate==null }">

@@ -22,11 +22,11 @@ public interface BuiltRepository extends JpaRepository<Built, Integer> {
 	@Query("select b from Built b where b.keybladeWielder.id=?1 AND b.building in (select w from Warehouse w ) AND (b.building.gummiSlots*(1+(b.lvl-1)*b.building.extraSlotsPerLvl))>(select count(t) from Recruited t where t.storageBuilding.id=b.id AND t.troop is null)")
 	Collection<Built> getMyFreeWarehousesGummi(Integer playerId);
 
-	@Query("select sum(b.building.materialsSlots.munny * (1+(b.lvl-1)*b.building.extraSlotsPerLvl)) from Built b where b.keybladeWielder.id=?1 AND b.building in (select w from Warehouse w) ")
+	@Query("select sum(b.building.materialsSlots.munny * (1+(b.lvl-1)*b.building.extraSlotsPerLvl)) from Built b where b.keybladeWielder.id=?1 AND b.lvl>0 AND b.building in (select w from Warehouse w) ")
 	Integer getExtraMunny(Integer playerId);
-	@Query("select sum(b.building.materialsSlots.mytrhil * (1+(b.lvl-1)*b.building.extraSlotsPerLvl)) from Built b where b.keybladeWielder.id=?1 AND b.building in (select w from Warehouse w) ")
+	@Query("select sum(b.building.materialsSlots.mytrhil * (1+(b.lvl-1)*b.building.extraSlotsPerLvl)) from Built b where b.keybladeWielder.id=?1 AND b.lvl>0  AND b.building in (select w from Warehouse w) ")
 	Integer getExtraMythril(Integer playerId);
-	@Query("select sum(b.building.materialsSlots.gummiCoal * (1+(b.lvl-1)*b.building.extraSlotsPerLvl)) from Built b where b.keybladeWielder.id=?1 AND b.building in (select w from Warehouse w) ")
+	@Query("select sum(b.building.materialsSlots.gummiCoal * (1+(b.lvl-1)*b.building.extraSlotsPerLvl)) from Built b where b.keybladeWielder.id=?1 AND b.lvl>0  AND b.building in (select w from Warehouse w) ")
 	Integer getExtraGummiCoal(Integer playerId);
 
 }
