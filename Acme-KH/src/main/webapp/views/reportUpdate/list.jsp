@@ -34,6 +34,7 @@
 	}
 </script>
 
+<jstl:if test="${empty suspiciousList}">
 <select id="type" onchange="javascript: reloadTable(event, ${report.id})">
 	<option value="all"><spring:message code="reportUpdate.showAll"/></option>
 	<security:authorize access="hasRole('GM') or hasRole('ADMIN')">
@@ -41,7 +42,7 @@
 	</security:authorize>
 	<option value="resolved"><spring:message code="reportUpdate.showResolved"/></option>
 </select>
-
+</jstl:if>
 <div id="container">
 <display:table name="reportUpdates" id="row" requestURI="${requestURI}"
 	pagesize="5" class="displaytag">

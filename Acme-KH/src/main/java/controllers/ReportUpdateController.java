@@ -92,6 +92,7 @@ public class ReportUpdateController extends AbstractController {
 		reports = reportUpdateService.getSuspiciousReportUpdates();
 		result = new ModelAndView("reportUpdate/list");
 		result.addObject("reportUpdates", reports);
+		result.addObject("suspiciousList", true);
 
 		return result;
 	}
