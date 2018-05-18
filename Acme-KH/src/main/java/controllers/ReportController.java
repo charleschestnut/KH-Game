@@ -82,7 +82,12 @@ public class ReportController extends AbstractController {
 		ModelAndView result;
 		Collection<Report> reports;
 
-		reports = reportService.getReportsByStatusAndPlayer(ReportStatus.valueOf(status), actorService.findByPrincipal().getId());
+		if(!status.equals("all")){
+			reports = reportService.getReportsByStatusAndPlayer(ReportStatus.valueOf(status), actorService.findByPrincipal().getId());
+		}else{
+			reports = reportService.findReportsByPlayer(actorService.findByPrincipal().getId());
+		}
+		
 		result = new ModelAndView("report/table");
 		result.addObject("requestURI", "report/player/list.do");
 		result.addObject("reports", reports);

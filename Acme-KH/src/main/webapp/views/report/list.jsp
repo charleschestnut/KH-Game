@@ -33,9 +33,11 @@
 		div.load(path);
 		return false;
 	}
+	
 </script>
 
 <select id="type" onchange="javascript: reloadTable(event, '${user}')">
+	<option value="all"><spring:message code="reportUpdate.showAll"/></option>
 	<option value="ONHOLD"><spring:message code="report.onhold"/></option>
 	<option value="WORKING"><spring:message code="report.working"/></option>
 	<option value="RESOLVED"><spring:message code="report.resolved"/></option>

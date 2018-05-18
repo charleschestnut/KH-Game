@@ -53,6 +53,7 @@ public class ReportUpdateController extends AbstractController {
 		result = new ModelAndView("reportUpdate/list");
 		result.addObject("reportUpdates", reports);
 		result.addObject("report", report);
+		result.addObject("requestURI", "reportUpdate/list.do");
 
 		return result;
 	}
@@ -78,6 +79,7 @@ public class ReportUpdateController extends AbstractController {
 		result = new ModelAndView("reportUpdate/table");
 		result.addObject("reportUpdates", reports);
 		result.addObject("report", report);
+		result.addObject("requestURI", "reportUpdate/listByType.do");
 
 		return result;
 	}

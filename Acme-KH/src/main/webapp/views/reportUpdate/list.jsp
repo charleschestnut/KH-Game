@@ -36,7 +36,9 @@
 
 <select id="type" onchange="javascript: reloadTable(event, ${report.id})">
 	<option value="all"><spring:message code="reportUpdate.showAll"/></option>
+	<security:authorize access="hasRole('GM') or hasRole('ADMIN')">
 	<option value="mine"><spring:message code="reportUpdate.showMine"/></option>
+	</security:authorize>
 	<option value="resolved"><spring:message code="reportUpdate.showResolved"/></option>
 </select>
 
@@ -63,7 +65,7 @@
 <!-- Action links -->
 
 <div>
-	<security:authorize access="hasRole('GM')">
+	<security:authorize access="hasRole('GM') or hasRole('ADMIN')">
 	<jstl:if test="${report.status ne 'RESOLVED'}">
 		<a href="reportUpdate/create.do?reportId=${report.id}"> <spring:message
 				code="reportUpdate.create" />

@@ -87,7 +87,13 @@
 	</ul>
 </div>
 
+<script type="text/javascript">
+function preventRedirect(path){
+	var currentUrl = window.location.href.split("?language")[0];
+	window.location.replace(currentUrl + path);
+}
+</script>
 <div>
-	<a href="?language=en">en</a> | <a href="?language=es">es</a>
+	<a href="javascript: preventRedirect('?language=en')">en</a> | <a href="javascript: preventRedirect('?language=es')">es</a>
 </div>
 
