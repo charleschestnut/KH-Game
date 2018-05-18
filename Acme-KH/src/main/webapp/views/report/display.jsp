@@ -44,6 +44,30 @@
 		<img src="${photo}" />
 		<br />
 	</jstl:forEach>
+	
+	<jstl:if test="${not empty report.reportUpdates}">
+	<spring:message code="report.seeUpdates"/>
+	</jstl:if>
+	<jstl:forEach items="${report.reportUpdates}" var="reportUpdate">
+		<fieldset>
+<legend><spring:message code="reportUpdate"></spring:message></legend>
+<ul style="list-style-type: disc">
+
+	<li><b><spring:message code="report.creator"></spring:message></b>
+		<jstl:out value="${reportUpdate.getCreator().nickname}" /></li>
+
+	<li><b><spring:message code="report.date"></spring:message></b>
+		<jstl:out value="${reportUpdate.date}" /></li>
+		
+	<li><b><spring:message code="report.status"></spring:message></b>
+		<jstl:out value="${reportUpdate.status}" /></li>
+		
+	<li><b><spring:message code="report.content"></spring:message></b>
+		<jstl:out value="${reportUpdate.content}" /></li>
+			
+</ul>
+</fieldset>
+	</jstl:forEach>
 
 	<acme:goback />
 

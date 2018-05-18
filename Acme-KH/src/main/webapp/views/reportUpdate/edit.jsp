@@ -44,8 +44,10 @@
 	</form:label>	
 	<form:select path="status">
 		<form:option value="WORKING" label="WORKING" />		
-		<form:option value="RESOLVED" label="RESOLVED" />		
-		<form:option value="IRRESOLVABLE" label="IRRESOLVABLE" />		
+		<form:option value="IRRESOLVABLE" label="IRRESOLVABLE" />	
+		<jstl:if test="${reportUpdate.id == 0}">
+		<form:option value="RESOLVED" label="RESOLVED" />	
+		</jstl:if>		
 	</form:select>
 	<form:errors path="status" cssClass="error" /><br/><br/>
 	
