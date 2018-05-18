@@ -142,9 +142,18 @@ public class InvitationService {
 	}
 
 	
-	public void chageRange(int invitationId, OrgRange range) {
+	public void chageRangeToMaster(int invitationId) {
 		Invitation toEdit = this.findOne(invitationId);
-		toEdit.setOrgRange(range);
+		toEdit.setOrgRange(OrgRange.MASTER);
+		this.invitationRepository.save(toEdit);
+	}
+	
+	public void changeRange(int invitationId) {
+		Invitation toEdit = this.findOne(invitationId);
+		if(toEdit.getOrgRange().equals(OrgRange.OFFICER))
+			toEdit.setOrgRange(OrgRange.GUEST);
+		else if(toEdit.getOrgRange().equals(OrgRange.GUEST))
+			toEdit.setOrgRange(OrgRange.OFFICER);
 		this.invitationRepository.save(toEdit);
 	}
 	
@@ -172,6 +181,11 @@ public class InvitationService {
 
 	public Collection<Invitation> findAllMembersOfOrganization(int orgId) {
 		return this.invitationRepository.findAllMembersOfOrganization(orgId);
+	}
+
+	public Invitation getInvitationOfMasterOrOfficer(int id) {
+		Invitation actual = this.invitationRepository.getInvitationOfMasterOrOfficer(id);
+		return actual;
 	}
 
 }

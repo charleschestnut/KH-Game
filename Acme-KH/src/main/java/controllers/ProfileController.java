@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.OrganizationService;
 import domain.Actor;
 import domain.KeybladeWielder;
 
@@ -27,6 +28,9 @@ public class ProfileController extends AbstractController {
 
 	@Autowired
 	private ActorService	actorService;
+	
+	@Autowired
+	private OrganizationService	organizationService;
 
 
 	// Actor ---------------------------------------------------------------		
@@ -50,6 +54,12 @@ public class ProfileController extends AbstractController {
 			KeybladeWielder user = (KeybladeWielder) actor;
 			result.addObject("user", user);
 			result.addObject("usernameInvitation", user.getUserAccount().getUsername());
+			if (username != null){
+			result.addObject("hasOrganization", this.organizationService.keybladeWielderHasOrganization(user.getId()));
+			result.addObject("puedoEnviarInvitation", this.organizationService.getCanSendInvitation());
+			System.out.println(this.organizationService.keybladeWielderHasOrganization(user.getId()));
+			System.out.println(this.organizationService.getCanSendInvitation());
+			}
 		} else
 			result.addObject("user", actor);
 

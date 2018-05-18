@@ -133,9 +133,9 @@ public class OrganizationService {
 			if(invitationActual.getOrgRange().equals(OrgRange.MASTER) ){ //Si se va el MASTER, le pasa el rango al OFFICER más antiguo, si no, al GUEST. Luego se borra la invitación.
 				
 				if(allOfficers.size()!=0)
-					this.invitationService.chageRange(allOfficers.get(0).getId(), OrgRange.MASTER);
+					this.invitationService.chageRangeToMaster(allOfficers.get(0).getId());
 				else
-					this.invitationService.chageRange(allGuests.get(0).getId(), OrgRange.MASTER);
+					this.invitationService.chageRangeToMaster(allGuests.get(0).getId());
 			}
 			this.invitationService.delete(invitationActual);
 		}
@@ -153,7 +153,7 @@ public class OrganizationService {
 		
 		if (o.getId() == 0) {
 			result = o;
-			result.setCreationDate(new Date(System.currentTimeMillis()));
+			result.setCreationDate(new Date(System.currentTimeMillis()-2000));
 		} else {
 			//Aquí van los atributos hidden
 			result = o;
@@ -164,6 +164,15 @@ public class OrganizationService {
 
 		return result;
 
+	}
+
+	public Boolean getCanSendInvitation() {
+		KeybladeWielder actual =(KeybladeWielder) this.actorService.findByPrincipal();
+		Invitation invitActual = this.invitationService.getInvitationOfMasterOrOfficer(actual.getId());
+		if(invitActual == null)
+			return false;
+		else
+			return true;
 	}
 	
 }

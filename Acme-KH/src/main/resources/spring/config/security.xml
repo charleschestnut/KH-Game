@@ -57,6 +57,7 @@
 		<security:intercept-url pattern="/organization/invitation/edit.do" access="hasRole('PLAYER')" />
 		<security:intercept-url pattern="/organization/invitation/accept.do" access="hasRole('PLAYER')" />
 		<security:intercept-url pattern="/organization/invitation/decline.do" access="hasRole('PLAYER')" />
+		<security:intercept-url pattern="/organization/invitation/changeRange.do" access="hasRole('PLAYER')" />
 		<!-- ÁNGEL PÉREZ -->
 		
 		<security:intercept-url pattern="/building/list.do" access="isAuthenticated()" /> 

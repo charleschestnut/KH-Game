@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import domain.Invitation;
 import domain.KeybladeWielder;
+import domain.OrgRange;
 import domain.Organization;
 
 import services.ActorService;
@@ -81,16 +82,20 @@ public class OrganizationController extends AbstractController {
 	public ModelAndView membersList(@RequestParam String organizationId) {
 		ModelAndView result;
 		int orgId = Integer.parseInt(organizationId);
-
+		
 		Collection<Invitation> membersInvitations = this.invitationService.findAllMembersOfOrganization(orgId);
-		Invitation actual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(this.actorService.findByPrincipal().getId(), orgId);
+		KeybladeWielder kw = (KeybladeWielder) this.actorService.findByPrincipal();
+		Invitation actual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(kw.getId(), orgId);
 		Boolean canChat = membersInvitations.contains(actual);
+
+		Boolean iAmMaster = actual.getOrgRange().equals(OrgRange.MASTER);
 		
 		result = new ModelAndView("organization/membersList");
 		result.addObject("organizationId", orgId);
 		result.addObject("requestURI", "organization/membersList.do?organizationId="+organizationId);
 		result.addObject("membersInvitations", membersInvitations);
 		result.addObject("canChat", canChat);
+		result.addObject("iAmMaster", iAmMaster);
 		
 		return result;
 	}

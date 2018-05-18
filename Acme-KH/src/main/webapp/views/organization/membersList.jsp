@@ -32,12 +32,14 @@
 	
 	<spring:message code="invitation.orgRange" var="orgRangeH" />
 	<display:column title="${orgRangeH}" sortable="true">
-		<jstl:out value="${row.orgRange}"/> 
+		<jstl:out value="${row.orgRange.toString()}"/> 
 	</display:column>
 	
 	<spring:message code="master.page.actions" var="actionsH" />
 	<display:column title="${actionsH}">
-		<acme:action code="invitation.changeRange" url=""/>
+		<jstl:if test="${iAmMaster}">
+			<acme:action code="invitation.changeRange" url="/organization/invitation/changeRange.do?invitationId=${row.id}"/>
+		</jstl:if>
 		<acme:action code="master.page.profile"  url=""/> 
 	</display:column>
 	
