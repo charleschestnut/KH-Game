@@ -311,7 +311,7 @@
 		<property name="materials" ref="material3" />
 		<property name="extraMaterialsPerLvl" value="0.3" />
 		<property name="timeToRecollect" value="40" />
-		<property name="lessTimePerLvl" value="3" />
+		<property name="lessTimePerLvl" value="0.5" />
 	</bean>
 	
 	<bean id="warehouse1" class="domain.Warehouse">

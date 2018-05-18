@@ -163,6 +163,43 @@ public class BuiltController extends AbstractController {
 		}
 		return res;
 	}
+
+	@RequestMapping("/startCollect")
+	public ModelAndView startCollect(@RequestParam final Integer builtId) {
+		ModelAndView res;
+		final Built b = this.builtService.findOne(builtId);
+		if (b == null)
+			res = new ModelAndView("redirect:list.do");
+		else
+			try {
+				this.builtService.startToCollect(b);
+				res = new ModelAndView("redirect:list.do");
+			} catch (final Throwable oops) {
+				final String msg = this.getErrorMessage(oops);
+				res = this.createListModelAndView(msg);
+			}
+
+		return res;
+	}
+
+	@RequestMapping("/collect")
+	public ModelAndView collect(@RequestParam final Integer builtId) {
+		ModelAndView res;
+		final Built b = this.builtService.findOne(builtId);
+		if (b == null)
+			res = new ModelAndView("redirect:list.do");
+		else
+			try {
+				this.builtService.collect(b);
+				res = new ModelAndView("redirect:list.do");
+			} catch (final Throwable oops) {
+				final String msg = this.getErrorMessage(oops);
+				res = this.createListModelAndView(msg);
+			}
+
+		return res;
+	}
+
 	protected ModelAndView createListModelAndView(final String msg) {
 		final ModelAndView res;
 		final Collection<Built> builts = this.builtService.getMyBuilts();

@@ -68,6 +68,7 @@ public class Livelihood extends Building {
 	 * 
 	 * Devuelve cuanto se reducirá el tiempo de recolección cada vez que se sube el nivel
 	 */
+	@Range(min = 0, max = 1)
 	@NotNull
 	public Double getLessTimePerLvl() {
 		return this.LessTimePerLvl;

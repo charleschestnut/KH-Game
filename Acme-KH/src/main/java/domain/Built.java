@@ -138,12 +138,13 @@ public class Built extends DomainEntity {
 	@Transient
 	public Boolean haTerminado(final Integer minutos) {
 		Boolean res = false;
-		final Date ahora = new Date(System.currentTimeMillis());
-		final Date fechaFin = new Date(this.getActivationDate().getTime() + minutos * 60 * 1000);
+		if (this.getActivationDate() != null) {
+			final Date ahora = new Date(System.currentTimeMillis());
+			final Date fechaFin = new Date(this.getActivationDate().getTime() + minutos * 60 * 1000);
 
-		if (ahora.after(fechaFin))
-			res = true;
-
+			if (ahora.after(fechaFin))
+				res = true;
+		}
 		return res;
 	}
 }

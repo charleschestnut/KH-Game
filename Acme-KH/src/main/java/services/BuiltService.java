@@ -169,7 +169,7 @@ public class BuiltService {
 		Assert.isTrue(b.getLvl() > 0, "error.message.built.unbuilt");
 		Assert.isNull(b.getActivationDate(), "error.message.built.alreadyInUse");
 
-		b.setActivationDate(new Date(System.currentTimeMillis()));
+		b.setActivationDate(new Date(System.currentTimeMillis() - 2000));
 
 		this.BuiltRepository.save(b);
 	}
@@ -223,7 +223,7 @@ public class BuiltService {
 		final Livelihood l = this.livelihoodService.findOne(b.getBuilding().getId());
 		final Date today = new Date(System.currentTimeMillis() - 1000);
 		final Long time1 = today.getTime() - b.getActivationDate().getTime();
-		final Long time2 = (long) (l.getTimeToRecollect() * 60 * 1000);
+		final Long time2 = (long) (l.getTotalTime(b.getLvl()) * 60 * 1000);
 
 		Assert.notNull(l, "error.message.built.noBuilding");
 		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");

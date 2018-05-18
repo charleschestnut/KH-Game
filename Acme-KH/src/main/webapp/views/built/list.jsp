@@ -112,6 +112,9 @@
 	<display:column title="${actionHeader}">
 	
 		<jstl:choose>
+					<jstl:when test="${row.lvl==0}">
+						<spring:message code="built.in.cosntruction"></spring:message>
+					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate!=null && row.haTerminado(row.building.getTotalTime(row.lvl))}">
 						<a href="built/collect.do?builtId=${row.id}"><jstl:out value="${collect}"></jstl:out></a>
 					</jstl:when>
@@ -119,7 +122,7 @@
 						<jstl:out value="${working }"></jstl:out>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate==null }">
-						<a href="built/collect.do?builtId=${row.id}"><jstl:out value="${startCollect}"></jstl:out></a>
+						<a href="built/startCollect.do?builtId=${row.id}"><jstl:out value="${startCollect}"></jstl:out></a>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.troop!=null && row.haTerminado(row.troop.timeToRecruit)}">
 						<a href="TODO: Enlace para crear los recruited con una tropa pasandole un builtId"><jstl:out value="${recruit}"></jstl:out></a>
