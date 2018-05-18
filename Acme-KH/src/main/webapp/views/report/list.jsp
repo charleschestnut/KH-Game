@@ -42,7 +42,6 @@
 	<option value="WORKING"><spring:message code="report.working"/></option>
 	<option value="RESOLVED"><spring:message code="report.resolved"/></option>
 	<option value="IRRESOLVABLE"><spring:message code="report.irresolvable"/></option>
-	<option value="SUSPICIOUS"><spring:message code="report.suspicious"/></option>
 </select>
 
 <!-- Listing grid -->

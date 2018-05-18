@@ -61,6 +61,13 @@
 		<a
 			href="reportUpdate/display.do?reportUpdateId=${row.id}">${display}</a>
 	</display:column>
+	
+	<spring:message code="report.suspicious" var="susp" />
+	<display:column title="${susp}">
+		<jstl:if test="${row.isSuspicious eq true}">
+		X
+		</jstl:if>
+	</display:column>
 </display:table>
 </div>
 <!-- Action links -->
