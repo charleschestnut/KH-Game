@@ -187,4 +187,24 @@ public class InvitationController extends AbstractController {
 		}
 	}
 	
+	@RequestMapping("/interchangeRange")
+	public ModelAndView interchangeRange(@RequestParam String invitationId) {
+		Integer id = Integer.parseInt(invitationId);
+		Invitation inv = this.invitationService.findOne(id);
+		
+		//Comprobar que el actual de verdad tiene Organización y es la del parámetro y yo soy MASTER
+		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
+		Boolean soyMaster = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(actual.getId(), inv.getOrganization().getId()).getOrgRange().equals(OrgRange.MASTER);
+		Boolean mismaOrganizacion = this.organizationService.findOne(inv.getOrganization().getId()).equals(this.organizationService.findOrganizationByPlayer(actual.getId()));
+		
+		if(soyMaster && mismaOrganizacion && inv.getInvitationStatus().equals(InvitationStatus.ACCEPTED)){
+			
+			this.invitationService.interchangeRange(this.invitationService.findInvitationByKeybladeWielderInAnOrganization(actual.getId(), inv.getOrganization().getId()), inv);
+			return new ModelAndView("redirect:/organization/membersList.do?organizationId="+inv.getOrganization().getId());
+		}else{
+			return new ModelAndView("redirect:/organization/membersList.do?organizationId="+this.organizationService.findOrganizationByPlayer(actual.getId()));
+			
+		}
+	}
+	
 }

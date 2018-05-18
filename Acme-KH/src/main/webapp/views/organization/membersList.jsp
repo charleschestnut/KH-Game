@@ -39,6 +39,7 @@
 	<display:column title="${actionsH}">
 		<jstl:if test="${iAmMaster}">
 			<acme:action code="invitation.changeRange" url="/organization/invitation/changeRange.do?invitationId=${row.id}"/>
+			<acme:action code="invitation.interchangeRange" url="/organization/invitation/interchangeRange.do?invitationId=${row.id}"/>
 		</jstl:if>
 		<acme:action code="master.page.profile"  url=""/> 
 	</display:column>

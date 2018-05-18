@@ -188,4 +188,12 @@ public class InvitationService {
 		return actual;
 	}
 
+	public void interchangeRange(Invitation master, Invitation toMaster) {
+		master.setOrgRange(OrgRange.OFFICER);
+		toMaster.setOrgRange(OrgRange.MASTER);
+		this.invitationRepository.save(master);
+		this.invitationRepository.save(toMaster);
+		
+	}
+
 }
