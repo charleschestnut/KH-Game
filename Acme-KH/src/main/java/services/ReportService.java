@@ -9,11 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ReportRepository;
+import domain.Actor;
+import domain.Administrator;
+import domain.GameMaster;
 import domain.KeybladeWielder;
 import domain.Report;
 import domain.ReportStatus;
+import domain.ReportUpdate;
 
 @Service
 @Transactional
@@ -25,6 +31,8 @@ public class ReportService {
 	private ReportRepository reportRepository;
 	@Autowired
 	private ActorService		actorService;
+	@Autowired
+	private Validator validator;
 
 	// CRUD methods
 	
@@ -32,11 +40,6 @@ public class ReportService {
 		Report report;
 		
 		report = new Report();
-		
-		report.setPhotos(new ArrayList<String>());
-		report.setDate(new Date(System.currentTimeMillis()-1000));
-		report.setKeybladeWielder((KeybladeWielder) actorService.findByPrincipal());
-		report.setStatus(ReportStatus.ONHOLD);
 		
 		return report;
 	}
@@ -112,6 +115,35 @@ public class ReportService {
 	
 	public Collection<Report> getReportsByStatusAndPlayer(ReportStatus status, int playerId){
 		return reportRepository.getReportsByStatusAndPlayer(status, playerId);
+	}
+	
+	public Report reconstruct(Report report,
+			final BindingResult binding) {
+		
+
+		if(report.getId() == 0){
+			Actor actor;
+
+			actor = actorService.findByPrincipal();
+			report.setDate(new Date(System.currentTimeMillis() - 1000));
+			report.setKeybladeWielder((KeybladeWielder) actor);
+			report.setStatus(ReportStatus.ONHOLD);
+			report.setPhotos(new ArrayList<String>());
+		}else{
+			Report original = this.findOne(report.getId());
+			
+			report.setContent(original.getContent());
+			report.setDate(original.getDate());
+			report.setIsBug(original.getIsBug());
+			report.setKeybladeWielder(original.getKeybladeWielder());
+			report.setPhotos(original.getPhotos());
+			report.setReportUpdates(original.getReportUpdates());
+			report.setTitle(original.getTitle());
+		}
+		
+		this.validator.validate(report, binding);
+
+		return report;
 	}
 
 }

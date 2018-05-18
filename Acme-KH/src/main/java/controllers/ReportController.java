@@ -122,6 +122,7 @@ public class ReportController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		Report report;
+		Assert.isTrue(actorService.getPrincipalAuthority().equals(Authority.PLAYER));
 
 		report = reportService.create();
 		result = createEditModelAndView(report);
@@ -144,9 +145,11 @@ public class ReportController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Report report, BindingResult binding) {
+	public ModelAndView save(Report report, BindingResult binding) {
 		ModelAndView result = null;
 
+		this.reportService.reconstruct(report, binding);
+		
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(report);
 		} else {

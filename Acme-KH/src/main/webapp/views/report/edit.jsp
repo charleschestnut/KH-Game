@@ -26,12 +26,8 @@
 	
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="date" />
-	<form:hidden path="keybladeWielder" />
 	
 	<security:authorize access="hasRole('PLAYER')">
-	<form:hidden path="status" />
-	
 	
 	<form:label path="isBug">
 		<spring:message code="report.type" />
@@ -49,10 +45,6 @@
 	</security:authorize>
 	
 	<security:authorize access="hasRole('GM')">
-	<form:hidden path="isBug" />
-	<form:hidden path="title" />
-	<form:hidden path="content" />
-	<form:hidden path="photos" />
 	
 	<form:label path="status">
 		<spring:message code="report.status" />
