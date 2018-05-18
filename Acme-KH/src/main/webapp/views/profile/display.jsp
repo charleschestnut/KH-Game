@@ -50,6 +50,6 @@
 
 
 <jstl:if test="${user.userAccount.getOwner()}">
-<br/> EDIT
+<br/> <acme:action code="master.page.edit"  url="/profile/actor/edit.do"/>
 </jstl:if>
 </fieldset>

@@ -37,9 +37,9 @@ public class Actor extends DomainEntity {
 	private String	nickname;
 	private String	email;
 	private String	phone;
+	private String	avatar;
 	private Boolean	hasConfirmedTerms;
 	private Date	confirmMoment;
-	private String	avatar;
 
 
 	@NotBlank
@@ -76,6 +76,7 @@ public class Actor extends DomainEntity {
 		this.email = email;
 	}
 
+	@Pattern(regexp = "(^\\+?\\d+)?")
 	public String getPhone() {
 		return this.phone;
 	}

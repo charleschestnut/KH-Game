@@ -35,7 +35,6 @@ public class KeybladeWielder extends Actor {
 	private String		worldName;
 
 	//relations
-
 	private Faction		faction;
 	private Shield		shield;
 

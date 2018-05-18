@@ -17,8 +17,13 @@
 <tiles-definitions>
 
 	<definition name="profile/actor/display" extends="master.page">	
-		<put-attribute name="title" value="Profile" />
+		<put-attribute name="title" value="Perfil" />
 		<put-attribute name="body" value="/views/profile/display.jsp" />
-	</definition>	
+	</definition>
+	
+	<definition name="profile/actor/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar Perfil" />
+		<put-attribute name="body" value="/views/profile/edit.jsp" />
+	</definition>		
 	
 </tiles-definitions>
