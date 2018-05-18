@@ -20,14 +20,16 @@
 
 <jstl:if test="${wantRecruit!='troop' && wantRecruit!='ship' }">
 
-<form:form action="built/startRecruit.do">
-<spring:message code=""></spring:message>	
+<form:form action="built/startRecruit.do" modelAttribute="recruitedForm">
+	<form:hidden path="built"/>
+	
+	<spring:message code="built.want.recruit"></spring:message>	
 	<select id="wantRecruit" name="wantRecruit">
 		  <option value="troop"><spring:message code="built.recruit.troop"></spring:message></option>
 		  <option value="ship"><spring:message code="built.recruit.ship"></spring:message></option>
 	</select>
 	
-	<acme:submit name="save" code="master.page.next"/>
+	<acme:submit name="next" code="master.page.next"/>
 	<acme:cancel url="built/list.do" code="master.page.cancel"/>
 
 </form:form>
@@ -39,10 +41,11 @@
 <form:form action="built/startRecruit.do" modelAttribute="recruitedForm">
 
 	<form:hidden path="built"/>
+	<input type="hidden" name="wantRecruit" value="${wantRecruit}"/>
 	
 	<jstl:if test="${wantRecruit=='troop' }">
 	<jstl:choose>
-		<jstl:when test="${troops!=null && troops.size>0 }">
+		<jstl:when test="${troops!=null && troops.size()>0 }">
 		<form:select path="troop">
 			<form:options itemLabel="name" itemValue="id"  items="${troops}"  />
 		</form:select>
@@ -59,7 +62,7 @@
 	
 	<jstl:if test="${wantRecruit=='ship' }">
 	<jstl:choose>
-		<jstl:when test="${ships!=null && ships.size>0 }">
+		<jstl:when test="${ships!=null && ships.size()>0 }">
 			<form:select path="ship">
 				<form:options itemLabel="name" itemValue="id"  items="${ships}"  />
 			</form:select>

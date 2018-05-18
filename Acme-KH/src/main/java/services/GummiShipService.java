@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -19,62 +20,68 @@ public class GummiShipService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private GummiShipRepository GummiShipRepository;
+	private GummiShipRepository	GummiShipRepository;
+
 
 	// CRUD methods
-	
-	public GummiShip create(Recruiter recruiter){
+
+	public GummiShip create(final Recruiter recruiter) {
 		GummiShip gummiShip;
-		Materials cost = new Materials();
-		
+		final Materials cost = new Materials();
+
 		gummiShip = new GummiShip();
 		gummiShip.setSlots(0);
 		gummiShip.setName("");
 		gummiShip.setTimeToRecruit(0);
 		gummiShip.setRecruiterRequiredLvl(0);
 		gummiShip.setRecruiter(recruiter);
-		
+
 		cost.setGummiCoal(0);
 		cost.setMunny(0);
 		cost.setMytrhil(0);
-		
+
 		gummiShip.setCost(cost);
-		
+
 		return gummiShip;
 	}
-	
-	public GummiShip save(GummiShip GummiShip){
+
+	public GummiShip save(final GummiShip GummiShip) {
 		Assert.notNull(GummiShip);
-		
+
 		GummiShip saved;
-		
-		saved = GummiShipRepository.save(GummiShip);
-		
+
+		saved = this.GummiShipRepository.save(GummiShip);
+
 		return saved;
 	}
-	
-	public GummiShip findOne(int GummiShipId){
+
+	public GummiShip findOne(final int GummiShipId) {
 		Assert.notNull(GummiShipId);
-		
+
 		GummiShip GummiShip;
-		
-		GummiShip = GummiShipRepository.findOne(GummiShipId);
-		
+
+		GummiShip = this.GummiShipRepository.findOne(GummiShipId);
+
 		return GummiShip;
 	}
-	
-	public Collection<GummiShip> findAll(){
+
+	public Collection<GummiShip> findAll() {
 		Collection<GummiShip> GummiShips;
-		
-		GummiShips = GummiShipRepository.findAll();
-		
+
+		GummiShips = this.GummiShipRepository.findAll();
+
 		return GummiShips;
 	}
-	
-	public void delete(GummiShip GummiShip){
+
+	public void delete(final GummiShip GummiShip) {
 		Assert.notNull(GummiShip);
-		
-		GummiShipRepository.delete(GummiShip);
+
+		this.GummiShipRepository.delete(GummiShip);
+	}
+	//Other methods
+
+	public Collection<GummiShip> getGummiShipFromRecruiter(final Integer recruiterId) {
+		return this.GummiShipRepository.getGummiShipsFromRecruiter(recruiterId);
 	}
 
 }

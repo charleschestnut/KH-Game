@@ -139,7 +139,7 @@
 						<jstl:out value="${working }"></jstl:out>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate==null }">
-						<a href="built/recruit.do?builtId=${row.id}"><jstl:out value="${startRecruit}"></jstl:out></a>
+						<a href="built/startRecruit.do?builtId=${row.id}"><jstl:out value="${startRecruit}"></jstl:out></a>
 					</jstl:when>
 					<jstl:otherwise>
 							----

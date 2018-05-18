@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,17 +17,22 @@ import security.LoginService;
 import services.BuildingService;
 import services.BuiltService;
 import services.DefenseService;
+import services.GummiShipService;
 import services.LivelihoodService;
 import services.RecruiterService;
 import services.RequirementService;
+import services.TroopService;
 import services.WarehouseService;
 import domain.Building;
 import domain.Built;
 import domain.Defense;
+import domain.GummiShip;
 import domain.Livelihood;
 import domain.Recruiter;
+import domain.Troop;
 import domain.Warehouse;
 import form.BuiltForm;
+import form.RecruitedForm;
 
 @Controller
 @RequestMapping("/built")
@@ -46,6 +52,10 @@ public class BuiltController extends AbstractController {
 	private LivelihoodService	livelihoodService;
 	@Autowired
 	private RequirementService	requirementService;
+	@Autowired
+	private TroopService		troopService;
+	@Autowired
+	private GummiShipService	gummiShipService;
 
 
 	@RequestMapping("/list")
@@ -200,6 +210,85 @@ public class BuiltController extends AbstractController {
 		return res;
 	}
 
+	@RequestMapping("/startRecruit")
+	public ModelAndView startRecruit(@RequestParam final Integer builtId) {
+		final ModelAndView res;
+
+		final Built b = this.builtService.findOne(builtId);
+		if (b == null || !b.getKeybladeWielder().getUserAccount().equals(LoginService.getPrincipal()))
+			res = new ModelAndView("redirect:list.do");
+		else {
+			res = new ModelAndView("built/recruit");
+			final RecruitedForm form = new RecruitedForm();
+			form.setBuilt(b);
+			res.addObject("recruitedForm", form);
+
+		}
+
+		return res;
+	}
+
+	@RequestMapping(value = "/startRecruit", params = "next", method = RequestMethod.POST)
+	public ModelAndView nextRecruit(final String wantRecruit, @Valid final RecruitedForm recruitedForm, final BindingResult binding) {
+		final ModelAndView res;
+
+		if (binding.hasErrors())
+			res = new ModelAndView("redirect:list.do");
+		else {
+			res = new ModelAndView("built/recruit");
+			res.addObject("wantRecruit", wantRecruit);
+			if (wantRecruit.equals("troop")) {
+				final Collection<Troop> troops = this.troopService.getTroopsFromRecruiter(recruitedForm.getBuilt().getBuilding().getId());
+				res.addObject("troops", troops);
+			} else if (wantRecruit.equals("ship")) {
+				final Collection<GummiShip> ships = this.gummiShipService.getGummiShipFromRecruiter(recruitedForm.getBuilt().getBuilding().getId());
+				res.addObject("ships", ships);
+			}
+			res.addObject("recruitedForm", recruitedForm);
+		}
+
+		return res;
+	}
+	@RequestMapping(value = "/startRecruit", params = "save", method = RequestMethod.POST)
+	public ModelAndView saveRecruit(final String wantRecruit, @Valid final RecruitedForm recruitedForm, final BindingResult binding) {
+		ModelAndView res;
+
+		if (binding.hasErrors() || (!wantRecruit.equals("troop") && !wantRecruit.equals("ship")))
+			res = this.createRecruitModelAndView(recruitedForm, wantRecruit, null);
+		else
+			try {
+				if (wantRecruit.equals("troop")) {
+					this.builtService.startToRecruitTroop(recruitedForm.getBuilt(), recruitedForm.getTroop());
+					res = new ModelAndView("redirect:list.do");
+				} else {
+					this.builtService.startToRecruitGummiShip(recruitedForm.getBuilt(), recruitedForm.getGummiship());
+					res = new ModelAndView("redirect:list.do");
+				}
+			} catch (final Throwable oops) {
+				final String msg = this.getErrorMessage(oops);
+				res = this.createRecruitModelAndView(recruitedForm, wantRecruit, msg);
+			}
+
+		return res;
+	}
+	protected ModelAndView createRecruitModelAndView(final RecruitedForm form, final String wantRecruit, final String msg) {
+		final ModelAndView res;
+
+		res = new ModelAndView("built/recruit");
+		res.addObject("wantRecruit", wantRecruit);
+		res.addObject("recruitedForm", form);
+		res.addObject("message", msg);
+
+		if (wantRecruit.equals("troop")) {
+			final Collection<Troop> troops = this.troopService.getTroopsFromRecruiter(form.getBuilt().getBuilding().getId());
+			res.addObject("troops", troops);
+		} else if (wantRecruit.equals("ship")) {
+			final Collection<GummiShip> ships = this.gummiShipService.getGummiShipFromRecruiter(form.getBuilt().getBuilding().getId());
+			res.addObject("ships", ships);
+		}
+
+		return res;
+	}
 	protected ModelAndView createListModelAndView(final String msg) {
 		final ModelAndView res;
 		final Collection<Built> builts = this.builtService.getMyBuilts();

@@ -178,6 +178,7 @@ public class BuiltService {
 		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 
 		Assert.notNull(r, "error.message.built.noBuilding");
+		Assert.notNull(t, "error.message.built.noTroop");
 		Assert.isNull(b.getActivationDate(), "error.message.built.alreadyInUse");
 		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
 		Assert.isTrue(t.getRecruiter().equals(b.getBuilding()), "error.message.built.recruit");
@@ -201,6 +202,7 @@ public class BuiltService {
 		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 
 		Assert.notNull(r, "error.message.built.noBuilding");
+		Assert.notNull(g, "error.message.built.noShip");
 		Assert.isNull(b.getActivationDate(), "error.message.built.alreadyInUse");
 		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
 		Assert.isTrue(g.getRecruiter().equals(b.getBuilding()), "error.message.built.recruit");
