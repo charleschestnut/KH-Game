@@ -59,7 +59,23 @@
 	<display:column title="${date}" property="date" />
 	
 	<spring:message code="report.status" var="status" />
-	<display:column title="${status}" property="status"/>
+	<display:column title="${status}">
+	<jstl:if test="${row.status eq 'ONHOLD'}">
+	<spring:message code="report.onhold"/>
+	</jstl:if>
+	<jstl:if test="${row.status eq 'RESOLVED'}">
+	<spring:message code="report.resolved"/>
+	</jstl:if>
+	<jstl:if test="${row.status eq 'IRRESOLVABLE'}">
+	<spring:message code="report.irresolvable"/>
+	</jstl:if>
+	<jstl:if test="${row.status eq 'WORKING'}">
+	<spring:message code="report.working"/>
+	</jstl:if>
+	<jstl:if test="${row.status eq 'SUSPICIOUS'}">
+	<spring:message code="report.suspicious"/>
+	</jstl:if>
+	</display:column>
 	
 	<spring:message code="master.page.view" var="display" />
 	<display:column title="${display}">

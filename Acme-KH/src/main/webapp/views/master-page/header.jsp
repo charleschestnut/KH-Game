@@ -89,8 +89,8 @@
 
 <script type="text/javascript">
 function preventRedirect(path){
-	var currentUrl = window.location.href.split("?language")[0];
-	window.location.replace(currentUrl + path);
+	var currentUrl = window.location.href.split(".do")[0];
+	window.location.replace(currentUrl + ".do" + path);
 }
 </script>
 <div>

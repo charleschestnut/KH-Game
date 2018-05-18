@@ -60,6 +60,6 @@
 	</security:authorize>
 	
 	<acme:submit code="master.page.save"  name="save" />
-	<acme:cancel code="master.page.return" url="/report/gm/list.do" />
+	<acme:cancel code="master.page.return" url="/report/player/list.do" />
 
 </form:form>

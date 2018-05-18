@@ -40,6 +40,7 @@ public class ReportService {
 		Report report;
 		
 		report = new Report();
+		report.setPhotos(new ArrayList<String>());
 		
 		return report;
 	}
@@ -128,7 +129,7 @@ public class ReportService {
 			report.setDate(new Date(System.currentTimeMillis() - 1000));
 			report.setKeybladeWielder((KeybladeWielder) actor);
 			report.setStatus(ReportStatus.ONHOLD);
-			report.setPhotos(new ArrayList<String>());
+			
 		}else{
 			Report original = this.findOne(report.getId());
 			
