@@ -107,7 +107,7 @@ public class Livelihood extends Building {
 	@Transient
 	public Integer getTotalTime(final Integer lvl) {
 
-		Integer res = (int) (this.getTimeToConstruct() - (this.getTimeToConstruct() * (lvl - 1) * this.getLessTimePerLvl()));
+		Integer res = (int) (this.getTimeToRecollect() - (this.getTimeToRecollect() * (lvl - 1) * this.getLessTimePerLvl()));
 		if (res < 0)
 			res = 0;
 
