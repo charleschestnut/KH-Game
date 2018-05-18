@@ -4,34 +4,47 @@
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <ul style="list-style-type: disc">
 
-	<li><b><spring:message code="report.title"></spring:message></b>
-		<jstl:out value="${report.title}" /></li>
+	<li><b><spring:message code="report.title"></spring:message></b> <jstl:out
+			value="${report.title}" /></li>
 
 	<li><b><spring:message code="report.content"></spring:message></b>
 		<jstl:out value="${report.content}" /></li>
-		
+
 	<li><b><spring:message code="report.status"></spring:message></b>
-		<jstl:out value="${report.status}" /></li>
-		
-	<li><b><spring:message code="report.date"></spring:message></b>
-		<jstl:out value="${report.date}" /></li>
-			
+		<jstl:if test="${report.status eq 'ONHOLD'}">
+			<spring:message code="report.onhold" />
+		</jstl:if> <jstl:if test="${report.status eq 'RESOLVED'}">
+			<spring:message code="report.resolved" />
+		</jstl:if> <jstl:if test="${report.status eq 'IRRESOLVABLE'}">
+			<spring:message code="report.irresolvable" />
+		</jstl:if> <jstl:if test="${report.status eq 'WORKING'}">
+			<spring:message code="report.working" />
+		</jstl:if> <jstl:if test="${report.status eq 'SUSPICIOUS'}">
+			<spring:message code="report.suspicious" />
+		</jstl:if></li>
+
+	<li><b><spring:message code="report.date"></spring:message></b> <jstl:out
+			value="${report.date}" /></li>
+
 	<li><b><spring:message code="report.creator"></spring:message></b>
-		<jstl:out value="${report.keybladeWielder.nickname}" /></li><br/>
-		
+		<jstl:out value="${report.keybladeWielder.nickname}" /></li>
+	<br />
+
 	<jstl:forEach items="${report.photos}" var="photo">
-	<img src="${photo}"/><br/>
+		<img src="${photo}" />
+		<br />
 	</jstl:forEach>
 
-	<acme:goback/>
+	<acme:goback />
 
 </ul>
