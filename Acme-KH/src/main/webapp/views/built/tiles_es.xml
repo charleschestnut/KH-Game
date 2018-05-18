@@ -32,4 +32,9 @@
 		<put-attribute name="body" value="/views/built/edit.jsp" />
 	</definition>
 	
+	
+	<definition name="built/recruit" extends="master.page">	
+		<put-attribute name="title" value="Reclutar" />
+		<put-attribute name="body" value="/views/built/recruit.jsp" />
+	</definition>
 </tiles-definitions>
