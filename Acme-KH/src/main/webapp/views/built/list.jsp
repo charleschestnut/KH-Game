@@ -77,6 +77,8 @@
 		<br>
 		${row.building.getTotalTime(row.lvl)}
 		<br>
+		${row.building.timeToConstruct}
+		<br>
 		${row.lvl}
 		</jstl:if>
 		</display:column>
