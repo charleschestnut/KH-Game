@@ -68,7 +68,38 @@
 	
 	<spring:message code="building.warehouse.gummiSlots"></spring:message>: 
 	<jstl:out value="${built.building.getTotalGummiSlots(built.lvl) }"></jstl:out><br>
-
+	
+	
+	<jstl:if test="${storagedTroops!=null && storagedTroops.size()>0 }">
+	<spring:message code="built.storaged.troop"></spring:message>:
+	
+		<display:table name="storagedTroops" id="row" pagesize="5" requestURI="built/display.do">
+	
+		<spring:message code="building.name" var="nameHeader"></spring:message>
+		<display:column property="name" title="${nameHeader}"></display:column>
+		
+		<spring:message code="troop.defense" var="defenseHeader"></spring:message>
+		<display:column property="defense" title="${defenseHeader}"></display:column>
+		
+		<spring:message code="troop.attack" var="attackHeader"></spring:message>
+		<display:column property="attack" title="${attackHeader}"></display:column>
+		
+		</display:table>
+	</jstl:if>
+	
+	<jstl:if test="${storagedShips!=null && storagedShips.size()>0 }">
+	<spring:message code="built.storaged.ship"></spring:message>:
+	
+		<display:table name="storagedShips" id="row" pagesize="5" requestURI="built/display.do">
+	
+		<spring:message code="building.name" var="nameHeader"></spring:message>
+		<display:column property="name" title="${nameHeader}"></display:column>
+		
+		<spring:message code="ship.slots" var="slotsHeader"></spring:message>
+		<display:column property="slots" title="${slotsHeader}"></display:column>
+		
+		</display:table>
+	</jstl:if>
 
 </jstl:if>
 
