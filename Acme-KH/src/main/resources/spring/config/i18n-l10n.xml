@@ -47,6 +47,7 @@
 		
 		<value>/views/report/messages</value>
 		<value>/views/reportUpdate/messages</value>
+		<value>/views/prompt/messages</value>
 		
 		<!-- ISMAEL -->
 		<value>/views/item/messages</value>

@@ -48,6 +48,7 @@
 		
 		<value>/views/report/tiles.xml</value>
 		<value>/views/reportUpdate/tiles.xml</value>
+		<value>/views/prompt/tiles.xml</value>
 		
 		<!-- ISMAEL -->
 		<value>/views/item/tiles.xml</value>

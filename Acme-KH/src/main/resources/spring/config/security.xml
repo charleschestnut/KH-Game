@@ -103,6 +103,9 @@
 		<security:intercept-url pattern="/reportUpdate/listByType.do" access="hasAnyRole('GM', 'ADMIN','PLAYER')"  /> 
 		<security:intercept-url pattern="/reportUpdate/**" access="hasAnyRole('GM', 'ADMIN')"  /> 
 		
+		<security:intercept-url pattern="/prompt.do" access="hasAnyRole('GM', 'ADMIN')"  /> 
+		<security:intercept-url pattern="/prompt/**" access="hasAnyRole('GM', 'ADMIN')"  /> 
+		
 		<!-- ISMAEL -->
 		<security:intercept-url pattern="/item/player/**" access="hasRole('PLAYER')" /> 
 		<security:intercept-url pattern="/item/manager/**" access="hasRole('MANAGER')" />

@@ -21,3 +21,42 @@
 .blueText{
 	color:blue;
 }
+
+#prompt{
+	background-color:black;
+	color:white;
+	width: 80%;
+	height:20em;
+	padding:0.5em;
+	overflow:auto;
+}
+
+.commandLine{
+	width:auto;
+    padding-left:0.5em;
+    border:0;
+    outline: 0px solid transparent;
+    color:cyan;
+    display:inline;
+    white-space: nowrap;
+}
+
+#default{
+	display: table-cell;
+}
+
+.parent{
+	border:solid 1px white;
+	white-space: nowrap;
+	width:50%;
+}
+
+.answer{
+	white-space: nowrap;
+	padding-left:0.5em;
+}
+
+.arrow{
+	color:white;
+	white-space: nowrap;
+}
