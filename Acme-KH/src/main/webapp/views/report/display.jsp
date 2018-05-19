@@ -66,6 +66,11 @@
 		<jstl:out value="${reportUpdate.content}" /></li>
 			
 </ul>
+<security:authorize access="hasRole('PLAYER')">
+<jstl:if test="${reportUpdate.isSuspicious eq false and report.status ne 'RESOLVED'}">
+<a href="reportUpdate/player/markSuspicious.do?reportUpdateId=${reportUpdate.id}&reportId=${report.id}"><spring:message code="reportUpdate.mark.suspicious"/></a>
+</jstl:if>
+</security:authorize>
 </fieldset>
 	</jstl:forEach>
 

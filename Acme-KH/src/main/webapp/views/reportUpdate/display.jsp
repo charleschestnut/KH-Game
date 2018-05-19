@@ -53,7 +53,7 @@
 </fieldset>
 
 <security:authorize access="hasRole('PLAYER')">
-<jstl:if test="${reportUpdate.isSuspicious eq false}">
+<jstl:if test="${reportUpdate.isSuspicious eq false and report.status ne 'RESOLVED'}">
 <a href="reportUpdate/player/markSuspicious.do?reportUpdateId=${reportUpdate.id}&reportId=${report.id}"><spring:message code="reportUpdate.mark.suspicious"/></a>
 </jstl:if>
 </security:authorize>
