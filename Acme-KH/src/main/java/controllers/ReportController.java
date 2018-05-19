@@ -108,6 +108,10 @@ public class ReportController extends AbstractController {
 
 		report = reportService.findOne(reportId);
 		
+		if(auth.equals("PLAYER")){
+			Assert.isTrue(report.getKeybladeWielder().equals(actorService.findByPrincipal()),"error.message.owner");
+		}
+		
 		result = new ModelAndView("report/display");
 		
 		

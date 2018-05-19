@@ -34,7 +34,7 @@
 </fieldset>
 
 <fieldset>
-<legend><spring:message code="reportUpdate"></spring:message></legend>
+<legend><spring:message code="report.updates"></spring:message></legend>
 <ul style="list-style-type: disc">
 
 	<li><b><spring:message code="report.creator"></spring:message></b>
@@ -54,7 +54,7 @@
 
 <security:authorize access="hasRole('PLAYER')">
 <jstl:if test="${reportUpdate.isSuspicious eq false and report.status ne 'RESOLVED'}">
-<a href="reportUpdate/player/markSuspicious.do?reportUpdateId=${reportUpdate.id}&reportId=${report.id}"><spring:message code="reportUpdate.mark.suspicious"/></a>
+<a href="reportUpdate/player/markSuspicious.do?reportUpdateId=${reportUpdate.id}&reportId=${report.id}&reportDisplay=false"><spring:message code="reportUpdate.mark.suspicious"/></a>
 </jstl:if>
 </security:authorize>
 

@@ -42,10 +42,9 @@ public class ReportUpdateController extends AbstractController {
 		report = reportService.findOne(reportId);
 
 		if (type == "mine") {
-			reports = reportUpdateService
-					.getReportUpdatesByActorId(reportId, actorService.findByPrincipal()
-							.getId());
-		} else if (type == "resolved"){
+			reports = reportUpdateService.getReportUpdatesByActorId(reportId,
+					actorService.findByPrincipal().getId());
+		} else if (type == "resolved") {
 			reports = reportUpdateService.getResolvedReportUpdates(reportId);
 		} else {
 			reports = reportUpdateService.getReportUpdatesByReportId(reportId);
@@ -57,7 +56,7 @@ public class ReportUpdateController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/listByType", method = RequestMethod.GET)
 	public ModelAndView listByType(@RequestParam int reportId,
 			@RequestParam(required = false) String type) {
@@ -68,10 +67,9 @@ public class ReportUpdateController extends AbstractController {
 		report = reportService.findOne(reportId);
 
 		if (type != null && type.equals("mine")) {
-			reports = reportUpdateService
-					.getReportUpdatesByActorId(reportId, actorService.findByPrincipal()
-							.getId());
-		} else if (type != null && type.equals("resolved")){
+			reports = reportUpdateService.getReportUpdatesByActorId(reportId,
+					actorService.findByPrincipal().getId());
+		} else if (type != null && type.equals("resolved")) {
 			reports = reportUpdateService.getResolvedReportUpdates(reportId);
 		} else {
 			reports = reportUpdateService.getReportUpdatesByReportId(reportId);
@@ -231,7 +229,8 @@ public class ReportUpdateController extends AbstractController {
 	@RequestMapping(value = "/player/markSuspicious", method = RequestMethod.GET)
 	public ModelAndView markSuspicious(
 			@RequestParam(required = true) int reportUpdateId,
-			@RequestParam(required = true) int reportId) {
+			@RequestParam(required = true) int reportId,
+			@RequestParam(required = true) Boolean reportDisplay) {
 		ModelAndView result = null;
 		ReportUpdate reportUpdate;
 		Report report;
@@ -242,10 +241,17 @@ public class ReportUpdateController extends AbstractController {
 		try {
 			Assert.isTrue(report.getStatus() != ReportStatus.RESOLVED,
 					"error.message.suspicious");
+			Assert.isTrue(report.getKeybladeWielder().equals(actorService.findByPrincipal()),"error.message.owner");
 			reportUpdateService.markSuspicious(reportUpdate);
-			result = new ModelAndView(
-					"redirect:/reportUpdate/display.do?reportUpdateId="
-							+ reportUpdateId + "&reportId=" + reportId);
+			if(!reportDisplay){
+				result = new ModelAndView(
+						"redirect:/reportUpdate/display.do?reportUpdateId="
+								+ reportUpdateId + "&reportId=" + reportId);
+			}else{
+				result = new ModelAndView(
+						"redirect:/report/display.do?reportId="
+								+ reportId);
+			}
 		} catch (Throwable oops) {
 			result = createEditModelAndViewList(reportUpdate,
 					"bulletin.commit.error");

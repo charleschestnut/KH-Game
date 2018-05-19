@@ -74,7 +74,7 @@
 
 <div>
 	<security:authorize access="hasRole('GM') or hasRole('ADMIN')">
-	<jstl:if test="${report.status ne 'RESOLVED'}">
+	<jstl:if test="${report.status ne 'RESOLVED' and !suspiciousList}">
 		<a href="reportUpdate/create.do?reportId=${report.id}"> <spring:message
 				code="reportUpdate.create" />
 		</a>

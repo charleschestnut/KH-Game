@@ -18,13 +18,22 @@
 
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <p><spring:message code="panic.text" /> <code>${name}</code>.</p>
 
 <h2><spring:message code="panic.message" /></h2>
 
 <p style="font-family: 'Courier New'">
-	${exception}
+	<jstl:choose>
+    <jstl:when test="${fn:startsWith(exception, 'error.message')}">
+    	<spring:message code="${exception}"/>
+    </jstl:when>
+    <jstl:otherwise>
+        ${exception}
+    </jstl:otherwise>
+</jstl:choose>
+	
 </p>
 
 <h2><spring:message code="panic.stack.trace" /></h2>
