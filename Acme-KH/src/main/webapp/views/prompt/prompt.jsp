@@ -28,7 +28,7 @@ var i = 0;
 var txt = 'Acme-Battle - Command Prompt#-------------------------------------------------------------';
 var speed = 25;
 var commands = [];
-
+var colors = ["cyan","blue","red","green","pink","green","white","purple","blueviolet"];
 typeWriter();
 
 var prompt = document.getElementById("prompt");
@@ -87,6 +87,8 @@ function interpret(command) {
 		$('.parent').empty();
 		$('.parent').append('<span class="arrow">></span><div id="commandLine" class="commandLine" contenteditable="true"></div>');
     	document.getElementById('commandLine').focus();
+	}else if(colors.indexOf(command)>0){
+		$('.commandLine').css("color",command);
 	}else{
 		var div = $('#commandLine');
 		$.ajax({
