@@ -5,9 +5,11 @@ import java.util.Collection;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.ContentManager;
@@ -54,16 +56,16 @@ public class ItemManagerController extends AbstractController {
 		}
 	
 	
-		// EDITION -----------
+	// EDITION -----------
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit() {
+	public ModelAndView edit(@RequestParam int itemId) {
 		ModelAndView result;
 		Item item;
 
-		item = this.itemService.create();
+		item = this.itemService.findOne(itemId);
+		Assert.notNull(item);
 
-		result = new ModelAndView("item/manager/edit");
-		result.addObject("item", item);
+		result = createEditModelAndView(item);
 
 		return result;
 	}
@@ -71,8 +73,9 @@ public class ItemManagerController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(Item item, BindingResult binding) {
 		ModelAndView result;
-		item.setId(0);
+		
 		item = this.itemService.reconstruct(item, binding);
+		
 		if (binding.hasErrors()) {
 			System.out.println(binding.getAllErrors());
 			result = this.createEditModelAndView(item);
@@ -85,6 +88,21 @@ public class ItemManagerController extends AbstractController {
 				result = this.createEditModelAndView(item, oops.getMessage());
 
 			}
+		return result;
+	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(Item item, BindingResult binding) {
+		ModelAndView result;
+		item = this.itemService.reconstruct(item, binding);
+
+		try {
+			itemService.delete(item);
+			result = new ModelAndView("redirect:/item/manager/createdItems.do");
+		} catch (Throwable oops) {
+			result = createEditModelAndView(item, "master.page.commit.error");
+		}
+
 		return result;
 	}
 	

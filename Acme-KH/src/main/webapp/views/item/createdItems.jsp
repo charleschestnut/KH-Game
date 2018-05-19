@@ -36,4 +36,8 @@
 	<spring:message code="item.munnyCost" var="munnyCostHeader" />
 	<display:column property="munnyCost" title="${munnyCostHeader}" />
 	
+	<display:column>
+	<a href="item/manager/edit.do?itemId=${row.id}"><spring:message code="master.page.edit"/></a>
+	</display:column>
+	
 </display:table>

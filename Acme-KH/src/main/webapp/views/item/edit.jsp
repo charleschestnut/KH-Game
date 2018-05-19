@@ -46,6 +46,11 @@
 	
 	
 	<acme:submit code="master.page.save"  name="save" />
-	<acme:cancel code="master.page.return" url="/" />
+	<acme:cancel code="master.page.return" url="/item/manager/createdItems.do" />
+	
+	<jstl:if test="${item.id != 0}">
+		<input type="submit" name="delete"
+			value="<spring:message code="master.page.delete" />" />
+	</jstl:if>
 
 </form:form>
