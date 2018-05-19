@@ -147,8 +147,11 @@ public class BuiltController extends AbstractController {
 					res.addObject("livelihood", true);
 				else {
 					warehouse = this.warehouseService.findOne(buildingId);
-					if (warehouse != null)
+					if (warehouse != null) {
 						res.addObject("warehouse", true);
+						res.addObject("storagedTroops", this.troopService.getStoragedTroops(builtId));
+						res.addObject("storagedShips", this.gummiShipService.getStoragedGummiShip(builtId));
+					}
 
 				}
 

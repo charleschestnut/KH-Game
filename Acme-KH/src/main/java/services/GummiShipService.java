@@ -83,5 +83,7 @@ public class GummiShipService {
 	public Collection<GummiShip> getGummiShipFromRecruiter(final Integer recruiterId) {
 		return this.GummiShipRepository.getGummiShipsFromRecruiter(recruiterId);
 	}
-
+	public Collection<GummiShip> getStoragedGummiShip(final Integer builtId) {
+		return this.GummiShipRepository.getStoragedGummiShip(builtId);
+	}
 }

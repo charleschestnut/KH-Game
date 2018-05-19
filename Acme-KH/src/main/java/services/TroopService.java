@@ -86,4 +86,8 @@ public class TroopService {
 		return this.TroopRepository.getTroopsFromRecruiter(recruiterId);
 	}
 
+	public Collection<Troop> getStoragedTroops(final Integer builtId) {
+		return this.TroopRepository.getStoragedTroops(builtId);
+	}
+
 }

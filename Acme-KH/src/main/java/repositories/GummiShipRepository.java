@@ -13,4 +13,7 @@ public interface GummiShipRepository extends JpaRepository<GummiShip, Integer> {
 	@Query("select g from GummiShip g where g.recruiter.id=?1")
 	Collection<GummiShip> getGummiShipsFromRecruiter(Integer recruiterId);
 
+	@Query("select r.gummiShip from Recruited r where r.storageBuilding.id=?1 and r.gummiShip!=null")
+	Collection<GummiShip> getStoragedGummiShip(Integer builtId);
+
 }
