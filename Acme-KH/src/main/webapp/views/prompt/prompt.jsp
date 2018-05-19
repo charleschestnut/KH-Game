@@ -27,17 +27,45 @@ $( document ).ready(function() {
 var i = 0;
 var txt = 'Acme-Battle - Command Prompt#-------------------------------------------------------------';
 var speed = 25;
+var commands = [];
 
 typeWriter();
 
 var prompt = document.getElementById("prompt");
+var count = -1;
 prompt.addEventListener("keydown", function (e) {
     if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
     	var command = document.getElementById('commandLine').innerText;
     	interpret(command);
     	e.preventDefault();
+    }else if(e.keyCode === 38){
+    	arrayUp();
+    	e.preventDefault();
+    	return false;
+    }else if(e.keyCode === 40){
+    	arrayDown();
+    	e.preventDefault();
+    	return false;
     }
 });
+
+function arrayUp() {
+	count++;
+	if(count >= commands.length){
+		count = 0;
+	}
+	$('#commandLine').text(commands[count]);
+	document.getElementById('commandLine').focus();
+}
+
+function arrayDown() {
+	count--;
+	if(count < 0){
+		count = commands.length-1;
+	}
+	$('#commandLine').text(commands[count]);
+	document.getElementById('commandLine').focus();
+}
 
 function typeWriter() {
   if (i < txt.length) {
@@ -54,6 +82,7 @@ function typeWriter() {
 }
 
 function interpret(command) {
+	commands.push(command);
 	if(command === 'clear'){
 		$('.parent').empty();
 		$('.parent').append('<span class="arrow">></span><div id="commandLine" class="commandLine" contenteditable="true"></div>');
