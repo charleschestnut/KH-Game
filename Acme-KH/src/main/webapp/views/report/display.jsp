@@ -44,41 +44,55 @@
 		<img src="${photo}" />
 		<br />
 	</jstl:forEach>
-	
+
 	<jstl:if test="${not empty report.reportUpdates}">
-	<spring:message code="report.seeUpdates"/>
+		<spring:message code="report.seeUpdates" />
 	</jstl:if>
 	<jstl:forEach items="${report.reportUpdates}" var="reportUpdate">
+
+		<jstl:if test="${not empty reportUpdate.administrator}">
+			<jstl:set value="blueText" var="blueText" />
+		</jstl:if>
+
 		<fieldset>
-<legend><spring:message code="reportUpdate"></spring:message></legend>
-<ul style="list-style-type: disc">
+			<legend>
+				<spring:message code="reportUpdate"></spring:message>
+			</legend>
+			<ul style="list-style-type: disc">
 
-	<li><b><spring:message code="report.creator"></spring:message></b>
-		<jstl:out value="${reportUpdate.getCreator().nickname}" /></li>
+				<li><b><spring:message code="report.creator"></spring:message></b>
+					<span class="${blueText}"> <jstl:out
+							value="${reportUpdate.getCreator().nickname}" /></span></li>
 
-	<li><b><spring:message code="report.date"></spring:message></b>
-		<jstl:out value="${reportUpdate.date}" /></li>
-		
-	<li><b><spring:message code="report.status"></spring:message></b>
-		<jstl:out value="${reportUpdate.status}" /></li>
-		
-	<li><b><spring:message code="report.content"></spring:message></b>
-		<jstl:out value="${reportUpdate.content}" /></li>
-			
-</ul>
-<security:authorize access="hasRole('PLAYER')">
-<jstl:if test="${reportUpdate.isSuspicious eq false and report.status ne 'RESOLVED'}">
-<a href="reportUpdate/player/markSuspicious.do?reportUpdateId=${reportUpdate.id}&reportId=${report.id}&reportDisplay=true"><spring:message code="reportUpdate.mark.suspicious"/></a>
-</jstl:if>
-</security:authorize>
-<br/>
-<jstl:if test="${reportUpdate.isSuspicious eq true}">
-<spring:message code="reportUpdate.marked.suspicious"/>
-<br/>
-</jstl:if>
-</fieldset>
+				<li><b><spring:message code="report.date"></spring:message></b>
+					<span class="${blueText}"> <jstl:out
+							value="${reportUpdate.date}" /></span></li>
+
+				<li><b><spring:message code="report.status"></spring:message></b>
+					<span class="${blueText}"> <jstl:out
+							value="${reportUpdate.status}" /></span></li>
+
+				<li><b><spring:message code="report.content"></spring:message></b>
+					<span class="${blueText}"> <jstl:out
+							value="${reportUpdate.content}" /></span></li>
+
+			</ul>
+			<security:authorize access="hasRole('PLAYER')">
+				<jstl:if
+					test="${reportUpdate.isSuspicious eq false and report.status ne 'RESOLVED'}">
+					<a
+						href="reportUpdate/player/markSuspicious.do?reportUpdateId=${reportUpdate.id}&reportId=${report.id}&reportDisplay=true"><spring:message
+							code="reportUpdate.mark.suspicious" /></a>
+				</jstl:if>
+			</security:authorize>
+			<br />
+			<jstl:if test="${reportUpdate.isSuspicious eq true}">
+				<spring:message code="reportUpdate.marked.suspicious" />
+				<br />
+			</jstl:if>
+		</fieldset>
 	</jstl:forEach>
-<br/>
+	<br />
 	<acme:goback />
 
 </ul>

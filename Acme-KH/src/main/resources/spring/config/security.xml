@@ -89,7 +89,7 @@
 		
 		<!-- CAMILA -->
 		
-		<security:intercept-url pattern="/report/display/**" access="hasAnyRole('GM', 'PLAYER','ADMIN')"  />
+		<security:intercept-url pattern="/report/display.do" access="hasAnyRole('GM', 'PLAYER','ADMIN')"  />
 		<security:intercept-url pattern="/report/list.do" access="hasAnyRole('GM','ADMIN')" /> 
 		<security:intercept-url pattern="/report/gm/**" access="hasRole('GM')" /> 
 		<security:intercept-url pattern="/report/player/**" access="hasRole('PLAYER')" /> 
