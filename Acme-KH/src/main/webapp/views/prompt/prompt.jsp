@@ -23,8 +23,12 @@
 <script type="text/javascript">
 
 $( document ).ready(function() {
-	
-document.getElementById('commandLine').focus();
+
+var i = 0;
+var txt = 'Acme-Battle - Command Prompt#-------------------------------------------------------------';
+var speed = 25;
+
+typeWriter();
 
 var prompt = document.getElementById("prompt");
 prompt.addEventListener("keydown", function (e) {
@@ -34,6 +38,20 @@ prompt.addEventListener("keydown", function (e) {
     	e.preventDefault();
     }
 });
+
+function typeWriter() {
+  if (i < txt.length) {
+	  if(txt.charAt(i) === "#"){
+		  document.getElementById("demo").innerHTML += "</br>";
+	  }else{
+    	  document.getElementById("demo").innerHTML += txt.charAt(i);
+	  }
+    i++;
+    setTimeout(typeWriter, speed);
+  }else{
+	  document.getElementById('commandLine').focus();
+  }
+}
 
 function interpret(command) {
 	if(command === 'clear'){
@@ -63,7 +81,6 @@ function interpret(command) {
 </script>
 
 <div id="prompt">
-<div contenteditable="false" id="default"> Acme-Battle - Command Prompt<br/>
--------------------------------------------------------------<br/><br/></div>
+<div contenteditable="false" id="default"><span id="demo"></span><br/><br/></div>
 <div class="parent"><span class="arrow">></span><div contenteditable="true" class="commandLine" id="commandLine"></div></div>
 </div>
