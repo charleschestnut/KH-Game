@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ItemRepository;
+import domain.ContentManager;
 import domain.Item;
 import domain.KeybladeWielder;
 import domain.Purchase;
@@ -20,13 +23,15 @@ public class ItemService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private ItemRepository ItemRepository;
+	private ItemRepository itemRepository;
 	@Autowired
 	private ActorService actorService;
 	@Autowired
 	private PurchaseService purchaseService;
 	@Autowired
 	private KeybladeWielderService keybladeWielderService;
+	@Autowired
+	private Validator validator;
 
 	// CRUD methods
 
@@ -43,7 +48,7 @@ public class ItemService {
 
 		Item saved;
 
-		saved = ItemRepository.save(item);
+		saved = itemRepository.save(item);
 
 		return saved;
 	}
@@ -53,7 +58,7 @@ public class ItemService {
 
 		Item Item;
 
-		Item = ItemRepository.findOne(itemId);
+		Item = itemRepository.findOne(itemId);
 
 		return Item;
 	}
@@ -62,7 +67,7 @@ public class ItemService {
 	// la tienda
 	public Collection<Item> findAll() {
 		Collection<Item> Items;
-		Items = ItemRepository.findAll();
+		Items = itemRepository.findAll();
 
 		return Items;
 	}
@@ -70,7 +75,7 @@ public class ItemService {
 	public void delete(Item item) {
 		Assert.notNull(item);
 
-		ItemRepository.delete(item);
+		itemRepository.delete(item);
 	}
 
 	// OTROS METODOS -----------------
@@ -104,7 +109,41 @@ public class ItemService {
 
 	// Items que he comprado en la tienda y los puedo usar (no han caducado)
 	public Collection<Item> myItems(int playerId) {
-		return this.ItemRepository.myItems(playerId);
+		return this.itemRepository.myItems(playerId);
+	}
+	
+	// Items que ha creado un Content Manager en especifico
+	public Collection<Item> itemsByManager(int managerId){
+		return this.itemRepository.itemsByManager(managerId);
+	}
+	
+	
+	public Item reconstruct(Item item, BindingResult binding) {
+		Item result;
+		Item original = this.itemRepository.findOne(item.getId());
+
+		if (item.getId() == 0) {
+			result = item;
+			result.setContentManager((ContentManager) this.actorService.findByPrincipal());
+		} else {
+			result = this.itemRepository.findOne(item.getId());
+
+			result.setName(item.getName());
+			result.setDescription(item.getDescription());
+			result.setOnSell(item.getOnSell());
+			result.setType(item.getType());
+			result.setDuration(item.getDuration());
+			result.setExpiration(item.getExpiration());
+			result.setExtra(item.getExtra());
+			result.setMunnyCost(item.getMunnyCost());
+			
+			result.setContentManager(original.getContentManager());
+			
+		}
+		this.validator.validate(result, binding);
+
+		return result;
+
 	}
 
 

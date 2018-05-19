@@ -1,18 +1,18 @@
 
 package domain;
 
-import java.util.Collection;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
@@ -44,6 +44,7 @@ public class Item extends DomainEntity {
 	 * Tiempo que durará el objeto <b>EN MINUTOS<b>
 	 */
 	@Range(min = 0)
+	@NotNull
 	public Integer getDuration() {
 		return this.duration;
 	}
@@ -56,6 +57,7 @@ public class Item extends DomainEntity {
 	 * Tiempo de caducidad del objeto despues de haberlo comprado <b>EN DIAS<b>
 	 */
 	@Range(min = 0)
+	@NotNull
 	public Integer getExpiration() {
 		return this.expiration;
 	}
@@ -68,6 +70,9 @@ public class Item extends DomainEntity {
 	 * Beneficio extra que dependará del tipo. Recordar que los "features" hay que programarlos, no se pueden crear features.
 	 */
 	@Range(min = 0, max = 1)
+	@DecimalMin("0.1")
+	@DecimalMax("0.9")
+	@NotNull
 	public Double getExtra() {
 		return this.extra;
 	}
@@ -76,6 +81,7 @@ public class Item extends DomainEntity {
 		this.extra = extra;
 	}
 	@Range(min = 0)
+	@NotNull
 	public Integer getMunnyCost() {
 		return this.munnyCost;
 	}

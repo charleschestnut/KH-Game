@@ -1,12 +1,3 @@
-<%--
- * edit.jsp
- *
- * Copyright (C) 2017 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- --%>
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -29,7 +20,18 @@
 	<acme:textarea code="item.description" path="description"/>
 	<acme:textbox code="item.duration" path="duration"/>
 	<acme:textbox code="item.expiration" path="expiration"/>
-	<acme:textbox code="item.extra" path="extra"/>
+	<spring:message code="item.extra" />
+	<form:select path="extra">
+                <form:option value="0.1">10%</form:option>
+                <form:option value="0.2">20%</form:option>
+                <form:option value="0.3">30%</form:option>
+                <form:option value="0.4">40%</form:option>
+                <form:option value="0.5">50%</form:option>
+                <form:option value="0.6">60%</form:option>
+                <form:option value="0.7">70%</form:option>
+                <form:option value="0.8">80%</form:option>
+                <form:option value="0.9">90%</form:option>
+    </form:select>
 	<acme:textbox code="item.munnyCost" path="munnyCost"/>
 	
 	<form:select path="type">
@@ -37,7 +39,7 @@
                 <form:option value="DEFENSEBOOST"><spring:message code="item.defenseBoost" /></form:option>
                 <form:option value="RESOURCEBOOST"><spring:message code="item.resourceBoost" /></form:option>
                 <form:option value="SHIELD"><spring:message code="item.shield" /></form:option>
-            </form:select>
+    </form:select>
 	
 	<form:checkbox path="onSell" value="true" />
 	<spring:message code="item.onSell" />

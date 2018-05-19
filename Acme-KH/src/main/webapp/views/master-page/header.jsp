@@ -58,6 +58,7 @@
 				<ul>
 					<li><a href="building/contentManager/myList.do"><spring:message code="master.page.myBuilding" /></a></li>
 					<li><a href="item/manager/create.do"><spring:message code="master.page.createItem" /></a></li>
+					<li><a href="item/manager/createdItems.do"><spring:message code="master.page.createdItems" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
