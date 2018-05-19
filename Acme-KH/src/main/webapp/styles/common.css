@@ -46,14 +46,14 @@
 }
 
 .parent{
-	border:solid 1px white;
+	border:solid 0px white;
 	white-space: nowrap;
 	width:50%;
 }
 
 .answer{
 	white-space: nowrap;
-	padding-left:0.5em;
+	padding-left:1em;
 }
 
 .arrow{

@@ -49,7 +49,7 @@ function interpret(command) {
 	        success: function( data, textStatus, jQxhr ){
 	        	div.removeAttr('id');
 	        	$('.parent').append('<br/><span class="answer">'+data+'</span>');
-	        	$('.parent').append('<br/><span class="arrow">></span><div id="commandLine" class="commandLine" contenteditable="true"></div>');
+	        	$('.parent').append('<br/><br/><span class="arrow">></span><div id="commandLine" class="commandLine" contenteditable="true"></div>');
 	        	document.getElementById('commandLine').focus();
 	        },
 	        error: function( jqXhr, textStatus, errorThrown ){
