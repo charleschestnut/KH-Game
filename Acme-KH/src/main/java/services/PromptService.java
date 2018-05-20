@@ -15,7 +15,7 @@ public class PromptService {
 		} else if (command.equals("hello")) {
 			res = "bye";
 		} else {
-			res = "hello world";
+			res = "Command not understood";
 		}
 		return res;
 	}
