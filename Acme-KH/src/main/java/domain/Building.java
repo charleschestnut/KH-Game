@@ -135,9 +135,9 @@ public class Building extends DomainEntity {
 		final Integer mythril = this.getCost().getMytrhil();
 		final Integer coal = this.getCost().getGummiCoal();
 
-		res.setMunny((int) (munny + this.extraCostPerLvl * munny * (currentLvL - 1)));
-		res.setMytrhil((int) (mythril + this.extraCostPerLvl * mythril * (currentLvL - 1)));
-		res.setGummiCoal((int) (coal + this.extraCostPerLvl * coal * (currentLvL - 1)));
+		res.setMunny((int) (munny + this.extraCostPerLvl * munny * (currentLvL)));
+		res.setMytrhil((int) (mythril + this.extraCostPerLvl * mythril * (currentLvL)));
+		res.setGummiCoal((int) (coal + this.extraCostPerLvl * coal * (currentLvL)));
 
 		return res;
 
