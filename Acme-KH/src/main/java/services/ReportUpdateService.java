@@ -1,9 +1,8 @@
+
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +15,6 @@ import repositories.ReportUpdateRepository;
 import security.Authority;
 import domain.Actor;
 import domain.Administrator;
-import domain.ContentManager;
-import domain.Defense;
 import domain.GameMaster;
 import domain.Report;
 import domain.ReportStatus;
@@ -30,13 +27,14 @@ public class ReportUpdateService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private ReportUpdateRepository reportUpdateRepository;
+	private ReportUpdateRepository	reportUpdateRepository;
 	@Autowired
-	private ActorService actorService;
+	private ActorService			actorService;
 	@Autowired
-	private ReportService reportService;
+	private ReportService			reportService;
 	@Autowired
-	private Validator validator;
+	private Validator				validator;
+
 
 	// CRUD methods
 
@@ -48,55 +46,47 @@ public class ReportUpdateService {
 		return reportUpdate;
 	}
 
-	public ReportUpdate save(ReportUpdate reportUpdate, Integer reportId) {
+	public ReportUpdate save(final ReportUpdate reportUpdate, final Integer reportId) {
 		Assert.notNull(reportUpdate);
 		Report report;
 		ReportUpdate saved;
 
-		report = reportService.findOne(reportId);
-		Assert.isTrue(report.getStatus() != ReportStatus.RESOLVED,
-				"error.message.noUpdate");
+		report = this.reportService.findOne(reportId);
+		Assert.isTrue(report.getStatus() != ReportStatus.RESOLVED, "error.message.noUpdate");
 
-		if (reportUpdate.getId() != 0) {
-			Assert.isTrue(report.getReportUpdates().contains(reportUpdate),
-					"error.message.distincReport");
-		}
-		saved = reportUpdateRepository.save(reportUpdate);
+		if (reportUpdate.getId() != 0)
+			Assert.isTrue(report.getReportUpdates().contains(reportUpdate), "error.message.distincReport");
+		saved = this.reportUpdateRepository.save(reportUpdate);
 
-		if (reportUpdate.getId() == 0) {
+		if (reportUpdate.getId() == 0)
 			report.getReportUpdates().add(saved);
-		}
 
 		report.setStatus(saved.getStatus());
-		reportService.save(report);
+		this.reportService.save(report);
 
 		return saved;
 	}
 
-	public ReportUpdate findOne(int reportUpdateId) {
+	public ReportUpdate findOne(final int reportUpdateId) {
 		Assert.notNull(reportUpdateId);
 
 		ReportUpdate ReportUpdate;
 
-		ReportUpdate = reportUpdateRepository.findOne(reportUpdateId);
+		ReportUpdate = this.reportUpdateRepository.findOne(reportUpdateId);
 
 		return ReportUpdate;
 	}
 
-	public ReportUpdate findOneToEdit(int reportUpdateId) {
+	public ReportUpdate findOneToEdit(final int reportUpdateId) {
 		Assert.notNull(reportUpdateId);
-		Assert.isTrue(actorService.getPrincipalAuthority().equals(
-				Authority.ADMIN)
-				|| actorService.getPrincipalAuthority().equals(Authority.GM));
-		Assert.isTrue(reportService.findReportsByReportUpdate(reportUpdateId)
-				.getStatus() != ReportStatus.RESOLVED, "error.message.noUpdate");
-		
-		
+		Assert.isTrue(this.actorService.getPrincipalAuthority().equals(Authority.ADMIN) || this.actorService.getPrincipalAuthority().equals(Authority.GM));
+		Assert.isTrue(this.reportService.findReportsByReportUpdate(reportUpdateId).getStatus() != ReportStatus.RESOLVED, "error.message.noUpdate");
+
 		ReportUpdate reportUpdate;
 
-		reportUpdate = reportUpdateRepository.findOne(reportUpdateId);
-		
-		Assert.isTrue(reportUpdate.getCreator().equals(actorService.findByPrincipal()),"error.message.notOwnUpdate");
+		reportUpdate = this.reportUpdateRepository.findOne(reportUpdateId);
+
+		Assert.isTrue(reportUpdate.getCreator().equals(this.actorService.findByPrincipal()), "error.message.notOwnUpdate");
 
 		return reportUpdate;
 	}
@@ -104,48 +94,46 @@ public class ReportUpdateService {
 	public Collection<ReportUpdate> findAll() {
 		Collection<ReportUpdate> ReportUpdates;
 
-		ReportUpdates = reportUpdateRepository.findAll();
+		ReportUpdates = this.reportUpdateRepository.findAll();
 
 		return ReportUpdates;
 	}
 
-	public void delete(ReportUpdate ReportUpdate) {
+	public void delete(final ReportUpdate ReportUpdate) {
 		Assert.notNull(ReportUpdate);
 
-		reportUpdateRepository.delete(ReportUpdate);
+		this.reportUpdateRepository.delete(ReportUpdate);
 	}
 
 	// Other business methods
 
-	public Collection<ReportUpdate> getReportUpdatesByReportId(int reportId) {
-		return reportUpdateRepository.getReportUpdatesByReportId(reportId);
+	public Collection<ReportUpdate> getReportUpdatesByReportId(final int reportId) {
+		return this.reportUpdateRepository.getReportUpdatesByReportId(reportId);
 	}
 
-	public void markSuspicious(ReportUpdate reportUpdate) {
+	public void markSuspicious(final ReportUpdate reportUpdate) {
 		Assert.notNull(reportUpdate);
 
 		reportUpdate.setIsSuspicious(true);
-		reportUpdateRepository.save(reportUpdate);
+		this.reportUpdateRepository.save(reportUpdate);
 	}
 
 	public Collection<ReportUpdate> getSuspiciousReportUpdates() {
-		Assert.isTrue(actorService.getPrincipalAuthority().equals(
-				Authority.ADMIN));
+		Assert.isTrue(this.actorService.getPrincipalAuthority().equals(Authority.ADMIN));
 
-		return reportUpdateRepository.getSuspiciousReportUpdates();
+		return this.reportUpdateRepository.getSuspiciousReportUpdates();
 	}
 
-	public ReportUpdate reconstruct(ReportUpdate reportUpdate,
-			final BindingResult binding) {
+	public ReportUpdate reconstruct(final ReportUpdate reportUpdate, final BindingResult binding) {
 		Actor actor;
 
-		actor = actorService.findByPrincipal();
+		actor = this.actorService.findByPrincipal();
 
 		if (reportUpdate.getId() == 0) {
-			if (actorService.getPrincipalAuthority().equals("ADMIN")) {
+			if (this.actorService.getPrincipalAuthority().equals("ADMIN")) {
 				reportUpdate.setAdministrator((Administrator) actor);
 				reportUpdate.setGameMaster(null);
-			} else if (actorService.getPrincipalAuthority().equals("GM")) {
+			} else if (this.actorService.getPrincipalAuthority().equals("GM")) {
 				reportUpdate.setGameMaster((GameMaster) actor);
 				reportUpdate.setAdministrator(null);
 			}
@@ -153,8 +141,7 @@ public class ReportUpdateService {
 			reportUpdate.setIsSuspicious(false);
 
 		} else {
-			final ReportUpdate original = this.findOneToEdit(reportUpdate
-					.getId());
+			final ReportUpdate original = this.findOneToEdit(reportUpdate.getId());
 
 			if (original.getGameMaster() != null) {
 				reportUpdate.setGameMaster(original.getGameMaster());
@@ -174,13 +161,47 @@ public class ReportUpdateService {
 
 		return reportUpdate;
 	}
-	
-	public Collection<ReportUpdate> getReportUpdatesByActorId(int reportId, int actorId){
-		return reportUpdateRepository.getReportUpdatesByActorId(reportId, actorId);
-	}
-	
-	public Collection<ReportUpdate> getResolvedReportUpdates(int reportId){
-		return reportUpdateRepository.getResolvedReportUpdates(reportId);
+
+	public Collection<ReportUpdate> getReportUpdatesByActorId(final int reportId, final int actorId) {
+		return this.reportUpdateRepository.getReportUpdatesByActorId(reportId, actorId);
 	}
 
+	public Collection<ReportUpdate> getResolvedReportUpdates(final int reportId) {
+		return this.reportUpdateRepository.getResolvedReportUpdates(reportId);
+	}
+
+	//dashboard
+
+	public Double avgUpdatesFromGm() {
+		return this.reportUpdateRepository.avgUpdatesFromGm();
+	}
+
+	public Double stddevUpdatesFromGm() {
+		return this.reportUpdateRepository.stddevUpdatesFromGm();
+	}
+
+	public Integer maxUpdatesFromGm() {
+		return this.reportUpdateRepository.maxUpdatesFromGm();
+	}
+
+	public Integer mminUpdatesFromGm() {
+		return this.reportUpdateRepository.minUpdatesFromGm();
+	}
+
+	public Double avgUpdatesFromReport() {
+		return this.reportUpdateRepository.avgUpdateFromReport();
+	}
+	public Double stddevUpdatesFromReport() {
+		return this.reportUpdateRepository.stddevUpdateFromReport();
+	}
+	public Integer maxUpdatesFromReport() {
+		return this.reportUpdateRepository.maxUpdateFromReport();
+	}
+	public Integer minUpdatesFromReport() {
+		return this.reportUpdateRepository.minUpdateFromReport();
+
+	}
+	public Double avgSuspiciousUpdatesFromGm() {
+		return this.reportUpdateRepository.avgSuspiciousUpdatesFromGm();
+	}
 }

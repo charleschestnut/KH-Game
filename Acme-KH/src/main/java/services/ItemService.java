@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -23,15 +24,16 @@ public class ItemService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private ItemRepository itemRepository;
+	private ItemRepository			itemRepository;
 	@Autowired
-	private ActorService actorService;
+	private ActorService			actorService;
 	@Autowired
-	private PurchaseService purchaseService;
+	private PurchaseService			purchaseService;
 	@Autowired
-	private KeybladeWielderService keybladeWielderService;
+	private KeybladeWielderService	keybladeWielderService;
 	@Autowired
-	private Validator validator;
+	private Validator				validator;
+
 
 	// CRUD methods
 
@@ -43,22 +45,22 @@ public class ItemService {
 		return Item;
 	}
 
-	public Item save(Item item) {
+	public Item save(final Item item) {
 		Assert.notNull(item);
 
 		Item saved;
 
-		saved = itemRepository.save(item);
+		saved = this.itemRepository.save(item);
 
 		return saved;
 	}
 
-	public Item findOne(int itemId) {
+	public Item findOne(final int itemId) {
 		Assert.notNull(itemId);
 
 		Item Item;
 
-		Item = itemRepository.findOne(itemId);
+		Item = this.itemRepository.findOne(itemId);
 
 		return Item;
 	}
@@ -67,38 +69,35 @@ public class ItemService {
 	// la tienda
 	public Collection<Item> findAll() {
 		Collection<Item> Items;
-		Items = itemRepository.findAll();
+		Items = this.itemRepository.findAll();
 
 		return Items;
 	}
 
-	public void delete(Item item) {
+	public void delete(final Item item) {
 		Assert.notNull(item);
 
-		itemRepository.delete(item);
+		this.itemRepository.delete(item);
 	}
 
 	// OTROS METODOS -----------------
 
 	// Comprar un item de la tienda
-	public Purchase buyItem(Item item) {
-		KeybladeWielder player = (KeybladeWielder) this.actorService
-				.findByPrincipal();
+	public Purchase buyItem(final Item item) {
+		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 		// Solo lo podremos comprar si disponemos del Munny que cuesta el item
 		Assert.isTrue(item.getMunnyCost() <= player.getMaterials().getMunny());
 		Assert.isTrue(item.getOnSell() == true);
-		Purchase p = this.purchaseService.create();
-		Date currentDate = new Date(System.currentTimeMillis()-100);
+		final Purchase p = this.purchaseService.create();
+		final Date currentDate = new Date(System.currentTimeMillis() - 100);
 
 		p.setPlayer(player);
 		p.setPurchaseDate(currentDate);
 		p.setItem(item);
-		player.getMaterials().setMunny(
-				player.getMaterials().getMunny() - item.getMunnyCost());
+		player.getMaterials().setMunny(player.getMaterials().getMunny() - item.getMunnyCost());
 
 		// Hacemos set de la que sera la fecha en la que el objeto expirara
-		Date expirationDate = new Date(currentDate.getTime()
-				+ p.getItem().getExpiration() * 24 * 60 * 60 * 1000);
+		final Date expirationDate = new Date(currentDate.getTime() + p.getItem().getExpiration() * 24 * 60 * 60 * 1000);
 		p.setExpirationDate(expirationDate);
 
 		this.purchaseService.save(p);
@@ -109,19 +108,18 @@ public class ItemService {
 	}
 
 	// Items que he comprado en la tienda y los puedo usar (no han caducado)
-	public Collection<Item> myItems(int playerId) {
+	public Collection<Item> myItems(final int playerId) {
 		return this.itemRepository.myItems(playerId);
 	}
-	
+
 	// Items que ha creado un Content Manager en especifico
-	public Collection<Item> itemsByManager(int managerId){
+	public Collection<Item> itemsByManager(final int managerId) {
 		return this.itemRepository.itemsByManager(managerId);
 	}
-	
-	
-	public Item reconstruct(Item item, BindingResult binding) {
+
+	public Item reconstruct(final Item item, final BindingResult binding) {
 		Item result;
-		Item original = this.itemRepository.findOne(item.getId());
+		final Item original = this.itemRepository.findOne(item.getId());
 
 		if (item.getId() == 0) {
 			result = item;
@@ -137,9 +135,9 @@ public class ItemService {
 			result.setExpiration(item.getExpiration());
 			result.setExtra(item.getExtra());
 			result.setMunnyCost(item.getMunnyCost());
-			
+
 			result.setContentManager(original.getContentManager());
-			
+
 		}
 		this.validator.validate(result, binding);
 
@@ -147,5 +145,23 @@ public class ItemService {
 
 	}
 
+	//dashboard
+
+	public Integer maxCreatedItem() {
+		return this.itemRepository.maxCreatedItem();
+
+	}
+	public Integer minCreatedItem() {
+		return this.itemRepository.minCreatedItem();
+
+	}
+	public Double avgCreatedItem() {
+		return this.itemRepository.avgCreatedItem();
+
+	}
+	public Double stddevCreatedItem() {
+		return this.itemRepository.stddevCreatedItem();
+
+	}
 
 }

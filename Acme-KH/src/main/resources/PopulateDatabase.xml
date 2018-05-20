@@ -82,6 +82,19 @@
 		</property>
 		<property name="enabled" value="true" />
 	</bean>
+	
+	<bean id="report1" class="domain.Report">
+		<property name="isBug" value="false" />
+		<property name="status" value="RESOLVED" />
+		<property name="title" value="prueba" />
+		<property name="content" value="contenido de prueba" />
+		<property name="photos">
+			<list></list>
+		</property>
+		<property name="date" value="05/04/2018"></property>
+		<property name="keybladeWielder" ref="player1"></property>
+		
+	</bean>
 
 	
 	<!-- Other domain beans come here -->
@@ -137,8 +150,8 @@
 		<property name="userAccount" ref="userAccount4" />
 		<property name="lastConnection" value="02/07/2017 08:32" />
 		<property name="materials" ref="material1" />
-		<property name="wins" value="1" />
-		<property name="loses" value="0" />
+		<property name="wins" value="13" />
+		<property name="loses" value="7" />
 		<property name="worldCoordinates" ref="coordinates1" />
 		<property name="worldName" value="Mundo de Sora" />
 		<property name="faction" ref="faction1" />
@@ -156,8 +169,8 @@
 		<property name="userAccount" ref="userAccount5" />
 		<property name="lastConnection" value="05/04/2017 11:05" />
 		<property name="materials" ref="material2" />
-		<property name="wins" value="0" />
-		<property name="loses" value="1" />
+		<property name="wins" value="79" />
+		<property name="loses" value="20" />
 		<property name="worldCoordinates" ref="coordinates2" />
 		<property name="worldName" value="Fox World" />
 		<property name="faction" ref="faction2" />
