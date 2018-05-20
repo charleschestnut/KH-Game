@@ -28,7 +28,7 @@ var i = 0;
 var txt = 'Acme-Battle - Command Prompt#-------------------------------------------------------------';
 var speed = 25;
 var commands = [];
-var colors = ["cyan","blue","red","green","pink","green","white","purple","blueviolet"];
+var colors = ["cyan","blue","red","green","pink","green","white","purple","blueviolet","crimson","deeppink"];
 typeWriter();
 
 var prompt = document.getElementById("prompt");
