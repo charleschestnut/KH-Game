@@ -23,12 +23,12 @@
 <jstl:set var="lang" value="es" />
 <jstl:choose>
 	<jstl:when test="${ pageContext.response.locale == lang }">
-    <button type="button" onClick="javascript:relativeRedir('?language=en')" class="btn btn-secondary-info"><img src="http://www.iraqposting.com/shipping/images/england32.png" width="16px"/></button> 
+    <button type="button" onClick="javascript:preventRedirect('language=en')" class="btn btn-secondary-info"><img src="http://www.iraqposting.com/shipping/images/england32.png" width="16px"/></button> 
    <button type="button" class="btn btn-secondary"><img src="http://e04-marca.uecdn.es/iconos/v1.x/v1.0/banderas-todo/32/s/Spain.png" width="16px"/></button>
   </jstl:when>
 	<jstl:otherwise>
      <button type="button" class="btn btn-secondary"><img src="http://www.iraqposting.com/shipping/images/england32.png" width="16px"/></button> 
-   <button type="button" onClick="javascript:relativeRedir('?language=es')" class="btn btn-secondary-info"><img src="http://e04-marca.uecdn.es/iconos/v1.x/v1.0/banderas-todo/32/s/Spain.png" width="16px"/></button>
+   <button type="button" onClick="javascript:preventRedirect('language=es')" class="btn btn-secondary-info"><img src="http://e04-marca.uecdn.es/iconos/v1.x/v1.0/banderas-todo/32/s/Spain.png" width="16px"/></button>
   </jstl:otherwise>
 </jstl:choose>
 </span>

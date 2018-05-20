@@ -22,10 +22,10 @@
 	
 	<form:hidden path="version" />
 	<form:hidden path="id" />
-	<form:hidden path="date" />
-	<form:hidden path="keybladeWielder" />
+	<input type="hidden" name="invitedId" value="${invitedId}" />
+	<%-- <form:hidden path="keybladeWielder" />
 	<form:hidden path="organization" />
-	<form:hidden path="invitationStatus" />
+	<form:hidden path="invitationStatus" /> --%>
 	
 	
 	
