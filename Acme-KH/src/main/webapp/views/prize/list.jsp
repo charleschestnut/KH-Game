@@ -22,10 +22,10 @@
 	<spring:message code="prize.description" var="descriptionHeader"></spring:message>
 	<display:column  title="${descriptionHeader}">
 	
-		<jstl:if test="${row.description=='built.prize.defaultDescription' }">
+		<jstl:if test="${row.description.contains('defaultDescription') }">
 			<spring:message code="${row.description}"></spring:message>
 		</jstl:if>
-		<jstl:if test="${row.description!='built.prize.defaultDescription'}">
+		<jstl:if test="${!row.description.contains('defaultDescription')}">
 			${row.description }
 		
 		</jstl:if>

@@ -28,6 +28,8 @@ public class PrizeService {
 	private KeybladeWielderService	keybladeWielderService;
 	@Autowired
 	private BuiltService			builtService;
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	// CRUD methods
@@ -76,10 +78,12 @@ public class PrizeService {
 	}
 
 	public void open(final Prize prize) {
+		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+		Assert.isTrue(prize.getKeybladeWielder().equals(player), "error.message.owner");
+
 		if (prize.getDate().before(new Date(System.currentTimeMillis())))
 			this.PrizeRepository.delete(prize);
 		else {
-			final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 
 			final Materials max = this.builtService.maxMaterials();
 			final Materials old = player.getMaterials();
@@ -88,7 +92,20 @@ public class PrizeService {
 
 			player.setMaterials(sinExceso);
 			this.keybladeWielderService.save(player);
+
+			this.PrizeRepository.delete(prize);
 		}
+
+	}
+
+	public void createDailyPrizeForPrincipal() {
+		final Prize p = this.create();
+
+		p.setKeybladeWielder((KeybladeWielder) this.actorService.findByPrincipal());
+		p.setMaterials(this.configurationService.getConfiguration().getDailyMaterials());
+		p.setDescription("prize.daily.defaultDescription");
+
+		this.PrizeRepository.save(p);
 
 	}
 	// Other methods
