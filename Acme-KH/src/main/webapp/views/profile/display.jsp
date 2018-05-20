@@ -23,11 +23,7 @@
 <fieldset>
 <legend>Actor</legend>
 
-<jstl:set var="avatar" value="${user.avatar}"/>
-<jstl:if test="${user.avatar == null }">
-<jstl:set var="avatar"  value="images/defaultAvatar.png"/>
-</jstl:if>
-<img src="${avatar}" width="100px" height="100px"/>
+<img src="${user.getAvatarImage()}" width="100px" height="100px"/>
 <p>
 <jstl:out value="${user.name}"/> <jstl:out value="${user.surname}"/> <br/>
 <jstl:out value="${user.nickname}"/> - <jstl:out value="${user.userAccount.username}"/>  - <b><jstl:out value="${user.getActorTypeName()}"/></b>

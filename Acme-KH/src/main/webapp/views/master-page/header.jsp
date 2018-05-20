@@ -14,6 +14,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
+	<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <nav style="background-color: #1a1e3d; font-size: 12px;"
 	class="text-uppercase navbar navbar-expand-md navbar-dark fixed-top justify-content-between">
@@ -190,9 +191,12 @@
 								code="master.page.logout" /> </a>
 					</div></li>
 			</security:authorize>
-
+			
 		</ul>
 	</div>
+	<security:authorize access="isAuthenticated()">
+	<acme:searchbox action="profile/actor/display.do"/>
+	</security:authorize>
 </nav>
 <!----------------->
 

@@ -10,6 +10,8 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,20 @@ public class ProfileController extends AbstractController {
 	private OrganizationService		organizationService;
 
 
-	// Actor ---------------------------------------------------------------		
+	// Actor ---------------------------------------------------------------	
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		ModelAndView result;
+		Collection<KeybladeWielder> players;
+
+		players = this.keybladeWielderService.findAll();
+
+		result = new ModelAndView("profile/actor/list");
+		result.addObject("players", players);
+
+		return result;
+	}
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam(required = false) String username) {
@@ -54,7 +69,9 @@ public class ProfileController extends AbstractController {
 			try {
 				actor = this.actorService.findByUserAccountUsername(username);
 			} catch (Throwable oops) { //Si mete un username invalido (nulo o no dentro de los limites [3, 32]), mostrar error o alternativa
-				actor = this.actorService.findByPrincipal();
+				result = new ModelAndView("redirect:list.do");
+				result.addObject("message", this.getErrorMessage(oops));
+				return result;
 			}
 
 		result = new ModelAndView("profile/actor/display");

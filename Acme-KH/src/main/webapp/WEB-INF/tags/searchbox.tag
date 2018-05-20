@@ -25,10 +25,9 @@
 
 <%-- Definition --%>
 <spring:message code="master.page.search" var="search"/>
-<spring:message code="master.page.keyword" var="keyword"/>
-<form action="${action}" method="get">
-<input type="text" name="keyword" placeholder="${keyword}">
-  <input type="submit" value="${search}">
+<spring:message code="username" var="username"/>
+<form class="form-inline my-2 my-sm-0" action="${action}" method="GET">
+    <input class="form-control form-control-sm input-group-sm mr-sm-2" style="margin-bottom: 0px;" type="search" name="username" placeholder="${username}" aria-label="Search">
+    <button class="btn btn-sm btn-outline-primary my-2 my-sm-0" type="submit">${search}</button>
 </form>
-<br/>
 

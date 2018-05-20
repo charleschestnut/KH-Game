@@ -29,6 +29,11 @@
 	<definition name="profile/actor/register" extends="master.page">	
 		<put-attribute name="title" value="Registrate" />
 		<put-attribute name="body" value="/views/profile/register.jsp" />
-	</definition>		
+	</definition>	
+	
+	<definition name="profile/actor/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de Jugadores" />
+		<put-attribute name="body" value="/views/profile/list.jsp" />
+	</definition>	
 	
 </tiles-definitions>

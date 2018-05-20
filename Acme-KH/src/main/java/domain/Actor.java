@@ -152,4 +152,12 @@ public class Actor extends DomainEntity {
 			return "UNKNOW";
 	}
 
+	@Transient
+	public String getAvatarImage() {
+		if (this.getAvatar() == null || this.avatar == "")
+			return "images/defaultAvatar.png";
+		else
+			return this.getAvatar();
+	}
+
 }

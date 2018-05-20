@@ -152,9 +152,10 @@ public class ActorService {
 	}
 
 	public Actor findByUserAccountUsername(String username) {
-		Assert.notNull(username);
+		Assert.notNull(username, "error.message.null");
 		Assert.isTrue(username.length() >= 3 && username.length() <= 32);
 		Actor actor = this.actorRepository.findByUserAccountUsername(username);
+		Assert.notNull(actor, "error.message.notexist");
 
 		return actor;
 	}
