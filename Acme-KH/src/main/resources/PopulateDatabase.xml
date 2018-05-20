@@ -142,6 +142,8 @@
 		<property name="worldCoordinates" ref="coordinates1" />
 		<property name="worldName" value="Mundo de Sora" />
 		<property name="faction" ref="faction1" />
+		<property name="hasConfirmedTerms" value="true" />
+		<property name="confirmMoment" value="20/02/2016 00:00" />
 		<!-- <property name="shield" ref="shield1" /> -->
 	</bean>
 	
@@ -159,6 +161,8 @@
 		<property name="worldCoordinates" ref="coordinates2" />
 		<property name="worldName" value="Fox World" />
 		<property name="faction" ref="faction2" />
+		<property name="hasConfirmedTerms" value="true" />
+		<property name="confirmMoment" value="20/02/2016 00:00" />
 		<!-- <property name="shield" ref="shield2" /> -->
 	</bean>
 	
