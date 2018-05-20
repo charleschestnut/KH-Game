@@ -8,6 +8,11 @@
  * 
  */
 
+body{
+	background-image:url("http://img13.deviantart.net/b67a/i/2012/310/3/f/3ds_wallpaper_by_saxzer-d5k6cp6.png");
+	color:white;
+	font-family: 'Montserrat', sans-serif;
+}
 .error {
 	color: red;
 	font-weight: bolder;
@@ -76,7 +81,7 @@ footer{
     border-top: 2px solid #fff;
 }
 
-.header-logo {
+/* .header-logo {
 	width: 100%;
     max-width: 458px;
     display: block;
@@ -84,7 +89,7 @@ footer{
     top: calc(50% - 121px);
     left: calc(50% - 229px);
     z-index: 1047;
-}
+} */
 .section.home {
     position: relative;
     z-index: 1;
@@ -135,3 +140,17 @@ footer{
 {
     background-color: #716992;
 }
+
+/* Show the dropdown menu on hover */
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu{
+	font-size:12px!important;
+}
+.dropdown > .dropdown-toggle:active {
+    /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}
+

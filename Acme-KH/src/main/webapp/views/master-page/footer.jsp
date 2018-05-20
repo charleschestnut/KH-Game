@@ -15,7 +15,8 @@
 <jsp:useBean id="date" class="java.util.Date" />
 
 <hr />
-
+<div style="background-color: #1a1e3d; color:white; opacity: 0.5; text-align:center;" >
 <b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Sample Co., Inc.</b>
-<br><i style="font-size: 14px">SQUARE ENIX logo are registered trademarks or trademarks of Square Enix Holdings Co., Ltd.
- <br>All other trademarks are properties of their respective owners.</i>
+<br><p style="font-size: 14px">SQUARE ENIX logo are registered trademarks or trademarks of Square Enix Holdings Co., Ltd.
+ <br>All other trademarks are properties of their respective owners.</p>
+</div>

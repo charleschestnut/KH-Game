@@ -13,7 +13,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
- <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark justify-content-between">
+ <nav style="background-color: #1a1e3d; font-size:12px;" class="text-uppercase navbar navbar-expand-md navbar-dark fixed-top justify-content-between">
       <div class="headerbar-logo navbar-brand">
     	<a href="https://square-enix-games.com">
       		<img class="headerbar-logo-img" src="https://cdn.sqexeu.com/headerbar/images/SE_Logo_White.svg" width="155px">
@@ -36,33 +36,15 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <div style="font-size:12px;" class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav ml-auto" >
          
          <security:authorize access="isAnonymous()">
 			<li class="nav-item"><a class="nav-link" href="profile/actor/register.do"><spring:message code="master.page.signup" /></a></li>
 			<li class="nav-item"><a class="nav-link" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 		</security:authorize>
-          
-        </ul>
-      </div>
-    </nav>
-    <!----------------->
-    
-     <div class="section home">
-        
-              <div class="video-home">
-                <img src="https://kingdomhearts.com/img/header/kingdom-hearts-header-still.jpg" width="100%" class="header-still">
-              </div>
-        <img class="header-logo" src="images/acme_battle.png" alt="KINGDOM HEARTS">
-        </div>
-        <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #1a1e3d;  border-bottom: 2px solid #fff; padding: 0px;">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav mx-auto">
-      <li class="nav-item">
+		
+		 <li class="nav-item">
         <a class="nav-link" href="#">
         <img src="https://kingdomhearts.com/img/header/icons/home-icon.png" align="center" class="nav-icon" alt="home">
         Home</a>
@@ -73,7 +55,7 @@
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<img src="https://kingdomhearts.com/img/header/icons/games-icon.png" align="center" class="nav-icon">
 			<spring:message	code="master.page.administrator" /></a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				<div style="font-size:12px;" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item" href="report/list.do"><spring:message code="report.list" /></a>
 					<a class="dropdown-item" href="reportUpdate/admin/listSuspicious.do"><spring:message code="reportUpdate.list.suspicious" /></a>
 					<a class="dropdown-item" href="legaltext/index.do"><spring:message code="master.page.terms" /></a>
@@ -87,7 +69,7 @@
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<img src="https://kingdomhearts.com/img/header/icons/characters-icon.png" align="center" class="nav-icon" >
 			<spring:message	code="master.page.player" /></a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				<div style="font-size:12px;" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item" href="report/player/list.do"><spring:message code="report.list" /></a>
 					<a class="dropdown-item" href="report/player/create.do"><spring:message code="report.create" /></a>
 					<a class="dropdown-item" href="built/list.do"><spring:message code="master.page.myBuilding" /></a>
@@ -103,7 +85,7 @@
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<img src="https://kingdomhearts.com/img/header/icons/characters-icon.png" align="center" class="nav-icon">
 			<spring:message	code="master.page.organization" /></a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">	
+				<div style="font-size:12px;" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">	
 					<a class="dropdown-item" href="organization/list.do"><spring:message code="organization.list" /></a>
 				</div>
 			</li>
@@ -114,7 +96,7 @@
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<img src="https://kingdomhearts.com/img/header/icons/connect-icon.png" align="center" class="nav-icon">
 			<spring:message	code="master.page.manager" /></a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">	
+				<div style="font-size:12px;" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">	
 					<a class="dropdown-item" href="building/contentManager/myList.do"><spring:message code="master.page.myBuilding" /></a>
 					<a class="dropdown-item" href="item/manager/create.do"><spring:message code="master.page.createItem" /></a>
 				</div>
@@ -134,19 +116,41 @@
 					<spring:message code="master.page.profile" /> 
 			        (<security:authentication property="principal.username" />)
 				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				<div style="font-size:12px;" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item" href="profile/actor/display.do"> <spring:message code="master.page.myprofile"></spring:message></a>
 					<a class="dropdown-item" href="building/list.do"> <spring:message code="master.page.availableBuilding"></spring:message></a>
 					<a class="dropdown-item" href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a>
 				</div>
 			</li>
 		</security:authorize>
-    </ul>
-  </div>
-</nav>
+          
+        </ul>
+      </div>
+    </nav>
+    <!----------------->
+    
+     <div class="section home">
+        <img src="images/banner2.jpg" width="100%" class="header-still">
+     </div>
 
-
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 <script type="text/javascript">
+
+$( document ).ready(function() {
+$('body').on('mouseenter mouseleave','.dropdown',function(e){
+	  var _d=$(e.target).closest('.dropdown');_d.addClass('show');
+	  setTimeout(function(){
+	    _d[_d.is(':hover')?'addClass':'removeClass']('show');
+	    $('[data-toggle="dropdown"]', _d).attr('aria-expanded',_d.is(':hover'));
+	  },300);
+	});
+});
+
+
 function preventRedirect(path){
 	var currentUrl = window.location.href;
 	

@@ -29,6 +29,7 @@ var txt = 'Acme-Battle - Command Prompt#----------------------------------------
 var speed = 25;
 var commands = [];
 var colors = ["cyan","blue","red","green","pink","green","white","purple","blueviolet","crimson","deeppink"];
+var lastColor;
 typeWriter();
 
 var prompt = document.getElementById("prompt");
@@ -83,14 +84,18 @@ function typeWriter() {
 
 function interpret(command) {
 	commands.push(command);
+	var div = $('#commandLine');
 	if(command === 'clear'){
 		$('.parent').empty();
 		$('.parent').append('<span class="arrow">></span><div id="commandLine" class="commandLine" contenteditable="true"></div>');
     	document.getElementById('commandLine').focus();
 	}else if(colors.indexOf(command)>0){
-		$('.commandLine').css("color",command);
+		div.removeAttr('id');
+		$('.parent').append('<br/><br/><span class="arrow">></span><div id="commandLine" class="commandLine" contenteditable="true"></div>');
+    	document.getElementById('commandLine').focus();
+    	$('.commandLine').css("color",command);
+		lastColor = command;
 	}else{
-		var div = $('#commandLine');
 		$.ajax({
 	        url: 'prompt/interpret.do',
 	        type: 'post',
@@ -100,6 +105,10 @@ function interpret(command) {
 	        	$('.parent').append('<br/><span class="answer">'+data+'</span>');
 	        	$('.parent').append('<br/><br/><span class="arrow">></span><div id="commandLine" class="commandLine" contenteditable="true"></div>');
 	        	document.getElementById('commandLine').focus();
+	        	
+	        	 if(lastColor){
+	    			$('.commandLine').css("color",lastColor);
+	    		} 
 	        },
 	        error: function( jqXhr, textStatus, errorThrown ){
 	            console.log( errorThrown );

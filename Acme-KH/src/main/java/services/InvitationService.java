@@ -224,7 +224,7 @@ public class InvitationService {
 			organitazion = this.organizationService.findOrganizationByPlayer(actor.getId());
 			
 			invitation.setKeybladeWielder(invited);
-			invitation.setDate(new Date(System.currentTimeMillis()));
+			invitation.setDate(new Date(System.currentTimeMillis()-2000));
 			invitation.setOrganization(organitazion);
 			invitation.setInvitationStatus(InvitationStatus.PENDING);
 		} else {

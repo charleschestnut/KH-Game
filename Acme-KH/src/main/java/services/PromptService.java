@@ -14,6 +14,8 @@ public class PromptService {
 			res = "huye";
 		} else if (command.equals("hello")) {
 			res = "bye";
+		} else if (command.equals("sad")) {
+			res = "send nudes";
 		} else {
 			res = "Command not understood";
 		}
