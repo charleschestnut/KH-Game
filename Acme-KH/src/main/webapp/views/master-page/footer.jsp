@@ -13,11 +13,6 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
 <jsp:useBean id="date" class="java.util.Date" />
 
 <hr />
