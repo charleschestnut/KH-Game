@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -14,6 +15,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -58,7 +60,9 @@ public class Actor extends DomainEntity {
 	public void setSurname(final String surname) {
 		this.surname = surname;
 	}
+
 	@NotBlank
+	@Column(unique = true)
 	public String getNickname() {
 		return this.nickname;
 	}
@@ -85,6 +89,8 @@ public class Actor extends DomainEntity {
 		this.phone = phone;
 	}
 
+	@NotNull
+	@AssertTrue
 	public Boolean getHasConfirmedTerms() {
 		return this.hasConfirmedTerms;
 	}

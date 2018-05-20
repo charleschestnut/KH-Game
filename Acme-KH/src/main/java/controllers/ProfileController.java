@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.KeybladeWielderService;
 import services.OrganizationService;
 import domain.Actor;
 import domain.KeybladeWielder;
@@ -31,10 +32,13 @@ import form.ActorForm;
 public class ProfileController extends AbstractController {
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private OrganizationService	organizationService;
+	private KeybladeWielderService	keybladeWielderService;
+
+	@Autowired
+	private OrganizationService		organizationService;
 
 
 	// Actor ---------------------------------------------------------------		
@@ -104,12 +108,44 @@ public class ProfileController extends AbstractController {
 			result = this.createEditModelAndViewForm(form);
 		else
 			try {
-
 				Actor actorReconstructed = this.actorService.reconstruct(form, binding);
 				this.actorService.save(actorReconstructed);
 				result = new ModelAndView("redirect:display.do");
 			} catch (Throwable oops) {
 				result = this.createEditModelAndViewEdit(form, this.getErrorMessage(oops));
+			}
+
+		return result;
+	}
+
+	// Sing Up
+
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public ModelAndView register() {
+		ModelAndView result;
+		Actor actor;
+
+		actor = this.actorService.create("PLAYER");
+
+		result = new ModelAndView("profile/actor/register");
+		result.addObject("actor", actor);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "register")
+	public ModelAndView signingup(Actor actor, BindingResult binding) {
+		ModelAndView result;
+
+		actor = this.actorService.reconstruct(actor, binding);
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(actor, "error.message.commit");
+		else
+			try {
+				this.actorService.saveFromCreate(actor);
+				result = new ModelAndView("redirect:/security/login.do");
+			} catch (Throwable oops) {
+				result = this.createEditModelAndView(actor, this.getErrorMessage(oops));
 			}
 
 		return result;

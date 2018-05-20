@@ -27,12 +27,27 @@
 
 
 
-<link rel="shortcut icon" href="favicon.ico"/> 
+ <link rel="apple-touch-icon" sizes="57x57" href="https://kingdomhearts.com/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://kingdomhearts.com/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://kingdomhearts.com/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://kingdomhearts.com/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://kingdomhearts.com/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://kingdomhearts.com/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://kingdomhearts.com/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://kingdomhearts.com/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://kingdomhearts.com/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://kingdomhearts.com/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://kingdomhearts.com/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://kingdomhearts.com/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://kingdomhearts.com/favicon-16x16.png">
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/jquery-ui.js"></script>
 <script type="text/javascript" src="scripts/jmenu.js"></script>
 
-<link rel="stylesheet" href="styles/boostrap.min.cs" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/docs/4.0/examples/jumbotron/jumbotron.css" rel="stylesheet">
 <link rel="stylesheet" href="styles/common.css" type="text/css">
 <link rel="stylesheet" href="styles/jmenu.css" media="screen" type="text/css" />
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
@@ -87,12 +102,15 @@
 </head>
 
 <body>
+	<tiles:insertAttribute name="header" />
+	
+    <main role="main">
+		
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+       
 
-	<div>
-		<tiles:insertAttribute name="header" />
-	</div>
-	<div>
-		<h1>
+      <div class="container layout">
+      <h1>
 			<tiles:insertAttribute name="title" />
 		</h1>
 		<tiles:insertAttribute name="body" />	
@@ -100,10 +118,18 @@
 			<br />
 			<span class="message"><spring:message code="${message}" /></span>
 		</jstl:if>	
-	</div>
-	<div>
-		<tiles:insertAttribute name="footer" />
-	</div>
 
+      </div> <!-- /container -->
+
+    </main>
+
+    <footer >
+      <tiles:insertAttribute name="footer" />
+    </footer>
+    
+    
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

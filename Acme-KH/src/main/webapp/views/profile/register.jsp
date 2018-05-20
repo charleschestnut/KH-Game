@@ -7,7 +7,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="profile/actor/register.do" modelAttribute="keybladeWielder" class="form-signin">
+<form:form action="profile/actor/register.do" modelAttribute="actor" class="form-signin">
 	
 	<acme:textbox code="username" path="userAccount.username" />
 	<acme:password code="password" path="userAccount.password" />
@@ -23,5 +23,5 @@
 	
 	<%-- <acme:submit code="user.register"  name="register"/> --%>
 	<input type="submit" name="register"
-		value="<spring:message code="user.register"/>" />
+		value="<spring:message code="master.page.signup"/>" />
 </form:form>

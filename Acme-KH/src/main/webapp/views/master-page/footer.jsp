@@ -17,3 +17,5 @@
 <hr />
 
 <b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Sample Co., Inc.</b>
+<br><i style="font-size: 14px">SQUARE ENIX logo are registered trademarks or trademarks of Square Enix Holdings Co., Ltd.
+ <br>All other trademarks are properties of their respective owners.</i>

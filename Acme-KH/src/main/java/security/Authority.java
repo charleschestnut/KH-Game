@@ -41,6 +41,7 @@ public class Authority implements GrantedAuthority {
 	public static final String	GM		= "GM";
 	public static final String	PLAYER	= "PLAYER";
 	public static final String	MANAGER	= "MANAGER";
+	public static final String	regexp	= "^" + Authority.ADMIN + "|" + Authority.GM + "|" + Authority.PLAYER + "|" + Authority.MANAGER + "$";
 
 	// Attributes -------------------------------------------------------------
 
