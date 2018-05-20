@@ -64,7 +64,13 @@
 	<div style="font-size: 12px;" class="collapse navbar-collapse"
 		id="navbarsExampleDefault">
 		<ul class="navbar-nav ml-auto">
-
+			
+			<security:authorize access="isAuthenticated()">
+				<li class="nav-item"><a class="nav-link" href="#"> <img
+						src="https://kingdomhearts.com/img/header/icons/home-icon.png"
+						align="center" class="nav-icon" alt="home"> Home
+				</a></li>
+			</security:authorize>
 			<security:authorize access="isAnonymous()">
 				<li class="nav-item"><a class="nav-link"
 					href="profile/actor/register.do"><spring:message
@@ -162,10 +168,6 @@
 			</security:authorize>
 
 			<security:authorize access="isAuthenticated()">
-				<li class="nav-item"><a class="nav-link" href="#"> <img
-						src="https://kingdomhearts.com/img/header/icons/home-icon.png"
-						align="center" class="nav-icon" alt="home"> Home
-				</a></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"

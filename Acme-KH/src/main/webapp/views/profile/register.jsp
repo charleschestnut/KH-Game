@@ -8,7 +8,6 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <form:form action="profile/actor/register.do" modelAttribute="actor" class="form-signin">
-	
 	<acme:textbox code="username" path="userAccount.username" />
 	<acme:password code="password" path="userAccount.password" />
 	<acme:textbox code="nickname" path="nickname" />
@@ -22,6 +21,6 @@
 	<form:errors cssClass="error" path="hasConfirmedTerms" /><br/><br/>
 	
 	<%-- <acme:submit code="user.register"  name="register"/> --%>
-	<input type="submit" name="register"
+	<input type="submit" name="register" class="btn btn-pink"
 		value="<spring:message code="master.page.signup"/>" />
 </form:form>

@@ -23,7 +23,7 @@
 
 <%-- Definition --%>
 
-<button type="button" onclick="javascript:history.back(1)" >
+<button type="button" class="btn btn-primary" onclick="javascript:history.back(1)" >
 	<spring:message code="master.page.return" />
 </button>
 
