@@ -53,6 +53,7 @@
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
 
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
@@ -111,15 +112,17 @@
        
 
       <div class="container layout">
-      <h1>
+        <h1 class="title-header">
 			<tiles:insertAttribute name="title" />
+			<hr />
 		</h1>
-		<tiles:insertAttribute name="body" />	
+		<div  class="body-center">
+		<tiles:insertAttribute name="body"/>	
 		<jstl:if test="${message != null}">
 			<br />
 			<span class="message"><spring:message code="${message}" /></span>
 		</jstl:if>	
-
+		</div>
       </div> <!-- /container -->
 
     </main>

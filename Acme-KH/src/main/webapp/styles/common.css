@@ -8,9 +8,47 @@
  * 
  */
 
-body{
-	background-image:url("http://img13.deviantart.net/b67a/i/2012/310/3/f/3ds_wallpaper_by_saxzer-d5k6cp6.png");
+
+.title-header hr {
+    padding-bottom:70px;
+    border-top: 1px solid white;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu{
+	font-size:12px!important;
+}
+
+.body-center{
+	padding:5px;
+	width:100%;
+}
+
+.container.layout {
+	margin-top:50px;
+	padding: 30px 40px 70px 70px;
+    background-repeat: repeat;
+    background-size: auto;
+    background-position: left top;
+    width:3000px;
+}
+
+form{
 	color:white;
+}
+
+.title-header{
+	font-family: 'Dancing Script', cursive;
+	font-size:70px;
+}
+body{
+	background-image:url("http://i.imgur.com/fKW8NxE.png");
+	color:white;
+	background-repeat: round;
 	font-family: 'Montserrat', sans-serif;
 }
 .error {
@@ -101,14 +139,6 @@ footer{
     display: block;
 }
 
-.container.layout {
-	padding: 40px 40px 10px 40px;
-	background-color: #000;
-    background-image: url(https://kingdomhearts.com/img/components/kingdom-hearts-home-argyle.jpg);
-    background-repeat: repeat;
-    background-size: auto;
-    background-position: left top;
-}
 
 .nav-item
 {
@@ -141,16 +171,4 @@ footer{
     background-color: #716992;
 }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover>.dropdown-menu {
-  display: block;
-}
-
-.dropdown-menu{
-	font-size:12px!important;
-}
-.dropdown > .dropdown-toggle:active {
-    /*Without this, clicking will make it sticky*/
-    pointer-events: none;
-}
 
