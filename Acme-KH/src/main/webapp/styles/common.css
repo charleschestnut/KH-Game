@@ -18,6 +18,18 @@
 	width:1000px;
 }
 
+.timer{
+	border: 1.5px solid #3B3A3A;
+	border-radius:5px;
+	display:inline-block;
+	margin-left:10px;
+	width:auto;
+	padding:5px;
+}
+.collect{
+	font-size:13px;
+	padding-top:5.5px;
+}
 .group-width{
 	width:10px;
 }

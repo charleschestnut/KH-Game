@@ -75,7 +75,7 @@
 
 <div class="row row-width">
 <jstl:forEach items="${builts}" var="row">
-	<div class="card" style="width: 18rem;color:black;">
+	<div class="card" style="width: 19rem;color:black;">
 		<img class="card-img-top" src="https://vignette.wikia.nocookie.net/kingdomhearts/images/3/3b/Twilight_Town-_Clock_Tower_%28Art%29_KHII.png" alt="Card image cap">
 		<div class="card-body">
 			<div style="padding:10px;"class="row"><h5 class="card-title">${row.building.name}</h5>
@@ -96,7 +96,7 @@
 										'${row.building.timeToConstruct}',
 										'${row.id }');
 							</script>
-							<p id="timer${row.id}"></p>
+							<div class="timer row"><i style="font-size:20px;vertical-align:middle;"class="material-icons">timer</i><span id="timer${row.id}"></span></div>
 						</div>
 					</jstl:if>
 				</p>
@@ -108,26 +108,24 @@
 						</jstl:when>
 						<jstl:otherwise>
 							<a href="built/upgrade.do?builtId=${row.id }" class="btn-sm btn btn-success"
-								title="${row.building.getTotalMaterials(row.lvl) }"><spring:message
+								title="${row.building.getTotalMaterials(row.lvl) }"><i style="font-size:20px;vertical-align:middle;" class="material-icons">arrow_upward</i><spring:message
 									code="built.upgrade"></spring:message></a>
 						</jstl:otherwise>
 					</jstl:choose>
 					
 					
 					<jstl:if test="${row.lvl>0 }">
-			<a class="btn-sm btn btn-primary" href="built/display.do?builtId=${row.id}"><jstl:out value="${displayHeader}"></jstl:out></a>
+			<a class="btn-sm btn btn-warning" href="built/display.do?builtId=${row.id}"><jstl:out value="${displayHeader}"></jstl:out></a>
 		</jstl:if>
-		</div><br/><br/>
-		<div class="btn-group">
 		<jstl:choose>
 					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate!=null && row.haTerminado(row.building.getTotalTime(row.lvl))}">
 						<a class="btn-sm btn btn-primary" href="built/collect.do?builtId=${row.id}"><jstl:out value="${collect}"></jstl:out></a>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate!=null && !row.haTerminado(row.building.getTotalTime(row.lvl)) }">
-						<button type="button" class="btn-sm btn btn-primary" disabled><jstl:out value="${working }"></jstl:out></button>
+						<button type="button" class="btn-sm btn btn-primary" disabled><i style="font-size:20px;vertical-align:middle;" class="material-icons">loop</i><jstl:out value="${working }"></jstl:out></button>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate==null }">
-						<a class="btn-sm btn btn-primary" href="built/startCollect.do?builtId=${row.id}"><jstl:out value="${startCollect}"></jstl:out></a>
+						<a class="collect btn-sm btn btn-primary" href="built/startCollect.do?builtId=${row.id}"><jstl:out value="${startCollect}"></jstl:out></a>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.troop!=null && row.haTerminado(row.troop.timeToRecruit)}">
 						<a class="btn-sm btn btn-primary" href="TODO: Enlace para crear los recruited con una tropa pasandole un builtId"><jstl:out value="${recruit}"></jstl:out></a>
@@ -142,12 +140,11 @@
 						<button type="button" class="btn-sm btn btn-primary" disabled><jstl:out value="${working }"></jstl:out></button>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate==null }">
-						<a class="btn-sm btn btn-primary" href="built/startRecruit.do?builtId=${row.id}"><jstl:out value="${startRecruit}"></jstl:out></a>
+						<a class="collect btn-sm btn btn-primary" href="built/startRecruit.do?builtId=${row.id}"><jstl:out value="${startRecruit}"></jstl:out></a>
 					</jstl:when>
 				</jstl:choose>
-				
-				<a class="btn-sm btn btn-danger" href="built/delete.do?builtId=${row.id}"><jstl:out value="${unbuildHeader }"></jstl:out></a>
-				</div>
+				</div><br/><br/>
+				<a class="btn-sm btn btn-danger" href="built/delete.do?builtId=${row.id}"><i style="font-size:20px;vertical-align:middle;"class="material-icons">clear</i><jstl:out value="${unbuildHeader }"></jstl:out></a>
 		</div>
 	</div>
 </jstl:forEach>
