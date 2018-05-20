@@ -123,6 +123,9 @@
 								code="master.page.myItems" /></a> <a class="dropdown-item"
 							href="item/player/activeItemsList.do"><spring:message
 								code="master.page.activeItems" /></a>
+								<a class="dropdown-item"
+							href="prize/list.do"><spring:message
+								code="master.page.prizes" /></a>
 					</div></li>
 			</security:authorize>
 

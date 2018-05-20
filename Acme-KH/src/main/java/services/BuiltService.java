@@ -223,7 +223,8 @@ public class BuiltService {
 
 	public void collect(final Built b) {
 		final Livelihood l = this.livelihoodService.findOne(b.getBuilding().getId());
-		final Date expiration = new Date(System.currentTimeMillis() + 30 * 24 * 60 * 60 * 1000);
+		final Long days = (long) 2592000;
+		final Date expiration = new Date(System.currentTimeMillis() + days * 1000);
 		final Date today = new Date(System.currentTimeMillis() - 1000);
 		final Long time1 = today.getTime() - b.getActivationDate().getTime();
 		final Long time2 = (long) (l.getTotalTime(b.getLvl()) * 60 * 1000);
@@ -245,7 +246,6 @@ public class BuiltService {
 		this.BuiltRepository.save(b);
 
 	}
-
 	public void recruit(final Built b) {
 		final Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
 		final Date today = new Date(System.currentTimeMillis() - 1000);

@@ -39,7 +39,7 @@
 	<display:column property="materials.mytrhil" title="${mytrhilHeader}"></display:column>
 	
 	<spring:message code="master.page.gummyCoal" var="gummyCoalHeader"></spring:message>
-	<display:column property="materials.gummyCoal" title="${gummyCoalHeader}"></display:column>
+	<display:column property="materials.gummiCoal" title="${gummyCoalHeader}"></display:column>
 	
 	<spring:message code="prize.expirationDate" var="expirationDateHeader"></spring:message>
 	<display:column property="date" title="${expirationDateHeader}"></display:column>

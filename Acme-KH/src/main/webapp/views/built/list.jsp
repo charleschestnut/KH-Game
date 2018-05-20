@@ -70,19 +70,7 @@
 		
 	
 	</display:column>
-	
-	<display:column  title="probando">
-		<jstl:if test="${row.building.getClass()=='class domain.Livelihood'}">
-		${row.haTerminado(row.building.getTotalTime(row.lvl))} <br> =====
-		<br>
-		${row.building.getTotalTime(row.lvl)}
-		<br>
-		${row.building.timeToConstruct}
-		<br>
-		${row.lvl}
-		</jstl:if>
-		</display:column>
-	
+		
 	<spring:message code="built.upgrade" var="upgradeHeader"></spring:message>	
 	<display:column title="${upgradeHeader }">
 		<jstl:choose >
