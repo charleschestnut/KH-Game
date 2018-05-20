@@ -78,7 +78,10 @@
 		<security:intercept-url pattern="/built/delete.do " access="hasRole('PLAYER')" />
 		<security:intercept-url pattern="/built/collect.do " access="hasRole('PLAYER')" />
 		<security:intercept-url pattern="/built/startCollect.do " access="hasRole('PLAYER')" />
-			 
+
+		<security:intercept-url pattern="/prize/list.do" access="hasRole('PLAYER')" />
+		<security:intercept-url pattern="/prize/open.do" access="hasRole('PLAYER')" />
+					 
 		
 		<!-- ÁNGEL LOZANO -->
 		

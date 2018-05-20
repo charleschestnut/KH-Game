@@ -223,6 +223,7 @@ public class BuiltService {
 
 	public void collect(final Built b) {
 		final Livelihood l = this.livelihoodService.findOne(b.getBuilding().getId());
+		final Date expiration = new Date(System.currentTimeMillis() + 30 * 24 * 60 * 60 * 1000);
 		final Date today = new Date(System.currentTimeMillis() - 1000);
 		final Long time1 = today.getTime() - b.getActivationDate().getTime();
 		final Long time2 = (long) (l.getTotalTime(b.getLvl()) * 60 * 1000);
@@ -233,7 +234,7 @@ public class BuiltService {
 		Assert.isTrue(time1 >= time2, "error.message.built.working");
 
 		final Prize p = new Prize();
-		p.setDate(today);
+		p.setDate(expiration);
 		p.setDescription("built.prize.defaultDescription");
 		p.setKeybladeWielder((KeybladeWielder) this.actorService.findByPrincipal());
 		p.setMaterials(l.getTotalCollectMaterials(b.getLvl()));
@@ -292,6 +293,14 @@ public class BuiltService {
 		materials.setGummiCoal(coal);
 
 		return materials;
+	}
+
+	public Materials maxMaterials() {
+		final Materials base = this.configurationService.getConfiguration().getBaseMaterials();
+		final Materials res = this.extraMaterials().add(base);
+
+		return res;
+
 	}
 
 }

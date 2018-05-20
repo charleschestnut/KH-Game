@@ -39,6 +39,7 @@
 		<value>/views/building/tiles.xml</value>
 		<value>/views/built/tiles.xml</value>
 		<value>/views/requirement/tiles.xml</value>
+		<value>/views/prize/tiles.xml</value>
 		
 		<!-- ÁNGEL LOZANO -->
 		
