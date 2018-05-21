@@ -159,6 +159,9 @@
 								code="master.page.myBuilding" /></a> <a class="dropdown-item"
 							href="item/manager/create.do"><spring:message
 								code="master.page.createItem" /></a>
+						<a class="dropdown-item"
+							href="item/manager/createdItems.do"><spring:message
+								code="master.page.createdItems" /></a>
 					</div></li>
 			</security:authorize>
 
