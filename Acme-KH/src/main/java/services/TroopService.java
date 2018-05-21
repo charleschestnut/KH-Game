@@ -90,4 +90,11 @@ public class TroopService {
 		return this.TroopRepository.getStoragedTroops(builtId);
 	}
 
+
+	public Collection<Troop> getTroopsAvailableForBuilt(Integer builtLevel){
+		return this.TroopRepository.getTroopsAvailableForBuilt(builtLevel);
+	}
+	
+	
+
 }

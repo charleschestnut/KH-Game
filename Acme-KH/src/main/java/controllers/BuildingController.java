@@ -12,9 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.BuildingService;
 import services.DefenseService;
+import services.GummiShipService;
 import services.LivelihoodService;
 import services.RecruiterService;
 import services.RequirementService;
+import services.TroopService;
 import services.WarehouseService;
 import domain.Building;
 import domain.Defense;
@@ -38,6 +40,10 @@ public class BuildingController extends AbstractController {
 	private LivelihoodService	livelihoodService;
 	@Autowired
 	private RequirementService	requirementService;
+	@Autowired
+	private TroopService	troopService;
+	@Autowired
+	private GummiShipService	gummiShipService;
 
 
 	@RequestMapping("/list")
@@ -77,6 +83,8 @@ public class BuildingController extends AbstractController {
 						res.addObject("recruiter", true);
 						res.addObject("building", recruiter);
 						//TODO: añadir query para las tropas y gummi ships
+						res.addObject("troops", this.troopService.getTroopsFromRecruiter(recruiter.getId()));
+						res.addObject("gummiShips", this.gummiShipService.getGummiShipFromRecruiter(recruiter.getId()));
 
 					} else {
 						livelihood = this.livelihoodService.findOne(buildingId);

@@ -135,7 +135,7 @@ public class InvitationController extends AbstractController {
 		Integer id = Integer.parseInt(invitationId);
 		Invitation inv = this.invitationService.findOne(id);
 		
-		//TODO Comprobar que el actual de verdad tiene Organización y es la del parámetro. 
+		// Comprobar que el actual de verdad tiene Organización y es la del parámetro. 
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 		if(this.organizationService.keybladeWielderHasOrganization(actual.getId()) || !inv.getInvitationStatus().equals(InvitationStatus.PENDING)){
 			return new ModelAndView("redirect:/organization/invitation/list.do");
@@ -155,7 +155,7 @@ public class InvitationController extends AbstractController {
 		Integer id = Integer.parseInt(invitationId);
 		Invitation inv = this.invitationService.findOne(id);
 		
-		//TODO Comprobar que el actual de verdad tiene Organización y es la del parámetro. 
+		// Comprobar que el actual de verdad tiene Organización y es la del parámetro. 
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 		
 		if(this.organizationService.keybladeWielderHasOrganization(actual.getId()) ||!inv.getInvitationStatus().equals(InvitationStatus.PENDING)){

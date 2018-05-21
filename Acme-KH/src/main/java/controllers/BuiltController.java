@@ -136,10 +136,12 @@ public class BuiltController extends AbstractController {
 		else {
 
 			recruiter = this.recruiterService.findOne(buildingId);
-			if (recruiter != null)
+			if (recruiter != null){
 				res.addObject("recruiter", true);
-			//TODO: añadir query para las tropas y gummi ships disponibles dentro del if
-			else {
+				//TODO: añadir query para las tropas y gummi ships disponibles dentro del if
+				res.addObject("troops", this.troopService.getTroopsAvailableForBuilt(b.getLvl()));
+				res.addObject("gummiShips", this.gummiShipService.getGummiShipsAvailableForBuilt(b.getLvl()));
+			}else {
 				livelihood = this.livelihoodService.findOne(buildingId);
 				if (livelihood != null)
 					res.addObject("livelihood", true);

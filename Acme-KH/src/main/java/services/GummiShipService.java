@@ -12,6 +12,7 @@ import repositories.GummiShipRepository;
 import domain.GummiShip;
 import domain.Materials;
 import domain.Recruiter;
+import domain.Troop;
 
 @Service
 @Transactional
@@ -20,7 +21,7 @@ public class GummiShipService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private GummiShipRepository	GummiShipRepository;
+	private GummiShipRepository	gummiShipRepository;
 
 
 	// CRUD methods
@@ -50,7 +51,7 @@ public class GummiShipService {
 
 		GummiShip saved;
 
-		saved = this.GummiShipRepository.save(GummiShip);
+		saved = this.gummiShipRepository.save(GummiShip);
 
 		return saved;
 	}
@@ -60,7 +61,7 @@ public class GummiShipService {
 
 		GummiShip GummiShip;
 
-		GummiShip = this.GummiShipRepository.findOne(GummiShipId);
+		GummiShip = this.gummiShipRepository.findOne(GummiShipId);
 
 		return GummiShip;
 	}
@@ -68,7 +69,7 @@ public class GummiShipService {
 	public Collection<GummiShip> findAll() {
 		Collection<GummiShip> GummiShips;
 
-		GummiShips = this.GummiShipRepository.findAll();
+		GummiShips = this.gummiShipRepository.findAll();
 
 		return GummiShips;
 	}
@@ -76,14 +77,20 @@ public class GummiShipService {
 	public void delete(final GummiShip GummiShip) {
 		Assert.notNull(GummiShip);
 
-		this.GummiShipRepository.delete(GummiShip);
+		this.gummiShipRepository.delete(GummiShip);
 	}
 	//Other methods
 
 	public Collection<GummiShip> getGummiShipFromRecruiter(final Integer recruiterId) {
-		return this.GummiShipRepository.getGummiShipsFromRecruiter(recruiterId);
+		return this.gummiShipRepository.getGummiShipsFromRecruiter(recruiterId);
 	}
+	
 	public Collection<GummiShip> getStoragedGummiShip(final Integer builtId) {
-		return this.GummiShipRepository.getStoragedGummiShip(builtId);
+		return this.gummiShipRepository.getStoragedGummiShip(builtId);
 	}
+	
+	public Collection<GummiShip> getGummiShipsAvailableForBuilt(Integer builtLevel){
+		return this.gummiShipRepository.getGummiShipsAvailableForBuilt(builtLevel);
+	}
+	
 }

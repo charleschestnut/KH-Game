@@ -45,7 +45,37 @@
 		<display:table name="troops" id="row" pagesize="5" requestURI="building/display.do">
 	
 				<!-- TODO: tabla de troops -->
+			<spring:message code="name" var="nameH" />
+			<display:column title="${nameH}">
+				<jstl:out value="${row.name}"/> 
+			</display:column>
+			
+			<spring:message code="recruiterRequiredLvl" var="minLevelH" />
+			<display:column title="${minLevelnameH}">
+				<jstl:out value="${row.recruiterRequiredLvl}"/> 
+			</display:column>
+			
+			<spring:message code="attack" var="attackH" />
+			<display:column title="${attackH}">
+				<jstl:out value="${row.attack}"/> 
+			</display:column>
+			
+			<spring:message code="defense" var="defenseH" />
+			<display:column title="${defenseH}">
+				<jstl:out value="${row.defense}"/> 
+			</display:column>
+			
+			<spring:message code="cost" var="costH" />
+			<display:column title="${costH}">
+				<jstl:out value="${row.cost}"/> 
+			</display:column>
+			
+			<spring:message code="timeToRecruit" var="timeH" />
+			<display:column title="${timeH}">
+				<jstl:out value="${row.timeToRecruit}"/> 
+			</display:column>
 		
+			
 		</display:table>
 	
 	</jstl:if>
@@ -55,6 +85,30 @@
 		<display:table name="gummiShips" id="row" pagesize="5" requestURI="building/display.do">
 	
 				<!-- TODO: tabla de gummi ships -->
+			<spring:message code="name" var="nameH" />
+			<display:column title="${nameH}">
+				<jstl:out value="${row.name}"/> 
+			</display:column>
+			
+			<spring:message code="recruiterRequiredLvl" var="minLevelH" />
+			<display:column title="${minLevelnameH}">
+				<jstl:out value="${row.recruiterRequiredLvl}"/> 
+			</display:column>
+			
+			<spring:message code="cost" var="costH" />
+			<display:column title="${costH}">
+				<jstl:out value="${row.cost}"/> 
+			</display:column>
+			
+			<spring:message code="slots" var="slotsH" />
+			<display:column title="${slotsH}">
+				<jstl:out value="${row.slots}"/> 
+			</display:column>
+			
+			<spring:message code="timeToRecruit" var="timeH" />
+			<display:column title="${timeH}">
+				<jstl:out value="${row.timeToRecruit}"/> 
+			</display:column>
 		
 		</display:table>
 	
