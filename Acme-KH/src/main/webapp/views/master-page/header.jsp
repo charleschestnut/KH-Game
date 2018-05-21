@@ -72,6 +72,14 @@
 						align="center" class="nav-icon" alt="home"> Home
 				</a></li>
 			</security:authorize>
+			
+			<security:authorize access="hasRole('PLAYER')">
+				<li class="nav-item"><a class="nav-link" href="keybladewielder/world.do"> <img
+						src="https://kingdomhearts.com/img/header/icons/worlds-icon.png"
+						align="center" class="nav-icon" alt="home"> <spring:message
+							code="master.page.myWorld" />
+				</a></li>
+			</security:authorize>
 			<security:authorize access="isAnonymous()">
 				<li class="nav-item"><a class="nav-link"
 					href="profile/actor/register.do"><spring:message
@@ -135,7 +143,7 @@
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> <img
-						src="https://kingdomhearts.com/img/header/icons/characters-icon.png"
+						src="https://kingdomhearts.com/img/header/icons/connect-icon.png"
 						align="center" class="nav-icon"> <spring:message
 							code="master.page.organization" /></a>
 					<div style="font-size: 12px;" class="dropdown-menu"

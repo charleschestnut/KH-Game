@@ -15,6 +15,9 @@
  <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
  <%@taglib prefix="display" uri="http://displaytag.sf.net"%><%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
  
+ 
+ <acme:searchbox action="keybladewielder/world.do"/>
+ 
 <jstl:if test="${puedoEnviarInvitation eq true and  hasOrganization eq false}">
 	<acme:action code="invitation.send"  url="/organization/invitation/edit.do?username=${usernameInvitation}"/>
 </jstl:if>
