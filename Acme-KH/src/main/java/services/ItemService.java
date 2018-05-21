@@ -14,6 +14,7 @@ import org.springframework.validation.Validator;
 import repositories.ItemRepository;
 import domain.ContentManager;
 import domain.Item;
+import domain.ItemType;
 import domain.KeybladeWielder;
 import domain.Purchase;
 
@@ -83,28 +84,45 @@ public class ItemService {
 	// OTROS METODOS -----------------
 
 	// Comprar un item de la tienda
-	public Purchase buyItem(final Item item) {
-		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
-		// Solo lo podremos comprar si disponemos del Munny que cuesta el item
-		Assert.isTrue(item.getMunnyCost() <= player.getMaterials().getMunny());
-		Assert.isTrue(item.getOnSell() == true);
-		final Purchase p = this.purchaseService.create();
-		final Date currentDate = new Date(System.currentTimeMillis() - 100);
+	// Comprar un item de la tienda
+		public Purchase buyItem(Item item) {
+			KeybladeWielder player = (KeybladeWielder) this.actorService
+					.findByPrincipal();
+			// Solo lo podremos comprar si disponemos del Munny que cuesta el item
+			Assert.isTrue(item.getMunnyCost() <= player.getMaterials().getMunny());
+			Assert.isTrue(item.getOnSell() == true);
+			Purchase p = this.purchaseService.create();
+			Date currentDate = new Date(System.currentTimeMillis()-100);
 
-		p.setPlayer(player);
-		p.setPurchaseDate(currentDate);
-		p.setItem(item);
-		player.getMaterials().setMunny(player.getMaterials().getMunny() - item.getMunnyCost());
+			p.setPlayer(player);
+			p.setPurchaseDate(currentDate);
+			p.setItem(item);
+			player.getMaterials().setMunny(
+					player.getMaterials().getMunny() - item.getMunnyCost());
 
-		// Hacemos set de la que sera la fecha en la que el objeto expirara
-		final Date expirationDate = new Date(currentDate.getTime() + p.getItem().getExpiration() * 24 * 60 * 60 * 1000);
-		p.setExpirationDate(expirationDate);
+			// Hacemos set de la que sera la fecha en la que el objeto expirara
+			Date expirationDate = new Date(currentDate.getTime()
+					+ p.getItem().getExpiration() * 24 * 60 * 60 * 1000);
+			p.setExpirationDate(expirationDate);
 
-		this.purchaseService.save(p);
-		this.keybladeWielderService.save(player);
+			this.purchaseService.save(p);
+			
+			
+			if(item.getType().equals(ItemType.SHIELD)) {
+				player.getShield().setName(item.getName());
+				player.getShield().setDuration(item.getDuration());
+				player.getShield().setDate(currentDate);
+			}
+			
+			this.keybladeWielderService.save(player);
 
-		return p;
+			return p;
 
+		}
+		
+	// Items que han sido comprados
+	public Collection<Item> itemsPurchased() {
+		return this.itemsPurchased();
 	}
 
 	// Items que he comprado en la tienda y los puedo usar (no han caducado)

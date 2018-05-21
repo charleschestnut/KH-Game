@@ -31,4 +31,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	@Query("select stddev(1.0*(select count(i) from Item i where i.contentManager.id=c.id)) from ContentManager c")
 	Double stddevCreatedItem();
 
+	// Todos los items que se han comprado
+	@Query("select p.item from Purchase p")
+	Collection<Item> itemsPurchased();
+	
 }

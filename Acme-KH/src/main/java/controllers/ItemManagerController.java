@@ -1,6 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,8 +66,18 @@ public class ItemManagerController extends AbstractController {
 
 		item = this.itemService.findOne(itemId);
 		Assert.notNull(item);
+		
+		Collection<Item> itemsPurchased = this.itemService.itemsPurchased();
+		List<Item> itemsPurchasedList = new ArrayList<>(itemsPurchased);
+		boolean contiene = false;
+		
+		if(itemsPurchasedList.contains(item)){
+			contiene = true;
+		}
+		
 
 		result = createEditModelAndView(item);
+		result.addObject("contiene", contiene);
 
 		return result;
 	}
@@ -97,6 +109,7 @@ public class ItemManagerController extends AbstractController {
 		item = this.itemService.reconstruct(item, binding);
 
 		try {
+			
 			itemService.delete(item);
 			result = new ModelAndView("redirect:/item/manager/createdItems.do");
 		} catch (Throwable oops) {
