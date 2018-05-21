@@ -96,9 +96,9 @@
 							href="reportUpdate/admin/listSuspicious.do"><spring:message
 								code="reportUpdate.list.suspicious" /></a> <a class="dropdown-item"
 							href="legaltext/index.do"><spring:message
-								code="master.page.terms" /></a> <a class="dropdown-item"
-							href="administrator/action-2.do"><spring:message
-								code="master.page.administrator.action.2" /></a>
+								code="master.page.terms" /></a> 
+							<a class="dropdown-item"
+							href="administrator/dashboard.do">Dashboard</a>
 					</div></li>
 			</security:authorize>
 

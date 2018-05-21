@@ -184,7 +184,7 @@ public class ReportUpdateService {
 		return this.reportUpdateRepository.maxUpdatesFromGm();
 	}
 
-	public Integer mminUpdatesFromGm() {
+	public Integer minUpdatesFromGm() {
 		return this.reportUpdateRepository.minUpdatesFromGm();
 	}
 

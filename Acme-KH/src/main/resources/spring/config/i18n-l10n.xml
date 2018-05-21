@@ -53,6 +53,7 @@
 		
 		<!-- ISMAEL -->
 		<value>/views/item/messages</value>
+		<value>/views/administrator/messages</value>
 		
 	</util:list>
 

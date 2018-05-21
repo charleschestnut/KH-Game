@@ -10,9 +10,16 @@
 
 package controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import services.ItemService;
+import services.KeybladeWielderService;
+import services.ReportService;
+import services.ReportUpdateService;
 
 @Controller
 @RequestMapping("/administrator")
@@ -23,26 +30,53 @@ public class AdministratorController extends AbstractController {
 	public AdministratorController() {
 		super();
 	}
+	
+	// SUPPORTED SERVICES -----------------------------------------------------
+	@Autowired
+	KeybladeWielderService keybladeWielderService;
+	@Autowired
+	ReportService reportService;
+	@Autowired
+	ReportUpdateService reportUpdateService;
+	@Autowired
+	ItemService itemService;
 
-	// Action-1 ---------------------------------------------------------------		
+	// DASHBOARD ---------------------------------------------------------------		
 
-	@RequestMapping("/action-1")
-	public ModelAndView action1() {
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public ModelAndView list() {
 		ModelAndView result;
 
-		result = new ModelAndView("administrator/action-1");
+		result = new ModelAndView("administrator/dashboard");
+		
+		result.addObject("ratioOfUserPerFaction", this.keybladeWielderService.ratioOfUserPerFaction());
+		result.addObject("getTopWinsPlayers", this.keybladeWielderService.getTopWinsPlayers());
+		result.addObject("getTopWinRatioPlayers", this.keybladeWielderService.getTopWinRatioPlayers());
+		result.addObject("getTopMunnyPlayers", this.keybladeWielderService.getTopMunnyPlayers());
+		result.addObject("getTopMytrhilPlayers", this.keybladeWielderService.getTopMytrhilPlayers());
+		result.addObject("avgOfWinRatio", this.keybladeWielderService.avgOfWinRatio());
+		
+		result.addObject("getAvgReportPerUser", this.reportService.getAvgReportPerUser());
+		result.addObject("getStddevReportPerUser", this.reportService.getStddevReportPerUser());
+		result.addObject("getRatioOfResolvedReport", this.reportService.getRatioOfResolvedReport());
+		result.addObject("getRatioOfIrresolvableReport", this.reportService.getRatioOfIrresolvableReport());
+		result.addObject("getRatioOfSuspiciousReport", this.reportService.getRatioOfSuspiciousReport());
+		
+		result.addObject("avgUpdatesFromGm", this.reportUpdateService.avgUpdatesFromGm());
+		result.addObject("stddevUpdatesFromGm", this.reportUpdateService.stddevUpdatesFromGm());
+		result.addObject("maxUpdatesFromGm", this.reportUpdateService.maxUpdatesFromGm());
+		result.addObject("minUpdatesFromGm", this.reportUpdateService.minUpdatesFromGm());
+		result.addObject("avgUpdatesFromReport", this.reportUpdateService.avgUpdatesFromReport());
+		result.addObject("stddevUpdatesFromReport", this.reportUpdateService.stddevUpdatesFromReport());
+		result.addObject("maxUpdatesFromReport", this.reportUpdateService.maxUpdatesFromReport());
+		result.addObject("minUpdatesFromReport", this.reportUpdateService.minUpdatesFromReport());
+		result.addObject("avgSuspiciousUpdatesFromGm", this.reportUpdateService.avgSuspiciousUpdatesFromGm());
 
-		return result;
-	}
-
-	// Action-2 ---------------------------------------------------------------
-
-	@RequestMapping("/action-2")
-	public ModelAndView action2() {
-		ModelAndView result;
-
-		result = new ModelAndView("administrator/action-2");
-
+		result.addObject("maxCreatedItem", this.itemService.maxCreatedItem());
+		result.addObject("minCreatedItem", this.itemService.minCreatedItem());
+		result.addObject("avgCreatedItem", this.itemService.avgCreatedItem());
+		result.addObject("stddevCreatedItem", this.itemService.stddevCreatedItem());
+		
 		return result;
 	}
 
