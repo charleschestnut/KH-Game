@@ -40,10 +40,27 @@
 <br/>
 <b><spring:message code="loses"/>:</b>
 <jstl:out value="${user.loses}"/>
+<br/>
+<div class="materials-panel">
+  <div class="btn btn-material">
+  	<img src="./images/materials/munny.png" width="50px" height="50px"/>
+  	<span class="badge badge-warning">${user.materials.munny}/${maxMaterial.munny}</span>
+  </div>
+  
+  <div class="btn  btn-material">
+  	<img src="./images/materials/mythril.png" width="50px" height="50px"/>
+  	<span class="badge badge-info">${user.materials.mytrhil}/${maxMaterial.mytrhil}</span>
+  </div>
+  
+  <div class="btn btn-material">
+  	<img src="./images/materials/gummiCoal.png" width="50px" height="50px"/>
+  	<span class="badge badge-dark">${user.materials.gummiCoal}/${maxMaterial.gummiCoal}</span>
+  </div>
+</div>
+  
 </p>
+<jstl:out value="${user.worldName}"/> <jstl:out value="${user.worldCoordinates.x}"/> <jstl:out value="${user.worldCoordinates.y}"/> <jstl:out value="${user.worldCoordinates.z}"/>
 </jstl:if>
-
-
 
 <jstl:if test="${user.userAccount.getOwner()}">
 <br/> <acme:action code="master.page.edit"  url="/profile/actor/edit.do"/>

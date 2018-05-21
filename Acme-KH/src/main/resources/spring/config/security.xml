@@ -90,6 +90,7 @@
 		<security:intercept-url pattern="/profile/actor/display.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/profile/actor/edit.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/profile/actor/list.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/keybladewielder/world.do" access="isAuthenticated()" />
 		
 		<security:intercept-url pattern="/profile/actor/register.do" access="isAnonymous()" />
 		

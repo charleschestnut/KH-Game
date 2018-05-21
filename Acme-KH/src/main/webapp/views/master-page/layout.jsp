@@ -59,6 +59,23 @@
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
 <script type="text/javascript">
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+
+function showErrorMessage(){
+	var msg = getUrlParameter("message");
+	var div = document.getElementById("alertMessage");
+	if(msg.includes("error.message.")){
+		div.style.display = '';
+		div.getElementsByTagName("span")[0].innerHTML = msg;
+	}
+}
+ 
+
 	$(document).ready(function() {
 	});
 
@@ -105,6 +122,16 @@
 </head>
 
 <body>
+<script>
+$('.btn-material').popover(options)
+document.body.onload = function() {showErrorMessage()};
+</script>
+<div class="alert alert-danger alert-dismissible fade show" id="alertMessage" style="display:none;" role="alert" >
+  <span></span>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 	<tiles:insertAttribute name="header" />
 	
     <main role="main">

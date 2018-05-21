@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -17,6 +18,7 @@ import javax.validation.constraints.Past;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 /**
  * 
@@ -138,4 +140,21 @@ public class KeybladeWielder extends Actor {
 		this.shield = shield;
 	}
 
+	/*
+	 * Este metodo te devuelve un Integer en modulo 34 (para elegir unas de las 34 imagenes de mundos) segun tu md5(nickname + worldName + worldCoordinate)
+	 * de este hash, cogemos todos los numeros y los ponemos en modulo 34, obteniendo asi un Integer aleatorio segun valores estaticos de la cuenta del Keyblade
+	 */
+	@Transient
+	public Long getWorldImage() {
+		Md5PasswordEncoder encoder;
+		String hash;
+
+		encoder = new Md5PasswordEncoder();
+		hash = encoder.encodePassword(this.getNickname() + this.getWorldName() + this.getWorldCoordinates().getX() + this.getWorldCoordinates().getY() + this.getWorldCoordinates().getZ(), null);
+		hash = hash.replaceAll("\\D+", "");
+		Long worldImageId = Long.parseLong(hash);
+		worldImageId = worldImageId % 34 + 1;
+
+		return worldImageId;
+	}
 }

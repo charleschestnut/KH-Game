@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.BuiltService;
 import services.KeybladeWielderService;
 import services.OrganizationService;
 import domain.Actor;
@@ -31,8 +32,8 @@ import domain.KeybladeWielder;
 import form.ActorForm;
 
 @Controller
-@RequestMapping("/profile/actor")
-public class ProfileController extends AbstractController {
+@RequestMapping("/keybladewielder")
+public class KeybladeWielderController extends AbstractController {
 
 	@Autowired
 	private ActorService			actorService;
@@ -43,8 +44,41 @@ public class ProfileController extends AbstractController {
 	@Autowired
 	private OrganizationService		organizationService;
 
+	@Autowired
+	private BuiltService			builtService;
+
 
 	// Actor ---------------------------------------------------------------	
+
+	@RequestMapping(value = "/world", method = RequestMethod.GET)
+	public ModelAndView world(@RequestParam(required = false) String username) {
+		ModelAndView result;
+		Actor actor;
+
+		if (username == null)
+			actor = this.actorService.findByPrincipal();
+		else
+			try {
+				actor = this.actorService.findByUserAccountUsername(username);
+			} catch (Throwable oops) { //Si mete un username invalido (nulo o no dentro de los limites [3, 32]), mostrar error o alternativa
+				result = new ModelAndView("redirect:list.do");
+
+				result.addObject("message", this.getErrorMessage(oops));
+				return result;
+			}
+
+		result = new ModelAndView("keybladewielder/world");
+		if (actor instanceof KeybladeWielder) {
+			KeybladeWielder user = (KeybladeWielder) actor;
+
+			result.addObject("user", user);
+			result.addObject("maxMaterial", this.builtService.maxMaterials());
+			result.addObject("usernameInvitation", user.getUserAccount().getUsername());
+		} else
+			result.addObject("user", actor);
+
+		return result;
+	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
@@ -212,5 +246,4 @@ public class ProfileController extends AbstractController {
 
 		return result;
 	}
-
 }
