@@ -128,13 +128,13 @@
 						<a class="collect btn-sm btn btn-primary" href="built/startCollect.do?builtId=${row.id}"><jstl:out value="${startCollect}"></jstl:out></a>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.troop!=null && row.haTerminado(row.troop.timeToRecruit)}">
-						<a class="btn-sm btn btn-primary" href="TODO: Enlace para crear los recruited con una tropa pasandole un builtId"><jstl:out value="${recruit}"></jstl:out></a>
+						<a class="btn-sm btn btn-primary" href="built/recruit.do?builtId=${row.id }"><jstl:out value="${recruit}"></jstl:out></a>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.troop!=null && !row.haTerminado(row.troop.timeToRecruit) }">
 						<button type="button" class="btn-sm btn btn-primary" disabled><jstl:out value="${working }"></jstl:out></button>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.gummiShip!=null && row.haTerminado(row.gummiShip.timeToRecruit)}">
-						<a class="btn-sm btn btn-primary" href="TODO: Enlace para crear los recruited con una nave pasandole un builtId. Si el mismo que el anterior poner el mismo enlace aqui"><jstl:out value="${recruit}"></jstl:out></a>
+						<a class="btn-sm btn btn-primary" href="built/recruit.do?builtId=${row.id }"><jstl:out value="${recruit}"></jstl:out></a>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.gummiShip!=null && !row.haTerminado(row.gummiShip.timeToRecruit) }">
 						<button type="button" class="btn-sm btn btn-primary" disabled><jstl:out value="${working }"></jstl:out></button>

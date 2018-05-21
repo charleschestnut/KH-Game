@@ -20,7 +20,6 @@ import services.DefenseService;
 import services.GummiShipService;
 import services.LivelihoodService;
 import services.RecruiterService;
-import services.RequirementService;
 import services.TroopService;
 import services.WarehouseService;
 import domain.Building;
@@ -28,6 +27,7 @@ import domain.Built;
 import domain.Defense;
 import domain.GummiShip;
 import domain.Livelihood;
+import domain.Recruited;
 import domain.Recruiter;
 import domain.Troop;
 import domain.Warehouse;
@@ -50,8 +50,6 @@ public class BuiltController extends AbstractController {
 	private WarehouseService	warehouseService;
 	@Autowired
 	private LivelihoodService	livelihoodService;
-	@Autowired
-	private RequirementService	requirementService;
 	@Autowired
 	private TroopService		troopService;
 	@Autowired
@@ -270,6 +268,26 @@ public class BuiltController extends AbstractController {
 			} catch (final Throwable oops) {
 				final String msg = this.getErrorMessage(oops);
 				res = this.createRecruitModelAndView(recruitedForm, wantRecruit, msg);
+			}
+
+		return res;
+	}
+
+	@RequestMapping("/recruit")
+	public ModelAndView recruit(@RequestParam final Integer builtId) {
+		ModelAndView res;
+		final Built built = this.builtService.findOne(builtId);
+		Recruited recruited;
+
+		if (built == null || !built.getKeybladeWielder().getUserAccount().equals(LoginService.getPrincipal()))
+			res = new ModelAndView("redirect:list.do");
+		else
+			try {
+				recruited = this.builtService.recruit(built);
+				res = new ModelAndView("redirect:display.do?builtId=" + recruited.getStorageBuilding().getId());
+			} catch (final Throwable oops) {
+				final String msg = this.getErrorMessage(oops);
+				res = this.createListModelAndView(msg);
 			}
 
 		return res;

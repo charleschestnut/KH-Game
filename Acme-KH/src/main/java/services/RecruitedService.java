@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,9 +12,7 @@ import org.springframework.util.Assert;
 
 import repositories.RecruitedRepository;
 import domain.Built;
-import domain.GummiShip;
 import domain.Recruited;
-import domain.Troop;
 
 @Service
 @Transactional
@@ -39,56 +38,48 @@ public class RecruitedService {
 
 	// CRUD methods
 
-	public Recruited createRecruitedTroop(final int troopId) {
+	public Recruited create(final Built built) {
 		Recruited recruited;
 		recruited = new Recruited();
-		final Troop troop = this.troopService.findOne(troopId);
 
-		final List<Built> availables = (List<Built>) this.builtService.getMyFreeWarehousesTroop();
-		Assert.isTrue(availables.size() > 0);
-		recruited.setStorageBuilding(availables.get(0));
-		recruited.setTroop(troop);
-
-		return recruited;
-	}
-
-	public Recruited createRecruitedGummiShip(final int gummiShipId) {
-		Recruited recruited;
-		recruited = new Recruited();
-		final GummiShip gummiShip = this.gummiShipService.findOne(gummiShipId);
-
-		final List<Built> availables = (List<Built>) this.builtService.getMyFreeWarehousesGummi();
-		Assert.isTrue(availables.size() > 0);
-		recruited.setStorageBuilding(availables.get(0));
-		recruited.setGummiShip(gummiShip);
-
-		return recruited;
-	}
-
-	public Recruited save(final Recruited recruited) {
-		Assert.notNull(recruited);
-		Assert.notNull(recruited.getStorageBuilding());
-		Assert.isTrue(!(recruited.getGummiShip() == null && recruited.getTroop() == null));
-
-		if (recruited.getGummiShip() == null)	// Miramos que el nivel sea el permitido o superior.
-			Assert.isTrue(recruited.getGummiShip().getRecruiterRequiredLvl() >= recruited.getStorageBuilding().getLvl(), "error.message.recruited.lowLevel");
-
+		if (built.getTroop() != null)
+			recruited.setTroop(built.getTroop());
 		else
-			// Miramos que el nivel sea el permitido o superior.
-			Assert.isTrue(recruited.getTroop().getRecruiterRequiredLvl() >= recruited.getStorageBuilding().getLvl(), "error.message.recruited.lowLevel");
+			recruited.setGummiShip(built.getGummiShip());
 
-		// Tenemos que ver que el BUILT pertenece al principal.
-		final List<Built> availables = (List<Built>) this.builtService.getMyFreeWarehousesGummi();
-		Assert.isTrue(availables.contains(recruited.getStorageBuilding()) && availables.size() > 0, "error.message.recruited.built");
+		return recruited;
+	}
 
-		//Tenemos que ver que el edificio tiene espacio para guardarlo.
+	public Recruited save(final Built built) {
+		final List<Built> warehouses;
+		final Recruited recruited = this.create(built);
+
+		Assert.notNull(built);
+		Assert.isTrue(!(built.getGummiShip() == null && built.getTroop() == null));
+		Assert.isTrue(!(built.getGummiShip() != null && built.getTroop() != null));
+
+		//Voy a reclutar una tropa
+		if (built.getTroop() != null) {
+			warehouses = new ArrayList<Built>(this.builtService.getMyFreeWarehousesTroop());
+
+			Assert.isTrue(warehouses != null && warehouses.size() > 0);
+
+			recruited.setStorageBuilding(warehouses.get(0));
+
+		} else { //Voy a reclutar una nave
+
+			warehouses = new ArrayList<Built>(this.builtService.getMyFreeWarehousesGummi());
+
+			Assert.isTrue(warehouses != null && warehouses.size() > 0);
+
+			recruited.setStorageBuilding(warehouses.get(0));
+		}
 
 		Recruited saved;
 		saved = this.RecruitedRepository.save(recruited);
 
 		return saved;
 	}
-
 	public Recruited findOne(final int RecruitedId) {
 		Assert.notNull(RecruitedId);
 

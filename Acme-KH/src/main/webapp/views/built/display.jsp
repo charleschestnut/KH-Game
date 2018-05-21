@@ -61,7 +61,7 @@
 <jstl:if test="${warehouse}">
 	
 	<spring:message code="building.warehouse.materialsSlots"></spring:message>: 
-	<jstl:out value="${built.building.getTotalMaterials(built.lvl)}"></jstl:out><br>
+	<jstl:out value="${built.building.getTotalSlotsMaterials(built.lvl)}"></jstl:out><br>
 	
 	<spring:message code="building.warehouse.troopSlots"></spring:message>: 
 	<jstl:out value="${built.building.getTotalTroopSlots(built.lvl)}"></jstl:out><br>
@@ -110,6 +110,6 @@
 	<jstl:out value="${built.building.getTotalTime(built.lvl) }"></jstl:out><br>
 	
 	<spring:message code="building.livelihood.materials"></spring:message>: 
-	<jstl:out value="${built.building.getTotalMaterials(built.lvl) }"></jstl:out><br>
+	<jstl:out value="${built.building.getTotalCollectMaterials(built.lvl) }"></jstl:out><br>
 
 </jstl:if>

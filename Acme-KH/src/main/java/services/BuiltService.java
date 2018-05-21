@@ -246,7 +246,8 @@ public class BuiltService {
 		this.BuiltRepository.save(b);
 
 	}
-	public void recruit(final Built b) {
+	public Recruited recruit(final Built b) {
+		Recruited res;
 		final Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
 		final Date today = new Date(System.currentTimeMillis() - 1000);
 		final Long time1 = today.getTime() - b.getActivationDate().getTime();
@@ -261,10 +262,12 @@ public class BuiltService {
 		Assert.notNull(b.getActivationDate(), "error.message.built.notInUse");
 		Assert.isTrue(time1 >= time2, "error.message.built.working");
 
-		//TODO: Falta crear el recruited
+		res = this.recruitedService.save(b);
 
 		b.setActivationDate(null);
 		this.BuiltRepository.save(b);
+
+		return res;
 
 	}
 	//other methods
