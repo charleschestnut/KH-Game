@@ -84,7 +84,6 @@ public class ItemService {
 	// OTROS METODOS -----------------
 
 	// Comprar un item de la tienda
-	// Comprar un item de la tienda
 		public Purchase buyItem(Item item) {
 			KeybladeWielder player = (KeybladeWielder) this.actorService
 					.findByPrincipal();
@@ -122,7 +121,7 @@ public class ItemService {
 		
 	// Items que han sido comprados
 	public Collection<Item> itemsPurchased() {
-		return this.itemsPurchased();
+		return this.itemRepository.itemsPurchased();
 	}
 
 	// Items que he comprado en la tienda y los puedo usar (no han caducado)
