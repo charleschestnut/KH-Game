@@ -55,16 +55,16 @@ public class PromptService {
 			if (player != null && new ArrayList<>(player.getUserAccount().getAuthorities()).get(0).getAuthority().equals(Authority.PLAYER)) {
 				if (command.indexOf("-mn") < 0) {
 					munny = 0;
-				} else if(command.split("-mn")[1].trim().matches("^[1-9]\\d*$")){
-					munny = Integer.valueOf(command.split("-mn")[1].trim());
+				} else if(command.split("-mn")[1].split("\\s+")[1].trim().matches("^[1-9]\\d*$")){
+					munny = Integer.valueOf(command.split("-mn")[1].split("\\s+")[1].trim());
 				}else{
 					valid = false;
 				}
 
 				if (command.indexOf("-mt") < 0) {
 					mythril = 0;
-				} else if(command.split("-mt")[1].trim().matches("^[1-9]\\d*$")){
-					mythril = Integer.valueOf(command.split("-mt")[0]);
+				} else if(command.split("-mt")[1].split("\\s+")[1].trim().matches("^[1-9]\\d*$")){
+					mythril = Integer.valueOf(command.split("-mt")[1].split("\\s+")[1].trim());
 				}else{
 					valid = false;
 				}
@@ -72,7 +72,7 @@ public class PromptService {
 				if (command.indexOf("-gc") < 0) {
 					gummiCoal = 0;
 				} else if(command.split("-gc")[1].trim().matches("^[1-9]\\d*$")){
-					gummiCoal = Integer.valueOf(command.split("-gc")[0]);
+					gummiCoal = Integer.valueOf(command.split("-gc")[1].split("\\s+")[1].trim());
 				}else{
 					valid = false;
 				}
