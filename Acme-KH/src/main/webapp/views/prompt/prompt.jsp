@@ -97,7 +97,7 @@ function interpret(command) {
 		lastColor = command;
 	}else{
 		$.ajax({
-	        url: 'prompt/interpret.do',
+	        url: 'gm/prompt/interpret.do',
 	        type: 'post',
 	        data: {command: command},
 	        success: function( data, textStatus, jQxhr ){

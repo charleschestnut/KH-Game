@@ -188,8 +188,14 @@
 				<li class="nav-item"><a class="nav-link" href="report/list.do">
 						<img
 						src="https://kingdomhearts.com/img/header/icons/connect-icon.png"
-						align="center" class="nav-icon"> <spring:message
+						align="center" class="nav-icon" alt="home"> <spring:message
 							code="report.list" />
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="gm/prompt/show.do">
+						<img
+						src="https://kingdomhearts.com/img/header/icons/worlds-icon.png"
+						align="center" class="nav-icon"> <spring:message
+							code="master.page.prompt" />
 				</a></li>
 			</security:authorize>
 

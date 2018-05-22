@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.PromptService;
 
 @Controller
-@RequestMapping("/prompt")
+@RequestMapping("/gm/prompt")
 public class PromptController extends AbstractController {
 
 	@Autowired
