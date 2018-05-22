@@ -107,6 +107,9 @@
 								code="master.page.terms" /></a> 
 							<a class="dropdown-item"
 							href="administrator/dashboard.do">Dashboard</a>
+							<a class="dropdown-item"
+							href="configuration/administrator/edit.do">
+							<spring:message code="master.page.configurationPage" /></a>
 					</div></li>
 			</security:authorize>
 

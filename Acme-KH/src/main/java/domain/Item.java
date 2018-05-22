@@ -36,8 +36,6 @@ public class Item extends DomainEntity {
 	//relations
 
 	private ContentManager	contentManager;
-//	private Collection<Purchase> purchases;
-
 
 	/**
 	 * 
@@ -69,7 +67,6 @@ public class Item extends DomainEntity {
 	 * 
 	 * Beneficio extra que dependará del tipo. Recordar que los "features" hay que programarlos, no se pueden crear features.
 	 */
-	@Range(min = 0, max = 1)
 	@DecimalMin("0.1")
 	@DecimalMax("0.9")
 	@NotNull
@@ -140,17 +137,5 @@ public class Item extends DomainEntity {
 	public void setContentManager(final ContentManager contentManager) {
 		this.contentManager = contentManager;
 	}
-
-//	@Valid
-//	@OneToMany
-//	public Collection<Purchase> getPurchases() {
-//		return purchases;
-//	}
-//
-//	public void setPurchases(Collection<Purchase> purchases) {
-//		this.purchases = purchases;
-//	}
-//	
-	
 
 }

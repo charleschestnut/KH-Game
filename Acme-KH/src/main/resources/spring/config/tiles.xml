@@ -55,6 +55,7 @@
 		
 		<!-- ISMAEL -->
 		<value>/views/item/tiles.xml</value>
+		<value>/views/configuration/tiles.xml</value>
 		
 	</util:list>
 

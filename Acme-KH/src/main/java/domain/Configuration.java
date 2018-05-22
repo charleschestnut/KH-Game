@@ -7,6 +7,9 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -58,6 +61,7 @@ public class Configuration extends DomainEntity {
 	 * @return número de mensajes que serán almacenados en una organización
 	 */
 	@Range(min = 5)
+	@NotNull
 	public Integer getOrgMessages() {
 		return this.orgMessages;
 	}
@@ -69,7 +73,9 @@ public class Configuration extends DomainEntity {
 	 * 
 	 * @return porcentaje de los recursos que se llevara el atacante del defensor si gana la batalla
 	 */
-	@Range(min = 0, max = 1)
+	@DecimalMin("0.1")
+	@DecimalMax("0.9")
+	@NotNull
 	public Double getPercentageWinAttacker() {
 		return this.percentageWinAttacker;
 	}
@@ -81,7 +87,9 @@ public class Configuration extends DomainEntity {
 	 * 
 	 * @return porcentaje de los recursos que se llevara el defensor de los recursos que envie el atacante si gana la batalla
 	 */
-	@Range(min = 0, max = 1)
+	@DecimalMin("0.1")
+	@DecimalMax("0.9")
+	@NotNull
 	public Double getPercentageWinDefender() {
 		return this.percentageWinDefender;
 	}
@@ -94,6 +102,7 @@ public class Configuration extends DomainEntity {
 	 * @return niveles que bajaran los edificios del defensor si pierde una batalla
 	 */
 	@Range(min = 0)
+	@NotNull
 	public Integer getLostLvlsDeffender() {
 		return this.lostLvlsDeffender;
 	}
@@ -107,6 +116,7 @@ public class Configuration extends DomainEntity {
 	 * @see esta propiedad solo puede ir aumentando
 	 */
 	@Range(min = 0)
+	@NotNull
 	public Integer getWorldSlots() {
 		return this.worldSlots;
 	}

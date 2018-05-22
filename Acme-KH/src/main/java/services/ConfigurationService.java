@@ -74,13 +74,18 @@ public class ConfigurationService {
 		this.configurationRepository.saveAndFlush(configuration);
 	}
 
-	public Configuration reconstruct(final Configuration configuration, final BindingResult binding) {
+	public Configuration reconstruct(Configuration configuration, BindingResult binding) {
 		Configuration res;
-		final Configuration original = this.getConfiguration();
 
 		res = configuration;
-		res.setBaseMaterials(original.getBaseMaterials());
-		res.setDailyMaterials(original.getDailyMaterials());
+		
+		res.getBaseMaterials().setGummiCoal(configuration.getBaseMaterials().getGummiCoal());
+		res.getBaseMaterials().setMunny(configuration.getBaseMaterials().getMunny());
+		res.getBaseMaterials().setMytrhil(configuration.getBaseMaterials().getMytrhil());
+		res.getDailyMaterials().setGummiCoal(configuration.getDailyMaterials().getGummiCoal());
+		res.getDailyMaterials().setMunny(configuration.getDailyMaterials().getMunny());
+		res.getDailyMaterials().setMytrhil(configuration.getDailyMaterials().getMytrhil());
+		
 		res.setLostLvlsDeffender(configuration.getLostLvlsDeffender());
 		res.setOrgMessages(configuration.getOrgMessages());
 		res.setPercentageWinAttacker(configuration.getPercentageWinAttacker());
