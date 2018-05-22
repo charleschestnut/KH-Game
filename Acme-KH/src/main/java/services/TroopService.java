@@ -2,14 +2,18 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.TroopRepository;
 import domain.Materials;
+import domain.Organization;
 import domain.Recruiter;
 import domain.Troop;
 
@@ -24,6 +28,8 @@ public class TroopService {
 
 	@Autowired
 	private BuiltService	builtService;
+	
+	@Autowired Validator validator;
 
 
 	// CRUD methods
@@ -51,7 +57,8 @@ public class TroopService {
 
 	public Troop save(final Troop troop) {
 
-		final Troop saved = this.TroopRepository.save(troop);
+
+		Troop saved = this.TroopRepository.save(troop);
 
 		return saved;
 	}
@@ -95,6 +102,24 @@ public class TroopService {
 		return this.TroopRepository.getTroopsAvailableForBuilt(builtLevel);
 	}
 	
+	// ------ RECONSTRUCT -----
+		public Troop reconstruct(Troop t, BindingResult binding) {
+			Troop result;
+			final Troop original = this.TroopRepository.findOne(t.getId());
+			
+			if (t.getId() == 0) {
+				result = t;
+			} else {
+				//Aquí van los atributos hidden
+				result = t;
+				result.setRecruiter(t.getRecruiter());
+				
+			}
+			this.validator.validate(result, binding);
+
+			return result;
+
+		}
 	
 
 }

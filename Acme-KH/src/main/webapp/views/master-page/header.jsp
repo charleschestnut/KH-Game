@@ -150,7 +150,14 @@
 						aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" href="organization/list.do"><spring:message
 								code="organization.list" /></a>
-					</div></li>
+			
+						<a class="dropdown-item" href="organization/invitation/list.do"><spring:message
+								code="master.page.myInvitations" /></a>
+					</div>
+					
+				</li>
+					
+					
 			</security:authorize>
 
 			<security:authorize access="hasRole('MANAGER')">
@@ -170,6 +177,10 @@
 						<a class="dropdown-item"
 							href="item/manager/createdItems.do"><spring:message
 								code="master.page.createdItems" /></a>
+						
+						<a class="dropdown-item"
+							href="troop/contentManager/list.do"><spring:message
+								code="master.page.createdTroops" /></a>
 					</div></li>
 			</security:authorize>
 

@@ -85,7 +85,8 @@ public class RecruiterService {
 		Assert.isTrue(!r.getIsFinal(), "error.message.building.final");
 		Assert.isTrue(r.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
 		Assert.isTrue(r.equals(t.getRecruiter()), "error.message.recruiter.addTroop");
-
+		Assert.isTrue(t.getRecruiterRequiredLvl() <= r.getMaxLvl(), "error.message.recruiter.highLevel");
+		
 		t = this.troopService.save(t);
 
 		final Collection<Troop> troops = r.getTroops();

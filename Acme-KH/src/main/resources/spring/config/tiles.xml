@@ -33,6 +33,7 @@
 		<value>/views/chatty/tiles.xml</value>
 		<value>/views/invitation/tiles.xml</value>
 		<value>/views/organization/tiles.xml</value>
+		<value>/views/troop/tiles.xml</value>
 		
 		
 		<!-- ÁNGEL PÉREZ -->

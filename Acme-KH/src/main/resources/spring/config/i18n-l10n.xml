@@ -33,6 +33,8 @@
 		<value>/views/invitation/messages</value>
 		<value>/views/organization/messages</value>
 		<value>/views/troop/messages</value>
+		<value>/views/gummiShip/messages</value>
+		<value>/views/recruited/messages</value>
 		<!-- ÁNGEL PÉREZ -->
 		<value>/views/building/messages</value>
 		<value>/views/built/messages</value>

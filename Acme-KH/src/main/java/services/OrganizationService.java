@@ -146,7 +146,10 @@ public class OrganizationService {
 		
 		return this.organizationRepository.findOrganizationByPlayer(playerId);
 	}
-	// ------ RECONTRUCT -----
+
+
+	
+	// ------ RECONSTRUCT -----
 	public Organization reconstruct(Organization o, BindingResult binding) {
 		Organization result;
 		final Organization original = this.organizationRepository.findOne(o.getId());

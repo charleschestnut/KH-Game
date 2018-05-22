@@ -40,6 +40,10 @@
 </jstl:if>
 
 <jstl:if test="${recruiter}">
+	<security:authorize access="hasRole('MANAGER')">
+			<acme:action code="troop.edit"  url="troop/contentManager/edit.do?recruiterId=${building.id}"/>
+	</security:authorize>
+		
 	<jstl:if test="${troops != null && troops.size()>0 }">
 	
 		<display:table name="troops" id="row" pagesize="5" requestURI="building/display.do">
@@ -75,9 +79,8 @@
 				<jstl:out value="${row.timeToRecruit}"/> 
 			</display:column>
 		
-			
 		</display:table>
-	
+		
 	</jstl:if>
 	
 	<jstl:if test="${gummiShips != null && gummiShips.size()>0 }">
