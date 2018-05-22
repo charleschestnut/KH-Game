@@ -1,7 +1,9 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +38,8 @@ public class PromptService {
 					"To send a prize, use set [username] followed by one of the next options:  <br/><br/>" +
 					"-mn [munnyQuantity]  <br/>" +
 					"-mt [mythrilQuantity]  <br/>" +
-					"-mn [gummyCoalQuantity]  <br/>";
+					"-mn [gummyCoalQuantity]  <br/>"+
+					"-dt [dd/MM/yyyy]  > By default, date is set as current date plus one day<br/>";
 		} else if (command.startsWith("set") && (command.indexOf("-mn")>0 || command.indexOf("-mt")>0 || command.indexOf("-gc")>0)) {
 			Integer munny = 0;
 			Integer mythril = 0;
@@ -90,8 +93,14 @@ public class PromptService {
 					prize.setMaterials(materials);
 					prize.setKeybladeWielder(keybladeWielder);
 					
+					if(command.indexOf("-dt")>=0){
+						prize.setDate((LocalDate.parse(command.split("-dt")[1].trim())).toDate());
+					}else{
+						prize.setDate(new Date(System.currentTimeMillis()+86400000));
+					}
+					
 					saved = prizeService.save(prize);
-					prizeService.sendPrize(saved);
+//					prizeService.sendPrize(saved);
 					res = "Prize sent";
 				}else{
 					res = "Command not understood";
