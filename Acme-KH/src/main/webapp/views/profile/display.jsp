@@ -43,17 +43,17 @@
 <br/>
 <div class="materials-panel">
   <div class="btn btn-material">
-  	<img src="./images/materials/munny.png" width="50px" height="50px"/>
+  	<img title="Munny" src="./images/materials/munny.png" width="50px" height="50px"/>
   	<span class="badge badge-warning">${user.materials.munny}/${maxMaterial.munny}</span>
   </div>
   
   <div class="btn  btn-material">
-  	<img src="./images/materials/mythril.png" width="50px" height="50px"/>
+  	<img title="Mythril" src="./images/materials/mythril.png" width="50px" height="50px"/>
   	<span class="badge badge-info">${user.materials.mytrhil}/${maxMaterial.mytrhil}</span>
   </div>
   
   <div class="btn btn-material">
-  	<img src="./images/materials/gummiCoal.png" width="50px" height="50px"/>
+  	<img  title="Gummi Coal" src="./images/materials/gummiCoal.png" width="50px" height="50px"/>
   	<span class="badge badge-dark">${user.materials.gummiCoal}/${maxMaterial.gummiCoal}</span>
   </div>
 </div>

@@ -51,8 +51,9 @@
 	
 	</display:column>
 						 
-	
-
+	<display:column>
+		<img src="./images/chests/${row.getPrizeImage()}.png"/>
+	</display:column>
 
 </display:table>
 

@@ -40,7 +40,7 @@ public class PromptService {
 					"-mt [mythrilQuantity]  <br/>" +
 					"-mn [gummyCoalQuantity]  <br/>"+
 					"-dt [dd/MM/yyyy]  > By default, date is set as current date plus one day<br/>";
-		} else if (command.startsWith("set") && (command.indexOf("-mn")>0 || command.indexOf("-mt")>0 || command.indexOf("-gc")>0)) {
+		} else if (command.trim().startsWith("set") && (command.indexOf("-mn")>0 || command.indexOf("-mt")>0 || command.indexOf("-gc")>0)) {
 			Integer munny = 0;
 			Integer mythril = 0;
 			Integer gummiCoal = 0;

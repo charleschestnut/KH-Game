@@ -1,6 +1,7 @@
 
 package domain;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import javax.persistence.Access;
@@ -9,11 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -74,6 +77,20 @@ public class Prize extends DomainEntity {
 
 	public void setKeybladeWielder(final KeybladeWielder keybladeWielder) {
 		this.keybladeWielder = keybladeWielder;
+	}
+	
+	@Transient
+	public String getPrizeImage() {
+		Md5PasswordEncoder encoder;
+		String hash;
+		encoder = new Md5PasswordEncoder();
+		hash = encoder.encodePassword(this.getDescription() + this.getDate() + this.getMaterials(), null);
+		hash = hash.replaceAll("\\D+", "");
+		hash = hash.replaceAll("0", "");
+		BigInteger prizeId = new BigInteger(hash);
+		prizeId = prizeId.mod(new BigInteger("21")).add(new BigInteger("1"));
+
+		return "chest"+prizeId;
 	}
 
 }
