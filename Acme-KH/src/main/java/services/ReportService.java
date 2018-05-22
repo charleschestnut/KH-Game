@@ -7,6 +7,8 @@ import java.util.Date;
 
 import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -88,6 +90,14 @@ public class ReportService {
 
 		return Reports;
 	}
+	
+	public Page<Report> findAll(Pageable p) {
+		Page<Report> reports;
+
+		reports = this.reportRepository.findAll(p);
+
+		return reports;
+	}
 
 	public void delete(final Report report) {
 		Assert.notNull(report);
@@ -138,6 +148,10 @@ public class ReportService {
 		this.validator.validate(report, binding);
 
 		return report;
+	}
+	
+	public Page<Report> getReportsByStatus(ReportStatus status, Pageable pageable){
+		return this.reportRepository.getReportsByStatus(status, pageable);
 	}
 
 	//Dashboard

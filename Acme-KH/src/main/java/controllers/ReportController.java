@@ -6,6 +6,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -34,32 +37,45 @@ public class ReportController extends AbstractController {
 	// Listing ----------------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam(required=false, defaultValue="0") Integer page) {
 		ModelAndView result;
-		Collection<Report> reports;
-
-		reports = reportService.findAll();
+		Page<Report> reports;
+		Pageable pageable;
+		
+		pageable = new PageRequest(page, 5);
+		reports = reportService.findAll(pageable);
 		result = new ModelAndView("report/list");
-		result.addObject("reports", reports);
+		
+		result.addObject("reports", reports.getContent());
 		result.addObject("user", "all");
+		result.addObject("page", page);
+		result.addObject("requestURI", "report/list.do?page=");
+		result.addObject("pageNum", reports.getTotalPages());
 
 		return result;
 	}
 	
 	@RequestMapping(value = "/listByStatus", method = RequestMethod.GET)
-	public ModelAndView listByStatus(@RequestParam (required = false) String status) {
+	public ModelAndView listByStatus(@RequestParam(required=false, defaultValue="0") Integer page,
+			@RequestParam (required = false) String status) {
 		ModelAndView result;
-		Collection<Report> reports;
+		Page<Report> reports;
+		Pageable pageable;
+		
+		pageable = new PageRequest(page, 5);
 
-		if(status != null){
-			reports = reportService.getReportsByStatus(ReportStatus.valueOf(status));
+		if(!status.equals("all")){
+			reports = reportService.getReportsByStatus(ReportStatus.valueOf(status), pageable);
 		}else{
-			reports = reportService.findAll();
+			reports = reportService.findAll(pageable);
 		}
 		
 		result = new ModelAndView("report/table");
 		result.addObject("reports", reports);
 		result.addObject("user", "all");
+		result.addObject("requestURI", "report/listByStatus.do?status="+ status + "&page=");
+		result.addObject("page", page);
+		result.addObject("pageNum", reports.getTotalPages());
 
 		return result;
 	}

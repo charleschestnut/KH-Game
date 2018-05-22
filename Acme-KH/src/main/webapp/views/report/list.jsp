@@ -18,16 +18,17 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <script type="text/javascript">
-	function reloadTable(event, usertype) {
+	function reloadTable(event, usertype, page) {
 		var type = $('select#type').val();
 		var div = $('#container');
 		var path = "";
 		if(usertype === 'all'){
-			path = "report/listByStatus.do?status=" + type;
+			path = "report/listByStatus.do?status=" + type + "&page="+page;
 		}else{
-			path = "report/player/listByStatus.do?status=" + type;
+			path = "report/player/listByStatus.do?status=" + type +"&page="+page;
 		}
 		event.preventDefault();
 		div.load(path);
@@ -36,7 +37,7 @@
 	
 </script>
 
-<select id="type" onchange="javascript: reloadTable(event, '${user}')">
+<select id="type" onchange="javascript: reloadTable(event, '${user}',0)">
 	<option value="all"><spring:message code="reportUpdate.showAll"/></option>
 	<option value="ONHOLD"><spring:message code="report.onhold"/></option>
 	<option value="WORKING"><spring:message code="report.working"/></option>
@@ -44,9 +45,13 @@
 	<option value="IRRESOLVABLE"><spring:message code="report.irresolvable"/></option>
 </select>
 
+
+
 <!-- Listing grid -->
 
 <div id="container">
+<acme:pagination page="${page}" pageNum="${pageNum}" requestURI="${requestURI}"/>
+
 <display:table name="reports" id="row" 
     requestURI="${requestURI}" 
     pagesize="5" class="displaytag">

@@ -8,6 +8,26 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+<script type="text/javascript">
+	function reloadTable(event, usertype, page) {
+		var type = $('select#type').val();
+		var div = $('#container');
+		var path = "";
+		if(usertype === 'all'){
+			path = "report/listByStatus.do?status=" + type + "&page="+page;
+		}else{
+			path = "report/player/listByStatus.do?status=" + type +"&page="+page;
+		}
+		event.preventDefault();
+		div.load(path);
+		return false;
+	}
+	
+</script>
+
+<acme:paginationAjax page="${page}" pageNum="${pageNum}" requestURI="${requestURI}"/>
 
 <display:table name="reports" id="row" 
     requestURI="${requestURI}" 

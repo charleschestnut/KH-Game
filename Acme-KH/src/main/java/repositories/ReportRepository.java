@@ -3,6 +3,8 @@ package repositories;
 
 import java.util.Collection;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -19,6 +21,9 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
 
 	@Query("select r from Report r where r.status = ?1")
 	Collection<Report> getReportsByStatus(ReportStatus status);
+	
+	@Query("select r from Report r where r.status = ?1")
+	Page<Report> getReportsByStatus(ReportStatus status, Pageable pageable);
 
 	@Query("select r from Report r where r.status = ?1 and r.keybladeWielder.id = ?2")
 	Collection<Report> getReportsByStatusAndPlayer(ReportStatus status, int playerId);
