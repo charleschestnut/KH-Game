@@ -95,7 +95,6 @@ public class PrizeService {
 
 			this.PrizeRepository.delete(prize);
 		}
-
 	}
 
 	public void createDailyPrizeForPrincipal() {
@@ -121,4 +120,22 @@ public class PrizeService {
 		return this.PrizeRepository.getPrizeFromKeybladeWielder(playerId);
 
 	}
+	
+	// Method to send prizes from prompt 
+	// Same as open() but without restrictions
+	public void sendPrize(final Prize prize) {
+		KeybladeWielder player;
+		
+		player = prize.getKeybladeWielder();
+		
+		final Materials max = this.builtService.maxMaterials();
+		final Materials old = player.getMaterials();
+		final Materials news = old.add(prize.getMaterials());
+		final Materials sinExceso = news.removeExcess(max);
+
+		player.setMaterials(sinExceso);
+		this.keybladeWielderService.save(player);
+
+	     this.PrizeRepository.delete(prize);
+		}
 }

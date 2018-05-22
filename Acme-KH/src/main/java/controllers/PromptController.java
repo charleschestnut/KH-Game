@@ -48,7 +48,11 @@ public class PromptController extends AbstractController {
 	public String interpret(@RequestParam("command") String command) {
 		String res;
 		
-		res = promptService.interpret(command);
+		try{
+			res = promptService.interpret(command);
+		}catch(Throwable e){
+			res = "Error while sending the prize";
+		}
 
 		return res;
 	}
