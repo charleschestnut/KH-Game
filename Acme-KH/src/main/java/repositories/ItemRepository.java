@@ -16,6 +16,10 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	// Items que ha creado un Content Manager en especifico
 	@Query("select i from Item i where i.contentManager.id = ?1")
 	Collection<Item> itemsByManager(int managerId);
+	
+	// Items de la tienda (onSell = true)
+	@Query("select i from Item i where i.onSell = true")
+	Collection<Item> shopItems();
 
 	//Dashboard
 

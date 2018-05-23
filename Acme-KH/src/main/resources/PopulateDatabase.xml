@@ -611,6 +611,22 @@
 		<property name="keybladeWielder" ref="player2" />
 	</bean>
 	
+	<bean id="prize4" class="domain.Prize">
+		<property name="materials" ref="material3" />
+		<property name="description" value="Premio por logearse una semana seguida" />
+		<property name="date" value="20/02/2017 00:00" />
+		<property name="keybladeWielder" ref="player3" />
+	</bean>
+	
+	<bean id="prize5" class="domain.Prize">
+		<property name="materials" ref="material3" />
+		<property name="description" value="Premio por logearse una semana seguida" />
+		<property name="date" value="20/02/2017 00:00" />
+		<property name="keybladeWielder" ref="player4" />
+	</bean>
+	
+	<!-- ORGANIZATION -->
+	
 	<!-- LEGALTEXT -->
 	<bean id="legalText1" class="domain.LegalText">
 		<property name="type" value="TERMS"/>

@@ -90,5 +90,13 @@ public class PurchaseService {
 	public Collection<Purchase> activePurchasesByPlayer(int playerId) {
 		return this.purchaseRepository.activePurchasesByPlayer(playerId);
 	}
+	
+	// Lista de items que estan activos pero han expirados (para eliminar)
+	public void deleteActiveExpiredPurchasesByPlayer(int playerId) {
+		Collection<Purchase> activeExpiredPurchases = this.purchaseRepository.activeExpiredPurchasesByPlayer(playerId);
+		for(Purchase p : activeExpiredPurchases) {
+			this.delete(p);
+		}
+	}
 
 }

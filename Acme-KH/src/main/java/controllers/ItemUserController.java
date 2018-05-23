@@ -33,7 +33,7 @@ public class ItemUserController extends AbstractController{
 		ModelAndView result;
 		Collection<Item> items;
 
-		items = this.itemService.findAll();
+		items = this.itemService.shopItems();
 		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 		Integer playerMunny = player.getMaterials().getMunny();
 
@@ -66,7 +66,7 @@ public class ItemUserController extends AbstractController{
 		Collection<Purchase> purchases;
 
 		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
-		// Con esta llamada al servicio tambien estamos elinando las purchases que estan caducadas
+		// Con esta llamada al servicio tambien estamos eliminando las purchases que estan caducadas
 		purchases = this.purchaseService.noActivePurchasesByPlayer(player.getId());
 
 		result = new ModelAndView("item/player/ownedItemsList");
@@ -95,6 +95,7 @@ public class ItemUserController extends AbstractController{
 		Collection<Purchase> purchases;
 		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 		
+		this.purchaseService.deleteActiveExpiredPurchasesByPlayer(player.getId());
 		purchases = this.purchaseService.activePurchasesByPlayer(player.getId());
 		
 		result = new ModelAndView("item/player/activeItemsList");

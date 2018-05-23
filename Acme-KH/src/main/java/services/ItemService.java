@@ -82,6 +82,11 @@ public class ItemService {
 	}
 
 	// OTROS METODOS -----------------
+	
+	// Items de la tienda
+	public Collection<Item> shopItems() {
+		return this.itemRepository.shopItems();
+	}
 
 	// Comprar un item de la tienda
 		public Purchase buyItem(Item item) {
