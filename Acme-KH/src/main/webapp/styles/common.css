@@ -141,8 +141,8 @@ body{
    color: #2ACBA9;
    width:210px;
    text-align:center;
+   pointer-events:auto;
 }
-
 
 .message {
 	color: red;

@@ -35,9 +35,9 @@
 </jstl:if>
 <%-- Definition --%>
 <jstl:if test="${not empty href}">
-	<a href="${href}" class="btn-effect btn-sm btn" style="background-color:${color}"
+	<a href="${href}" class="btn-effect btn-sm btn" style="background-color:${color};color:${iconColor}"
 		title='<spring:message code="${title}"/>'><i 
-		style="font-size: 20px; vertical-align: middle; color:${iconColor}"
+		style="font-size: 20px; vertical-align: middle"
 		class="material-icons">${icon}</i> <jstl:if
 			test="${not empty message}">
 			<spring:message code="${message}"></spring:message>
@@ -45,11 +45,11 @@
 </jstl:if>
 <jstl:if test="${empty href}">
 	<button type="button" class="btn-sm btn"
-		style="background-color:${color}" disabled>
+		style="background-color:${color};pointer-events:none;color:${iconColor}">
 		<i style="font-size: 20px; vertical-align: middle;"
 			class="material-icons">${icon}</i>
 		<jstl:if test="${not empty message}">
-			<jstl:out value="${working }"></jstl:out>
+			<jstl:out value="${message}"></jstl:out>
 		</jstl:if>
 	</button>
 </jstl:if>

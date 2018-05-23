@@ -89,7 +89,7 @@
 		<img class="card-img-top" src="${row.building.photo}" alt="Card image cap">
 		<div class="card-body">
 			<div style="padding:10px;"class="row"><h5 class="card-title">${row.building.name}</h5>
-			<h6><span style="margin-left:10px;" class="badge badge-info"> Lvl ${row.lvl}</span></h6></div>
+			</div>
 			<p class="card-text">${row.building.description}</p>
 				<p>
 					<spring:message code="built.state" var="stateHeader"></spring:message>
@@ -135,7 +135,7 @@
 						<a class="btn-sm btn btn-primary" href="built/collect.do?builtId=${row.id}"><jstl:out value="${collect}"></jstl:out></a>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate!=null && !row.haTerminado(row.building.getTotalTime(row.lvl)) }">
-						<button type="button" class="btn-sm btn btn-primary" disabled><i style="font-size:20px;vertical-align:middle;" class="fa fa-refresh fa-spin"></i>&nbsp;&nbsp;<jstl:out value="${working }"></jstl:out></button>
+						<button title="${working}" type="button" class="btn-sm btn btn-primary" disabled><i style="font-size:20px;vertical-align:middle;" class="fa fa-refresh fa-spin"></i></button>
 					</jstl:when>																										
 					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate==null }">
 						<%-- <a class="collect btn-sm btn btn-primary" href="built/startCollect.do?builtId=${row.id}"><jstl:out value="${startCollect}"></jstl:out></a> --%>
@@ -162,6 +162,7 @@
 				</jstl:choose>
 				<%-- <a class="btn-sm btn btn-danger" href="built/delete.do?builtId=${row.id}"><i style="font-size:20px;vertical-align:middle;"class="material-icons">clear</i><jstl:out value="${unbuildHeader }"></jstl:out></a> --%>
 				<acme:icon-button color="#ff0101" icon="clear" href="built/delete.do?builtId=${row.id}" title="built.unbuild"/>
+				<acme:icon-button color="blue" icon="star"  message="Lvl ${row.lvl}"/>
 			</div>
 		</div>
 	</div>
