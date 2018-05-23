@@ -14,7 +14,6 @@ import repositories.GummiShipRepository;
 import domain.GummiShip;
 import domain.Materials;
 import domain.Recruiter;
-import domain.Troop;
 
 @Service
 @Transactional
@@ -24,9 +23,9 @@ public class GummiShipService {
 
 	@Autowired
 	private GummiShipRepository	gummiShipRepository;
-	
+
 	@Autowired
-	private Validator validator;
+	private Validator			validator;
 
 
 	// CRUD methods
@@ -89,23 +88,26 @@ public class GummiShipService {
 	public Collection<GummiShip> getGummiShipFromRecruiter(final Integer recruiterId) {
 		return this.gummiShipRepository.getGummiShipsFromRecruiter(recruiterId);
 	}
-	
+
 	public Collection<GummiShip> getStoragedGummiShip(final Integer builtId) {
 		return this.gummiShipRepository.getStoragedGummiShip(builtId);
 	}
-	
-	public Collection<GummiShip> getGummiShipsAvailableForBuilt(Integer builtLevel){
+
+	public Collection<GummiShip> getGummiShipsAvailableForBuilt(final Integer builtLevel) {
 		return this.gummiShipRepository.getGummiShipsAvailableForBuilt(builtLevel);
 	}
-	
+	public Collection<GummiShip> getGummiShipsAvailableFromRecruiterAndLvl(final Integer recruiterId, final Integer lvl) {
+		return this.gummiShipRepository.getGummiShipsAvailableFromRecruiterAndLvl(recruiterId, lvl);
+	}
+
 	// ------ RECONSTRUCT -------
-	public GummiShip reconstruct(GummiShip g, BindingResult binding) {
+	public GummiShip reconstruct(final GummiShip g, final BindingResult binding) {
 		GummiShip result;
 		final GummiShip original = this.gummiShipRepository.findOne(g.getId());
-		
-		if (g.getId() == 0) {
+
+		if (g.getId() == 0)
 			result = g;
-		} else {
+		else {
 			//Aquí van los atributos hidden
 			result = g;
 			result.setRecruiter(original.getRecruiter());
@@ -115,5 +117,5 @@ public class GummiShipService {
 		return result;
 
 	}
-	
+
 }

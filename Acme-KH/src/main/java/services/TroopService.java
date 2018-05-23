@@ -2,7 +2,6 @@
 package services;
 
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,6 @@ import org.springframework.validation.Validator;
 
 import repositories.TroopRepository;
 import domain.Materials;
-import domain.Organization;
 import domain.Recruiter;
 import domain.Troop;
 
@@ -28,8 +26,9 @@ public class TroopService {
 
 	@Autowired
 	private BuiltService	builtService;
-	
-	@Autowired Validator validator;
+
+	@Autowired
+	Validator				validator;
 
 
 	// CRUD methods
@@ -57,8 +56,7 @@ public class TroopService {
 
 	public Troop save(final Troop troop) {
 
-
-		Troop saved = this.TroopRepository.save(troop);
+		final Troop saved = this.TroopRepository.save(troop);
 
 		return saved;
 	}
@@ -97,29 +95,31 @@ public class TroopService {
 		return this.TroopRepository.getStoragedTroops(builtId);
 	}
 
-
-	public Collection<Troop> getTroopsAvailableForBuilt(Integer builtLevel){
+	public Collection<Troop> getTroopsAvailableForBuilt(final Integer builtLevel) {
 		return this.TroopRepository.getTroopsAvailableForBuilt(builtLevel);
 	}
-	
-	// ------ RECONSTRUCT -----
-		public Troop reconstruct(Troop t, BindingResult binding) {
-			Troop result;
-			final Troop original = this.TroopRepository.findOne(t.getId());
-			
-			if (t.getId() == 0) {
-				result = t;
-			} else {
-				//Aquí van los atributos hidden
-				result = t;
-				result.setRecruiter(original.getRecruiter());
-				
-			}
-			this.validator.validate(result, binding);
 
-			return result;
+	public Collection<Troop> getTroopsAvailableFromRecruiterAndLvl(final Integer recruiterId, final Integer lvl) {
+		return this.TroopRepository.getTroopsAvailableFromRecruiterAndLvl(recruiterId, lvl);
+	}
+
+	// ------ RECONSTRUCT -----
+	public Troop reconstruct(final Troop t, final BindingResult binding) {
+		Troop result;
+		final Troop original = this.TroopRepository.findOne(t.getId());
+
+		if (t.getId() == 0)
+			result = t;
+		else {
+			//Aquí van los atributos hidden
+			result = t;
+			result.setRecruiter(original.getRecruiter());
 
 		}
-	
+		this.validator.validate(result, binding);
+
+		return result;
+
+	}
 
 }

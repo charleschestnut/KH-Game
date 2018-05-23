@@ -63,10 +63,10 @@
 	<jstl:if test="${wantRecruit=='ship' }">
 	<jstl:choose>
 		<jstl:when test="${ships!=null && ships.size()>0 }">
-			<form:select path="ship">
+			<form:select path="gummiship">
 				<form:options itemLabel="name" itemValue="id"  items="${ships}"  />
 			</form:select>
-			<form:errors path="ship" cssClass="error"></form:errors>
+			<form:errors path="gummiship" cssClass="error"></form:errors>
 		<br>
 		<acme:submit name="save" code="master.page.save"/>
 		</jstl:when>

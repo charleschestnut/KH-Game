@@ -18,4 +18,8 @@ public interface GummiShipRepository extends JpaRepository<GummiShip, Integer> {
 
 	@Query("select g from GummiShip g where g.recruiterRequiredLvl<=?1")
 	Collection<GummiShip> getGummiShipsAvailableForBuilt(Integer builtLevel);
+
+	@Query("select g from GummiShip g where g.recruiter.id=?1 and g.recruiterRequiredLvl<=?2")
+	Collection<GummiShip> getGummiShipsAvailableFromRecruiterAndLvl(Integer recruiterId, Integer lvl);
+
 }

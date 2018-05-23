@@ -136,12 +136,12 @@ public class BuiltController extends AbstractController {
 		else {
 
 			recruiter = this.recruiterService.findOne(buildingId);
-			if (recruiter != null){
+			if (recruiter != null) {
 				res.addObject("recruiter", true);
 				//TODO: añadir query para las tropas y gummi ships disponibles dentro del if
 				res.addObject("troops", this.troopService.getTroopsAvailableForBuilt(b.getLvl()));
 				res.addObject("gummiShips", this.gummiShipService.getGummiShipsAvailableForBuilt(b.getLvl()));
-			}else {
+			} else {
 				livelihood = this.livelihoodService.findOne(buildingId);
 				if (livelihood != null)
 					res.addObject("livelihood", true);
@@ -241,10 +241,10 @@ public class BuiltController extends AbstractController {
 			res = new ModelAndView("built/recruit");
 			res.addObject("wantRecruit", wantRecruit);
 			if (wantRecruit.equals("troop")) {
-				final Collection<Troop> troops = this.troopService.getTroopsFromRecruiter(recruitedForm.getBuilt().getBuilding().getId());
+				final Collection<Troop> troops = this.troopService.getTroopsAvailableFromRecruiterAndLvl(recruitedForm.getBuilt().getBuilding().getId(), recruitedForm.getBuilt().getLvl());
 				res.addObject("troops", troops);
 			} else if (wantRecruit.equals("ship")) {
-				final Collection<GummiShip> ships = this.gummiShipService.getGummiShipFromRecruiter(recruitedForm.getBuilt().getBuilding().getId());
+				final Collection<GummiShip> ships = this.gummiShipService.getGummiShipsAvailableFromRecruiterAndLvl(recruitedForm.getBuilt().getBuilding().getId(), recruitedForm.getBuilt().getLvl());
 				res.addObject("ships", ships);
 			}
 			res.addObject("recruitedForm", recruitedForm);
@@ -303,10 +303,10 @@ public class BuiltController extends AbstractController {
 		res.addObject("message", msg);
 
 		if (wantRecruit.equals("troop")) {
-			final Collection<Troop> troops = this.troopService.getTroopsFromRecruiter(form.getBuilt().getBuilding().getId());
+			final Collection<Troop> troops = this.troopService.getTroopsAvailableFromRecruiterAndLvl(form.getBuilt().getBuilding().getId(), form.getBuilt().getLvl());
 			res.addObject("troops", troops);
 		} else if (wantRecruit.equals("ship")) {
-			final Collection<GummiShip> ships = this.gummiShipService.getGummiShipFromRecruiter(form.getBuilt().getBuilding().getId());
+			final Collection<GummiShip> ships = this.gummiShipService.getGummiShipsAvailableFromRecruiterAndLvl(form.getBuilt().getBuilding().getId(), form.getBuilt().getLvl());
 			res.addObject("ships", ships);
 		}
 
