@@ -10,8 +10,12 @@
 
 package controllers;
 
+import java.security.Security;
+
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ClassUtils;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.Authority;
+import security.LoginService;
 import services.ActorService;
 import services.BuiltService;
 import domain.KeybladeWielder;
@@ -57,13 +62,23 @@ public class AbstractController {
 	
 	@ModelAttribute
 	public void addPlayerToModel(Model model){
-		if(actorService.getPrincipalAuthority().equals(Authority.PLAYER)){
-			KeybladeWielder player;
-			
-			player = (KeybladeWielder) actorService.findByPrincipal();
-			
-			model.addAttribute("playerFromAbstract", player);
-			model.addAttribute("maxMaterialsFromAbstract", builtService.maxMaterials());
+		SecurityContext context;
+		Boolean anonymous;
+		
+		try{
+		context = SecurityContextHolder.getContext();
+		anonymous = context.getAuthentication().getPrincipal().equals("anonymousUser");
+		
+			if(!anonymous && actorService.getPrincipalAuthority().equals(Authority.PLAYER)){
+				KeybladeWielder player;
+				
+				player = (KeybladeWielder) actorService.findByPrincipal();
+				
+				model.addAttribute("playerFromAbstract", player);
+				model.addAttribute("maxMaterialsFromAbstract", builtService.maxMaterials());
+			}
+		}catch(Throwable e){
+			System.out.println("oh baia");
 		}
 	}
 }
