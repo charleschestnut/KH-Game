@@ -125,7 +125,7 @@
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> <img
-						src="https://kingdomhearts.com/img/header/icons/characters-icon.png"
+						src="https://kingdomhearts.com/img/header/icons/shop-icon.png"
 						align="center" class="nav-icon"> <spring:message
 							code="master.page.player" /></a>
 					<div style="font-size: 12px;" class="dropdown-menu"
@@ -166,6 +166,14 @@
 					</div>
 					
 				</li>
+				
+				<security:authorize access="hasRole('PLAYER')">
+				<li class="nav-item"><a class="nav-link" href="profile/actor/list.do"> <img
+						src="https://kingdomhearts.com/img/header/icons/games-icon.png"
+						align="center" class="nav-icon" alt="home"> <spring:message
+							code="master.page.users" />
+				</a></li>
+			</security:authorize>
 					
 					
 			</security:authorize>
@@ -233,6 +241,7 @@
 		</ul>
 	</div>
 	<security:authorize access="isAuthenticated()">
+	&nbsp;
 	<acme:searchbox action="profile/actor/display.do"/>
 	</security:authorize>
 </nav>
