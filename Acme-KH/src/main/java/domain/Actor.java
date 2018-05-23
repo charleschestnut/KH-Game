@@ -22,7 +22,6 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import security.UserAccount;
@@ -110,8 +109,6 @@ public class Actor extends DomainEntity {
 		this.confirmMoment = confirmMoment;
 	}
 
-	@URL
-	@Pattern(regexp = ".+.(jpg|jpeg|gif|png)", message = "(jpg, jpeg, gif, png)")
 	public String getAvatar() {
 		return this.avatar;
 	}

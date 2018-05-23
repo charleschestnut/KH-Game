@@ -38,6 +38,7 @@
 
 		<security:intercept-url pattern="/security/login.do" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/security/loginFailure.do" access="isAnonymous()" /> 
+		<security:intercept-url pattern="/security/loginCheck.do" access="isAnonymous()" /> 
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 
@@ -95,7 +96,7 @@
 		<security:intercept-url pattern="/profile/actor/list.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/keybladewielder/world.do" access="isAuthenticated()" />
 		
-		<security:intercept-url pattern="/profile/actor/register.do" access="isAnonymous()" />
+		<security:intercept-url pattern="/profile/actor/register.do" access="isAnonymous() || hasRole('ADMIN')" />
 		
 		<!-- CAMILA -->
 		

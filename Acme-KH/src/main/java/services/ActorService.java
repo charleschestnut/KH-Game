@@ -39,17 +39,15 @@ public class ActorService {
 	public Actor create(String AuthorityString) {
 		Actor actor;
 		UserAccount userAccount;
-		Collection<Authority> authorities;
 		Authority auth;
 
 		actor = new Actor();
 		userAccount = new UserAccount();
-		authorities = new ArrayList<>();
 		auth = new Authority();
 
 		auth.setAuthority(AuthorityString);
-		authorities.add(auth);
-		userAccount.setAuthorities(authorities);
+		userAccount.addAuthority(auth);
+
 		actor.setUserAccount(userAccount);
 		actor.setHasConfirmedTerms(false);
 
@@ -80,8 +78,6 @@ public class ActorService {
 
 	public Actor saveFromCreate(Actor user) {
 		Actor result;
-		System.out.println("Username: " + user.getUserAccount().getUsername());
-		System.out.println("Nickname: " + user.getNickname());
 		Assert.isTrue(this.findByUserAccountUsername(user.getUserAccount().getUsername()) == null, "error.message.duplicatedUsername");
 		Assert.isTrue(this.findByNickname(user.getNickname()) == null, "error.message.duplicatedNickname");
 
@@ -107,9 +103,25 @@ public class ActorService {
 		authorities = new ArrayList<>();
 		auth = new Authority();
 
-		auth.setAuthority("PLAYER");
+		List<Authority> auts = new ArrayList<Authority>(user.getUserAccount().getAuthorities());
+		String accountType = auts.get(0).getAuthority();
+
+		try {
+			if (LoginService.getPrincipal().isAuthority(Authority.ADMIN)) {
+				if (accountType == null || !((accountType.equals("GM") && !accountType.equals("MANAGER")) || (!accountType.equals("GM") && accountType.equals("MANAGER"))))
+					Assert.isTrue(false, "error.message.notexist");
+			} else
+				new Throwable();
+			//Si no es ADMIN (Aqui no deberia llegar, porque solo puede entrar ADMIN o anonimos, y si es anonimo, salta el if y va al catch)
+
+		} catch (Throwable oops) {
+			accountType = "PLAYER";
+		}
+
+		auth.setAuthority(accountType);
 		authorities.add(auth);
 		userAccount.setAuthorities(authorities);
+		userAccount.setEnabled(true);
 		user.setUserAccount(userAccount);
 
 		user.setId(0);
@@ -155,7 +167,6 @@ public class ActorService {
 		Assert.notNull(username, "error.message.null");
 		Assert.isTrue(username.length() >= 3 && username.length() <= 32);
 		Actor actor = this.actorRepository.findByUserAccountUsername(username);
-		Assert.notNull(actor, "error.message.notexist");
 
 		return actor;
 	}

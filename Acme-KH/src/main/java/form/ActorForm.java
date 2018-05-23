@@ -7,7 +7,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
 public class ActorForm {
 
@@ -55,8 +54,6 @@ public class ActorForm {
 		this.phone = phone;
 	}
 
-	@URL
-	@Pattern(regexp = ".+.(jpg|jpeg|gif|png)", message = "(jpg, jpeg, gif, png)")
 	public String getAvatar() {
 		return this.avatar;
 	}

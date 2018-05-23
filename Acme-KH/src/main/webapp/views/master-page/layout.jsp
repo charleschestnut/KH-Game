@@ -69,10 +69,9 @@ function getUrlParameter(name) {
 function showErrorMessage(){
 	var msg = getUrlParameter("message");
 	var div = document.getElementById("alertMessage");
-	if(msg.includes("error.message.")){
+
 		div.style.display = '';
 		div.getElementsByTagName("span")[0].innerHTML = msg;
-	}
 }
  
 
@@ -123,7 +122,7 @@ function showErrorMessage(){
 
 <body>
 <script>
-$('.btn-material').popover(options)
+$('.btn-material').popover(options);
 document.body.onload = function() {showErrorMessage()};
 </script>
 <div class="alert alert-danger alert-dismissible fade show" id="alertMessage" style="display:none;" role="alert" >

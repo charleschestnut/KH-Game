@@ -10,6 +10,7 @@
 <form:form action="profile/actor/register.do" modelAttribute="actor" class="form-signin">
 	<acme:textbox code="username" path="userAccount.username" />
 	<acme:password code="password" path="userAccount.password" />
+	<form:hidden path="userAccount.authorities" />
 	<acme:textbox code="nickname" path="nickname" />
 	<acme:textbox code="name" path="name" />
 	<acme:textbox  code="surname" path="surname" />

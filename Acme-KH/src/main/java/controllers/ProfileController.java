@@ -23,7 +23,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.Authority;
+import security.LoginService;
 import services.ActorService;
+import services.BuiltService;
+import services.ContentManagerService;
+import services.GameMasterService;
 import services.KeybladeWielderService;
 import services.OrganizationService;
 import domain.Actor;
@@ -41,7 +46,16 @@ public class ProfileController extends AbstractController {
 	private KeybladeWielderService	keybladeWielderService;
 
 	@Autowired
+	private GameMasterService		gameMasterService;
+
+	@Autowired
+	private ContentManagerService	contentManagerService;
+
+	@Autowired
 	private OrganizationService		organizationService;
+
+	@Autowired
+	private BuiltService			builtService;
 
 
 	// Actor ---------------------------------------------------------------	
@@ -80,6 +94,7 @@ public class ProfileController extends AbstractController {
 		if (actor instanceof KeybladeWielder) {
 			KeybladeWielder user = (KeybladeWielder) actor;
 			result.addObject("user", user);
+			result.addObject("maxMaterial", this.builtService.maxMaterials());
 			result.addObject("usernameInvitation", user.getUserAccount().getUsername());
 
 			//from: Carlos
@@ -139,18 +154,31 @@ public class ProfileController extends AbstractController {
 	// Sing Up
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public ModelAndView register() {
+	public ModelAndView register(@RequestParam(required = false) String accountType) {
 		ModelAndView result;
 		Actor actor;
 
-		actor = this.actorService.create("PLAYER");
+		try {
+			if (LoginService.getPrincipal().isAuthority(Authority.ADMIN)) {
+				if (accountType == null || !((accountType.equals("GM") && !accountType.equals("MANAGER")) || (!accountType.equals("GM") && accountType.equals("MANAGER")))) {
+					result = new ModelAndView("welcome/index");
+					result.addObject("message", "error.message.commit");
+					return result;
+				}
+			} else
+				new Throwable();
+			//Si no es ADMIN (Aqui no deberia llegar, porque solo puede entrar ADMIN o anonimos, y si es anonimo, salta el if y va al catch)
 
+		} catch (Throwable oops) {
+			accountType = "PLAYER";
+		}
+
+		actor = this.actorService.create(accountType);
 		result = new ModelAndView("profile/actor/register");
 		result.addObject("actor", actor);
 
 		return result;
 	}
-
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "register")
 	public ModelAndView signingup(Actor actor, BindingResult binding) {
 		ModelAndView result;
@@ -160,15 +188,26 @@ public class ProfileController extends AbstractController {
 			result = this.createEditModelAndView(actor, "error.message.commit");
 		else
 			try {
-				this.actorService.saveFromCreate(actor);
-				result = new ModelAndView("redirect:/security/login.do");
+				if (actor.getUserAccount().isAuthority(Authority.GM))
+					this.gameMasterService.saveFromCreate(actor);
+				else if (actor.getUserAccount().isAuthority(Authority.MANAGER))
+					this.contentManagerService.saveFromCreate(actor);
+				else if (actor.getUserAccount().isAuthority(Authority.PLAYER))
+					this.keybladeWielderService.save((KeybladeWielder) actor);
+				else
+					new Throwable("error.message.commit");
+
+				if (LoginService.getPrincipal().isAuthority(Authority.ADMIN))
+					result = new ModelAndView("welcome/index");
+				else
+					result = new ModelAndView("redirect:/security/login.do");
+
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(actor, this.getErrorMessage(oops));
 			}
 
 		return result;
 	}
-
 	// Ancillary methods ------------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(Actor actor) {

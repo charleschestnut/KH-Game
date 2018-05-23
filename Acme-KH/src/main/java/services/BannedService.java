@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -17,50 +18,55 @@ public class BannedService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private BannedRepository bannedRepository;
+	private BannedRepository	bannedRepository;
+
 
 	// CRUD methods
-	
-	public Banned create(){
+
+	public Banned create() {
 		Banned banned;
-		
+
 		banned = new Banned();
-		
+
 		return banned;
 	}
-	
-	public Banned save(Banned banned){
+
+	public Banned save(Banned banned) {
 		Assert.notNull(banned);
-		
+
 		Banned saved;
-		
-		saved = bannedRepository.save(banned);
-		
+
+		saved = this.bannedRepository.save(banned);
+
 		return saved;
 	}
-	
-	public Banned findOne(int bannedId){
+
+	public Banned findOne(int bannedId) {
 		Assert.notNull(bannedId);
-		
+
 		Banned banned;
-		
-		banned = bannedRepository.findOne(bannedId);
-		
+
+		banned = this.bannedRepository.findOne(bannedId);
+
 		return banned;
 	}
-	
-	public Collection<Banned> findAll(){
+
+	public Collection<Banned> findAll() {
 		Collection<Banned> banneds;
-		
-		banneds = bannedRepository.findAll();
-		
+
+		banneds = this.bannedRepository.findAll();
+
 		return banneds;
 	}
-	
-	public void delete(Banned banned){
+
+	public void delete(Banned banned) {
 		Assert.notNull(banned);
-		
-		bannedRepository.delete(banned);
+
+		this.bannedRepository.delete(banned);
+	}
+
+	public Banned findBanned(int actorId) {
+		return this.bannedRepository.findBanned(actorId);
 	}
 
 }

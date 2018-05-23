@@ -100,7 +100,14 @@
 					<div style="font-size: 12px;" class="dropdown-menu"
 						aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" href="report/list.do"><spring:message
-								code="report.list" /></a> <a class="dropdown-item"
+								code="report.list" /></a> 
+								<a class="dropdown-item"
+							href="profile/actor/register.do?accountType=GM">
+							<spring:message code="master.page.create.gm" /></a>
+							<a class="dropdown-item"
+							href="profile/actor/register.do?accountType=MANAGER">
+							<spring:message code="master.page.create.manager" /></a>
+								<a class="dropdown-item"
 							href="reportUpdate/admin/listSuspicious.do"><spring:message
 								code="reportUpdate.list.suspicious" /></a> <a class="dropdown-item"
 							href="legaltext/index.do"><spring:message

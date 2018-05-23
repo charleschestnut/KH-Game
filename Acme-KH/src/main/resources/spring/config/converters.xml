@@ -108,6 +108,8 @@
 	<!-- ÁNGEL LOZANO -->
 	
 	<!-- SERGIO -->
+		<bean class="converters.AuthorityToStringConverter" /> 
+		<bean class="converters.StringToAuthorityConverter" /> 
 	
 	<!-- CAMILA -->
 		<bean class="converters.KeybladeWielderToStringConverter" /> 

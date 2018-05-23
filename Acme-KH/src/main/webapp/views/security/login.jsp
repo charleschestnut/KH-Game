@@ -31,11 +31,18 @@
 	<form:password class="form-control" path="password" />	
 	<form:errors class="error" path="password" />
 	
+	<jstl:if test="${banned != null}">
+		<div class="error">
+			<jstl:out value="${banned.reason}"/>
+		</div>
+	</jstl:if>
+	
 	<jstl:if test="${showError == true}">
 		<div class="error">
 			<spring:message code="security.login.failed" />
 		</div>
 	</jstl:if>
+	
 	<br>
 	<input class="btn btn-pink" type="submit" value="<spring:message code="security.login" />" />
 	

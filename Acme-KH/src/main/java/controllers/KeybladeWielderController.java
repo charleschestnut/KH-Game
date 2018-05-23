@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
-import services.BuiltService;
 import services.KeybladeWielderService;
 import services.OrganizationService;
 import domain.Actor;
@@ -43,9 +42,6 @@ public class KeybladeWielderController extends AbstractController {
 
 	@Autowired
 	private OrganizationService		organizationService;
-
-	@Autowired
-	private BuiltService			builtService;
 
 
 	// Actor ---------------------------------------------------------------	
@@ -72,7 +68,6 @@ public class KeybladeWielderController extends AbstractController {
 			KeybladeWielder user = (KeybladeWielder) actor;
 
 			result.addObject("user", user);
-			result.addObject("maxMaterial", this.builtService.maxMaterials());
 			result.addObject("usernameInvitation", user.getUserAccount().getUsername());
 		} else
 			result.addObject("user", actor);
