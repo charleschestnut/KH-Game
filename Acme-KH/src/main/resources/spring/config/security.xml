@@ -63,6 +63,9 @@
 		
 		<security:intercept-url pattern="/troop/contentManager/list.do" access="hasRole('MANAGER')" />
 		<security:intercept-url pattern="/troop/contentManager/edit.do" access="hasRole('MANAGER')" />
+		
+		<security:intercept-url pattern="/gummiShip/contentManager/list.do" access="hasRole('MANAGER')" />
+		<security:intercept-url pattern="/gummiShip/contentManager/edit.do" access="hasRole('MANAGER')" />
 		<!-- ÁNGEL PÉREZ -->
 		
 		<security:intercept-url pattern="/building/list.do" access="isAuthenticated()" /> 

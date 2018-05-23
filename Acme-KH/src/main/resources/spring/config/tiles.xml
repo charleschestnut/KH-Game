@@ -34,6 +34,7 @@
 		<value>/views/invitation/tiles.xml</value>
 		<value>/views/organization/tiles.xml</value>
 		<value>/views/troop/tiles.xml</value>
+		<value>/views/gummiShip/tiles.xml</value>
 		
 		
 		<!-- ÁNGEL PÉREZ -->

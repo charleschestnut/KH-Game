@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.GummiShipRepository;
 import domain.GummiShip;
@@ -22,6 +24,9 @@ public class GummiShipService {
 
 	@Autowired
 	private GummiShipRepository	gummiShipRepository;
+	
+	@Autowired
+	private Validator validator;
 
 
 	// CRUD methods
@@ -91,6 +96,24 @@ public class GummiShipService {
 	
 	public Collection<GummiShip> getGummiShipsAvailableForBuilt(Integer builtLevel){
 		return this.gummiShipRepository.getGummiShipsAvailableForBuilt(builtLevel);
+	}
+	
+	// ------ RECONSTRUCT -------
+	public GummiShip reconstruct(GummiShip g, BindingResult binding) {
+		GummiShip result;
+		final GummiShip original = this.gummiShipRepository.findOne(g.getId());
+		
+		if (g.getId() == 0) {
+			result = g;
+		} else {
+			//Aquí van los atributos hidden
+			result = g;
+			result.setRecruiter(original.getRecruiter());
+		}
+		this.validator.validate(result, binding);
+
+		return result;
+
 	}
 	
 }

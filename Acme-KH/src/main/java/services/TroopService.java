@@ -112,7 +112,7 @@ public class TroopService {
 			} else {
 				//Aquí van los atributos hidden
 				result = t;
-				result.setRecruiter(t.getRecruiter());
+				result.setRecruiter(original.getRecruiter());
 				
 			}
 			this.validator.validate(result, binding);

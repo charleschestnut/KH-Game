@@ -41,7 +41,7 @@
 
 <jstl:if test="${recruiter}">
 	<security:authorize access="hasRole('MANAGER')">
-			<acme:action code="troop.edit"  url="troop/contentManager/edit.do?recruiterId=${building.id}"/>
+			<acme:action code="troop.create"  url="troop/contentManager/edit.do?recruiterId=${building.id}"/>
 	</security:authorize>
 		
 	<jstl:if test="${troops != null && troops.size()>0 }">
@@ -82,6 +82,11 @@
 		</display:table>
 		
 	</jstl:if>
+	
+	
+	<security:authorize access="hasRole('MANAGER')">
+			<acme:action code="gummiShip.create"  url="gummiShip/contentManager/edit.do?recruiterId=${building.id}"/>
+	</security:authorize>
 	
 	<jstl:if test="${gummiShips != null && gummiShips.size()>0 }">
 	

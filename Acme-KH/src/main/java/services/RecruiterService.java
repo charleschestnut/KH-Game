@@ -100,7 +100,7 @@ public class RecruiterService {
 		Assert.isTrue(!r.getIsFinal(), "error.message.building.final");
 		Assert.isTrue(r.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
 		Assert.isTrue(r.equals(gs.getRecruiter()), "error.message.recruiter.addGummiShip");
-
+		Assert.isTrue(gs.getRecruiterRequiredLvl() <= r.getMaxLvl(), "error.message.recruiter.highLevel");
 		gs = this.gummiShipService.save(gs);
 
 		final Collection<GummiShip> gummies = r.getGummiShips();
