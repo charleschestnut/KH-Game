@@ -14,6 +14,9 @@ table {
 	margin: 20px 0 20px 0 !important;
 	text-align: center;
 	color:black;
+	border: 0;
+	font-family: 'proxima_nova_rgbold', Arial, sans-serif;
+    font-size: 1em;
 }
 
 th,td {
@@ -23,12 +26,17 @@ th,td {
 	text-align: center;
 }
 
+tr th td{
+	padding:10px;
+}
+
 thead tr {
-	background-color: #fc0;
+	background-color: #2129D6;
+	color:white;
 }
 
 th.sorted {
-	background-color: orange;
+	background-color: #FFFA55;
 }
 
 th a,th a:visited {
@@ -66,11 +74,19 @@ th.order2 a {
 }
 
 tr.odd {
-	background-color: #fff
+	background-color: white
+}
+
+tr.odd:hover {
+	background-color: #CCDFF5;
 }
 
 tr.tableRowEven,tr.even {
-	background-color: #fea
+	background-color: #CCDFF5
+}
+
+tr.tableRowEven,tr.even:hover {
+	background-color: #CCDFF5
 }
 
 div.exportlinks {
@@ -131,7 +147,6 @@ span.pagelinks {
 }
 
 .group-1 {
-	font-weight: bold;
 	padding-bottom: 10px;
 	border-top: 1px solid black;
 }
@@ -142,7 +157,6 @@ span.pagelinks {
 }
 
 .subtotal-sum,.grandtotal-sum {
-	font-weight: bold;
 	text-align: right;
 }
 
