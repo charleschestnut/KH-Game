@@ -81,34 +81,45 @@ public class ReportController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/player/list", method = RequestMethod.GET)
-	public ModelAndView playerList() {
+	public ModelAndView playerList(@RequestParam(required=false, defaultValue="0") Integer page) {
 		ModelAndView result;
-		Collection<Report> reports;
+		Page<Report> reports;
+		Pageable pageable;
+		
+		pageable = new PageRequest(page, 5);
 
-		reports = reportService.findReportsByPlayer(actorService.findByPrincipal().getId());
+		reports = reportService.findReportsByPlayer(actorService.findByPrincipal().getId(), pageable);
 		result = new ModelAndView("report/list");
-		result.addObject("requestURI", "report/player/list.do");
+		result.addObject("requestURI", "report/player/list.do?page=");
 		result.addObject("reports", reports);
 		result.addObject("user", "player");
+		result.addObject("page", page);
+		result.addObject("pageNum", reports.getTotalPages());
 
 		return result;
 	}
 	
 	@RequestMapping(value = "/player/listByStatus", method = RequestMethod.GET)
-	public ModelAndView playerListByStatus(@RequestParam (required = false) String status) {
+	public ModelAndView playerListByStatus(@RequestParam (required = false) String status,
+			@RequestParam(required=false, defaultValue="0") Integer page) {
 		ModelAndView result;
-		Collection<Report> reports;
+		Page<Report> reports;
+		Pageable pageable;
+		
+		pageable = new PageRequest(page, 5);
 
 		if(!status.equals("all")){
-			reports = reportService.getReportsByStatusAndPlayer(ReportStatus.valueOf(status), actorService.findByPrincipal().getId());
+			reports = reportService.getReportsByStatusAndPlayer(ReportStatus.valueOf(status), actorService.findByPrincipal().getId(), pageable);
 		}else{
-			reports = reportService.findReportsByPlayer(actorService.findByPrincipal().getId());
+			reports = reportService.findReportsByPlayer(actorService.findByPrincipal().getId(),pageable);
 		}
 		
 		result = new ModelAndView("report/table");
-		result.addObject("requestURI", "report/player/list.do");
+		result.addObject("requestURI", "report/player/listByStatus.do?status="+ status + "&page=");
 		result.addObject("reports", reports);
 		result.addObject("user", "player");
+		result.addObject("page", page);
+		result.addObject("pageNum", reports.getTotalPages());
 
 		return result;
 	}

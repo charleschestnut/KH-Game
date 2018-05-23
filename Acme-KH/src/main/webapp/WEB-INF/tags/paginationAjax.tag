@@ -35,20 +35,50 @@
 <jstl:set var="user" value="all"/>
 </security:authorize>
 
+<jstl:set var="previous" value="${page-2}"/>
+<jstl:if test="${page-2 < 0}">
+<jstl:set var="previous" value="0"/>
+</jstl:if>
+
+<jstl:set var="next" value="${page+1}"/>
+<jstl:if test="${page+1 > pageNum-1}">
+<jstl:set var="next" value="${pageNum-1}"/>
+</jstl:if>
+
 <jstl:if test="${pageNum!=0}">
+
+<br/>
+
 	<!-- Pagination -->
-	<ul>
+	<ul class="pagination">
+		<li class="page-item">
+	      <a  href="" class="page-link" onclick="javascript: reloadTable(event, '${user}',${previous})" aria-label="Previous">
+	        <span aria-hidden="true">&laquo;</span>
+	        <span class="sr-only">Previous</span>
+	      </a>
+	    </li>
 		<jstl:forEach begin="1" end="${pageNum}" var="index">
+		
+		<jstl:set var="style" value="page-item"/>
+		<jstl:if test="${index-1 == page}">
+			<jstl:set var="style" value="active page-item"/>
+		</jstl:if>
 
 			<jstl:set var="pageEffect" value="waves-effect" />
 			<jstl:if test="${index-1 == page}">
 				<jstl:set var="pageEffect" value="active" />
 			</jstl:if>
 
-			<li class="${pageEffect}"><a style="cursor:pointer;" onclick="javascript: reloadTable(event, '${user}',${index-1})">
+			<li class="${style}"><a href="" class="page-link" onclick="javascript: reloadTable(event, '${user}',${index-1})">
 					<jstl:out value="${index}" />
 			</a></li>
 		</jstl:forEach>
+		<li class="page-item">
+	      <a href="" class="page-link" onclick="javascript: reloadTable(event, '${user}',${next})" aria-label="Previous">
+	        <span aria-hidden="true">&raquo;</span>
+	        <span class="sr-only">Next</span>
+	      </a>
+	    </li>
 		<br />
 	</ul>
 </jstl:if>

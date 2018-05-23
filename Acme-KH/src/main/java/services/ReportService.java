@@ -153,6 +153,14 @@ public class ReportService {
 	public Page<Report> getReportsByStatus(ReportStatus status, Pageable pageable){
 		return this.reportRepository.getReportsByStatus(status, pageable);
 	}
+	
+	public Page<Report> findReportsByPlayer(final int playerId, Pageable pageable) {
+		return this.reportRepository.findReportsByPlayer(playerId, pageable);
+	}
+	
+	public Page<Report> getReportsByStatusAndPlayer(final ReportStatus status, final int playerId, Pageable pageable) {
+		return this.reportRepository.getReportsByStatusAndPlayer(status, playerId, pageable);
+	}
 
 	//Dashboard
 

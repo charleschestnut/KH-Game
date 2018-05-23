@@ -15,6 +15,9 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
 
 	@Query("select r from Report r where r.keybladeWielder.id = ?1")
 	Collection<Report> findReportsByPlayer(int playerId);
+	
+	@Query("select r from Report r where r.keybladeWielder.id = ?1")
+	Page<Report> findReportsByPlayer(int playerId, Pageable pageable);
 
 	@Query("select r from Report r join r.reportUpdates ru where ru IN (select rupd from ReportUpdate rupd where rupd.id=?1)")
 	Report findReportsByReportUpdate(int reportUpdateId);
@@ -27,6 +30,9 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
 
 	@Query("select r from Report r where r.status = ?1 and r.keybladeWielder.id = ?2")
 	Collection<Report> getReportsByStatusAndPlayer(ReportStatus status, int playerId);
+	
+	@Query("select r from Report r where r.status = ?1 and r.keybladeWielder.id = ?2")
+	Page<Report> getReportsByStatusAndPlayer(ReportStatus status, int playerId, Pageable pageable);
 
 	@Query("select avg(1.0*(select count(r) from Report r where r.keybladeWielder.id=u.id and r.isBug=1)) from KeybladeWielder u")
 	Double getAvgReportPerUser();

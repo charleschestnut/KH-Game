@@ -50,7 +50,7 @@
 <!-- Listing grid -->
 
 <div id="container">
-<acme:pagination page="${page}" pageNum="${pageNum}" requestURI="${requestURI}"/>
+<acme:paginationAjax page="${page}" pageNum="${pageNum}" requestURI="${requestURI}"/>
 
 <display:table name="reports" id="row" 
     requestURI="${requestURI}" 
