@@ -17,6 +17,11 @@
 	width:1000px;
 }
 
+.card:hover{
+	transform: scale(1.05);
+	transition-duration: 0.3s;
+}
+
 .timer{
 	border: 1.5px solid #3B3A3A;
 	border-radius:5px;
