@@ -14,6 +14,8 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -146,6 +148,24 @@ document.body.onload = function() {showErrorMessage()};
 			<hr />
 		</h1>
 		<div  class="body-center">
+		<security:authorize access="hasRole('PLAYER')">
+				<div class="materials-panel">
+					<div class="btn btn-material">
+						<img title="Munny" src="./images/materials/munny.png" width="50px"
+							height="50px" /> <span class="badge badge-warning">${playerFromAbstract.materials.munny}/${maxMaterialsFromAbstract.munny}</span>
+					</div>
+
+					<div class="btn  btn-material">
+						<img title="Mythril" src="./images/materials/mythril.png"
+							width="50px" height="50px" /> <span class="badge badge-info">${playerFromAbstract.materials.mytrhil}/${maxMaterialsFromAbstract.mytrhil}</span>
+					</div>
+
+					<div class="btn btn-material">
+						<img title="Gummi Coal" src="./images/materials/gummiCoal.png"
+							width="50px" height="50px" /> <span class="badge badge-dark">${playerFromAbstract.materials.gummiCoal}/${maxMaterialsFromAbstract.gummiCoal}</span>
+					</div>
+				</div>
+			</security:authorize>
 		<tiles:insertAttribute name="body"/>	
 		<jstl:if test="${message != null}">
 			<br />

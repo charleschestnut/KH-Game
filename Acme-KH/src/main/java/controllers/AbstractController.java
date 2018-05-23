@@ -11,13 +11,26 @@
 package controllers;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
+
+import security.Authority;
+import services.ActorService;
+import services.BuiltService;
+import domain.KeybladeWielder;
 
 @Controller
 public class AbstractController {
+	
+	@Autowired
+	private ActorService		actorService;
+	@Autowired
+	private BuiltService			builtService;
 
 	// Panic handler ----------------------------------------------------------
 
@@ -41,5 +54,16 @@ public class AbstractController {
 
 		return res;
 	}
-
+	
+	@ModelAttribute
+	public void addPlayerToModel(Model model){
+		if(actorService.getPrincipalAuthority().equals(Authority.PLAYER)){
+			KeybladeWielder player;
+			
+			player = (KeybladeWielder) actorService.findByPrincipal();
+			
+			model.addAttribute("playerFromAbstract", player);
+			model.addAttribute("maxMaterialsFromAbstract", builtService.maxMaterials());
+		}
+	}
 }
