@@ -313,5 +313,7 @@ public class BuiltService {
 		return res;
 
 	}
-
+	public Integer getDefenseByBuildings(Integer actorId) {
+		return this.BuiltRepository.myDefenseByBuildings(actorId);
+	}
 }
