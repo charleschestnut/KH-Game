@@ -626,6 +626,40 @@
 	</bean>
 	
 	<!-- ORGANIZATION -->
+	<bean id="organization1" class="domain.Organization">
+		<property name="name" value="Iluminati" />
+		<property name="description" value="Asociacion de iluminados" />
+		<property name="creationDate" value="01/02/2015 07:00" />
+	</bean>
+	
+	<!-- INVITATION -->
+	<bean id="invitation1" class="domain.Invitation">
+		<property name="date" value="01/02/2015" />
+		<property name="invitationStatus" value="ACCEPTED" />
+		<property name="orgRange" value="MASTER" />
+		<property name="content" value="¿Quieres unirte a mi organización?" />
+		<property name="keybladeWielder" ref="player1" />
+		<property name="organization" ref="organization1" />
+	</bean>
+	
+	<bean id="invitation2" class="domain.Invitation">
+		<property name="date" value="20/02/2015" />
+		<property name="invitationStatus" value="ACCEPTED" />
+		<property name="orgRange" value="OFFICER" />
+		<property name="content" value="¿Quieres unirte a mi organización?" />
+		<property name="keybladeWielder" ref="player3" />
+		<property name="organization" ref="organization1" />
+	</bean>
+	
+	<bean id="invitation3" class="domain.Invitation">
+		<property name="date" value="20/02/2015" />
+		<property name="invitationStatus" value="ACCEPTED" />
+		<property name="orgRange" value="GUEST" />
+		<property name="content" value="¿Quieres unirte a mi organización?" />
+		<property name="keybladeWielder" ref="player4" />
+		<property name="organization" ref="organization1" />
+	</bean>
+	
 	
 	<!-- LEGALTEXT -->
 	<bean id="legalText1" class="domain.LegalText">
