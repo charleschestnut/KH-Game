@@ -9,6 +9,9 @@
  */
 
 
+.jhosue{
+}
+
 .title-header hr {
     padding-bottom:70px;
     border-top: 1px solid white;
@@ -23,11 +26,20 @@
 	border-radius:5px;
 	display:inline-block;
 	margin-left:10px;
-	width:auto;
+	height: auto;
 	padding:5px;
 }
+
+
+.card .card-img-top{
+	width:auto;
+	height:200px;
+	margin: 0 auto 0 auto;
+	padding:5%;
+	display: block;
+}
 .collect{
-	font-size:13px;
+	font-size:1vw;
 	padding-top:5.5px;
 }
 .group-width{
@@ -88,16 +100,36 @@ form{
 	font-family: 'Dancing Script', cursive;
 	font-size:70px;
 }
+
+.card-title{
+	font-family: 'Dancing Script', cursive;
+	font-size: 2.3vw;
+}
 body{
 	background-image:url("http://i.imgur.com/fKW8NxE.png");
 	color:white;
 	background-repeat: round;
 	font-family: 'Montserrat', sans-serif;
 }
+
+.btn-effect:hover{
+	opacity: 0.7;
+}
+
 .error {
 	color: red;
 	font-weight: bolder;
 }
+
+.disabledCard{
+	background-color: rgba(0,0,0,0.6);!important;
+    top: 0!important;
+    left: 0!important;
+    width: 100%!important;
+    height: 100%!important;
+    opacity: 0.7;
+}
+
 
 .message {
 	color: red;

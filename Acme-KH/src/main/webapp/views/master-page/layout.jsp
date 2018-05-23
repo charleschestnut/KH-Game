@@ -40,7 +40,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://kingdomhearts.com/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="https://kingdomhearts.com/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://kingdomhearts.com/favicon-16x16.png">
-<script type="text/javascript" src="scripts/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="scripts/jquery-ui.js"></script>
 <script type="text/javascript" src="scripts/jmenu.js"></script>
 
@@ -55,6 +55,7 @@
 
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 

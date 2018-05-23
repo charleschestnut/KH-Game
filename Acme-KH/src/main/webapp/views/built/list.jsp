@@ -51,12 +51,18 @@
 				  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
 				  // Display the result in the element with id="demo"
+				  if(seconds < 10){
+					  seconds = "0" + seconds;
+				  }
 				  document.getElementById("timer"+id).innerHTML = "0" + minutes + ":" + seconds;
 
 				  // If the count down is finished, write some text 
 				  if (distance < 0) {
 				    clearInterval(x);
 				    document.getElementById("timer"+id).innerHTML = '<a href="built/upgrade.do?builtId='+id+'"><spring:message code="built.finish.cosntruct"></spring:message></a>';
+				    document.getElementById("timer"+id).style.width = "80%";
+				    document.getElementById("card"+id).className += " disabledCard";
+				    document.getElementById("img"+id).style.content += " disabledCard";
 				  }
 				}, 1000);
 		}
@@ -76,7 +82,9 @@
 <div class="row row-width">
 <jstl:forEach items="${builts}" var="row">
 	<div class="card" style="width: 19rem;color:black;">
-		<img class="card-img-top" src="https://vignette.wikia.nocookie.net/kingdomhearts/images/3/3b/Twilight_Town-_Clock_Tower_%28Art%29_KHII.png" alt="Card image cap">
+	<div id="card${row.id}">
+		<img class="card-img-top" src="${row.building.photo}" alt="Card image cap">
+		<div id="img${row.id}"></div>
 		<div class="card-body">
 			<div style="padding:10px;"class="row"><h5 class="card-title">${row.building.name}</h5>
 			<h6><span style="margin-left:10px;" class="badge badge-info"> Lvl ${row.lvl}</span></h6></div>
@@ -101,37 +109,43 @@
 					</jstl:if>
 				</p>
 				
-				<div class="btn-group">
+				<div class="btn-group pagination-centered">
+				
 					<jstl:choose>
 						<jstl:when test="${row.lvl==row.building.maxLvl }">
 							<spring:message code="built.max"></spring:message>
 						</jstl:when>
 						<jstl:otherwise>
-							<a href="built/upgrade.do?builtId=${row.id }" class="btn-sm btn btn-success"
+							<%-- <a href="built/upgrade.do?builtId=${row.id }" class="btn-sm btn btn-success"
 								title="${row.building.getTotalMaterials(row.lvl) }"><i style="font-size:20px;vertical-align:middle;" class="material-icons">arrow_upward</i><spring:message
-									code="built.upgrade"></spring:message></a>
+									code="built.upgrade"></spring:message></a> --%>
+							<acme:icon-button color="#83f52c" icon="arrow_upward" href="built/upgrade.do?builtId=${row.id }" title="built.upgrade"/>
 						</jstl:otherwise>
 					</jstl:choose>
 					
 					
 					<jstl:if test="${row.lvl>0 }">
-			<a class="btn-sm btn btn-warning" href="built/display.do?builtId=${row.id}"><jstl:out value="${displayHeader}"></jstl:out></a>
+			<%-- <a class="btn-sm btn btn-warning" href="built/display.do?builtId=${row.id}"><jstl:out value="${displayHeader}"></jstl:out></a> --%>
+			<acme:icon-button color="#f3f315" icon="visibility" href="built/display.do?builtId=${row.id}" title="master.page.display"/>
 		</jstl:if>
 		<jstl:choose>
 					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate!=null && row.haTerminado(row.building.getTotalTime(row.lvl))}">
 						<a class="btn-sm btn btn-primary" href="built/collect.do?builtId=${row.id}"><jstl:out value="${collect}"></jstl:out></a>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate!=null && !row.haTerminado(row.building.getTotalTime(row.lvl)) }">
-						<button type="button" class="btn-sm btn btn-primary" disabled><i style="font-size:20px;vertical-align:middle;" class="material-icons">loop</i><jstl:out value="${working }"></jstl:out></button>
-					</jstl:when>
+						<button type="button" class="btn-sm btn btn-primary" disabled><i style="font-size:20px;vertical-align:middle;" class="fa fa-refresh fa-spin"></i>&nbsp;&nbsp;<jstl:out value="${working }"></jstl:out></button>
+					</jstl:when>																										
 					<jstl:when test="${row.building.getClass()=='class domain.Livelihood' && row.activationDate==null }">
-						<a class="collect btn-sm btn btn-primary" href="built/startCollect.do?builtId=${row.id}"><jstl:out value="${startCollect}"></jstl:out></a>
+						<%-- <a class="collect btn-sm btn btn-primary" href="built/startCollect.do?builtId=${row.id}"><jstl:out value="${startCollect}"></jstl:out></a> --%>
+						<acme:icon-button color="#1bbee3" icon="toys" href="built/startCollect.do?builtId=${row.id}" title="built.start.collect"/>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.troop!=null && row.haTerminado(row.troop.timeToRecruit)}">
-						<a class="btn-sm btn btn-primary" href="built/recruit.do?builtId=${row.id }"><jstl:out value="${recruit}"></jstl:out></a>
+						<%-- <a class="btn-sm btn btn-primary" href="built/recruit.do?builtId=${row.id }"><jstl:out value="${recruit}"></jstl:out></a> --%>
+						<acme:icon-button color="#00abb3" icon="domain" href="built/recruit.do?builtId=${row.id }" title="built.recruit"/>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.troop!=null && !row.haTerminado(row.troop.timeToRecruit) }">
-						<button type="button" class="btn-sm btn btn-primary" disabled><jstl:out value="${working }"></jstl:out></button>
+						<%-- <button type="button" class="btn-sm btn btn-primary" disabled><jstl:out value="${working }"></jstl:out></button> --%>
+						<button type="button" class="btn-sm btn btn-primary" disabled><i style="font-size:20px;vertical-align:middle;" class="fa fa-gear fa-spin"></i>&nbsp;&nbsp;<jstl:out value="${working }"></jstl:out></button>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.gummiShip!=null && row.haTerminado(row.gummiShip.timeToRecruit)}">
 						<a class="btn-sm btn btn-primary" href="built/recruit.do?builtId=${row.id }"><jstl:out value="${recruit}"></jstl:out></a>
@@ -140,12 +154,15 @@
 						<button type="button" class="btn-sm btn btn-primary" disabled><jstl:out value="${working }"></jstl:out></button>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate==null }">
-						<a class="collect btn-sm btn btn-primary" href="built/startRecruit.do?builtId=${row.id}"><jstl:out value="${startRecruit}"></jstl:out></a>
+						<%-- <a class="collect btn-sm btn btn-primary" href="built/startRecruit.do?builtId=${row.id}"><jstl:out value="${startRecruit}"></jstl:out></a> --%>
+						<acme:icon-button color="blue" icon="settings" href="built/startRecruit.do?builtId=${row.id}" title="built.start.recruit"/>
 					</jstl:when>
 				</jstl:choose>
-				</div><br/><br/>
-				<a class="btn-sm btn btn-danger" href="built/delete.do?builtId=${row.id}"><i style="font-size:20px;vertical-align:middle;"class="material-icons">clear</i><jstl:out value="${unbuildHeader }"></jstl:out></a>
+				<%-- <a class="btn-sm btn btn-danger" href="built/delete.do?builtId=${row.id}"><i style="font-size:20px;vertical-align:middle;"class="material-icons">clear</i><jstl:out value="${unbuildHeader }"></jstl:out></a> --%>
+				<acme:icon-button color="#ff0101" icon="clear" href="built/delete.do?builtId=${row.id}" title="built.unbuild"/>
+			</div>
 		</div>
+	</div>
 	</div>
 </jstl:forEach>
 </div>
