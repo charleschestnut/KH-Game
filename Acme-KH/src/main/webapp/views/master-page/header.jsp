@@ -199,6 +199,10 @@
 						<a class="dropdown-item"
 							href="troop/contentManager/list.do"><spring:message
 								code="master.page.createdTroops" /></a>
+						
+						<a class="dropdown-item"
+							href="gummiShip/contentManager/list.do"><spring:message
+								code="master.page.createdGummiShips" /></a>
 					</div></li>
 			</security:authorize>
 

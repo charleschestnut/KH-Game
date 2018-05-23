@@ -83,8 +83,8 @@ public class BuildingController extends AbstractController {
 						res.addObject("recruiter", true);
 						res.addObject("building", recruiter);
 						//TODO: añadir query para las tropas y gummi ships
-						res.addObject("troops", this.troopService.getTroopsFromRecruiter(recruiter.getId()));
-						res.addObject("gummiShips", this.gummiShipService.getGummiShipFromRecruiter(recruiter.getId()));
+						res.addObject("troops", this.troopService.getTroopsAvailableFromRecruiterAndLvl(buildingId, recruiter.getMaxLvl()));
+						res.addObject("gummiShips", this.gummiShipService.getGummiShipsAvailableFromRecruiterAndLvl(buildingId, recruiter.getMaxLvl()));
 
 					} else {
 						livelihood = this.livelihoodService.findOne(buildingId);
