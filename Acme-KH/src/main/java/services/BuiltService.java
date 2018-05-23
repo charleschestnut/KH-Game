@@ -286,9 +286,15 @@ public class BuiltService {
 	public Materials extraMaterials() {
 		final Integer playerId = this.actorService.findByPrincipal().getId();
 
-		final Integer munny = this.BuiltRepository.getExtraMunny(playerId);
-		final Integer coal = this.BuiltRepository.getExtraGummiCoal(playerId);
-		final Integer mytrhil = this.BuiltRepository.getExtraMythril(playerId);
+		Integer munny = this.BuiltRepository.getExtraMunny(playerId);
+		if (munny == null || munny < 0)
+			munny = 0;
+		Integer coal = this.BuiltRepository.getExtraGummiCoal(playerId);
+		if (coal == null || coal < 0)
+			coal = 0;
+		Integer mytrhil = this.BuiltRepository.getExtraMythril(playerId);
+		if (mytrhil == null || mytrhil < 0)
+			mytrhil = 0;
 
 		final Materials materials = new Materials();
 		materials.setMunny(munny);
@@ -297,7 +303,6 @@ public class BuiltService {
 
 		return materials;
 	}
-
 	public Materials maxMaterials() {
 		final Materials base = this.configurationService.getConfiguration().getBaseMaterials();
 		final Materials res = this.extraMaterials().add(base);
