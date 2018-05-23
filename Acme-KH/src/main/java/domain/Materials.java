@@ -85,6 +85,21 @@ public class Materials {
 	}
 
 	@Transient
+	public Materials increase(final Double extraPercentage) {
+		final Integer munny = (int) (this.getMunny() * (1 + extraPercentage));
+		final Integer gummi = (int) (this.getGummiCoal() * (1 + extraPercentage));
+		final Integer mythril = (int) (this.getMytrhil() * (1 + extraPercentage));
+
+		final Materials res = new Materials();
+		res.setMunny(munny);
+		res.setGummiCoal(gummi);
+		res.setMytrhil(mythril);
+
+		return res;
+
+	}
+
+	@Transient
 	public Materials removeExcess(final Materials max) {
 		final Materials res = new Materials();
 		final Integer munny = this.getMunny();

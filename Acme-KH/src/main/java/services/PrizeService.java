@@ -43,12 +43,19 @@ public class PrizeService {
 		return prize;
 	}
 
-	public Prize save(final Prize Prize) {
-		Assert.notNull(Prize);
+	public Prize save(final Prize prize) {
+		Assert.notNull(prize);
 
 		Prize saved;
+		final Double extra = prize.getKeybladeWielder().getFaction().getExtraResources();
+		if (extra != null && extra > 0) {
+			final Materials oldMaterials = prize.getMaterials();
+			final Materials newMaterials = oldMaterials.increase(extra);
 
-		saved = this.PrizeRepository.save(Prize);
+			prize.setMaterials(newMaterials);
+		}
+
+		saved = this.PrizeRepository.save(prize);
 
 		return saved;
 	}
@@ -120,14 +127,14 @@ public class PrizeService {
 		return this.PrizeRepository.getPrizeFromKeybladeWielder(playerId);
 
 	}
-	
+
 	// Method to send prizes from prompt 
 	// Same as open() but without restrictions
 	public void sendPrize(final Prize prize) {
 		KeybladeWielder player;
-		
+
 		player = prize.getKeybladeWielder();
-		
+
 		final Materials max = this.builtService.maxMaterials();
 		final Materials old = player.getMaterials();
 		final Materials news = old.add(prize.getMaterials());
@@ -136,6 +143,6 @@ public class PrizeService {
 		player.setMaterials(sinExceso);
 		this.keybladeWielderService.save(player);
 
-	     this.PrizeRepository.delete(prize);
-		}
+		this.PrizeRepository.delete(prize);
+	}
 }
