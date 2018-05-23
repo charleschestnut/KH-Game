@@ -33,7 +33,9 @@
 				document.getElementById(id).innerHTML ='<a href="built/upgrade.do?builtId='+id+'"><spring:message code="built.finish.cosntruct"></spring:message></a>';	
 			}
 			else{ */
-				document.getElementById(id).innerHTML ='<spring:message code="built.in.cosntruction"></spring:message>';	
+				document.getElementById("card"+id).className += " disabledCard";
+		   		document.getElementById("card"+id).style.position = "relative";
+				/* document.getElementById(id).innerHTML ='<spring:message code="built.in.cosntruction"></spring:message>';	 */
 			}
 			
 			var x = setInterval(function() {
@@ -55,14 +57,15 @@
 					  seconds = "0" + seconds;
 				  }
 				  document.getElementById("timer"+id).innerHTML = "0" + minutes + ":" + seconds;
+				  
+				  document.getElementById("card"+id).style.pointerEvents = "none";
 
 				  // If the count down is finished, write some text 
 				  if (distance < 0) {
 				    clearInterval(x);
 				    document.getElementById("timer"+id).innerHTML = '<a href="built/upgrade.do?builtId='+id+'"><spring:message code="built.finish.cosntruct"></spring:message></a>';
-				    document.getElementById("timer"+id).style.width = "80%";
 				    document.getElementById("card"+id).className += " disabledCard";
-				    document.getElementById("img"+id).style.content += " disabledCard";
+				    document.getElementById("card"+id).style.position = "relative";
 				  }
 				}, 1000);
 		}
@@ -84,7 +87,6 @@
 	<div class="card" style="width: 19rem;color:black;">
 	<div id="card${row.id}">
 		<img class="card-img-top" src="${row.building.photo}" alt="Card image cap">
-		<div id="img${row.id}"></div>
 		<div class="card-body">
 			<div style="padding:10px;"class="row"><h5 class="card-title">${row.building.name}</h5>
 			<h6><span style="margin-left:10px;" class="badge badge-info"> Lvl ${row.lvl}</span></h6></div>
@@ -104,7 +106,7 @@
 										'${row.building.timeToConstruct}',
 										'${row.id }');
 							</script>
-							<div class="timer row"><i style="font-size:20px;vertical-align:middle;"class="material-icons">timer</i><span id="timer${row.id}"></span></div>
+							<div id="counter${row.id}" class="centered"><i style="font-size:20px;vertical-align:middle;margin-right:5px;"class="material-icons">timer</i><span id="timer${row.id}"></span></div>
 						</div>
 					</jstl:if>
 				</p>
@@ -262,4 +264,4 @@
 <%-- </display:table> --%>
 
 <br/>
-<acme:cancel url="built/create.do" code="master.page.create"/>
+<acme:action url="built/create.do" code="master.page.create"/>
