@@ -66,6 +66,7 @@ public class ItemUserController extends AbstractController{
 		Collection<Purchase> purchases;
 
 		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+		// Con esta llamada al servicio tambien estamos elinando las purchases que estan caducadas
 		purchases = this.purchaseService.noActivePurchasesByPlayer(player.getId());
 
 		result = new ModelAndView("item/player/ownedItemsList");

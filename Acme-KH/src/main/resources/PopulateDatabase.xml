@@ -83,18 +83,46 @@
 		<property name="enabled" value="true" />
 	</bean>
 	
-	<bean id="report1" class="domain.Report">
-		<property name="isBug" value="false" />
-		<property name="status" value="RESOLVED" />
-		<property name="title" value="prueba" />
-		<property name="content" value="contenido de prueba" />
-		<property name="photos">
-			<list></list>
+	<bean id="userAccount6" class="security.UserAccount">
+		<property name="username" value="player3" />
+		<property name="password" value="1aa3814dca32e4c0b79a2ca047ef1db0" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="PLAYER" />
+				</bean>
+			</list>
 		</property>
-		<property name="date" value="05/04/2018"></property>
-		<property name="keybladeWielder" ref="player1"></property>
-		
+		<property name="enabled" value="true" />
 	</bean>
+	
+	<bean id="userAccount7" class="security.UserAccount">
+		<property name="username" value="player4" />
+		<property name="password" value="12efaba7fd50f5c66bd295683c0ce2a7" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="PLAYER" />
+				</bean>
+			</list>
+		</property>
+		<property name="enabled" value="true" />
+	</bean>
+	
+	<bean id="userAccount8" class="security.UserAccount">
+		<property name="username" value="player5" />
+		<property name="password" value="c5aec8b7110bb97bf59ab1a06805ebdd" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="PLAYER" />
+				</bean>
+			</list>
+		</property>
+		<property name="enabled" value="true" />
+	</bean>
+	
+
 
 	
 	<!-- Other domain beans come here -->
@@ -168,11 +196,68 @@
 		<property name="email" value="starzorro@gmail.com" />
 		<property name="userAccount" ref="userAccount5" />
 		<property name="lastConnection" value="05/04/2017 11:05" />
-		<property name="materials" ref="material2" />
+		<property name="materials" ref="material1" />
 		<property name="wins" value="79" />
 		<property name="loses" value="20" />
 		<property name="worldCoordinates" ref="coordinates2" />
 		<property name="worldName" value="Fox World" />
+		<property name="faction" ref="faction2" />
+		<property name="hasConfirmedTerms" value="true" />
+		<property name="confirmMoment" value="20/02/2016 00:00" />
+		<!-- <property name="shield" ref="shield2" /> -->
+	</bean>
+	
+	<bean id="player3" class="domain.KeybladeWielder">
+		<property name="name" value="Julio" />
+		<property name="surname" value="Mambo" />
+		<property name="nickname" value="Julito" />
+		<property name="phone" value="660450342" />
+		<property name="email" value="julitomambo@gmail.com" />
+		<property name="userAccount" ref="userAccount6" />
+		<property name="lastConnection" value="07/06/2017 11:05" />
+		<property name="materials" ref="material1" />
+		<property name="wins" value="10" />
+		<property name="loses" value="9" />
+		<property name="worldCoordinates" ref="coordinates3" />
+		<property name="worldName" value="Tron world" />
+		<property name="faction" ref="faction1" />
+		<property name="hasConfirmedTerms" value="true" />
+		<property name="confirmMoment" value="20/02/2016 00:00" />
+		<!-- <property name="shield" ref="shield2" /> -->
+	</bean>
+	
+	<bean id="player4" class="domain.KeybladeWielder">
+		<property name="name" value="Peter" />
+		<property name="surname" value="Garcia" />
+		<property name="nickname" value="Peter" />
+		<property name="phone" value="62458723" />
+		<property name="email" value="peter@hotmail.com" />
+		<property name="userAccount" ref="userAccount7" />
+		<property name="lastConnection" value="07/06/2017 11:05" />
+		<property name="materials" ref="material1" />
+		<property name="wins" value="30" />
+		<property name="loses" value="12" />
+		<property name="worldCoordinates" ref="coordinates4" />
+		<property name="worldName" value="Tron world" />
+		<property name="faction" ref="faction1" />
+		<property name="hasConfirmedTerms" value="true" />
+		<property name="confirmMoment" value="20/02/2016 00:00" />
+		<!-- <property name="shield" ref="shield2" /> -->
+	</bean>
+	
+	<bean id="player5" class="domain.KeybladeWielder">
+		<property name="name" value="Luke" />
+		<property name="surname" value="Smith" />
+		<property name="nickname" value="Luke" />
+		<property name="phone" value="694852941" />
+		<property name="email" value="luke@hotmail.com" />
+		<property name="userAccount" ref="userAccount8" />
+		<property name="lastConnection" value="07/06/2017 11:05" />
+		<property name="materials" ref="material1" />
+		<property name="wins" value="40" />
+		<property name="loses" value="26" />
+		<property name="worldCoordinates" ref="coordinates5" />
+		<property name="worldName" value="Tron world" />
 		<property name="faction" ref="faction2" />
 		<property name="hasConfirmedTerms" value="true" />
 		<property name="confirmMoment" value="20/02/2016 00:00" />
@@ -189,14 +274,32 @@
 	<bean id="coordinates2" class="domain.Coordinates">
 		<property name="x" value="2" />
 		<property name="y" value="2" />
-		<property name="z" value="1" />
+		<property name="z" value="2" />
+	</bean>
+	
+	<bean id="coordinates3" class="domain.Coordinates">
+		<property name="x" value="3" />
+		<property name="y" value="4" />
+		<property name="z" value="3" />
+	</bean>
+	
+	<bean id="coordinates4" class="domain.Coordinates">
+		<property name="x" value="4" />
+		<property name="y" value="5" />
+		<property name="z" value="3" />
+	</bean>
+	
+	<bean id="coordinates5" class="domain.Coordinates">
+		<property name="x" value="5" />
+		<property name="y" value="1" />
+		<property name="z" value="4" />
 	</bean>
 	
 	<!-- MATERIALS -->
 	<bean id="material1" class="domain.Materials">
-		<property name="munny" value="200" />
-		<property name="mytrhil" value="200" />
-		<property name="gummiCoal" value="200" />
+		<property name="munny" value="300" />
+		<property name="mytrhil" value="300" />
+		<property name="gummiCoal" value="300" />
 	</bean>
 	
 	<bean id="material2" class="domain.Materials">
@@ -471,6 +574,41 @@
 		<property name="description" value="With this boost You will have resources 30% faster" />
 		<property name="onSell" value="true" />
 		<property name="contentManager" ref="manager1" />
+	</bean>
+	
+	<!-- REPORT -->
+		<bean id="report1" class="domain.Report">
+		<property name="isBug" value="false" />
+		<property name="status" value="RESOLVED" />
+		<property name="title" value="prueba" />
+		<property name="content" value="contenido de prueba" />
+		<property name="photos">
+			<list></list>
+		</property>
+		<property name="date" value="05/04/2018"></property>
+		<property name="keybladeWielder" ref="player1"></property>
+		</bean>
+	
+	<!-- PRIZE -->
+	<bean id="prize1" class="domain.Prize">
+		<property name="materials" ref="material3" />
+		<property name="description" value="Premio por logearse una semana seguida" />
+		<property name="date" value="20/02/2017 00:00" />
+		<property name="keybladeWielder" ref="player1" />
+	</bean>
+	
+	<bean id="prize2" class="domain.Prize">
+		<property name="materials" ref="material3" />
+		<property name="description" value="Premio por logearse dos semana seguida" />
+		<property name="date" value="20/03/2017 00:00" />
+		<property name="keybladeWielder" ref="player1" />
+	</bean>
+	
+	<bean id="prize3" class="domain.Prize">
+		<property name="materials" ref="material3" />
+		<property name="description" value="Premio por logearse una semana seguida" />
+		<property name="date" value="20/02/2017 00:00" />
+		<property name="keybladeWielder" ref="player2" />
 	</bean>
 	
 	<!-- LEGALTEXT -->

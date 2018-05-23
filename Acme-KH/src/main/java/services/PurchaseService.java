@@ -78,6 +78,11 @@ public class PurchaseService {
 	}
 	
 	public Collection<Purchase> noActivePurchasesByPlayer(int playerId) {
+		Collection<Purchase> expiredPurchases = this.purchaseRepository.noActiveExpiredPurchasesByPlayer(playerId);
+		for(Purchase p : expiredPurchases) {	// Eliminamos los Purchases que han caducado
+			this.purchaseRepository.delete(p);
+		}
+		
 		return this.purchaseRepository.noActivePurchasesByPlayer(playerId);
 	}
 	
