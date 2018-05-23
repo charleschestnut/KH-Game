@@ -81,15 +81,18 @@ public class OrganizationController extends AbstractController {
 	@RequestMapping("/membersList")
 	public ModelAndView membersList(@RequestParam String organizationId) {
 		ModelAndView result;
+		Boolean canChat = false;
+		Boolean iAmMaster = false;
 		int orgId = Integer.parseInt(organizationId);
 		
 		Collection<Invitation> membersInvitations = this.invitationService.findAllMembersOfOrganization(orgId);
 		KeybladeWielder kw = (KeybladeWielder) this.actorService.findByPrincipal();
 		Invitation actual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(kw.getId(), orgId);
-		Boolean canChat = membersInvitations.contains(actual);
-
-		Boolean iAmMaster = actual.getOrgRange().equals(OrgRange.MASTER);
 		
+		if(actual != null){
+			canChat = membersInvitations.contains(actual);
+			iAmMaster = actual.getOrgRange().equals(OrgRange.MASTER);
+		}
 		result = new ModelAndView("organization/membersList");
 		result.addObject("organizationId", orgId);
 		result.addObject("requestURI", "organization/membersList.do?organizationId="+organizationId);

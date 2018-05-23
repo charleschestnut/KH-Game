@@ -41,7 +41,7 @@
 			<acme:action code="invitation.changeRange" url="/organization/invitation/changeRange.do?invitationId=${row.id}"/>
 			<acme:action code="invitation.interchangeRange" url="/organization/invitation/interchangeRange.do?invitationId=${row.id}"/>
 		</jstl:if>
-		<acme:action code="master.page.profile"  url=""/> 
+		<acme:action code="master.page.profile"  url="/profile/actor/display.do?username=${row.keybladeWielder.userAccount.username }"/> 
 	</display:column>
 	
 
