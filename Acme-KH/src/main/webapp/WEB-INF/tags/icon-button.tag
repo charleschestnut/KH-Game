@@ -27,7 +27,7 @@
 <%@ attribute name="href" required="false"%>
 <%@ attribute name="color" required="true"%>
 <%@ attribute name="title" required="false"%>
-<%@ attribute name="message" required="false"%>
+<%@ attribute name="displayedMessage" required="false"%>
 <%@ attribute name="iconColor" required="false"%>
 
 <jstl:if test="${empty iconColor}">
@@ -39,8 +39,8 @@
 		title='<spring:message code="${title}"/>'><i 
 		style="font-size: 20px; vertical-align: middle"
 		class="material-icons">${icon}</i> <jstl:if
-			test="${not empty message}">
-			<spring:message code="${message}"></spring:message>
+			test="${not empty displayedMessage}">
+			<spring:message code="${displayedMessage}"></spring:message>
 		</jstl:if> </a>
 </jstl:if>
 <jstl:if test="${empty href}">
@@ -48,8 +48,8 @@
 		style="background-color:${color};pointer-events:none;color:${iconColor}">
 		<i style="font-size: 20px; vertical-align: middle;"
 			class="material-icons">${icon}</i>
-		<jstl:if test="${not empty message}">
-			<jstl:out value="${message}"></jstl:out>
+		<jstl:if test="${not empty displayedMessage}">
+			<jstl:out value="${displayedMessage}"></jstl:out>
 		</jstl:if>
 	</button>
 </jstl:if>
