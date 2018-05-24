@@ -33,7 +33,8 @@
 	<div class="btn-group btn-group-toggle" data-toggle="buttons">
 	<jstl:forEach items="${factions}" var="faction">
 		<label class="btn btn-light <jstl:if test="${fn:toLowerCase(faction.name) == 'light'}">active</jstl:if>"
-		data-toggle="popover" data-trigger="focus" data-placement="bottom" title="${faction.name}" data-content="${faction.powerUpDescription}">
+		data-toggle="popover" data-trigger="focus" data-placement="bottom" title="${faction.name}" data-content="${faction.powerUpDescription}"
+		<jstl:if test="${fn:toLowerCase(faction.name) == 'light'}">checked</jstl:if>>
 	    	<input type="radio" name="factionId" value="${faction.id}" id="option${faction.id}" autocomplete="off"> 
 	    	<jstl:choose>
 				<jstl:when test="${fn:toLowerCase(faction.name) == 'light' or fn:toLowerCase(faction.name) == 'darkness'}">
