@@ -19,6 +19,16 @@
 
 <div class="row row-width-prize prize-container">
 <jstl:forEach items="${prizes}" var="row">
+<div class="all">
 	<img class="shadowfilter" src="./images/chests/${row.getPrizeImage()}.png"/><div id="div${row.id}" onclick='javascript: openChest(${row.id})' class="centered-prize heart"></div>
+	<div class="prize-info" id="info${row.id}">
+	<spring:message code="master.page.munny"/>:
+	${row.materials.munny}<br/>
+	<spring:message code="master.page.mytrhil"/>:
+	${row.materials.mytrhil}<br/>
+	<spring:message code="master.page.gummyCoal"/>:
+	${row.materials.gummiCoal}
+	</div>
+	</div>
 </jstl:forEach>
 </div>

@@ -23,8 +23,16 @@ function openChest(id){
 	document.getElementById("div"+id).className += " heart-blast";
 	
 	setTimeout(function(){ 
+		$("#info"+id).fadeIn();
+	}, 300);
+	
+	setTimeout(function(){ 
+		$("#all"+id).fadeOut(700);
+	}, 1000);
+	
+	setTimeout(function(){ 
 		$('#container').load("prize/openAJAX.do?prizeId="+id);
-	}, 700);
+	}, 3000);
 	
 }
     
@@ -33,7 +41,17 @@ function openChest(id){
 <div id="container">
 <div class="row row-width-prize prize-container">
 <jstl:forEach items="${prizes}" var="row">
+<div id="all${row.id}" class="all">
 	<img class="shadowfilter" src="./images/chests/${row.getPrizeImage()}.png"/><div id="div${row.id}" onclick='javascript: openChest(${row.id})' class="centered-prize heart"></div>
+	<div class="prize-info" id="info${row.id}">
+	<spring:message code="master.page.munny"/>:
+	${row.materials.munny}<br/>
+	<spring:message code="master.page.mytrhil"/>:
+	${row.materials.mytrhil}<br/>
+	<spring:message code="master.page.gummyCoal"/>:
+	${row.materials.gummiCoal}
+	</div>
+</div>
 </jstl:forEach>
 </div>
 </div>
