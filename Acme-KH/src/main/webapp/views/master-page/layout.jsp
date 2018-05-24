@@ -27,7 +27,7 @@
 	<base
 	href="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/" />
 
-
+	
 
  <link rel="apple-touch-icon" sizes="57x57" href="https://kingdomhearts.com/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="https://kingdomhearts.com/apple-icon-60x60.png">
@@ -39,7 +39,6 @@
     <link rel="apple-touch-icon" sizes="152x152" href="https://kingdomhearts.com/apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="https://kingdomhearts.com/apple-icon-180x180.png">
     <link rel="icon" type="image/png" sizes="192x192" href="https://kingdomhearts.com/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://kingdomhearts.com/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="https://kingdomhearts.com/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://kingdomhearts.com/favicon-16x16.png">
     
@@ -59,6 +58,7 @@
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
+
 <script type="text/javascript">
 function getUrlParameter(name) {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -70,7 +70,11 @@ function getUrlParameter(name) {
 function showErrorMessage(){
 	var msg = getUrlParameter("message");
 	var div = document.getElementById("alertMessage");
-
+	
+	var videodiv = document.getElementById("src");
+	if('<tiles:insertAttribute name="title" ignore="true" />' == 'Welcome!' || '<tiles:insertAttribute name="title" ignore="true" />' == '¡Bienvenidos!')
+	videodiv.innerHTML = '<video id="src" autoplay="" muted="" loop="" poster="https://kingdomhearts.com/img/header/kingdom-hearts-header-still.jpg"><source src="https://cdn.sqexeu.com/sea/kh/KH_Franchise_Video_Header-2.mp4" type="video/mp4"> Your browser does not support the video tag.</video>';
+	
 	if(msg != ""){
 		div.style.display = '';
 		div.getElementsByTagName("span")[0].innerHTML = msg;
@@ -152,17 +156,17 @@ document.body.onload = function() {showErrorMessage()};
 		<div  class="body-center">
 		<security:authorize access="hasRole('PLAYER')">
 				<div class="materials-panel">
-					<div class="btn btn-material">
+					<div class="btn btn-material" data-trigger="hover" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<spring:message code='munny'/>">
 						<img title="Munny" src="./images/materials/munny.png" width="50px"
 							height="50px" /> <span class="badge badge-warning">${playerFromAbstract.materials.munny}/${maxMaterialsFromAbstract.munny}</span>
 					</div>
 
-					<div class="btn  btn-material">
+					<div class="btn  btn-material" data-trigger="hover" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<spring:message code='mythril'/>">
 						<img title="Mythril" src="./images/materials/mythril.png"
 							width="50px" height="50px" /> <span class="badge badge-info">${playerFromAbstract.materials.mytrhil}/${maxMaterialsFromAbstract.mytrhil}</span>
 					</div>
 
-					<div class="btn btn-material">
+					<div class="btn btn-material" data-trigger="hover" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<spring:message code='gummiCoal'/>">
 						<img title="Gummi Coal" src="./images/materials/gummiCoal.png"
 							width="50px" height="50px" /> <span class="badge badge-dark">${playerFromAbstract.materials.gummiCoal}/${maxMaterialsFromAbstract.gummiCoal}</span>
 					</div>
@@ -179,6 +183,7 @@ document.body.onload = function() {showErrorMessage()};
     </main>
 
     <footer >
+    
       <tiles:insertAttribute name="footer" />
     </footer>
     

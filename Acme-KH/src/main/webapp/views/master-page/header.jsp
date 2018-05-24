@@ -252,9 +252,11 @@
 <!----------------->
 
 <div class="section home">
-	<img src="images/banner2.jpg" width="100%" class="header-still">
-</div>
-
+      <div class="video-home" id="src">
+      <img src="https://kingdomhearts.com/img/header/kingdom-hearts-header-still.jpg" width="100%">
+      </div>
+        <img class="header-logo" src="./images/acme_battle.png" alt="KINGDOM HEARTS">
+    </div>
 <script type="text/javascript">
 
 	function preventRedirect(path) {

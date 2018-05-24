@@ -365,3 +365,47 @@ hr{
     text-align: center;
     padding: 35px 0;
 }
+
+
+
+
+.section.home
+{
+    position: relative;
+    z-index: 1;
+}
+.section.home .container
+{
+    position: relative;
+}
+.section.home .video-home
+{
+    width: 100%;
+    position: relative;
+    display: block;
+}
+.section.home .video-home video
+{
+    width: 100%;
+    padding: 0 !important;
+}
+body[class=home] .section.home .video-home:after
+{
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 6px;
+    position: absolute;
+    display: block;
+}
+.header-logo
+{
+  width: 100%;
+  max-width: 458px;
+  display: block;
+  position: absolute;
+  top: calc(50% - 121px);
+  left: calc(50% - 229px);
+  z-index: 1047;
+}
