@@ -13,6 +13,9 @@ public interface KeybladeWielderRepository extends JpaRepository<KeybladeWielder
 	@Query("select i.keybladeWielder from Invitation i where (i.invitationStatus='ACCEPTED' and i.organization.id=?1)")
 	Collection<KeybladeWielder> findMembersOfOrganization(int organizationId);
 
+	@Query("select a from KeybladeWielder a where a.worldName = ?1")
+	KeybladeWielder findByWorldName(String worldName);
+
 	//Dashboard
 
 	@Query("select 1.0*(select count(k)/(select count(u) from KeybladeWielder u) from KeybladeWielder k where k.faction.id=f.id) from Faction f")

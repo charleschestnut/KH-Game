@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +29,7 @@ import security.LoginService;
 import services.ActorService;
 import services.BuiltService;
 import services.ContentManagerService;
+import services.FactionService;
 import services.GameMasterService;
 import services.KeybladeWielderService;
 import services.OrganizationService;
@@ -56,6 +58,9 @@ public class ProfileController extends AbstractController {
 
 	@Autowired
 	private BuiltService			builtService;
+
+	@Autowired
+	private FactionService			factionService;
 
 
 	// Actor ---------------------------------------------------------------	
@@ -176,11 +181,12 @@ public class ProfileController extends AbstractController {
 		actor = this.actorService.create(accountType);
 		result = new ModelAndView("profile/actor/register");
 		result.addObject("actor", actor);
-
+		if (accountType == "PLAYER")
+			result.addObject("factions", this.factionService.findAll());
 		return result;
 	}
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "register")
-	public ModelAndView signingup(Actor actor, BindingResult binding) {
+	public ModelAndView signingup(Actor actor, @ModelAttribute("worldName") String worldName, @ModelAttribute("factionId") String factionId, BindingResult binding) {
 		ModelAndView result;
 
 		actor = this.actorService.reconstruct(actor, binding);
@@ -193,7 +199,7 @@ public class ProfileController extends AbstractController {
 				else if (actor.getUserAccount().isAuthority(Authority.MANAGER))
 					this.contentManagerService.saveFromCreate(actor);
 				else if (actor.getUserAccount().isAuthority(Authority.PLAYER))
-					this.keybladeWielderService.save((KeybladeWielder) actor);
+					this.keybladeWielderService.saveFromCreate(actor, worldName, factionId);
 				else
 					new Throwable("error.message.commit");
 
@@ -222,6 +228,8 @@ public class ProfileController extends AbstractController {
 		result = new ModelAndView("profile/actor/register");
 		result.addObject("actor", actor);
 		result.addObject("message", message);
+		if (actor.getUserAccount().isAuthority("PLAYER"))
+			result.addObject("factions", this.factionService.findAll());
 
 		return result;
 	}

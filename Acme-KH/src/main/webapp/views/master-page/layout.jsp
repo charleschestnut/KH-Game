@@ -71,8 +71,10 @@ function showErrorMessage(){
 	var msg = getUrlParameter("message");
 	var div = document.getElementById("alertMessage");
 
+	if(msg != ""){
 		div.style.display = '';
 		div.getElementsByTagName("span")[0].innerHTML = msg;
+	}
 }
  
 
@@ -143,7 +145,7 @@ document.body.onload = function() {showErrorMessage()};
        
 
       <div class="container layout">
-        <h1 class="title-header">
+        <h1 class="title-header text-center">
 			<tiles:insertAttribute name="title" />
 			<hr />
 		</h1>

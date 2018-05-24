@@ -2,14 +2,21 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.KeybladeWielderRepository;
+import domain.Actor;
+import domain.Coordinates;
+import domain.Faction;
 import domain.KeybladeWielder;
+import domain.Materials;
 import domain.Organization;
 
 @Service
@@ -26,6 +33,9 @@ public class KeybladeWielderService {
 
 	@Autowired
 	private ActorService				actorService;
+
+	@Autowired
+	private FactionService				factionService;
 
 
 	// CRUD methods
@@ -48,6 +58,82 @@ public class KeybladeWielderService {
 		return saved;
 	}
 
+	public KeybladeWielder saveFromCreate(Actor user, String worldName, String factionId) {
+		KeybladeWielder result;
+
+		Assert.isTrue(this.actorService.findByUserAccountUsername(user.getUserAccount().getUsername()) == null, "error.message.duplicatedUsername");
+		Assert.isTrue(this.actorService.findByNickname(user.getNickname()) == null, "error.message.duplicatedNickname");
+
+		//Password
+		Md5PasswordEncoder encoder;
+		String hash;
+		encoder = new Md5PasswordEncoder();
+		hash = encoder.encodePassword(user.getUserAccount().getPassword(), null);
+
+		user.getUserAccount().setPassword(hash);
+
+		//UserAccount
+		user.setConfirmMoment(new Date(System.currentTimeMillis() - 1000));
+		user.setHasConfirmedTerms(true);
+
+		//Actor to KW
+		KeybladeWielder kw = new KeybladeWielder();
+		kw.setAvatar(user.getAvatar());
+		kw.setConfirmMoment(user.getConfirmMoment());
+		kw.setEmail(user.getEmail());
+		kw.setHasConfirmedTerms(user.getHasConfirmedTerms());
+		kw.setName(user.getName());
+		kw.setNickname(user.getNickname());
+		kw.setPhone(user.getPhone());
+		kw.setSurname(user.getSurname());
+		kw.setUserAccount(user.getUserAccount());
+		kw.setVersion(user.getVersion());
+		kw.setId(user.getId());
+
+		//KW
+		Faction faction;
+		faction = this.factionService.findOne(Integer.parseInt(factionId));
+		kw.setFaction(faction);
+
+		kw.setWins(0);
+		kw.setLoses(0);
+		Materials materials = new Materials();
+		materials.setGummiCoal(0);
+		materials.setMunny(0);
+		materials.setMytrhil(0);
+		kw.setMaterials(materials);
+		kw.setLastConnection(new Date(System.currentTimeMillis() - 1000));
+		Coordinates coordinates = new Coordinates();
+
+		int g = 0;
+
+		switch (faction.getGalaxy()) {
+		case 0:
+			//cualquier galaxia
+			g = (int) (Math.random() * 100);
+		case 1:
+			//galaxias impares
+			g = (int) (Math.random() * 100);
+			g += (g % 2 == 0 ? 1 : 0);
+		case 2:
+			//galaxias pares
+			g += (g % 2 == 0 ? 0 : 1);
+		case 3:
+			//galaxias multiplo de 3
+			g *= (g % 3 == 0 ? 1 : 3);
+		}
+		coordinates.setX(new Random().nextInt(10));
+		coordinates.setY(new Random().nextInt(10));
+		coordinates.setZ(g);
+
+		kw.setWorldCoordinates(coordinates);
+
+		Assert.isTrue(this.findByWorldName(worldName) == null, "error.message.worldExist");
+		kw.setWorldName(worldName);
+
+		result = this.save(kw);
+		return result;
+	}
 	public KeybladeWielder findOne(final int KeybladeWielderId) {
 		Assert.notNull(KeybladeWielderId);
 
@@ -87,6 +173,10 @@ public class KeybladeWielderService {
 	}
 
 	//Dashboard
+
+	public KeybladeWielder findByWorldName(String worldName) {
+		return this.KeybladeWielderRepository.findByWorldName(worldName);
+	}
 
 	public Collection<Double> ratioOfUserPerFaction() {
 		return this.KeybladeWielderRepository.ratioOfUserPerFaction();

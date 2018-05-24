@@ -5,12 +5,15 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -27,6 +30,9 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
  */
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(uniqueConstraints = {
+	@UniqueConstraint(columnNames = "worldName")
+})
 public class KeybladeWielder extends Actor {
 
 	private Date		lastConnection;
@@ -111,7 +117,9 @@ public class KeybladeWielder extends Actor {
 	public void setWorldCoordinates(final Coordinates worldCoordinates) {
 		this.worldCoordinates = worldCoordinates;
 	}
+
 	@NotBlank
+	@Column(unique = true)
 	public String getWorldName() {
 		return this.worldName;
 	}
@@ -152,7 +160,7 @@ public class KeybladeWielder extends Actor {
 		encoder = new Md5PasswordEncoder();
 		hash = encoder.encodePassword(this.getNickname() + this.getWorldName() + this.getWorldCoordinates().getX() + this.getWorldCoordinates().getY() + this.getWorldCoordinates().getZ(), null);
 		hash = hash.replaceAll("\\D+", "");
-		Long worldImageId = Long.parseLong(hash);
+		Long worldImageId = Long.parseLong(hash.substring(0, 17));
 		worldImageId = worldImageId % 34 + 1;
 
 		return worldImageId;

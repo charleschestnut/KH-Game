@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -17,50 +18,53 @@ public class FactionService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private FactionRepository FactionRepository;
+	private FactionRepository	FactionRepository;
+
 
 	// CRUD methods
-	
-	public Faction create(){
+
+	public Faction create() {
 		Faction Faction;
-		
+
 		Faction = new Faction();
-		
+
 		return Faction;
 	}
-	
-	public Faction save(Faction Faction){
+
+	public Faction save(Faction Faction) {
 		Assert.notNull(Faction);
-		
+
 		Faction saved;
-		
-		saved = FactionRepository.save(Faction);
-		
+
+		saved = this.FactionRepository.save(Faction);
+
 		return saved;
 	}
-	
-	public Faction findOne(int FactionId){
+
+	public Faction findOne(int FactionId) {
 		Assert.notNull(FactionId);
-		
+
 		Faction Faction;
-		
-		Faction = FactionRepository.findOne(FactionId);
-		
+
+		Faction = this.FactionRepository.findOne(FactionId);
+
+		Assert.notNull(Faction, "error.message.null");
+
 		return Faction;
 	}
-	
-	public Collection<Faction> findAll(){
+
+	public Collection<Faction> findAll() {
 		Collection<Faction> Factions;
-		
-		Factions = FactionRepository.findAll();
-		
+
+		Factions = this.FactionRepository.findAll();
+
 		return Factions;
 	}
-	
-	public void delete(Faction Faction){
+
+	public void delete(Faction Faction) {
 		Assert.notNull(Faction);
-		
-		FactionRepository.delete(Faction);
+
+		this.FactionRepository.delete(Faction);
 	}
 
 }
