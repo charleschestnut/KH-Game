@@ -80,11 +80,11 @@
 
 <div class="row row-width">
 <jstl:forEach items="${builts}" var="row">
-	<div class="card" style="width: 19rem;color:black;border:0;border-radius:10px;">
+	<div class="card card-built" style="width: 19rem;color:black;border:0;border-radius:10px;">
 	<div id="card${row.id}" style="border-radius:10px;">
 		<img class="card-img-top" src="${row.building.photo}" alt="Card image cap">
 		<div class="card-body">
-			<div style="padding:10px;"class="row"><h5 class="card-title">${row.building.name}</h5>
+			<div style="padding:10px;"class="row"><h5 class="card-title-body card-title">${row.building.name}</h5>
 			</div>
 			<p class="card-text">${row.building.description}</p>
 				<p>

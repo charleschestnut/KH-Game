@@ -21,7 +21,7 @@
 	width:1000px;
 }
 
-.card:hover{
+.card-built:hover{
 	transform: scale(1.05);
 	transition-duration: 0.3s;
 }
@@ -36,7 +36,7 @@
 }
 
 
-.card .card-img-top{
+.card-built .card-img-top{
 	width:auto;
 	height:200px;
 	margin: 0 auto 0 auto;
@@ -59,7 +59,7 @@
     top: 12px;
 }
 
-.card {
+.card-built {
 	display:inline-block;
 	margin-left:2%;
 	margin-bottom:5%;
@@ -106,7 +106,7 @@ form{
 	font-size:70px;
 }
 
-.card-title{
+.card-title-built{
 	font-family: 'Dancing Script', cursive;
 	font-size: 2.3vw;
 }
@@ -117,7 +117,7 @@ body{
 	font-family: 'Montserrat', sans-serif;
 }
 
-.card{
+.card-built{
 	background:linear-gradient(rgba(255,255,255,.6), rgba(255,255,255,.6));
 	background-position: center;
     background-size: cover;
