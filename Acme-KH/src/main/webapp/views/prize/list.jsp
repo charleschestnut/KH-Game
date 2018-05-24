@@ -22,17 +22,18 @@ function openChest(id){
 	
 	document.getElementById("div"+id).className += " heart-blast";
 	
-	setTimeout(function(){ 
+	var a = setTimeout(function(){ 
 		$("#info"+id).fadeIn();
-	}, 300);
+	}, 100);
 	
-	setTimeout(function(){ 
+	var b = setTimeout(function(){ 
 		$("#all"+id).fadeOut(700);
 	}, 1000);
 	
-	setTimeout(function(){ 
+	var c = setTimeout(function(){ 
 		$('#container').load("prize/openAJAX.do?prizeId="+id);
-	}, 3000);
+	}, 2000);
+	
 	
 }
     
