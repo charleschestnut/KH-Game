@@ -62,7 +62,7 @@ public class RecruitedService {
 		if (built.getTroop() != null) {
 			warehouses = new ArrayList<Built>(this.builtService.getMyFreeWarehousesTroop());
 
-			Assert.isTrue(warehouses != null && warehouses.size() > 0);
+			Assert.isTrue(warehouses != null && warehouses.size() > 0, "error.message.recruited.warehouses");
 
 			recruited.setStorageBuilding(warehouses.get(0));
 
@@ -70,7 +70,7 @@ public class RecruitedService {
 
 			warehouses = new ArrayList<Built>(this.builtService.getMyFreeWarehousesGummi());
 
-			Assert.isTrue(warehouses != null && warehouses.size() > 0);
+			Assert.isTrue(warehouses != null && warehouses.size() > 0, "error.message.recruited.warehouses");
 
 			recruited.setStorageBuilding(warehouses.get(0));
 		}
