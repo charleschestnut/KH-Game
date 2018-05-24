@@ -18,19 +18,24 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <script>
-$(function() {
-    
-  $(".heart").on("click", function() {
-    $(this).toggleClass("heart-blast");
-  });
-}); 
+function openChest(id){
+	
+	document.getElementById("div"+id).className += " heart-blast";
+	
+	setTimeout(function(){ 
+		$('#container').load("prize/openAJAX.do?prizeId="+id);
+	}, 700);
+	
+}
     
 </script>   
 
-<div class="row row-width prize-container">
+<div id="container">
+<div class="row row-width-prize prize-container">
 <jstl:forEach items="${prizes}" var="row">
-	<img class="shadowfilter" src="./images/chests/${row.getPrizeImage()}.png"/>	<div class="centered-prize heart"></div>
+	<img class="shadowfilter" src="./images/chests/${row.getPrizeImage()}.png"/><div id="div${row.id}" onclick='javascript: openChest(${row.id})' class="centered-prize heart"></div>
 </jstl:forEach>
+</div>
 </div>
 <%-- <display:table name="prizes" id="row" pagesize="5" requestURI="prize/list.do">
 
