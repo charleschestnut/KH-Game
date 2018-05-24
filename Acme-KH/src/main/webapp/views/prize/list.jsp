@@ -17,7 +17,22 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<display:table name="prizes" id="row" pagesize="5" requestURI="prize/list.do">
+<script>
+$(function() {
+    
+  $(".heart").on("click", function() {
+    $(this).toggleClass("heart-blast");
+  });
+}); 
+    
+</script>   
+
+<div class="row row-width prize-container">
+<jstl:forEach items="${prizes}" var="row">
+	<img class="shadowfilter" src="./images/chests/${row.getPrizeImage()}.png"/>	<div class="centered-prize heart"></div>
+</jstl:forEach>
+</div>
+<%-- <display:table name="prizes" id="row" pagesize="5" requestURI="prize/list.do">
 
 	<spring:message code="prize.description" var="descriptionHeader"></spring:message>
 	<display:column  title="${descriptionHeader}">
@@ -52,10 +67,11 @@
 	</display:column>
 						 
 	<display:column>
-		<img src="./images/chests/${row.getPrizeImage()}.png"/>
+		<label for="toggle-heart"><img src="./images/chests/${row.getPrizeImage()}.png"/></label>
+		<img src="./images/chests/${row.getPrizeImage()}.png"/>	<div class="heart"></div>
 	</display:column>
 
-</display:table>
+</display:table> --%>
 
 
 

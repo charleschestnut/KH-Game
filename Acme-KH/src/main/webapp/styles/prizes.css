@@ -1,0 +1,38 @@
+.heart {
+  width: 100px;
+  height: 100px;
+  background: url(../images/sparkles.png) no-repeat;  
+  cursor: pointer;
+  /* position: relative;
+  left: 50%;
+  margin-top:-50%; */
+  transform: translate(-50%, -50%);
+}
+.heart-blast {
+  background-position: -2800px 0;
+  transition: background 1s steps(28);
+}
+
+.centered-prize {
+   position: relative;
+   transform: translate(-110%, 0%);
+   display: flex; /*added*/
+   flex-direction: column; /*added*/
+}
+
+.prize-container {
+    position: relative;
+    text-align: center;
+}
+
+@keyframes glowing{
+	0% {-webkit-filter: drop-shadow(0px 0px 8px rgba(0, 231, 255, 0.8));}
+	40% {-webkit-filter: drop-shadow(0px 0px 0px rgba(255,255,255,0.80));}
+	60% {-webkit-filter: drop-shadow(0px 0px 0px rgba(255,255,255,0.80));}
+	100% {-webkit-filter: drop-shadow(0px 0px 8px rgba(0, 231, 255, 0.8));}
+}
+
+.shadowfilter {
+	 animation: glowing 1500ms infinite;
+	
+}
