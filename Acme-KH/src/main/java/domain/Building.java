@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.URL;
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(indexes = {
-	@Index(columnList = "is")
+	@Index(columnList = "isFinal")
 })
 public class Building extends DomainEntity {
 
