@@ -71,7 +71,7 @@ public class OrganizationService {
 			Assert.isTrue(!tieneOrganizacion, "error.message.invitation.hasOrganization");
 			//Tengo que crear una invitación aceptada automáticamente para mí.
 			saved = organizationRepository.save(organization);
-			this.invitationService.createForOrganizationCreation(this.actorService.findByPrincipal().getId(), saved.getId()); //TODO Me peta en el save y no sé xq.
+			this.invitationService.createForOrganizationCreation(this.actorService.findByPrincipal().getId(), saved.getId()); 
 		}
 		
 		//Tengo que crear una invitación aceptada automáticamente para mí.
@@ -101,7 +101,7 @@ public class OrganizationService {
 		Assert.notNull(organization);
 		//Sólo puede hacerlo el admin o si se queda sin gente.
 		//Query que me devuelva los keywielders conectados a esa organización.
-		Collection<KeybladeWielder> members = this.keybladeWielderService.findMembersOfOrganization(organization.getId()); //TODO
+		Collection<KeybladeWielder> members = this.keybladeWielderService.findMembersOfOrganization(organization.getId()); 
 		Assert.isTrue(members.size() == 0 || LoginService.getPrincipal().isAuthority("ADMIN"));
 		
 		this.organizationRepository.delete(organization);
@@ -152,7 +152,7 @@ public class OrganizationService {
 	// ------ RECONSTRUCT -----
 	public Organization reconstruct(Organization o, BindingResult binding) {
 		Organization result;
-		final Organization original = this.organizationRepository.findOne(o.getId());
+		Organization original = this.organizationRepository.findOne(o.getId());
 		
 		if (o.getId() == 0) {
 			result = o;

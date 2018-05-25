@@ -30,9 +30,9 @@ public class GummiShipService {
 
 	// CRUD methods
 
-	public GummiShip create(final Recruiter recruiter) {
+	public GummiShip create(Recruiter recruiter) {
 		GummiShip gummiShip;
-		final Materials cost = new Materials();
+		Materials cost = new Materials();
 
 		gummiShip = new GummiShip();
 		gummiShip.setSlots(0);
@@ -50,7 +50,7 @@ public class GummiShipService {
 		return gummiShip;
 	}
 
-	public GummiShip save(final GummiShip GummiShip) {
+	public GummiShip save(GummiShip GummiShip) {
 		Assert.notNull(GummiShip);
 
 		GummiShip saved;
@@ -60,7 +60,7 @@ public class GummiShipService {
 		return saved;
 	}
 
-	public GummiShip findOne(final int GummiShipId) {
+	public GummiShip findOne(int GummiShipId) {
 		Assert.notNull(GummiShipId);
 
 		GummiShip GummiShip;
@@ -78,32 +78,32 @@ public class GummiShipService {
 		return GummiShips;
 	}
 
-	public void delete(final GummiShip GummiShip) {
+	public void delete(GummiShip GummiShip) {
 		Assert.notNull(GummiShip);
 
 		this.gummiShipRepository.delete(GummiShip);
 	}
 	//Other methods
 
-	public Collection<GummiShip> getGummiShipFromRecruiter(final Integer recruiterId) {
+	public Collection<GummiShip> getGummiShipFromRecruiter(Integer recruiterId) {
 		return this.gummiShipRepository.getGummiShipsFromRecruiter(recruiterId);
 	}
 
-	public Collection<GummiShip> getStoragedGummiShip(final Integer builtId) {
+	public Collection<GummiShip> getStoragedGummiShip(Integer builtId) {
 		return this.gummiShipRepository.getStoragedGummiShip(builtId);
 	}
 
-	public Collection<GummiShip> getGummiShipsAvailableForBuilt(final Integer builtLevel) {
+	public Collection<GummiShip> getGummiShipsAvailableForBuilt(Integer builtLevel) {
 		return this.gummiShipRepository.getGummiShipsAvailableForBuilt(builtLevel);
 	}
-	public Collection<GummiShip> getGummiShipsAvailableFromRecruiterAndLvl(final Integer recruiterId, final Integer lvl) {
+	public Collection<GummiShip> getGummiShipsAvailableFromRecruiterAndLvl(Integer recruiterId, Integer lvl) {
 		return this.gummiShipRepository.getGummiShipsAvailableFromRecruiterAndLvl(recruiterId, lvl);
 	}
 
 	// ------ RECONSTRUCT -------
-	public GummiShip reconstruct(final GummiShip g, final BindingResult binding) {
+	public GummiShip reconstruct(GummiShip g, BindingResult binding) {
 		GummiShip result;
-		final GummiShip original = this.gummiShipRepository.findOne(g.getId());
+		GummiShip original = this.gummiShipRepository.findOne(g.getId());
 
 		if (g.getId() == 0)
 			result = g;

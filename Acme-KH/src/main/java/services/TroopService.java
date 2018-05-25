@@ -25,18 +25,15 @@ public class TroopService {
 	private TroopRepository	TroopRepository;
 
 	@Autowired
-	private BuiltService	builtService;
-
-	@Autowired
 	Validator				validator;
 
 
 	// CRUD methods
 
-	public Troop create(final Recruiter recruiter) {
+	public Troop create(Recruiter recruiter) {
 		Troop troop;
 		troop = new Troop();
-		final Materials cost = new Materials();
+		Materials cost = new Materials();
 
 		troop.setAttack(0);
 		troop.setDefense(0);
@@ -54,14 +51,14 @@ public class TroopService {
 		return troop;
 	}
 
-	public Troop save(final Troop troop) {
+	public Troop save(Troop troop) {
 
-		final Troop saved = this.TroopRepository.save(troop);
+		Troop saved = this.TroopRepository.save(troop);
 
 		return saved;
 	}
 
-	public Troop findOne(final int TroopId) {
+	public Troop findOne(int TroopId) {
 		Assert.notNull(TroopId);
 
 		Troop Troop;
@@ -79,7 +76,7 @@ public class TroopService {
 		return Troops;
 	}
 
-	public void delete(final Troop Troop) {
+	public void delete(Troop Troop) {
 		Assert.notNull(Troop);
 
 		this.TroopRepository.delete(Troop);
@@ -87,26 +84,26 @@ public class TroopService {
 
 	//Other methods
 
-	public Collection<Troop> getTroopsFromRecruiter(final Integer recruiterId) {
+	public Collection<Troop> getTroopsFromRecruiter(Integer recruiterId) {
 		return this.TroopRepository.getTroopsFromRecruiter(recruiterId);
 	}
 
-	public Collection<Troop> getStoragedTroops(final Integer builtId) {
+	public Collection<Troop> getStoragedTroops(Integer builtId) {
 		return this.TroopRepository.getStoragedTroops(builtId);
 	}
 
-	public Collection<Troop> getTroopsAvailableForBuilt(final Integer builtLevel) {
+	public Collection<Troop> getTroopsAvailableForBuilt(Integer builtLevel) {
 		return this.TroopRepository.getTroopsAvailableForBuilt(builtLevel);
 	}
 
-	public Collection<Troop> getTroopsAvailableFromRecruiterAndLvl(final Integer recruiterId, final Integer lvl) {
+	public Collection<Troop> getTroopsAvailableFromRecruiterAndLvl(Integer recruiterId, Integer lvl) {
 		return this.TroopRepository.getTroopsAvailableFromRecruiterAndLvl(recruiterId, lvl);
 	}
 
 	// ------ RECONSTRUCT -----
-	public Troop reconstruct(final Troop t, final BindingResult binding) {
+	public Troop reconstruct(Troop t, BindingResult binding) {
 		Troop result;
-		final Troop original = this.TroopRepository.findOne(t.getId());
+		Troop original = this.TroopRepository.findOne(t.getId());
 
 		if (t.getId() == 0)
 			result = t;

@@ -17,8 +17,6 @@ import domain.InvitationStatus;
 import domain.KeybladeWielder;
 import domain.OrgRange;
 import domain.Organization;
-import domain.Report;
-import domain.ReportStatus;
 
 @Service
 @Transactional
@@ -212,7 +210,7 @@ public class InvitationService {
 	}
 
 	public Invitation reconstruct(Invitation invitation, int keybladeWielderId,
-			final BindingResult binding) {
+			BindingResult binding) {
 
 		if (invitation.getId() == 0) {
 			Actor actor;
