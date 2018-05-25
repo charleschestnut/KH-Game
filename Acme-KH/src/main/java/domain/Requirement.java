@@ -39,7 +39,7 @@ public class Requirement extends DomainEntity {
 		return this.lvl;
 	}
 
-	public void setLvl(final Integer lvl) {
+	public void setLvl( Integer lvl) {
 		this.lvl = lvl;
 	}
 	/**
@@ -52,7 +52,7 @@ public class Requirement extends DomainEntity {
 		return this.mainBuilding;
 	}
 
-	public void setMainBuilding(final Building mainBuilding) {
+	public void setMainBuilding( Building mainBuilding) {
 		this.mainBuilding = mainBuilding;
 	}
 	/**
@@ -65,7 +65,7 @@ public class Requirement extends DomainEntity {
 		return this.requiredBuilding;
 	}
 
-	public void setRequiredBuilding(final Building requiredBuilding) {
+	public void setRequiredBuilding( Building requiredBuilding) {
 		this.requiredBuilding = requiredBuilding;
 	}
 

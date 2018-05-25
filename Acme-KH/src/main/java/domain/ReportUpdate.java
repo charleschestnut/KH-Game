@@ -41,7 +41,7 @@ public class ReportUpdate extends DomainEntity {
 		return this.status;
 	}
 
-	public void setStatus(final ReportStatus status) {
+	public void setStatus( ReportStatus status) {
 		this.status = status;
 	}
 
@@ -51,7 +51,7 @@ public class ReportUpdate extends DomainEntity {
 		return this.content;
 	}
 
-	public void setContent(final String content) {
+	public void setContent( String content) {
 		this.content = content;
 	}
 	@NotNull
@@ -62,7 +62,7 @@ public class ReportUpdate extends DomainEntity {
 		return this.date;
 	}
 
-	public void setDate(final Date date) {
+	public void setDate( Date date) {
 		this.date = date;
 	}
 	
@@ -85,7 +85,7 @@ public class ReportUpdate extends DomainEntity {
 		return this.administrator;
 	}
 
-	public void setAdministrator(final Administrator administrator) {
+	public void setAdministrator( Administrator administrator) {
 		this.administrator = administrator;
 	}
 	/**
@@ -98,7 +98,7 @@ public class ReportUpdate extends DomainEntity {
 		return this.gameMaster;
 	}
 
-	public void setGameMaster(final GameMaster gameMaster) {
+	public void setGameMaster( GameMaster gameMaster) {
 		this.gameMaster = gameMaster;
 	}
 

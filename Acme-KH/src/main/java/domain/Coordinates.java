@@ -32,7 +32,7 @@ public class Coordinates {
 		return this.x;
 	}
 
-	public void setX(final Integer x) {
+	public void setX( Integer x) {
 		this.x = x;
 	}
 	/**
@@ -44,7 +44,7 @@ public class Coordinates {
 		return this.y;
 	}
 
-	public void setY(final Integer y) {
+	public void setY( Integer y) {
 		this.y = y;
 	}
 	/**
@@ -57,7 +57,7 @@ public class Coordinates {
 		return this.z;
 	}
 
-	public void setZ(final Integer z) {
+	public void setZ( Integer z) {
 		this.z = z;
 	}
 

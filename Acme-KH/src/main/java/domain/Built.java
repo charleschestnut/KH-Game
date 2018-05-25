@@ -53,7 +53,7 @@ public class Built extends DomainEntity {
 		return this.lvl;
 	}
 
-	public void setLvl(final Integer lvl) {
+	public void setLvl( Integer lvl) {
 		this.lvl = lvl;
 	}
 	/**
@@ -68,7 +68,7 @@ public class Built extends DomainEntity {
 		return this.creationDate;
 	}
 
-	public void setCreationDate(final Date creationDate) {
+	public void setCreationDate( Date creationDate) {
 		this.creationDate = creationDate;
 	}
 	/**
@@ -82,7 +82,7 @@ public class Built extends DomainEntity {
 		return this.activationDate;
 	}
 
-	public void setActivationDate(final Date activationDate) {
+	public void setActivationDate( Date activationDate) {
 		this.activationDate = activationDate;
 	}
 	/**
@@ -95,7 +95,7 @@ public class Built extends DomainEntity {
 		return this.keybladeWielder;
 	}
 
-	public void setKeybladeWielder(final KeybladeWielder keybladeWielder) {
+	public void setKeybladeWielder( KeybladeWielder keybladeWielder) {
 		this.keybladeWielder = keybladeWielder;
 	}
 	/**
@@ -109,7 +109,7 @@ public class Built extends DomainEntity {
 		return this.troop;
 	}
 
-	public void setTroop(final Troop troop) {
+	public void setTroop( Troop troop) {
 		this.troop = troop;
 	}
 	/**
@@ -123,7 +123,7 @@ public class Built extends DomainEntity {
 		return this.gummiShip;
 	}
 
-	public void setGummiShip(final GummiShip gummiShip) {
+	public void setGummiShip( GummiShip gummiShip) {
 		this.gummiShip = gummiShip;
 	}
 	/**
@@ -136,16 +136,16 @@ public class Built extends DomainEntity {
 		return this.building;
 	}
 
-	public void setBuilding(final Building building) {
+	public void setBuilding( Building building) {
 		this.building = building;
 	}
 
 	@Transient
-	public Boolean haTerminado(final Integer minutos) {
+	public Boolean haTerminado( Integer minutos) {
 		Boolean res = false;
 		if (this.getActivationDate() != null) {
-			final Date ahora = new Date(System.currentTimeMillis());
-			final Date fechaFin = new Date(this.getActivationDate().getTime() + minutos * 60 * 1000);
+			 Date ahora = new Date(System.currentTimeMillis());
+			 Date fechaFin = new Date(this.getActivationDate().getTime() + minutos * 60 * 1000);
 
 			if (ahora.after(fechaFin))
 				res = true;

@@ -42,7 +42,7 @@ public class Chatty extends DomainEntity {
 		return this.content;
 	}
 
-	public void setContent(final String content) {
+	public void setContent( String content) {
 		this.content = content;
 	}
 	/**
@@ -57,7 +57,7 @@ public class Chatty extends DomainEntity {
 		return this.date;
 	}
 
-	public void setDate(final Date date) {
+	public void setDate( Date date) {
 		this.date = date;
 	}
 
@@ -66,7 +66,7 @@ public class Chatty extends DomainEntity {
 		return this.invitation;
 	}
 
-	public void setInvitation(final Invitation invitation) {
+	public void setInvitation( Invitation invitation) {
 		this.invitation = invitation;
 	}
 

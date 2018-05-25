@@ -36,7 +36,7 @@ public class Livelihood extends Building {
 		return this.materials;
 	}
 
-	public void setMaterials(final Materials materials) {
+	public void setMaterials( Materials materials) {
 		this.materials = materials;
 	}
 	/**
@@ -49,7 +49,7 @@ public class Livelihood extends Building {
 		return this.extraMaterialsPerLvl;
 	}
 
-	public void setExtraMaterialsPerLvl(final Double extraMaterialsPerLvl) {
+	public void setExtraMaterialsPerLvl( Double extraMaterialsPerLvl) {
 		this.extraMaterialsPerLvl = extraMaterialsPerLvl;
 	}
 	/**
@@ -61,7 +61,7 @@ public class Livelihood extends Building {
 		return this.timeToRecollect;
 	}
 
-	public void setTimeToRecollect(final Integer timeToRecollect) {
+	public void setTimeToRecollect( Integer timeToRecollect) {
 		this.timeToRecollect = timeToRecollect;
 	}
 	/**
@@ -74,7 +74,7 @@ public class Livelihood extends Building {
 		return this.LessTimePerLvl;
 	}
 
-	public void setLessTimePerLvl(final Double lessTimePerLvl) {
+	public void setLessTimePerLvl( Double lessTimePerLvl) {
 		this.LessTimePerLvl = lessTimePerLvl;
 	}
 	/**
@@ -84,12 +84,12 @@ public class Livelihood extends Building {
 	 * @return Los materiales totales este edificio de nivel "lvl" recolecta
 	 */
 	@Transient
-	public Materials getTotalCollectMaterials(final Integer lvl) {
-		final Materials res = new Materials();
+	public Materials getTotalCollectMaterials( Integer lvl) {
+		 Materials res = new Materials();
 
-		final Integer munny = this.getMaterials().getMunny();
-		final Integer mythril = this.getMaterials().getMytrhil();
-		final Integer coal = this.getMaterials().getGummiCoal();
+		 Integer munny = this.getMaterials().getMunny();
+		 Integer mythril = this.getMaterials().getMytrhil();
+		 Integer coal = this.getMaterials().getGummiCoal();
 
 		res.setMunny((int) (munny + this.extraMaterialsPerLvl * munny * (lvl - 1)));
 		res.setMytrhil((int) (mythril + this.extraMaterialsPerLvl * mythril * (lvl - 1)));
@@ -105,7 +105,7 @@ public class Livelihood extends Building {
 	 * @return El tiempo total de este edificio de nivel "lvl" tarda en recolectar
 	 */
 	@Transient
-	public Integer getTotalTime(final Integer lvl) {
+	public Integer getTotalTime( Integer lvl) {
 
 		Integer res = (int) (this.getTimeToRecollect() - (this.getTimeToRecollect() * (lvl - 1) * this.getLessTimePerLvl()));
 		if (res < 0)

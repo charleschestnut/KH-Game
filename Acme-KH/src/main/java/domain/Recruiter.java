@@ -22,7 +22,7 @@ public class Recruiter extends Building {
 		return this.gummiShips;
 	}
 
-	public void setGummiShips(final Collection<GummiShip> gummiShips) {
+	public void setGummiShips( Collection<GummiShip> gummiShips) {
 		this.gummiShips = gummiShips;
 	}
 
@@ -31,7 +31,7 @@ public class Recruiter extends Building {
 		return this.troops;
 	}
 
-	public void setTroops(final Collection<Troop> troops) {
+	public void setTroops( Collection<Troop> troops) {
 		this.troops = troops;
 	}
 

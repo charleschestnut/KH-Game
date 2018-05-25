@@ -31,7 +31,7 @@ public class Recruited extends DomainEntity {
 		return this.storageBuilding;
 	}
 
-	public void setStorageBuilding(final Built storageBuilding) {
+	public void setStorageBuilding( Built storageBuilding) {
 		this.storageBuilding = storageBuilding;
 	}
 	/**
@@ -44,7 +44,7 @@ public class Recruited extends DomainEntity {
 		return this.gummiShip;
 	}
 
-	public void setGummiShip(final GummiShip gummiShip) {
+	public void setGummiShip( GummiShip gummiShip) {
 		this.gummiShip = gummiShip;
 	}
 	/**
@@ -57,7 +57,7 @@ public class Recruited extends DomainEntity {
 		return this.troop;
 	}
 
-	public void setTroop(final Troop troop) {
+	public void setTroop( Troop troop) {
 		this.troop = troop;
 	}
 

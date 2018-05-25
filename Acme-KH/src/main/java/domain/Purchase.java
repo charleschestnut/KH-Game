@@ -42,7 +42,7 @@ public class Purchase extends DomainEntity {
 		return this.purchaseDate;
 	}
 
-	public void setPurchaseDate(final Date purchaseDate) {
+	public void setPurchaseDate( Date purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
 	/**
@@ -55,7 +55,7 @@ public class Purchase extends DomainEntity {
 		return this.activationDate;
 	}
 
-	public void setActivationDate(final Date activationDate) {
+	public void setActivationDate( Date activationDate) {
 		this.activationDate = activationDate;
 	}
 	@Valid
@@ -64,7 +64,7 @@ public class Purchase extends DomainEntity {
 		return this.item;
 	}
 
-	public void setItem(final Item item) {
+	public void setItem( Item item) {
 		this.item = item;
 	}
 

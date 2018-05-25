@@ -32,7 +32,7 @@ public class Shield extends DomainEntity {
 		return this.name;
 	}
 
-	public void setName(final String name) {
+	public void setName( String name) {
 		this.name = name;
 	}
 	@NotNull
@@ -43,7 +43,7 @@ public class Shield extends DomainEntity {
 		return this.date;
 	}
 
-	public void setDate(final Date date) {
+	public void setDate( Date date) {
 		this.date = date;
 	}
 	/**
@@ -54,7 +54,7 @@ public class Shield extends DomainEntity {
 		return this.duration;
 	}
 
-	public void setDuration(final Integer duration) {
+	public void setDuration( Integer duration) {
 		this.duration = duration;
 	}
 

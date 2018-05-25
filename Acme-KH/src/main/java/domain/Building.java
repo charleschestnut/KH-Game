@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.URL;
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(indexes = {
-	@Index(columnList = "isFinal")
+	@Index(columnList = "is")
 })
 public class Building extends DomainEntity {
 
@@ -27,7 +27,7 @@ public class Building extends DomainEntity {
 	private String			description;
 	private String			photo;
 	private Integer			maxLvl;
-	private Boolean			isFinal;
+	private Boolean			is;
 	private Materials		cost;
 	private Double			extraCostPerLvl;
 	private Integer			timeToConstruct;
@@ -43,7 +43,7 @@ public class Building extends DomainEntity {
 		return this.name;
 	}
 
-	public void setName(final String name) {
+	public void setName( String name) {
 		this.name = name;
 	}
 	@SafeHtml()
@@ -52,7 +52,7 @@ public class Building extends DomainEntity {
 		return this.description;
 	}
 
-	public void setDescription(final String description) {
+	public void setDescription( String description) {
 		this.description = description;
 	}
 	@SafeHtml()
@@ -61,7 +61,7 @@ public class Building extends DomainEntity {
 		return this.photo;
 	}
 
-	public void setPhoto(final String photo) {
+	public void setPhoto( String photo) {
 		this.photo = photo;
 	}
 	/**
@@ -74,7 +74,7 @@ public class Building extends DomainEntity {
 		return this.maxLvl;
 	}
 
-	public void setMaxLvl(final Integer maxLvl) {
+	public void setMaxLvl( Integer maxLvl) {
 		this.maxLvl = maxLvl;
 	}
 	/**
@@ -82,12 +82,12 @@ public class Building extends DomainEntity {
 	 * Ya esta guardado para usarse (true), se puede editar (false)
 	 */
 	@NotNull
-	public Boolean getIsFinal() {
-		return this.isFinal;
+	public Boolean getIs() {
+		return this.is;
 	}
 
-	public void setIsFinal(final Boolean isFinal) {
-		this.isFinal = isFinal;
+	public void setIs( Boolean is) {
+		this.is = is;
 	}
 	/**
 	 * 
@@ -98,7 +98,7 @@ public class Building extends DomainEntity {
 		return this.cost;
 	}
 
-	public void setCost(final Materials cost) {
+	public void setCost( Materials cost) {
 		this.cost = cost;
 	}
 	/**
@@ -111,7 +111,7 @@ public class Building extends DomainEntity {
 		return this.extraCostPerLvl;
 	}
 
-	public void setExtraCostPerLvl(final Double extraCostPerLvl) {
+	public void setExtraCostPerLvl( Double extraCostPerLvl) {
 		this.extraCostPerLvl = extraCostPerLvl;
 	}
 	/**
@@ -124,7 +124,7 @@ public class Building extends DomainEntity {
 		return this.timeToConstruct;
 	}
 
-	public void setTimeToConstruct(final Integer timeToConstruct) {
+	public void setTimeToConstruct( Integer timeToConstruct) {
 		this.timeToConstruct = timeToConstruct;
 	}
 	@Valid
@@ -133,16 +133,16 @@ public class Building extends DomainEntity {
 		return this.contentManager;
 	}
 
-	public void setContentManager(final ContentManager contentManager) {
+	public void setContentManager( ContentManager contentManager) {
 		this.contentManager = contentManager;
 	}
 	@Transient
-	public Materials getTotalMaterials(final Integer currentLvL) {
-		final Materials res = new Materials();
+	public Materials getTotalMaterials( Integer currentLvL) {
+		 Materials res = new Materials();
 
-		final Integer munny = this.getCost().getMunny();
-		final Integer mythril = this.getCost().getMytrhil();
-		final Integer coal = this.getCost().getGummiCoal();
+		 Integer munny = this.getCost().getMunny();
+		 Integer mythril = this.getCost().getMytrhil();
+		 Integer coal = this.getCost().getGummiCoal();
 
 		res.setMunny((int) (munny + this.extraCostPerLvl * munny * (currentLvL)));
 		res.setMytrhil((int) (mythril + this.extraCostPerLvl * mythril * (currentLvL)));

@@ -48,7 +48,7 @@ public class Actor extends DomainEntity {
 		return this.name;
 	}
 
-	public void setName(final String name) {
+	public void setName( String name) {
 		this.name = name;
 	}
 	@NotBlank
@@ -56,7 +56,7 @@ public class Actor extends DomainEntity {
 		return this.surname;
 	}
 
-	public void setSurname(final String surname) {
+	public void setSurname( String surname) {
 		this.surname = surname;
 	}
 
@@ -66,7 +66,7 @@ public class Actor extends DomainEntity {
 		return this.nickname;
 	}
 
-	public void setNickname(final String nickname) {
+	public void setNickname( String nickname) {
 		this.nickname = nickname;
 	}
 	@NotBlank
@@ -75,7 +75,7 @@ public class Actor extends DomainEntity {
 		return this.email;
 	}
 
-	public void setEmail(final String email) {
+	public void setEmail( String email) {
 		this.email = email;
 	}
 
@@ -84,7 +84,7 @@ public class Actor extends DomainEntity {
 		return this.phone;
 	}
 
-	public void setPhone(final String phone) {
+	public void setPhone( String phone) {
 		this.phone = phone;
 	}
 
@@ -105,7 +105,7 @@ public class Actor extends DomainEntity {
 		return this.confirmMoment;
 	}
 
-	public void setConfirmMoment(final Date confirmMoment) {
+	public void setConfirmMoment( Date confirmMoment) {
 		this.confirmMoment = confirmMoment;
 	}
 

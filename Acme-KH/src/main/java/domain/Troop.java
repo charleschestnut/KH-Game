@@ -36,7 +36,7 @@ public class Troop extends DomainEntity {
 		return this.attack;
 	}
 
-	public void setAttack(final Integer attack) {
+	public void setAttack( Integer attack) {
 		this.attack = attack;
 	}
 	@Range(min = 0)
@@ -44,7 +44,7 @@ public class Troop extends DomainEntity {
 		return this.defense;
 	}
 
-	public void setDefense(final Integer defense) {
+	public void setDefense( Integer defense) {
 		this.defense = defense;
 	}
 	@Valid
@@ -52,7 +52,7 @@ public class Troop extends DomainEntity {
 		return this.cost;
 	}
 
-	public void setCost(final Materials cost) {
+	public void setCost( Materials cost) {
 		this.cost = cost;
 	}
 	@Range(min = 0)
@@ -60,7 +60,7 @@ public class Troop extends DomainEntity {
 		return this.timeToRecruit;
 	}
 
-	public void setTimeToRecruit(final Integer timeToRecruit) {
+	public void setTimeToRecruit( Integer timeToRecruit) {
 		this.timeToRecruit = timeToRecruit;
 	}
 	/**
@@ -72,7 +72,7 @@ public class Troop extends DomainEntity {
 		return this.recruiterRequiredLvl;
 	}
 
-	public void setRecruiterRequiredLvl(final Integer recruiterRequiredLvl) {
+	public void setRecruiterRequiredLvl( Integer recruiterRequiredLvl) {
 		this.recruiterRequiredLvl = recruiterRequiredLvl;
 	}
 	@NotBlank
@@ -81,7 +81,7 @@ public class Troop extends DomainEntity {
 		return this.name;
 	}
 
-	public void setName(final String name) {
+	public void setName( String name) {
 		this.name = name;
 	}
 
@@ -90,7 +90,7 @@ public class Troop extends DomainEntity {
 		return this.recruiter;
 	}
 
-	public void setRecruiter(final Recruiter recruiter) {
+	public void setRecruiter( Recruiter recruiter) {
 		this.recruiter = recruiter;
 	}
 

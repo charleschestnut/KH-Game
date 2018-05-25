@@ -46,7 +46,7 @@ public class Prize extends DomainEntity {
 		return this.materials;
 	}
 
-	public void setMaterials(final Materials materials) {
+	public void setMaterials( Materials materials) {
 		this.materials = materials;
 	}
 	/**
@@ -59,7 +59,7 @@ public class Prize extends DomainEntity {
 		return this.description;
 	}
 
-	public void setDescription(final String description) {
+	public void setDescription( String description) {
 		this.description = description;
 	}
 	/**
@@ -73,7 +73,7 @@ public class Prize extends DomainEntity {
 		return this.date;
 	}
 
-	public void setDate(final Date date) {
+	public void setDate( Date date) {
 		this.date = date;
 	}
 
@@ -82,7 +82,7 @@ public class Prize extends DomainEntity {
 		return this.keybladeWielder;
 	}
 
-	public void setKeybladeWielder(final KeybladeWielder keybladeWielder) {
+	public void setKeybladeWielder( KeybladeWielder keybladeWielder) {
 		this.keybladeWielder = keybladeWielder;
 	}
 

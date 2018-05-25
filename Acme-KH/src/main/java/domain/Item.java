@@ -47,7 +47,7 @@ public class Item extends DomainEntity {
 		return this.duration;
 	}
 
-	public void setDuration(final Integer duration) {
+	public void setDuration( Integer duration) {
 		this.duration = duration;
 	}
 	/**
@@ -60,7 +60,7 @@ public class Item extends DomainEntity {
 		return this.expiration;
 	}
 
-	public void setExpiration(final Integer expiration) {
+	public void setExpiration( Integer expiration) {
 		this.expiration = expiration;
 	}
 	/**
@@ -74,7 +74,7 @@ public class Item extends DomainEntity {
 		return this.extra;
 	}
 
-	public void setExtra(final Double extra) {
+	public void setExtra( Double extra) {
 		this.extra = extra;
 	}
 	@Range(min = 0)
@@ -83,7 +83,7 @@ public class Item extends DomainEntity {
 		return this.munnyCost;
 	}
 
-	public void setMunnyCost(final Integer munnyCost) {
+	public void setMunnyCost( Integer munnyCost) {
 		this.munnyCost = munnyCost;
 	}
 	/**
@@ -97,7 +97,7 @@ public class Item extends DomainEntity {
 		return this.type;
 	}
 
-	public void setType(final ItemType type) {
+	public void setType( ItemType type) {
 		this.type = type;
 	}
 
@@ -106,7 +106,7 @@ public class Item extends DomainEntity {
 		return this.name;
 	}
 
-	public void setName(final String name) {
+	public void setName( String name) {
 		this.name = name;
 	}
 	@NotBlank
@@ -114,7 +114,7 @@ public class Item extends DomainEntity {
 		return this.description;
 	}
 
-	public void setDescription(final String description) {
+	public void setDescription( String description) {
 		this.description = description;
 	}
 	/**
@@ -125,7 +125,7 @@ public class Item extends DomainEntity {
 		return this.onSell;
 	}
 
-	public void setOnSell(final boolean onSell) {
+	public void setOnSell( boolean onSell) {
 		this.onSell = onSell;
 	}
 	@Valid
@@ -134,7 +134,7 @@ public class Item extends DomainEntity {
 		return this.contentManager;
 	}
 
-	public void setContentManager(final ContentManager contentManager) {
+	public void setContentManager( ContentManager contentManager) {
 		this.contentManager = contentManager;
 	}
 

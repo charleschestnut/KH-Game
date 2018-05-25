@@ -32,7 +32,7 @@ public class Organization extends DomainEntity {
 	}
 
 	
-	public void setName(final String name) {
+	public void setName( String name) {
 		this.name = name;
 	}
 	
@@ -44,7 +44,7 @@ public class Organization extends DomainEntity {
 	}
 
 	
-	public void setDescription(final String description) {
+	public void setDescription( String description) {
 		this.description = description;
 	}
 	
@@ -57,7 +57,7 @@ public class Organization extends DomainEntity {
 		return this.creationDate;
 	}
 
-	public void setCreationDate(final Date creationDate) {
+	public void setCreationDate( Date creationDate) {
 		this.creationDate = creationDate;
 	}
 

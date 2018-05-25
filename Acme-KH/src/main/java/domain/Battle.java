@@ -40,7 +40,7 @@ public class Battle extends DomainEntity {
 		return this.balance;
 	}
 
-	public void setBalance(final String balance) {
+	public void setBalance( String balance) {
 		this.balance = balance;
 	}
 
@@ -54,7 +54,7 @@ public class Battle extends DomainEntity {
 		return this.luckAttacker;
 	}
 
-	public void setLuckAttacker(final Double luckAttacker) {
+	public void setLuckAttacker( Double luckAttacker) {
 		this.luckAttacker = luckAttacker;
 	}
 	/**
@@ -67,7 +67,7 @@ public class Battle extends DomainEntity {
 		return this.luckDeffender;
 	}
 
-	public void setLuckDeffender(final Double luckDeffender) {
+	public void setLuckDeffender( Double luckDeffender) {
 		this.luckDeffender = luckDeffender;
 	}
 	/**
@@ -80,7 +80,7 @@ public class Battle extends DomainEntity {
 		return this.isWon;
 	}
 
-	public void setIsWon(final Boolean isWon) {
+	public void setIsWon( Boolean isWon) {
 		this.isWon = isWon;
 	}
 	/**
@@ -93,7 +93,7 @@ public class Battle extends DomainEntity {
 		return this.attackerOwner;
 	}
 
-	public void setAttackerOwner(final Boolean attackerOwner) {
+	public void setAttackerOwner( Boolean attackerOwner) {
 		this.attackerOwner = attackerOwner;
 	}
 	/**
@@ -105,7 +105,7 @@ public class Battle extends DomainEntity {
 		return this.wonOrLostMaterials;
 	}
 
-	public void setWonOrLostMaterials(final Materials wonOrLostMaterials) {
+	public void setWonOrLostMaterials( Materials wonOrLostMaterials) {
 		this.wonOrLostMaterials = wonOrLostMaterials;
 	}
 	/**
@@ -118,7 +118,7 @@ public class Battle extends DomainEntity {
 		return this.attacker;
 	}
 
-	public void setAttacker(final KeybladeWielder attacker) {
+	public void setAttacker( KeybladeWielder attacker) {
 		this.attacker = attacker;
 	}
 	/**
@@ -131,7 +131,7 @@ public class Battle extends DomainEntity {
 		return this.deffender;
 	}
 
-	public void setDeffender(final KeybladeWielder deffender) {
+	public void setDeffender( KeybladeWielder deffender) {
 		this.deffender = deffender;
 	}
 

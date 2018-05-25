@@ -51,7 +51,7 @@ public class Banned extends DomainEntity {
 		return this.banDate;
 	}
 
-	public void setBanDate(final Date banDate) {
+	public void setBanDate( Date banDate) {
 		this.banDate = banDate;
 	}
 	/**
@@ -63,7 +63,7 @@ public class Banned extends DomainEntity {
 		return this.duration;
 	}
 
-	public void setDuration(final Integer duration) {
+	public void setDuration( Integer duration) {
 		this.duration = duration;
 	}
 
@@ -71,7 +71,7 @@ public class Banned extends DomainEntity {
 		return this.reason;
 	}
 
-	public void setReason(final String reason) {
+	public void setReason( String reason) {
 		this.reason = reason;
 	}
 	/**
@@ -86,7 +86,7 @@ public class Banned extends DomainEntity {
 		return this.isValid;
 	}
 
-	public void setIsValid(final Boolean isValid) {
+	public void setIsValid( Boolean isValid) {
 		this.isValid = isValid;
 	}
 
@@ -98,7 +98,7 @@ public class Banned extends DomainEntity {
 		return this.actor;
 	}
 
-	public void setActor(final Actor actor) {
+	public void setActor( Actor actor) {
 		this.actor = actor;
 	}
 

@@ -48,7 +48,7 @@ public class Report extends DomainEntity {
 		return this.isBug;
 	}
 
-	public void setIsBug(final boolean isBug) {
+	public void setIsBug( boolean isBug) {
 		this.isBug = isBug;
 	}
 	/**
@@ -69,7 +69,7 @@ public class Report extends DomainEntity {
 		return this.status;
 	}
 
-	public void setStatus(final ReportStatus status) {
+	public void setStatus( ReportStatus status) {
 		this.status = status;
 	}
 	
@@ -79,7 +79,7 @@ public class Report extends DomainEntity {
 		return this.title;
 	}
 
-	public void setTitle(final String title) {
+	public void setTitle( String title) {
 		this.title = title;
 	}
 	
@@ -89,7 +89,7 @@ public class Report extends DomainEntity {
 		return this.content;
 	}
 
-	public void setContent(final String content) {
+	public void setContent( String content) {
 		this.content = content;
 	}
 	/**
@@ -103,7 +103,7 @@ public class Report extends DomainEntity {
 		return this.photos;
 	}
 
-	public void setPhotos(final Collection<String> photos) {
+	public void setPhotos( Collection<String> photos) {
 		this.photos = photos;
 	}
 	
@@ -115,7 +115,7 @@ public class Report extends DomainEntity {
 		return this.date;
 	}
 
-	public void setDate(final Date date) {
+	public void setDate( Date date) {
 		this.date = date;
 	}
 	@Valid
@@ -124,7 +124,7 @@ public class Report extends DomainEntity {
 		return this.keybladeWielder;
 	}
 
-	public void setKeybladeWielder(final KeybladeWielder keybladeWielder) {
+	public void setKeybladeWielder( KeybladeWielder keybladeWielder) {
 		this.keybladeWielder = keybladeWielder;
 	}
 

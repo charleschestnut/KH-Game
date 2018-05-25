@@ -31,7 +31,7 @@ public class Faction extends DomainEntity {
 		return this.name;
 	}
 
-	public void setName(final String name) {
+	public void setName( String name) {
 		this.name = name;
 	}
 	@NotBlank
@@ -39,7 +39,7 @@ public class Faction extends DomainEntity {
 		return this.powerUpDescription;
 	}
 
-	public void setPowerUpDescription(final String powerUpDescription) {
+	public void setPowerUpDescription( String powerUpDescription) {
 		this.powerUpDescription = powerUpDescription;
 	}
 	@NotNull
@@ -48,7 +48,7 @@ public class Faction extends DomainEntity {
 		return this.extraResources;
 	}
 
-	public void setExtraResources(final Double extraResources) {
+	public void setExtraResources( Double extraResources) {
 		this.extraResources = extraResources;
 	}
 	@NotNull
@@ -57,7 +57,7 @@ public class Faction extends DomainEntity {
 		return this.extraAttack;
 	}
 
-	public void setExtraAttack(final Double extraAttack) {
+	public void setExtraAttack( Double extraAttack) {
 		this.extraAttack = extraAttack;
 	}
 	@NotNull
@@ -66,7 +66,7 @@ public class Faction extends DomainEntity {
 		return this.extraDefense;
 	}
 
-	public void setExtraDefense(final Double extraDefense) {
+	public void setExtraDefense( Double extraDefense) {
 		this.extraDefense = extraDefense;
 	}
 	/**
@@ -82,7 +82,7 @@ public class Faction extends DomainEntity {
 		return this.galaxy;
 	}
 
-	public void setGalaxy(final Integer galaxy) {
+	public void setGalaxy( Integer galaxy) {
 		this.galaxy = galaxy;
 	}
 

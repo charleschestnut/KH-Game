@@ -38,7 +38,7 @@ public class Configuration extends DomainEntity {
 		return this.dailyMaterials;
 	}
 
-	public void setDailyMaterials(final Materials dailyMaterials) {
+	public void setDailyMaterials( Materials dailyMaterials) {
 		this.dailyMaterials = dailyMaterials;
 	}
 	/**
@@ -53,7 +53,7 @@ public class Configuration extends DomainEntity {
 		return this.baseMaterials;
 	}
 
-	public void setBaseMaterials(final Materials baseMaterials) {
+	public void setBaseMaterials( Materials baseMaterials) {
 		this.baseMaterials = baseMaterials;
 	}
 	/**
@@ -66,7 +66,7 @@ public class Configuration extends DomainEntity {
 		return this.orgMessages;
 	}
 
-	public void setOrgMessages(final Integer orgMessages) {
+	public void setOrgMessages( Integer orgMessages) {
 		this.orgMessages = orgMessages;
 	}
 	/**
@@ -80,7 +80,7 @@ public class Configuration extends DomainEntity {
 		return this.percentageWinAttacker;
 	}
 
-	public void setPercentageWinAttacker(final Double percentageWinAttacker) {
+	public void setPercentageWinAttacker( Double percentageWinAttacker) {
 		this.percentageWinAttacker = percentageWinAttacker;
 	}
 	/**
@@ -94,7 +94,7 @@ public class Configuration extends DomainEntity {
 		return this.percentageWinDefender;
 	}
 
-	public void setPercentageWinDefender(final Double percentageWinDefender) {
+	public void setPercentageWinDefender( Double percentageWinDefender) {
 		this.percentageWinDefender = percentageWinDefender;
 	}
 	/**
@@ -107,7 +107,7 @@ public class Configuration extends DomainEntity {
 		return this.lostLvlsDeffender;
 	}
 
-	public void setLostLvlsDeffender(final Integer lostLvlsDeffender) {
+	public void setLostLvlsDeffender( Integer lostLvlsDeffender) {
 		this.lostLvlsDeffender = lostLvlsDeffender;
 	}
 	/**
@@ -121,7 +121,7 @@ public class Configuration extends DomainEntity {
 		return this.worldSlots;
 	}
 
-	public void setWorldSlots(final Integer worldSlots) {
+	public void setWorldSlots( Integer worldSlots) {
 		this.worldSlots = worldSlots;
 	}
 

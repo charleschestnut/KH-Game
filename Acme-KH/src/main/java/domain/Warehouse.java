@@ -36,7 +36,7 @@ public class Warehouse extends Building {
 		return this.materialsSlots;
 	}
 
-	public void setMaterialsSlots(final Materials materialsSlots) {
+	public void setMaterialsSlots( Materials materialsSlots) {
 		this.materialsSlots = materialsSlots;
 	}
 	/**
@@ -49,7 +49,7 @@ public class Warehouse extends Building {
 		return this.troopSlots;
 	}
 
-	public void setTroopSlots(final Integer troopSlots) {
+	public void setTroopSlots( Integer troopSlots) {
 		this.troopSlots = troopSlots;
 	}
 	/**
@@ -62,7 +62,7 @@ public class Warehouse extends Building {
 		return this.gummiSlots;
 	}
 
-	public void setGummiSlots(final Integer gummiSlots) {
+	public void setGummiSlots( Integer gummiSlots) {
 		this.gummiSlots = gummiSlots;
 	}
 	@NotNull
@@ -71,7 +71,7 @@ public class Warehouse extends Building {
 		return this.extraSlotsPerLvl;
 	}
 
-	public void setExtraSlotsPerLvl(final Double extraSlotsPerLvl) {
+	public void setExtraSlotsPerLvl( Double extraSlotsPerLvl) {
 		this.extraSlotsPerLvl = extraSlotsPerLvl;
 	}
 	/**
@@ -81,12 +81,12 @@ public class Warehouse extends Building {
 	 * @return Cuantos materiales puede almacenar en total el edificio de nivel "lvl"
 	 */
 	@Transient
-	public Materials getTotalSlotsMaterials(final Integer lvl) {
-		final Materials res = new Materials();
+	public Materials getTotalSlotsMaterials( Integer lvl) {
+		 Materials res = new Materials();
 
-		final Integer munny = this.getMaterialsSlots().getMunny();
-		final Integer mythril = this.getMaterialsSlots().getMytrhil();
-		final Integer coal = this.getMaterialsSlots().getGummiCoal();
+		 Integer munny = this.getMaterialsSlots().getMunny();
+		 Integer mythril = this.getMaterialsSlots().getMytrhil();
+		 Integer coal = this.getMaterialsSlots().getGummiCoal();
 
 		res.setMunny((int) (munny + this.extraSlotsPerLvl * munny * (lvl - 1)));
 		res.setMytrhil((int) (mythril + this.extraSlotsPerLvl * mythril * (lvl - 1)));
@@ -100,9 +100,9 @@ public class Warehouse extends Building {
 	 * @return Cuantas tropas puede almacenar en total el edificio de nivel "lvl"
 	 */
 	@Transient
-	public Integer getTotalTroopSlots(final Integer lvl) {
+	public Integer getTotalTroopSlots( Integer lvl) {
 
-		final Integer res = (int) (this.troopSlots + this.troopSlots * (lvl - 1) * this.extraSlotsPerLvl);
+		 Integer res = (int) (this.troopSlots + this.troopSlots * (lvl - 1) * this.extraSlotsPerLvl);
 
 		return res;
 
@@ -112,9 +112,9 @@ public class Warehouse extends Building {
 	 * @return Cuantas tropas puede almacenar en total el edificio de nivel "lvl"
 	 */
 	@Transient
-	public Integer getTotalGummiSlots(final Integer lvl) {
+	public Integer getTotalGummiSlots( Integer lvl) {
 
-		final Integer res = (int) (this.gummiSlots + this.gummiSlots * (lvl - 1) * this.extraSlotsPerLvl);
+		 Integer res = (int) (this.gummiSlots + this.gummiSlots * (lvl - 1) * this.extraSlotsPerLvl);
 
 		return res;
 

@@ -23,7 +23,7 @@ public class Defense extends Building {
 		return this.defense;
 	}
 
-	public void setDefense(final Integer defense) {
+	public void setDefense( Integer defense) {
 		this.defense = defense;
 	}
 	@NotNull
@@ -32,7 +32,7 @@ public class Defense extends Building {
 		return this.extraDefensePerLvl;
 	}
 
-	public void setExtraDefensePerLvl(final Double extraDefensePerLvl) {
+	public void setExtraDefensePerLvl( Double extraDefensePerLvl) {
 		this.extraDefensePerLvl = extraDefensePerLvl;
 	}
 	/**
@@ -42,9 +42,9 @@ public class Defense extends Building {
 	 * @return La defensa total de este edificio de nivel "lvl"
 	 */
 	@Transient
-	public Integer getTotalDefense(final Integer lvl) {
+	public Integer getTotalDefense( Integer lvl) {
 
-		final Integer res = (int) (this.defense + this.defense * (lvl - 1) * this.extraDefensePerLvl);
+		 Integer res = (int) (this.defense + this.defense * (lvl - 1) * this.extraDefensePerLvl);
 
 		return res;
 

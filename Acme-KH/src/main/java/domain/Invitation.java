@@ -50,7 +50,7 @@ public class Invitation extends DomainEntity {
 	}
 
 	
-	public void setDate(final Date date) {
+	public void setDate( Date date) {
 		this.date = date;
 	}
 	
@@ -66,7 +66,7 @@ public class Invitation extends DomainEntity {
 	}
 
 	
-	public void setInvitationStatus(final InvitationStatus invitationStatus) {
+	public void setInvitationStatus( InvitationStatus invitationStatus) {
 		this.invitationStatus = invitationStatus;
 	}
 	
@@ -82,7 +82,7 @@ public class Invitation extends DomainEntity {
 	}
 
 	
-	public void setOrgRange(final OrgRange orgRange) {
+	public void setOrgRange( OrgRange orgRange) {
 		this.orgRange = orgRange;
 	}
 	
@@ -98,7 +98,7 @@ public class Invitation extends DomainEntity {
 	}
 
 	
-	public void setContent(final String content) {
+	public void setContent( String content) {
 		this.content = content;
 	}
 	
@@ -110,7 +110,7 @@ public class Invitation extends DomainEntity {
 	}
 
 	
-	public void setKeybladeWielder(final Actor keybladeWielder) {
+	public void setKeybladeWielder( Actor keybladeWielder) {
 		this.keybladeWielder = keybladeWielder;
 	}
 	
@@ -121,7 +121,7 @@ public class Invitation extends DomainEntity {
 		return this.organization;
 	}
 
-	public void setOrganization(final Organization organization) {
+	public void setOrganization( Organization organization) {
 		this.organization = organization;
 	}
 	
