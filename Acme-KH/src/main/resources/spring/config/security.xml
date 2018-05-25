@@ -103,6 +103,8 @@
 		
 		<security:intercept-url pattern="/profile/actor/register.do" access="isAnonymous() || hasRole('ADMIN')" />
 		
+		<security:intercept-url pattern="/keybladewielder/updateMaterialsPanel.do" access="hasRole('PLAYER')" />
+		
 		<!-- CAMILA -->
 		
 		<security:intercept-url pattern="/report/display.do" access="hasAnyRole('GM', 'PLAYER','ADMIN')"  />

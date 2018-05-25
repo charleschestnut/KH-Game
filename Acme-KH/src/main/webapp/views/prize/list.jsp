@@ -26,17 +26,17 @@ function openChest(id){
 	document.getElementById("div"+id).className += " heart-blast";
 	document.getElementById("badge"+id).style.display = "none";
 	
-	var a = setTimeout(function(){ 
+	setTimeout(function(){ 
 		$("#info"+id).fadeIn();
 	}, 100);
 	
-	/* var b = setTimeout(function(){ 
-		$("#all"+id).fadeOut(300);
-	}, 1000); */
-	
-	var c = setTimeout(function(){ 
-		$('#container').load("prize/openAJAX.do?prizeId="+id).hide().fadeIn('slow');;
+	setTimeout(function(){ 
+		$('#container').load("prize/openAJAX.do?prizeId="+id).hide().fadeIn('slow');
 	}, 1500);
+	
+	setTimeout(function(){ 
+		$(".materials-panel").load("keybladewielder/updateMaterialsPanel.do").hide().fadeIn();
+	}, 1700);
 	
 	
 }

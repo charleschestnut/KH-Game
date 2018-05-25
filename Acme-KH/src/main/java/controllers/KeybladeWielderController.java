@@ -241,4 +241,19 @@ public class KeybladeWielderController extends AbstractController {
 
 		return result;
 	}
+	
+	//Update materials panels
+	
+	@RequestMapping(value = "/updateMaterialsPanel", method = RequestMethod.GET)
+	public ModelAndView updateMaterialsPanel() {
+		ModelAndView res;
+		KeybladeWielder player;
+		
+		player = (KeybladeWielder) actorService.findByPrincipal();
+		
+		res = new ModelAndView("keybladewielder/materials-panel");
+		res.addObject("playerFromAbstract", player);
+
+		return res;
+	}
 }

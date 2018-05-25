@@ -35,6 +35,7 @@ import services.KeybladeWielderService;
 import services.OrganizationService;
 import domain.Actor;
 import domain.KeybladeWielder;
+import domain.Prize;
 import form.ActorForm;
 
 @Controller
@@ -259,5 +260,5 @@ public class ProfileController extends AbstractController {
 
 		return result;
 	}
-
+	
 }

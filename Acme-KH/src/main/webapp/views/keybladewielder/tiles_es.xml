@@ -21,4 +21,6 @@
 		<put-attribute name="body" value="/views/keybladewielder/world.jsp" />
 	</definition>
 	
+	<definition name="keybladewielder/materials-panel" template="/views/keybladewielder/materials-panel.jsp" />
+	
 </tiles-definitions>
