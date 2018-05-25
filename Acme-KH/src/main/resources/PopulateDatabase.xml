@@ -122,6 +122,19 @@
 		<property name="enabled" value="true" />
 	</bean>
 	
+	<bean id="userAccount9" class="security.UserAccount">
+		<property name="username" value="manager2" />
+		<property name="password" value="8df5127cd164b5bc2d2b78410a7eea0c" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MANAGER" />
+				</bean>
+			</list>
+		</property>
+		<property name="enabled" value="true" />
+	</bean>
+	
 
 
 	
@@ -150,6 +163,17 @@
 		<property name="phone" value="549592823" />
 		<property name="email" value="manager1@gmail.com" />
 		<property name="userAccount" ref="userAccount3" />
+		<property name="hasConfirmedTerms" value="true" />
+		<property name="confirmMoment" value="20/02/2016 00:00" />
+	</bean>
+	
+	<bean id="manager2" class="domain.ContentManager">
+		<property name="name" value="Content" />
+		<property name="surname" value="Manager 2" />
+		<property name="nickname" value="manager2" />
+		<property name="phone" value="549592823" />
+		<property name="email" value="manager2@gmail.com" />
+		<property name="userAccount" ref="userAccount9" />
 		<property name="hasConfirmedTerms" value="true" />
 		<property name="confirmMoment" value="20/02/2016 00:00" />
 	</bean>
@@ -340,7 +364,7 @@
 	</bean>
 	
 	<!-- BATTLE -->
-<!-- 	<bean id="battle1" class="domain.Battle">
+	<bean id="battle1" class="domain.Battle">
 		<property name="luckAttacker" value="0.1" />
 		<property name="luckDeffender" value="0.0" />
 		<property name="isWon" value="true" />
@@ -348,19 +372,63 @@
 		<property name="wonOrLostMaterials" ref="material3" />
 		<property name="attacker" ref="player1" />
 		<property name="deffender" ref="player2" />
-		<property name="recruiteds" ref="recruited1" />
+		<property name="balance" value="Has ganado" />
 	</bean>
 	
 	<bean id="battle2" class="domain.Battle">
 		<property name="luckAttacker" value="0.0" />
-		<property name="luckDeffender" value="0.15" />
+		<property name="luckDeffender" value="0.2" />
 		<property name="isWon" value="false" />
 		<property name="attackerOwner" value="false" />
 		<property name="wonOrLostMaterials" ref="material4" />
 		<property name="attacker" ref="player1" />
 		<property name="deffender" ref="player2" />
-		<property name="recruiteds" ref="recruited2" />
-	</bean> -->
+		<property name="balance" value="Has perdido" />
+	</bean>
+	
+	<bean id="battle3" class="domain.Battle">
+		<property name="luckAttacker" value="0.3" />
+		<property name="luckDeffender" value="0.0" />
+		<property name="isWon" value="true" />
+		<property name="attackerOwner" value="true" />
+		<property name="wonOrLostMaterials" ref="material3" />
+		<property name="attacker" ref="player2" />
+		<property name="deffender" ref="player3" />
+		<property name="balance" value="Has ganado" />
+	</bean>
+	
+	<bean id="battle4" class="domain.Battle">
+		<property name="luckAttacker" value="0.0" />
+		<property name="luckDeffender" value="0.2" />
+		<property name="isWon" value="false" />
+		<property name="attackerOwner" value="false" />
+		<property name="wonOrLostMaterials" ref="material4" />
+		<property name="attacker" ref="player2" />
+		<property name="deffender" ref="player3" />
+		<property name="balance" value="Has perdido" />
+	</bean>
+	
+	<bean id="battle5" class="domain.Battle">
+		<property name="luckAttacker" value="0.5" />
+		<property name="luckDeffender" value="0.0" />
+		<property name="isWon" value="true" />
+		<property name="attackerOwner" value="true" />
+		<property name="wonOrLostMaterials" ref="material3" />
+		<property name="attacker" ref="player5" />
+		<property name="deffender" ref="player1" />
+		<property name="balance" value="Has ganado" />
+	</bean>
+	
+	<bean id="battle6" class="domain.Battle">
+		<property name="luckAttacker" value="0.0" />
+		<property name="luckDeffender" value="0.1" />
+		<property name="isWon" value="false" />
+		<property name="attackerOwner" value="false" />
+		<property name="wonOrLostMaterials" ref="material4" />
+		<property name="attacker" ref="player5" />
+		<property name="deffender" ref="player1" />
+		<property name="balance" value="Has perdido" />
+	</bean>
 	
 	<!-- BUILT -->
 	<bean id="built1" class="domain.Built">
@@ -400,6 +468,45 @@
 		<property name="keybladeWielder" ref="player1" />
 		<property name="troop" ref="troop1" />
 		<property name="building" ref="recruiter1" />
+	</bean>
+	
+	<bean id="built2.1" class="domain.Built">
+		<property name="lvl" value="1" />
+		<property name="creationDate" value="05/04/2018" />
+		<!-- <property name="activationDate" value="" /> -->
+		<property name="keybladeWielder" ref="player2" />
+		<!-- <property name="troop" ref="" />
+		<property name="gummiShip" ref="" /> -->
+		<property name="building" ref="defense2" />
+	</bean>
+	
+	<bean id="built2.2" class="domain.Built">
+		<property name="lvl" value="1" />
+		<property name="creationDate" value="05/04/2018" />
+		<!-- <property name="activationDate" value="05/04/2018 12:06" /> -->
+		<property name="keybladeWielder" ref="player2" />
+		<!-- <property name="troop" ref="" />
+		<property name="gummiShip" ref="" /> -->
+		<property name="building" ref="livelihood2" />
+	</bean>
+	
+	<bean id="built2.3" class="domain.Built">
+		<property name="lvl" value="1" />
+		<property name="creationDate" value="05/04/2018" />
+		<!-- <property name="activationDate" value="" /> -->
+		<property name="keybladeWielder" ref="player2" />
+		<!-- <property name="troop" ref="" />
+		<property name="gummiShip" ref="" /> -->
+		<property name="building" ref="warehouse2" />
+	</bean>
+	
+	<bean id="built2.4" class="domain.Built">
+		<property name="lvl" value="1" />
+		<property name="creationDate" value="05/04/2018" />
+		<property name="activationDate" value="05/04/2018 12:08" />
+		<property name="keybladeWielder" ref="player2" />
+		<property name="troop" ref="troop2" />
+		<property name="building" ref="recruiter2" />
 	</bean>
 	
 	<!-- BUILDING -->
@@ -471,6 +578,74 @@
 		</property>
 	</bean>
 	
+	<bean id="defense2" class="domain.Defense">
+		<property name="name" value="Defense Towers" />
+		<property name="description" value="Defensive towers" />
+		<property name="photo" value="http://clipart.coolclips.com/480/vectors/tf05247/CoolClips_vc036380.png" />
+		<property name="maxLvl" value="10" />
+		<property name="isFinal" value="true" />
+		<property name="cost" ref="material4" />
+		<property name="extraCostPerLvl" value="0.3" />
+		<property name="timeToConstruct" value="5" />
+		<property name="contentManager" ref="manager1" />
+		<property name="defense" value="100" />
+		<property name="extraDefensePerLvl" value="0.25" />
+	</bean>
+	
+	<bean id="livelihood2" class="domain.Livelihood">
+		<property name="name" value="Livelihood Number 1" />
+		<property name="description" value="This is the Livehood number 1" />
+		<property name="photo" value="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Livelihood_-_The_Noun_Project.svg/2000px-Livelihood_-_The_Noun_Project.svg.png" />
+		<property name="maxLvl" value="10" />
+		<property name="isFinal" value="true" />
+		<property name="cost" ref="material4" />
+		<property name="extraCostPerLvl" value="0.4" />
+		<property name="timeToConstruct" value="6" />
+		<property name="contentManager" ref="manager1" />
+		<property name="materials" ref="material3" />
+		<property name="extraMaterialsPerLvl" value="0.3" />
+		<property name="timeToRecollect" value="40" />
+		<property name="lessTimePerLvl" value="0.5" />
+	</bean>
+	
+	<bean id="warehouse2" class="domain.Warehouse">
+		<property name="name" value="Warehouse Number 1" />
+		<property name="description" value="This is the Warehouse number 1" />
+		<property name="photo" value="http://www.pngmart.com/files/3/Warehouse-PNG-Clipart.png" />
+		<property name="maxLvl" value="10" />
+		<property name="isFinal" value="true" />
+		<property name="cost" ref="material4" />
+		<property name="extraCostPerLvl" value="0.6" />
+		<property name="timeToConstruct" value="8" />
+		<property name="contentManager" ref="manager1" />
+		<property name="materialsSlots" ref="material4" />
+		<property name="troopSlots" value="10" />
+		<property name="gummiSlots" value="2" />
+		<property name="extraSlotsPerLvl" value="0.5" />
+	</bean>
+	
+	<bean id="recruiter2" class="domain.Recruiter">
+		<property name="name" value="Recruiter Number 1" />
+		<property name="description" value="This is the Recruiter number 1" />
+		<property name="photo" value="http://www.mckinnon.com/images/new-recruiting-page1.png" />
+		<property name="maxLvl" value="10" />
+		<property name="isFinal" value="true" />
+		<property name="cost" ref="material4" />
+		<property name="extraCostPerLvl" value="0.4" />
+		<property name="timeToConstruct" value="8" />
+		<property name="contentManager" ref="manager1" />
+		<property name="gummiShips" >
+			<list>
+				<ref bean="gummiShip2"/>
+			</list>
+		</property>
+		<property name="troops">
+			<list>
+				<ref bean="troop2"/>
+			</list>
+		</property>
+	</bean>
+	
 	<!-- GUMMISHIPS AND TROOPS -->
 	<bean id="troop1" class="domain.Troop">
 		<property name="attack" value="150" />
@@ -489,6 +664,25 @@
 		<property name="recruiterRequiredLvl" value="1" />
 		<property name="name" value="Interstellar" />
 		<property name="recruiter" ref="recruiter1" />
+	</bean>
+	
+	<bean id="troop2" class="domain.Troop">
+		<property name="attack" value="150" />
+		<property name="defense" value="80" />
+		<property name="cost" ref="material3" />
+		<property name="timeToRecruit" value="20" />
+		<property name="recruiterRequiredLvl" value="1" />
+		<property name="name" value="Troop number 2" />
+		<property name="recruiter" ref="recruiter2" />
+	</bean>
+	
+	<bean id="gummiShip2" class="domain.GummiShip">
+		<property name="slots" value="150" />
+		<property name="cost" ref="material1" />
+		<property name="timeToRecruit" value="50" />
+		<property name="recruiterRequiredLvl" value="1" />
+		<property name="name" value="Platon" />
+		<property name="recruiter" ref="recruiter2" />
 	</bean>
 	
 	
