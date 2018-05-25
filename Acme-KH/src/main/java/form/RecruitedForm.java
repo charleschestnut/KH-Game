@@ -21,7 +21,7 @@ public class RecruitedForm {
 		return this.built;
 	}
 
-	public void setBuilt(final Built built) {
+	public void setBuilt( Built built) {
 		this.built = built;
 	}
 	@Valid
@@ -29,7 +29,7 @@ public class RecruitedForm {
 		return this.troop;
 	}
 
-	public void setTroop(final Troop troop) {
+	public void setTroop( Troop troop) {
 		this.troop = troop;
 	}
 	@Valid
@@ -37,7 +37,7 @@ public class RecruitedForm {
 		return this.gummiship;
 	}
 
-	public void setGummiship(final GummiShip gummiship) {
+	public void setGummiship( GummiShip gummiship) {
 		this.gummiship = gummiship;
 	}
 

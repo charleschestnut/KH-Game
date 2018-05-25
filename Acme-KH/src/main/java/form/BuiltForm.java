@@ -17,7 +17,7 @@ public class BuiltForm {
 		return this.building;
 	}
 
-	public void setBuilding(final Building building) {
+	public void setBuilding( Building building) {
 		this.building = building;
 	}
 
