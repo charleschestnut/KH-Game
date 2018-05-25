@@ -14,7 +14,7 @@ import domain.OrgRange;
 public class OrgRangeToStringConverter implements Converter<OrgRange, String> {
 
 	@Override
-	public String convert(final OrgRange o) {
+	public String convert( OrgRange o) {
 		String result;
 		StringBuilder builder;
 		if (o == null)
@@ -25,7 +25,7 @@ public class OrgRangeToStringConverter implements Converter<OrgRange, String> {
 				builder.append(URLEncoder.encode(o.getDeclaringClass().toString(), "UTF-8"));
 
 				result = builder.toString();
-			} catch (final Throwable oops) {
+			} catch ( Throwable oops) {
 				throw new RuntimeException(oops);
 			}
 

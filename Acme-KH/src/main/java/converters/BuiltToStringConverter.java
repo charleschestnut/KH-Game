@@ -12,7 +12,7 @@ import domain.Built;
 public class BuiltToStringConverter implements Converter<Built, String> {
 
 	@Override
-	public String convert(final Built o) {
+	public String convert( Built o) {
 		String result;
 
 		if (o == null)

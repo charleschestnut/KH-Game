@@ -12,7 +12,7 @@ import domain.Recruiter;
 public class RecruiterToStringConverter implements Converter<Recruiter, String> {
 
 	@Override
-	public String convert(final Recruiter o) {
+	public String convert( Recruiter o) {
 		String result;
 
 		if (o == null)

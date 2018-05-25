@@ -12,7 +12,7 @@ import domain.Chatty;
 public class ChattyToStringConverter implements Converter<Chatty, String> {
 
 	@Override
-	public String convert(final Chatty o) {
+	public String convert( Chatty o) {
 		String result;
 
 		if (o == null)

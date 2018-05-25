@@ -12,7 +12,7 @@ import domain.Livelihood;
 public class LivelihoodToStringConverter implements Converter<Livelihood, String> {
 
 	@Override
-	public String convert(final Livelihood o) {
+	public String convert( Livelihood o) {
 		String result;
 
 		if (o == null)

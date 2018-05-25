@@ -35,7 +35,7 @@ public class StringToMaterialsConverter implements Converter<String, Materials> 
 				result.setMunny(Integer.valueOf(URLDecoder.decode(parts[1], "UFT-8")));
 				result.setMytrhil(Integer.valueOf(URLDecoder.decode(parts[2], "UFT-8")));
 				
-			} catch (final Throwable oops) {
+			} catch ( Throwable oops) {
 				throw new RuntimeException(oops);
 			}
 

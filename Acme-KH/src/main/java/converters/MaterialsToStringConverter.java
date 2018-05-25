@@ -14,7 +14,7 @@ import domain.Materials;
 public class MaterialsToStringConverter implements Converter<Materials, String> {
 
 	@Override
-	public String convert(final Materials o) {
+	public String convert( Materials o) {
 		String result;
 		StringBuilder builder;
 		if (o == null)
@@ -28,7 +28,7 @@ public class MaterialsToStringConverter implements Converter<Materials, String> 
 				builder.append("|");
 				builder.append(URLEncoder.encode(Integer.toString(o.getMytrhil()), "UTF-8"));
 				result = builder.toString();
-			} catch (final Throwable oops) {
+			} catch ( Throwable oops) {
 				throw new RuntimeException(oops);
 			}
 

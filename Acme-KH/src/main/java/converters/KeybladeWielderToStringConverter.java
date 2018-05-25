@@ -12,7 +12,7 @@ import domain.KeybladeWielder;
 public class KeybladeWielderToStringConverter implements Converter<KeybladeWielder, String> {
 
 	@Override
-	public String convert(final KeybladeWielder o) {
+	public String convert( KeybladeWielder o) {
 		String result;
 
 		if (o == null)

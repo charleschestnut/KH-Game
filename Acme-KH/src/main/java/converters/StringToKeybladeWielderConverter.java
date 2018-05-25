@@ -26,7 +26,7 @@ public class StringToKeybladeWielderConverter implements Converter<String, Keybl
 		try {
 			id = Integer.valueOf(text);
 			result = this.repository.findOne(id);
-		} catch (final Throwable oops) {
+		} catch ( Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
 

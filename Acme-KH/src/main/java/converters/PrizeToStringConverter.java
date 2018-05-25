@@ -12,7 +12,7 @@ import domain.Prize;
 public class PrizeToStringConverter implements Converter<Prize, String> {
 
 	@Override
-	public String convert(final Prize o) {
+	public String convert( Prize o) {
 		String result;
 
 		if (o == null)

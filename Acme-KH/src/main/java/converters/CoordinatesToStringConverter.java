@@ -14,7 +14,7 @@ import domain.Coordinates;
 public class CoordinatesToStringConverter implements Converter<Coordinates, String> {
 
 	@Override
-	public String convert(final Coordinates coord) {
+	public String convert( Coordinates coord) {
 		String result;
 		StringBuilder builder;
 
@@ -29,7 +29,7 @@ public class CoordinatesToStringConverter implements Converter<Coordinates, Stri
 				builder.append("|");
 				builder.append(URLEncoder.encode(Float.toString(coord.getZ()), "UTF-8"));
 				result = builder.toString();
-			} catch (final Throwable oops) {
+			} catch ( Throwable oops) {
 				throw new RuntimeException(oops);
 			}
 		return result;

@@ -12,7 +12,7 @@ import domain.Administrator;
 public class AdministratorToStringConverter implements Converter<Administrator, String> {
 
 	@Override
-	public String convert(final Administrator o) {
+	public String convert( Administrator o) {
 		String result;
 
 		if (o == null)

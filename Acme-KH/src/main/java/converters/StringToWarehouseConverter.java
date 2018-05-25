@@ -29,7 +29,7 @@ public class StringToWarehouseConverter implements Converter<String, Warehouse> 
 		try {
 			id = Integer.valueOf(text);
 			result = this.repository.findOne(id);
-		} catch (final Throwable oops) {
+		} catch ( Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
 

@@ -33,7 +33,7 @@ public class StringToCoordinatesConverter implements Converter<String, Coordinat
 				result.setX(Integer.valueOf(URLDecoder.decode(parts[0], "UFT-8")));
 				result.setY(Integer.valueOf(URLDecoder.decode(parts[1], "UFT-8")));
 				result.setZ(Integer.valueOf(URLDecoder.decode(parts[2], "UFT-8")));
-			} catch (final Throwable oops) {
+			} catch ( Throwable oops) {
 				throw new RuntimeException(oops);
 			}
 

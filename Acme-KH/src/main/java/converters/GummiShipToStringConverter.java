@@ -12,7 +12,7 @@ import domain.GummiShip;
 public class GummiShipToStringConverter implements Converter<GummiShip, String> {
 
 	@Override
-	public String convert(final GummiShip o) {
+	public String convert( GummiShip o) {
 		String result;
 
 		if (o == null)

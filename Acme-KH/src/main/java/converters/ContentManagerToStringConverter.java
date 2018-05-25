@@ -12,7 +12,7 @@ import domain.ContentManager;
 public class ContentManagerToStringConverter implements Converter<ContentManager, String> {
 
 	@Override
-	public String convert(final ContentManager o) {
+	public String convert( ContentManager o) {
 		String result;
 
 		if (o == null)

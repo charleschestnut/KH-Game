@@ -18,14 +18,14 @@ public class StringToBuildingConverter implements Converter<String, Building> {
 
 
 	@Override
-	public Building convert(final String text) {
+	public Building convert( String text) {
 		Building result;
 		int id;
 
 		try {
 			id = Integer.valueOf(text);
 			result = this.repository.findOne(id);
-		} catch (final Throwable oops) {
+		} catch ( Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
 

@@ -12,7 +12,7 @@ import domain.Report;
 public class ReportToStringConverter implements Converter<Report, String> {
 
 	@Override
-	public String convert(final Report o) {
+	public String convert( Report o) {
 		String result;
 
 		if (o == null)

@@ -14,7 +14,7 @@ import domain.InvitationStatus;
 public class InvitationStatusToStringConverter implements Converter<InvitationStatus, String> {
 
 	@Override
-	public String convert(final InvitationStatus inv) {
+	public String convert( InvitationStatus inv) {
 		String result;
 		StringBuilder builder;
 
@@ -26,7 +26,7 @@ public class InvitationStatusToStringConverter implements Converter<InvitationSt
 				builder.append(URLEncoder.encode(inv.getDeclaringClass().toString(), "UTF-8"));
 
 				result = builder.toString();
-			} catch (final Throwable oops) {
+			} catch ( Throwable oops) {
 				throw new RuntimeException(oops);
 			}
 		return result;

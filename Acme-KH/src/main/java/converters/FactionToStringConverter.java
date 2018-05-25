@@ -12,7 +12,7 @@ import domain.Faction;
 public class FactionToStringConverter implements Converter<Faction, String> {
 
 	@Override
-	public String convert(final Faction o) {
+	public String convert( Faction o) {
 		String result;
 
 		if (o == null)

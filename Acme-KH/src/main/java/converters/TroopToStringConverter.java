@@ -12,7 +12,7 @@ import domain.Troop;
 public class TroopToStringConverter implements Converter<Troop, String> {
 
 	@Override
-	public String convert(final Troop o) {
+	public String convert( Troop o) {
 		String result;
 
 		if (o == null)

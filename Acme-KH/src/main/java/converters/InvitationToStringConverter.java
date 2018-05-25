@@ -12,7 +12,7 @@ import domain.Invitation;
 public class InvitationToStringConverter implements Converter<Invitation, String> {
 
 	@Override
-	public String convert(final Invitation o) {
+	public String convert( Invitation o) {
 		String result;
 
 		if (o == null)

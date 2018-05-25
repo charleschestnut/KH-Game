@@ -12,7 +12,7 @@ import domain.Item;
 public class ItemToStringConverter implements Converter<Item, String> {
 
 	@Override
-	public String convert(final Item o) {
+	public String convert( Item o) {
 		String result;
 
 		if (o == null)

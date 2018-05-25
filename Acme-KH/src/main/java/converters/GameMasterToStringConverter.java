@@ -12,7 +12,7 @@ import domain.GameMaster;
 public class GameMasterToStringConverter implements Converter<GameMaster, String> {
 
 	@Override
-	public String convert(final GameMaster o) {
+	public String convert( GameMaster o) {
 		String result;
 
 		if (o == null)

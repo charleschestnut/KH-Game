@@ -12,7 +12,7 @@ import domain.Purchase;
 public class PurchaseToStringConverter implements Converter<Purchase, String> {
 
 	@Override
-	public String convert(final Purchase o) {
+	public String convert( Purchase o) {
 		String result;
 
 		if (o == null)

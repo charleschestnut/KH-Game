@@ -12,7 +12,7 @@ import domain.Banned;
 public class BannedToStringConverter implements Converter<Banned, String> {
 
 	@Override
-	public String convert(final Banned o) {
+	public String convert( Banned o) {
 		String result;
 
 		if (o == null)

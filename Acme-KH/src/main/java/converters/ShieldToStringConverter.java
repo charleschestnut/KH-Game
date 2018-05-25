@@ -12,7 +12,7 @@ import domain.Shield;
 public class ShieldToStringConverter implements Converter<Shield, String> {
 
 	@Override
-	public String convert(final Shield o) {
+	public String convert( Shield o) {
 		String result;
 
 		if (o == null)

@@ -12,7 +12,7 @@ import domain.Organization;
 public class OrganizationToStringConverter implements Converter<Organization, String> {
 
 	@Override
-	public String convert(final Organization o) {
+	public String convert( Organization o) {
 		String result;
 
 		if (o == null)

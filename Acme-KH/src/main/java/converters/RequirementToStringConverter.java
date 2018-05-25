@@ -12,7 +12,7 @@ import domain.Requirement;
 public class RequirementToStringConverter implements Converter<Requirement, String> {
 
 	@Override
-	public String convert(final Requirement o) {
+	public String convert( Requirement o) {
 		String result;
 
 		if (o == null)

@@ -12,7 +12,7 @@ import domain.Battle;
 public class BattleToStringConverter implements Converter<Battle, String> {
 
 	@Override
-	public String convert(final Battle o) {
+	public String convert( Battle o) {
 		String result;
 
 		if (o == null)

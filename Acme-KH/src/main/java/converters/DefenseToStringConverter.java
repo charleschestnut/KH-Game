@@ -12,7 +12,7 @@ import domain.Defense;
 public class DefenseToStringConverter implements Converter<Defense, String> {
 
 	@Override
-	public String convert(final Defense o) {
+	public String convert( Defense o) {
 		String result;
 
 		if (o == null)

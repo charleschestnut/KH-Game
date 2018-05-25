@@ -12,7 +12,7 @@ import domain.Configuration;
 public class ConfigurationToStringConverter implements Converter<Configuration, String> {
 
 	@Override
-	public String convert(final Configuration o) {
+	public String convert( Configuration o) {
 		String result;
 
 		if (o == null)

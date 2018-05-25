@@ -12,7 +12,7 @@ import domain.Actor;
 public class ActorToStringConverter implements Converter<Actor, String> {
 
 	@Override
-	public String convert(final Actor o) {
+	public String convert( Actor o) {
 		String result;
 
 		if (o == null)

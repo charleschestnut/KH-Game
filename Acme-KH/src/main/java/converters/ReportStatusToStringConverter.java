@@ -14,7 +14,7 @@ import domain.ReportStatus;
 public class ReportStatusToStringConverter implements Converter<ReportStatus, String> {
 
 	@Override
-	public String convert(final ReportStatus o) {
+	public String convert( ReportStatus o) {
 		String result;
 		StringBuilder builder;
 		if (o == null)
@@ -25,7 +25,7 @@ public class ReportStatusToStringConverter implements Converter<ReportStatus, St
 				builder.append(URLEncoder.encode(o.getDeclaringClass().toString(), "UTF-8"));
 
 				result = builder.toString();
-			} catch (final Throwable oops) {
+			} catch ( Throwable oops) {
 				throw new RuntimeException(oops);
 			}
 

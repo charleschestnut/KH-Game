@@ -28,7 +28,7 @@ public class StringToBannedConverter implements Converter<String, Banned> {
 		try {
 			id = Integer.valueOf(text);
 			result = this.repository.findOne(id);
-		} catch (final Throwable oops) {
+		} catch ( Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
 

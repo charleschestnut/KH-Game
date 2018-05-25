@@ -12,7 +12,7 @@ import domain.Warehouse;
 public class WarehouseToStringConverter implements Converter<Warehouse, String> {
 
 	@Override
-	public String convert(final Warehouse o) {
+	public String convert( Warehouse o) {
 		String result;
 
 		if (o == null)

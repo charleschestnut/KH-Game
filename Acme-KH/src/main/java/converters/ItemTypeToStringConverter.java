@@ -14,7 +14,7 @@ import domain.ItemType;
 public class ItemTypeToStringConverter implements Converter<ItemType, String> {
 
 	@Override
-	public String convert(final ItemType o) {
+	public String convert( ItemType o) {
 		String result;
 		StringBuilder builder;
 		if (o == null)
@@ -25,7 +25,7 @@ public class ItemTypeToStringConverter implements Converter<ItemType, String> {
 				builder.append(URLEncoder.encode(o.getDeclaringClass().toString(), "UTF-8"));
 
 				result = builder.toString();
-			} catch (final Throwable oops) {
+			} catch ( Throwable oops) {
 				throw new RuntimeException(oops);
 			}
 
