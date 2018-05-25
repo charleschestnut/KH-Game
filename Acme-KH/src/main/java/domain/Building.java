@@ -86,7 +86,7 @@ public class Building extends DomainEntity {
 		return this.isFinal;
 	}
 
-	public void setIs(Boolean isFinal) {
+	public void setIsFinal(Boolean isFinal) {
 		this.isFinal = isFinal;
 	}
 	/**
