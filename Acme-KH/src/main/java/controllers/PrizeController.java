@@ -4,9 +4,6 @@ package controllers;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,8 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.PrizeService;
 import domain.Prize;
-import domain.Report;
-import domain.ReportStatus;
 
 @Controller
 @RequestMapping("/prize")
@@ -54,15 +49,14 @@ public class PrizeController extends AbstractController {
 
 		return res;
 	}
-	
+
 	@RequestMapping(value = "/openAJAX", method = RequestMethod.GET)
 	public ModelAndView openAJAX(@RequestParam final Integer prizeId) {
 		ModelAndView res;
 		final Prize prize;
 		final Collection<Prize> prizes;
-		
+
 		prize = this.prizeService.findOne(prizeId);
-		
 
 		if (prize == null)
 			res = new ModelAndView("prize/prizes");
@@ -73,9 +67,9 @@ public class PrizeController extends AbstractController {
 			} catch (final Throwable oops) {
 				res = new ModelAndView("prize/prizes");
 			}
-		
+
 		prizes = this.prizeService.getMyPrizes();
-		res.addObject("prizes",prizes);
+		res.addObject("prizes", prizes);
 
 		return res;
 	}

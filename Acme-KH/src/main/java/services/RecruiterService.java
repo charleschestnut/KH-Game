@@ -27,8 +27,6 @@ public class RecruiterService {
 	@Autowired
 	private RecruiterRepository	RecruiterRepository;
 	@Autowired
-	private BuildingService		buildingService;
-	@Autowired
 	private Validator			validator;
 	@Autowired
 	private ActorService		actorService;
@@ -86,7 +84,7 @@ public class RecruiterService {
 		Assert.isTrue(r.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
 		Assert.isTrue(r.equals(t.getRecruiter()), "error.message.recruiter.addTroop");
 		Assert.isTrue(t.getRecruiterRequiredLvl() <= r.getMaxLvl(), "error.message.recruiter.highLevel");
-		
+
 		t = this.troopService.save(t);
 
 		final Collection<Troop> troops = r.getTroops();

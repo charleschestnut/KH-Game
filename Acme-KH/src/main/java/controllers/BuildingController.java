@@ -11,18 +11,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.BuildingService;
-import services.DefenseService;
 import services.GummiShipService;
-import services.LivelihoodService;
-import services.RecruiterService;
 import services.RequirementService;
 import services.TroopService;
-import services.WarehouseService;
 import domain.Building;
 import domain.Defense;
 import domain.Livelihood;
 import domain.Recruiter;
-import domain.Warehouse;
 
 @Controller
 @RequestMapping("/building")
@@ -31,17 +26,9 @@ public class BuildingController extends AbstractController {
 	@Autowired
 	private BuildingService		buildingService;
 	@Autowired
-	private DefenseService		defenseService;
-	@Autowired
-	private RecruiterService	recruiterService;
-	@Autowired
-	private WarehouseService	warehouseService;
-	@Autowired
-	private LivelihoodService	livelihoodService;
-	@Autowired
 	private RequirementService	requirementService;
 	@Autowired
-	private TroopService	troopService;
+	private TroopService		troopService;
 	@Autowired
 	private GummiShipService	gummiShipService;
 
@@ -61,54 +48,30 @@ public class BuildingController extends AbstractController {
 	@RequestMapping("/display")
 	public ModelAndView display(@RequestParam final Integer buildingId) {
 		ModelAndView res = new ModelAndView("building/display");
-		Recruiter recruiter = null;
-		Warehouse warehouse = null;
-		Livelihood livelihood = null;
 
 		final Building b = this.buildingService.findOne(buildingId);
 		try {
 			//Si no existe el edificio o no es final y no soy el dueño pa fuera
 			if (b == null || (!b.getIsFinal() && !b.getContentManager().getUserAccount().equals(LoginService.getPrincipal())))
 				res = new ModelAndView("redirect:list.do");
-			else {
+			else if (b instanceof Defense)
+				res.addObject("defense", true);
+			else if (b instanceof Recruiter) {
 
-				final Defense defense = this.defenseService.findOne(buildingId);
-				if (defense != null) {
-					res.addObject("defense", true);
-					res.addObject("building", defense);
-				} else {
-
-					recruiter = this.recruiterService.findOne(buildingId);
-					if (recruiter != null) {
-						res.addObject("recruiter", true);
-						res.addObject("building", recruiter);
-						//TODO: añadir query para las tropas y gummi ships
-						res.addObject("troops", this.troopService.getTroopsAvailableFromRecruiterAndLvl(buildingId, recruiter.getMaxLvl()));
-						res.addObject("gummiShips", this.gummiShipService.getGummiShipsAvailableFromRecruiterAndLvl(buildingId, recruiter.getMaxLvl()));
-
-					} else {
-						livelihood = this.livelihoodService.findOne(buildingId);
-						if (livelihood != null) {
-							res.addObject("livelihood", true);
-							res.addObject("building", livelihood);
-
-						} else {
-							warehouse = this.warehouseService.findOne(buildingId);
-							res.addObject("warehouse", true);
-							res.addObject("building", warehouse);
-
-						}
-
-					}
-				}
-
-			}
+				res.addObject("recruiter", true);
+				res.addObject("troops", this.troopService.getTroopsFromRecruiter(b.getId()));
+				res.addObject("gummiShips", this.gummiShipService.getGummiShipFromRecruiter(b.getId()));
+			} else if (b instanceof Livelihood)
+				res.addObject("livelihood", true);
+			else
+				res.addObject("warehouse", true);
 
 		} catch (final Throwable oops) {
 			res = new ModelAndView("redirect:list.do");
 		}
 
 		res.addObject("requirements", this.requirementService.getRequirementsByBuilding(buildingId));
+		res.addObject("building", b);
 
 		return res;
 	}

@@ -16,12 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.BuildingService;
 import services.BuiltService;
-import services.DefenseService;
 import services.GummiShipService;
-import services.LivelihoodService;
-import services.RecruiterService;
 import services.TroopService;
-import services.WarehouseService;
 import domain.Building;
 import domain.Built;
 import domain.Defense;
@@ -30,7 +26,6 @@ import domain.Livelihood;
 import domain.Recruited;
 import domain.Recruiter;
 import domain.Troop;
-import domain.Warehouse;
 import form.BuiltForm;
 import form.RecruitedForm;
 
@@ -42,14 +37,6 @@ public class BuiltController extends AbstractController {
 	private BuildingService		buildingService;
 	@Autowired
 	private BuiltService		builtService;
-	@Autowired
-	private DefenseService		defenseService;
-	@Autowired
-	private RecruiterService	recruiterService;
-	@Autowired
-	private WarehouseService	warehouseService;
-	@Autowired
-	private LivelihoodService	livelihoodService;
 	@Autowired
 	private TroopService		troopService;
 	@Autowired
@@ -120,42 +107,26 @@ public class BuiltController extends AbstractController {
 	@RequestMapping("/display")
 	public ModelAndView display(@RequestParam final Integer builtId) {
 		ModelAndView res = new ModelAndView("built/display");
-		Recruiter recruiter = null;
-		Warehouse warehouse = null;
-		Livelihood livelihood = null;
 
 		final Built b = this.builtService.findOne(builtId);
-		final Integer buildingId = b.getBuilding().getId();
+		final Building building = b.getBuilding();
 
 		if (!b.getKeybladeWielder().getUserAccount().equals(LoginService.getPrincipal()) || b.getLvl() == 0)
 			res = new ModelAndView("redirect:list.do");
 
-		final Defense defense = this.defenseService.findOne(buildingId);
-		if (defense != null)
+		else if (building instanceof Defense)
 			res.addObject("defense", true);
+		else if (building instanceof Recruiter) {
+
+			res.addObject("recruiter", true);
+			res.addObject("troops", this.troopService.getTroopsAvailableFromRecruiterAndLvl(building.getId(), b.getLvl()));
+			res.addObject("gummiShips", this.gummiShipService.getGummiShipsAvailableFromRecruiterAndLvl(building.getId(), b.getLvl()));
+		} else if (building instanceof Livelihood)
+			res.addObject("livelihood", true);
 		else {
-
-			recruiter = this.recruiterService.findOne(buildingId);
-			if (recruiter != null) {
-				res.addObject("recruiter", true);
-				//TODO: añadir query para las tropas y gummi ships disponibles dentro del if
-				res.addObject("troops", this.troopService.getTroopsAvailableForBuilt(b.getLvl()));
-				res.addObject("gummiShips", this.gummiShipService.getGummiShipsAvailableForBuilt(b.getLvl()));
-			} else {
-				livelihood = this.livelihoodService.findOne(buildingId);
-				if (livelihood != null)
-					res.addObject("livelihood", true);
-				else {
-					warehouse = this.warehouseService.findOne(buildingId);
-					if (warehouse != null) {
-						res.addObject("warehouse", true);
-						res.addObject("storagedTroops", this.troopService.getStoragedTroops(builtId));
-						res.addObject("storagedShips", this.gummiShipService.getStoragedGummiShip(builtId));
-					}
-
-				}
-
-			}
+			res.addObject("warehouse", true);
+			res.addObject("storagedTroops", this.troopService.getStoragedTroops(builtId));
+			res.addObject("storagedShips", this.gummiShipService.getStoragedGummiShip(builtId));
 		}
 
 		res.addObject("built", b);

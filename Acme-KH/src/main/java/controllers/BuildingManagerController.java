@@ -17,7 +17,6 @@ import services.BuildingService;
 import services.DefenseService;
 import services.LivelihoodService;
 import services.RecruiterService;
-import services.RequirementService;
 import services.WarehouseService;
 import domain.Building;
 import domain.Defense;
@@ -39,8 +38,6 @@ public class BuildingManagerController extends AbstractController {
 	private WarehouseService	warehouseService;
 	@Autowired
 	private LivelihoodService	livelihoodService;
-	@Autowired
-	private RequirementService	requirementService;
 
 
 	@RequestMapping("/myList")
