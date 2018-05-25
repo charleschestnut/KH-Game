@@ -4,17 +4,23 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = {
+	@Index(columnList = "isFinal")
+})
 public class Building extends DomainEntity {
 
 	private String			name;
@@ -31,6 +37,7 @@ public class Building extends DomainEntity {
 	private ContentManager	contentManager;
 
 
+	@SafeHtml()
 	@NotBlank
 	public String getName() {
 		return this.name;
@@ -39,6 +46,7 @@ public class Building extends DomainEntity {
 	public void setName(final String name) {
 		this.name = name;
 	}
+	@SafeHtml()
 	@NotBlank
 	public String getDescription() {
 		return this.description;
@@ -47,6 +55,7 @@ public class Building extends DomainEntity {
 	public void setDescription(final String description) {
 		this.description = description;
 	}
+	@SafeHtml()
 	@URL
 	public String getPhoto() {
 		return this.photo;

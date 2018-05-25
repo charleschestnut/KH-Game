@@ -7,7 +7,9 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -15,10 +17,14 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 @Entity
+@Table(indexes = {
+	@Index(columnList = "date")
+})
 @Access(AccessType.PROPERTY)
 public class Prize extends DomainEntity {
 
@@ -47,6 +53,7 @@ public class Prize extends DomainEntity {
 	 * 
 	 * Por si algun empleado quiere mandar premios a los jugadores o eventos... (en batallas poner una descripción tipo en plan, has ganado contra: X y por tanto recibes: Y)
 	 */
+	@SafeHtml()
 	@NotBlank
 	public String getDescription() {
 		return this.description;
@@ -78,7 +85,7 @@ public class Prize extends DomainEntity {
 	public void setKeybladeWielder(final KeybladeWielder keybladeWielder) {
 		this.keybladeWielder = keybladeWielder;
 	}
-	
+
 	@Transient
 	public String getPrizeImage() {
 		Md5PasswordEncoder encoder;
@@ -90,7 +97,7 @@ public class Prize extends DomainEntity {
 		BigInteger prizeId = new BigInteger(hash);
 		prizeId = prizeId.mod(new BigInteger("21")).add(new BigInteger("1"));
 
-		return "chest"+prizeId;
+		return "chest" + prizeId;
 	}
 
 }
