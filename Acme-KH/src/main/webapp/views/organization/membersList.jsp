@@ -37,7 +37,7 @@
 	
 	<spring:message code="master.page.actions" var="actionsH" />
 	<display:column title="${actionsH}">
-		<jstl:if test="${iAmMaster}">
+		<jstl:if test="${iAmMaster and row.orgRange.toString() !='MASTER'}">
 			<acme:action code="invitation.changeRange" url="/organization/invitation/changeRange.do?invitationId=${row.id}"/>
 			<acme:action code="invitation.interchangeRange" url="/organization/invitation/interchangeRange.do?invitationId=${row.id}"/>
 		</jstl:if>
