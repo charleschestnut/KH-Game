@@ -39,11 +39,14 @@ public class ItemService {
 	// CRUD methods
 
 	public Item create() {
-		Item Item;
+		Item item;
 
-		Item = new Item();
+		item = new Item();
+		ContentManager contentManager = (ContentManager) this.actorService.findByPrincipal();
+		item.setContentManager(contentManager);
+		
 
-		return Item;
+		return item;
 	}
 
 	public Item save(final Item item) {
