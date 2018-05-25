@@ -160,17 +160,17 @@ document.body.onload = function() {showErrorMessage()};
 		<security:authorize access="hasRole('PLAYER')">
 				<div class="materials-panel">
 					<div class="btn btn-material" data-trigger="hover" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<spring:message code='munny'/>">
-						<img title="Munny" src="./images/materials/munny.png" width="50px"
+						<img src="./images/materials/munny.png" width="50px"
 							height="50px" /> <span class="badge badge-warning">${playerFromAbstract.materials.munny}/${maxMaterialsFromAbstract.munny}</span>
 					</div>
 
 					<div class="btn  btn-material" data-trigger="hover" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<spring:message code='mythril'/>">
-						<img title="Mythril" src="./images/materials/mythril.png"
+						<img src="./images/materials/mythril.png"
 							width="50px" height="50px" /> <span class="badge badge-info">${playerFromAbstract.materials.mytrhil}/${maxMaterialsFromAbstract.mytrhil}</span>
 					</div>
 
 					<div class="btn btn-material" data-trigger="hover" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<spring:message code='gummiCoal'/>">
-						<img title="Gummi Coal" src="./images/materials/gummiCoal.png"
+						<img src="./images/materials/gummiCoal.png"
 							width="50px" height="50px" /> <span class="badge badge-dark">${playerFromAbstract.materials.gummiCoal}/${maxMaterialsFromAbstract.gummiCoal}</span>
 					</div>
 				</div>

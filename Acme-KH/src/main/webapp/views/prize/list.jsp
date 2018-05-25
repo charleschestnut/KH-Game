@@ -25,28 +25,30 @@ function openChest(id){
 	
 	document.getElementById("div"+id).className += " heart-blast";
 	document.getElementById("badge"+id).style.display = "none";
+	$("[data-toggle='popover']").popover('hide');
 	
 	setTimeout(function(){ 
 		$("#info"+id).fadeIn();
 	}, 100);
 	
 	setTimeout(function(){ 
-		$('#container').load("prize/openAJAX.do?prizeId="+id).hide().fadeIn('slow');
+		$('#container').load("prize/openAJAX.do?prizeId="+id);
 	}, 1500);
 	
 	setTimeout(function(){ 
-		$(".materials-panel").load("keybladewielder/updateMaterialsPanel.do").hide().fadeIn();
-	}, 1700);
+		$(".materials-panel").load("keybladewielder/updateMaterialsPanel.do");
+	}, 2000);
 	
 	
 }
-    
+
 </script>   
 
 <div id="container">
 <div class="row row-width-prize prize-container">
 <jstl:forEach items="${prizes}" var="row">
-<div id="all${row.id}" class="all">
+<div id="all${row.id}" class="all" data-trigger="hover"
+		data-toggle="popover" data-trigger="focus" data-placement="top" data-content="${row.description}">
 	<img class="shadowfilter" src="./images/chests/${row.getPrizeImage()}.png"/><div id="div${row.id}" onclick='javascript: openChest(${row.id})' class="centered-prize heart"></div>
 	<div class="prize-info" id="info${row.id}">
 	<spring:message code="master.page.munny"/>:

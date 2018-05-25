@@ -20,9 +20,15 @@
 
 <spring:message var="dateFormat" code="master.page.dateFormat"/>
 
+<script>
+$(function () {
+	  $('[data-toggle="popover"]').popover()
+	})
+</script>
 <div class="row row-width-prize prize-container">
 <jstl:forEach items="${prizes}" var="row">
-	<div class="all">
+	<div class="all" data-trigger="hover"
+		data-toggle="popover" data-trigger="focus" data-placement="top" data-content="${row.description}">
 		<img class="shadowfilter" src="./images/chests/${row.getPrizeImage()}.png"/><div id="div${row.id}" onclick='javascript: openChest(${row.id})' class="centered-prize heart"></div>
 		<div class="prize-info" id="info${row.id}">
 		<spring:message code="master.page.munny"/>:
