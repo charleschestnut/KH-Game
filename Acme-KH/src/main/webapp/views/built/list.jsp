@@ -108,8 +108,10 @@
 				</p>
 				
 				<div class="btn-group pagination-centered">
+				<div data-trigger="hover"
+		data-toggle="popover" data-trigger="focus" data-placement="top" data-content="${row.building.getTotalMaterials(row.lvl) }">
 							<acme:icon-button color="#83f52c" icon="arrow_upward" href="built/upgrade.do?builtId=${row.id }" title="built.upgrade"/>
-					
+				</div>
 					
 					<jstl:if test="${row.lvl>0 }">
 			<%-- <a class="btn-sm btn btn-warning" href="built/display.do?builtId=${row.id}"><jstl:out value="${displayHeader}"></jstl:out></a> --%>
