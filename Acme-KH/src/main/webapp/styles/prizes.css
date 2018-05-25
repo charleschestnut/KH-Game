@@ -66,3 +66,7 @@
 	height:auto;
 }
 
+.badge-prize{
+	transform: translate(60%, -1240%);
+}
+

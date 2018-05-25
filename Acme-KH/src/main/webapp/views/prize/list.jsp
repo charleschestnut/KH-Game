@@ -16,23 +16,27 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<spring:message var="dateFormat" code="master.page.dateFormat"/>
 
 <script>
 function openChest(id){
 	
 	document.getElementById("div"+id).className += " heart-blast";
+	document.getElementById("badge"+id).style.display = "none";
 	
 	var a = setTimeout(function(){ 
 		$("#info"+id).fadeIn();
 	}, 100);
 	
-	var b = setTimeout(function(){ 
-		$("#all"+id).fadeOut(700);
-	}, 1000);
+	/* var b = setTimeout(function(){ 
+		$("#all"+id).fadeOut(300);
+	}, 1000); */
 	
 	var c = setTimeout(function(){ 
-		$('#container').load("prize/openAJAX.do?prizeId="+id);
-	}, 2000);
+		$('#container').load("prize/openAJAX.do?prizeId="+id).hide().fadeIn('slow');;
+	}, 1500);
 	
 	
 }
@@ -52,6 +56,7 @@ function openChest(id){
 	<spring:message code="master.page.gummyCoal"/>:
 	${row.materials.gummiCoal}
 	</div>
+	<span id="badge${row.id}" class="badge-prize badge badge-info"><fmt:formatDate value="${row.date}" pattern='${dateFormat}' /></span>
 </div>
 </jstl:forEach>
 </div>
