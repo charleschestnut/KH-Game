@@ -9,7 +9,13 @@
  */
  
 table {
-	border: 1px solid #666;
+	border: 1px solid #4195fc!important;
+    -webkit-border-radius: 20px!important;
+       -moz-border-radius: 20px!important;
+            border-radius: 20px!important;
+    -webkit-box-shadow: 0px 0px 20px #4195fc!important;
+       -moz-box-shadow: 0px 0px 20px #4195fc!important;
+            box-shadow: 0px 0px 20px #4195fc!important;
 	width: 80%;
 	margin: 20px 0 20px 0 !important;
 	text-align: center;
@@ -20,7 +26,7 @@ table {
 }
 
 th,td {
-	padding: 2px 4px 2px 4px !important;
+	padding: 10px 30px 10px 30px !important;
 	text-align: left;
 	vertical-align: top;
 	text-align: center;

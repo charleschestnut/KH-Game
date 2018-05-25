@@ -32,7 +32,7 @@
 	<form:label path="isBug">
 		<spring:message code="report.type" />
 	</form:label>	
-	<form:select id="${id}" path="isBug">
+	<form:select id="${id}" class="form-control" path="isBug">
 		<form:option value="true" label="Bug" />		
 		<form:option value="false" label="${asistence}" />		
 	</form:select>
