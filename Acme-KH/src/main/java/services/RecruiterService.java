@@ -50,7 +50,7 @@ public class RecruiterService {
 		return recruiter;
 	}
 
-	public Recruiter save(final Recruiter Recruiter) {
+	public Recruiter save(Recruiter Recruiter) {
 		Assert.notNull(Recruiter);
 		Assert.isTrue(Recruiter.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
 		Assert.isTrue(!Recruiter.getIsFinal() || (Recruiter.getTroops() != null && Recruiter.getTroops().size() > 0) || (Recruiter.getGummiShips() != null && Recruiter.getGummiShips().size() > 0), "error.message.recruiter.empty");
@@ -61,7 +61,7 @@ public class RecruiterService {
 
 		return saved;
 	}
-	public Recruiter findOne(final int RecruiterId) {
+	public Recruiter findOne(int RecruiterId) {
 		Assert.notNull(RecruiterId);
 
 		Recruiter Recruiter;
@@ -79,37 +79,37 @@ public class RecruiterService {
 		return Recruiters;
 	}
 
-	public void addTroop(final Recruiter r, Troop t) {
-		Assert.isTrue(!r.getIsFinal(), "error.message.building.final");
+	public void addTroop(Recruiter r, Troop t) {
+		Assert.isTrue(!r.getIsFinal(), "error.message.building.");
 		Assert.isTrue(r.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
 		Assert.isTrue(r.equals(t.getRecruiter()), "error.message.recruiter.addTroop");
 		Assert.isTrue(t.getRecruiterRequiredLvl() <= r.getMaxLvl(), "error.message.recruiter.highLevel");
 
 		t = this.troopService.save(t);
 
-		final Collection<Troop> troops = r.getTroops();
+		Collection<Troop> troops = r.getTroops();
 		troops.add(t);
 
 		this.RecruiterRepository.save(r);
 
 	}
 
-	public void addGummiShip(final Recruiter r, GummiShip gs) {
-		Assert.isTrue(!r.getIsFinal(), "error.message.building.final");
+	public void addGummiShip(Recruiter r, GummiShip gs) {
+		Assert.isTrue(!r.getIsFinal(), "error.message.building.");
 		Assert.isTrue(r.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
 		Assert.isTrue(r.equals(gs.getRecruiter()), "error.message.recruiter.addGummiShip");
 		Assert.isTrue(gs.getRecruiterRequiredLvl() <= r.getMaxLvl(), "error.message.recruiter.highLevel");
 		gs = this.gummiShipService.save(gs);
 
-		final Collection<GummiShip> gummies = r.getGummiShips();
+		Collection<GummiShip> gummies = r.getGummiShips();
 		gummies.add(gs);
 
 		this.RecruiterRepository.save(r);
 
 	}
 
-	public Recruiter reconstruct(Recruiter recruiter, final BindingResult binding) {
-		final Recruiter original = this.findOne(recruiter.getId());
+	public Recruiter reconstruct(Recruiter recruiter, BindingResult binding) {
+		Recruiter original = this.findOne(recruiter.getId());
 
 		if (recruiter.getId() == 0) {
 			recruiter.setGummiShips(new ArrayList<GummiShip>());

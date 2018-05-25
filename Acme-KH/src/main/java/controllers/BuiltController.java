@@ -45,8 +45,8 @@ public class BuiltController extends AbstractController {
 
 	@RequestMapping("/list")
 	public ModelAndView list() {
-		final ModelAndView res;
-		final Collection<Built> builts = this.builtService.getMyBuilts();
+		ModelAndView res;
+		Collection<Built> builts = this.builtService.getMyBuilts();
 
 		res = new ModelAndView("built/list");
 		res.addObject("builts", builts);
@@ -58,8 +58,8 @@ public class BuiltController extends AbstractController {
 	@RequestMapping("/create")
 	public ModelAndView create() {
 		ModelAndView res;
-		final Collection<Building> buildings = this.buildingService.getAvailableBuildings();
-		final BuiltForm form = new BuiltForm();
+		Collection<Building> buildings = this.buildingService.getAvailableBuildings();
+		BuiltForm form = new BuiltForm();
 
 		res = new ModelAndView("built/edit");
 		res.addObject("buildings", buildings);
@@ -69,18 +69,18 @@ public class BuiltController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/create", params = "save")
-	public ModelAndView save(@Valid final BuiltForm builtForm, final BindingResult binding) {
+	public ModelAndView save(@Valid BuiltForm builtForm, BindingResult binding) {
 		ModelAndView res;
 
 		if (binding.hasErrors())
 			res = this.createEditModelAndView(builtForm);
 		else
 			try {
-				final Built b = this.builtService.create(builtForm.getBuilding());
+				Built b = this.builtService.create(builtForm.getBuilding());
 				this.builtService.save(b);
 				res = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
+			} catch (Throwable oops) {
+				String msg = this.getErrorMessage(oops);
 				res = this.createEditModelAndView(builtForm, msg);
 			}
 
@@ -88,28 +88,28 @@ public class BuiltController extends AbstractController {
 	}
 
 	@RequestMapping("/upgrade")
-	public ModelAndView update(@RequestParam final Integer builtId) {
+	public ModelAndView update(@RequestParam Integer builtId) {
 		ModelAndView res;
-		final Built b = this.builtService.findOne(builtId);
+		Built b = this.builtService.findOne(builtId);
 		if (b == null)
 			res = new ModelAndView("redirect:list.do");
 		else
 			try {
 				this.builtService.upgrade(b);
 				res = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
+			} catch (Throwable oops) {
+				String msg = this.getErrorMessage(oops);
 				res = this.createListModelAndView(msg);
 			}
 		return res;
 	}
 
 	@RequestMapping("/display")
-	public ModelAndView display(@RequestParam final Integer builtId) {
+	public ModelAndView display(@RequestParam Integer builtId) {
 		ModelAndView res = new ModelAndView("built/display");
 
-		final Built b = this.builtService.findOne(builtId);
-		final Building building = b.getBuilding();
+		Built b = this.builtService.findOne(builtId);
+		Building building = b.getBuilding();
 
 		if (!b.getKeybladeWielder().getUserAccount().equals(LoginService.getPrincipal()) || b.getLvl() == 0)
 			res = new ModelAndView("redirect:list.do");
@@ -134,32 +134,32 @@ public class BuiltController extends AbstractController {
 		return res;
 	}
 	@RequestMapping("/delete")
-	public ModelAndView delete(@RequestParam final Integer builtId) {
+	public ModelAndView delete(@RequestParam Integer builtId) {
 		ModelAndView res;
-		final Built built = this.builtService.findOne(builtId);
+		Built built = this.builtService.findOne(builtId);
 
 		try {
 			this.builtService.delete(built);
 			res = new ModelAndView("redirect:list.do");
-		} catch (final Throwable oops) {
-			final String msg = this.getErrorMessage(oops);
+		} catch (Throwable oops) {
+			String msg = this.getErrorMessage(oops);
 			res = this.createListModelAndView(msg);
 		}
 		return res;
 	}
 
 	@RequestMapping("/startCollect")
-	public ModelAndView startCollect(@RequestParam final Integer builtId) {
+	public ModelAndView startCollect(@RequestParam Integer builtId) {
 		ModelAndView res;
-		final Built b = this.builtService.findOne(builtId);
+		Built b = this.builtService.findOne(builtId);
 		if (b == null)
 			res = new ModelAndView("redirect:list.do");
 		else
 			try {
 				this.builtService.startToCollect(b);
 				res = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
+			} catch (Throwable oops) {
+				String msg = this.getErrorMessage(oops);
 				res = this.createListModelAndView(msg);
 			}
 
@@ -167,17 +167,17 @@ public class BuiltController extends AbstractController {
 	}
 
 	@RequestMapping("/collect")
-	public ModelAndView collect(@RequestParam final Integer builtId) {
+	public ModelAndView collect(@RequestParam Integer builtId) {
 		ModelAndView res;
-		final Built b = this.builtService.findOne(builtId);
+		Built b = this.builtService.findOne(builtId);
 		if (b == null)
 			res = new ModelAndView("redirect:list.do");
 		else
 			try {
 				this.builtService.collect(b);
 				res = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
+			} catch (Throwable oops) {
+				String msg = this.getErrorMessage(oops);
 				res = this.createListModelAndView(msg);
 			}
 
@@ -185,15 +185,15 @@ public class BuiltController extends AbstractController {
 	}
 
 	@RequestMapping("/startRecruit")
-	public ModelAndView startRecruit(@RequestParam final Integer builtId) {
-		final ModelAndView res;
+	public ModelAndView startRecruit(@RequestParam Integer builtId) {
+		ModelAndView res;
 
-		final Built b = this.builtService.findOne(builtId);
+		Built b = this.builtService.findOne(builtId);
 		if (b == null || !b.getKeybladeWielder().getUserAccount().equals(LoginService.getPrincipal()))
 			res = new ModelAndView("redirect:list.do");
 		else {
 			res = new ModelAndView("built/recruit");
-			final RecruitedForm form = new RecruitedForm();
+			RecruitedForm form = new RecruitedForm();
 			form.setBuilt(b);
 			res.addObject("recruitedForm", form);
 
@@ -203,8 +203,8 @@ public class BuiltController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/startRecruit", params = "next", method = RequestMethod.POST)
-	public ModelAndView nextRecruit(final String wantRecruit, @Valid final RecruitedForm recruitedForm, final BindingResult binding) {
-		final ModelAndView res;
+	public ModelAndView nextRecruit(String wantRecruit, @Valid RecruitedForm recruitedForm, BindingResult binding) {
+		ModelAndView res;
 
 		if (binding.hasErrors())
 			res = new ModelAndView("redirect:list.do");
@@ -212,10 +212,10 @@ public class BuiltController extends AbstractController {
 			res = new ModelAndView("built/recruit");
 			res.addObject("wantRecruit", wantRecruit);
 			if (wantRecruit.equals("troop")) {
-				final Collection<Troop> troops = this.troopService.getTroopsAvailableFromRecruiterAndLvl(recruitedForm.getBuilt().getBuilding().getId(), recruitedForm.getBuilt().getLvl());
+				Collection<Troop> troops = this.troopService.getTroopsAvailableFromRecruiterAndLvl(recruitedForm.getBuilt().getBuilding().getId(), recruitedForm.getBuilt().getLvl());
 				res.addObject("troops", troops);
 			} else if (wantRecruit.equals("ship")) {
-				final Collection<GummiShip> ships = this.gummiShipService.getGummiShipsAvailableFromRecruiterAndLvl(recruitedForm.getBuilt().getBuilding().getId(), recruitedForm.getBuilt().getLvl());
+				Collection<GummiShip> ships = this.gummiShipService.getGummiShipsAvailableFromRecruiterAndLvl(recruitedForm.getBuilt().getBuilding().getId(), recruitedForm.getBuilt().getLvl());
 				res.addObject("ships", ships);
 			}
 			res.addObject("recruitedForm", recruitedForm);
@@ -224,7 +224,7 @@ public class BuiltController extends AbstractController {
 		return res;
 	}
 	@RequestMapping(value = "/startRecruit", params = "save", method = RequestMethod.POST)
-	public ModelAndView saveRecruit(final String wantRecruit, @Valid final RecruitedForm recruitedForm, final BindingResult binding) {
+	public ModelAndView saveRecruit(String wantRecruit, @Valid RecruitedForm recruitedForm, BindingResult binding) {
 		ModelAndView res;
 
 		if (binding.hasErrors() || (!wantRecruit.equals("troop") && !wantRecruit.equals("ship")))
@@ -238,8 +238,8 @@ public class BuiltController extends AbstractController {
 					this.builtService.startToRecruitGummiShip(recruitedForm.getBuilt(), recruitedForm.getGummiship());
 					res = new ModelAndView("redirect:list.do");
 				}
-			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
+			} catch (Throwable oops) {
+				String msg = this.getErrorMessage(oops);
 				res = this.createRecruitModelAndView(recruitedForm, wantRecruit, msg);
 			}
 
@@ -247,9 +247,9 @@ public class BuiltController extends AbstractController {
 	}
 
 	@RequestMapping("/recruit")
-	public ModelAndView recruit(@RequestParam final Integer builtId) {
+	public ModelAndView recruit(@RequestParam Integer builtId) {
 		ModelAndView res;
-		final Built built = this.builtService.findOne(builtId);
+		Built built = this.builtService.findOne(builtId);
 		Recruited recruited;
 
 		if (built == null || !built.getKeybladeWielder().getUserAccount().equals(LoginService.getPrincipal()))
@@ -258,15 +258,15 @@ public class BuiltController extends AbstractController {
 			try {
 				recruited = this.builtService.recruit(built);
 				res = new ModelAndView("redirect:display.do?builtId=" + recruited.getStorageBuilding().getId());
-			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
+			} catch (Throwable oops) {
+				String msg = this.getErrorMessage(oops);
 				res = this.createListModelAndView(msg);
 			}
 
 		return res;
 	}
-	protected ModelAndView createRecruitModelAndView(final RecruitedForm form, final String wantRecruit, final String msg) {
-		final ModelAndView res;
+	protected ModelAndView createRecruitModelAndView(RecruitedForm form, String wantRecruit, String msg) {
+		ModelAndView res;
 
 		res = new ModelAndView("built/recruit");
 		res.addObject("wantRecruit", wantRecruit);
@@ -274,18 +274,18 @@ public class BuiltController extends AbstractController {
 		res.addObject("message", msg);
 
 		if (wantRecruit.equals("troop")) {
-			final Collection<Troop> troops = this.troopService.getTroopsAvailableFromRecruiterAndLvl(form.getBuilt().getBuilding().getId(), form.getBuilt().getLvl());
+			Collection<Troop> troops = this.troopService.getTroopsAvailableFromRecruiterAndLvl(form.getBuilt().getBuilding().getId(), form.getBuilt().getLvl());
 			res.addObject("troops", troops);
 		} else if (wantRecruit.equals("ship")) {
-			final Collection<GummiShip> ships = this.gummiShipService.getGummiShipsAvailableFromRecruiterAndLvl(form.getBuilt().getBuilding().getId(), form.getBuilt().getLvl());
+			Collection<GummiShip> ships = this.gummiShipService.getGummiShipsAvailableFromRecruiterAndLvl(form.getBuilt().getBuilding().getId(), form.getBuilt().getLvl());
 			res.addObject("ships", ships);
 		}
 
 		return res;
 	}
-	protected ModelAndView createListModelAndView(final String msg) {
-		final ModelAndView res;
-		final Collection<Built> builts = this.builtService.getMyBuilts();
+	protected ModelAndView createListModelAndView(String msg) {
+		ModelAndView res;
+		Collection<Built> builts = this.builtService.getMyBuilts();
 
 		res = new ModelAndView("built/list");
 		res.addObject("builts", builts);
@@ -294,13 +294,13 @@ public class BuiltController extends AbstractController {
 		return res;
 	}
 
-	protected ModelAndView createEditModelAndView(final BuiltForm form) {
+	protected ModelAndView createEditModelAndView(BuiltForm form) {
 		return this.createEditModelAndView(form, null);
 
 	}
-	protected ModelAndView createEditModelAndView(final BuiltForm form, final String msg) {
+	protected ModelAndView createEditModelAndView(BuiltForm form, String msg) {
 		ModelAndView res;
-		final Collection<Building> buildings = this.buildingService.getAvailableBuildings();
+		Collection<Building> buildings = this.buildingService.getAvailableBuildings();
 
 		res = new ModelAndView("built/edit");
 		res.addObject("buildings", buildings);

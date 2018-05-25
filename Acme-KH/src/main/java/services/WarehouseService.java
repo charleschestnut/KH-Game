@@ -24,8 +24,6 @@ public class WarehouseService {
 	@Autowired
 	private WarehouseRepository	WarehouseRepository;
 	@Autowired
-	private BuildingService		buildingService;
-	@Autowired
 	private Validator			validator;
 	@Autowired
 	private ActorService		actorService;
@@ -42,7 +40,7 @@ public class WarehouseService {
 
 		return Warehouse;
 	}
-	public Warehouse save(final Warehouse Warehouse) {
+	public Warehouse save(Warehouse Warehouse) {
 		Assert.notNull(Warehouse);
 		Assert.isTrue(Warehouse.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
 		Assert.notNull(Warehouse.getMaterialsSlots().getGummiCoal(), "error.message.warehouse.nullMaterials");
@@ -55,7 +53,7 @@ public class WarehouseService {
 
 		return saved;
 	}
-	public Warehouse findOne(final int WarehouseId) {
+	public Warehouse findOne(int WarehouseId) {
 		Assert.notNull(WarehouseId);
 
 		Warehouse Warehouse;
@@ -73,14 +71,14 @@ public class WarehouseService {
 		return Warehouses;
 	}
 
-	public void delete(final Warehouse Warehouse) {
+	public void delete(Warehouse Warehouse) {
 		Assert.notNull(Warehouse);
 
 		this.WarehouseRepository.delete(Warehouse);
 	}
 
-	public Warehouse reconstruct(Warehouse w, final BindingResult binding) {
-		final Warehouse original = this.findOne(w.getId());
+	public Warehouse reconstruct(Warehouse w, BindingResult binding) {
+		Warehouse original = this.findOne(w.getId());
 
 		if (w.getId() == 0) {
 			w.setContentManager((ContentManager) this.actorService.findByPrincipal());

@@ -24,8 +24,6 @@ public class LivelihoodService {
 	@Autowired
 	private LivelihoodRepository	LivelihoodRepository;
 	@Autowired
-	private BuildingService			buildingService;
-	@Autowired
 	private Validator				validator;
 	@Autowired
 	private ActorService			actorService;
@@ -43,7 +41,7 @@ public class LivelihoodService {
 		return Livelihood;
 	}
 
-	public Livelihood save(final Livelihood Livelihood) {
+	public Livelihood save(Livelihood Livelihood) {
 		Assert.notNull(Livelihood);
 		Assert.isTrue(Livelihood.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
 
@@ -54,7 +52,7 @@ public class LivelihoodService {
 		return saved;
 	}
 
-	public Livelihood findOne(final int LivelihoodId) {
+	public Livelihood findOne(int LivelihoodId) {
 		Assert.notNull(LivelihoodId);
 
 		Livelihood Livelihood;
@@ -72,13 +70,13 @@ public class LivelihoodService {
 		return Livelihoods;
 	}
 
-	public void delete(final Livelihood Livelihood) {
+	public void delete(Livelihood Livelihood) {
 		Assert.notNull(Livelihood);
 
 		this.LivelihoodRepository.delete(Livelihood);
 	}
-	public Livelihood reconstruct(Livelihood l, final BindingResult binding) {
-		final Livelihood original = this.findOne(l.getId());
+	public Livelihood reconstruct(Livelihood l, BindingResult binding) {
+		Livelihood original = this.findOne(l.getId());
 
 		if (l.getId() == 0) {
 			l.setContentManager((ContentManager) this.actorService.findByPrincipal());

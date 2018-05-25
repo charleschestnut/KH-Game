@@ -52,7 +52,7 @@ public class BuiltService {
 
 	// CRUD methods
 
-	public Built create(final Building b) {
+	public Built create(Building b) {
 		Built built;
 
 		built = new Built();
@@ -64,8 +64,8 @@ public class BuiltService {
 		return built;
 	}
 
-	public Built save(final Built built) {
-		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+	public Built save(Built built) {
+		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 
 		Assert.notNull(built);
 		Assert.isTrue(this.getMyBuilts().size() < this.configurationService.getConfiguration().getWorldSlots(), "error.message.built.slots");
@@ -77,17 +77,17 @@ public class BuiltService {
 
 		saved = this.BuiltRepository.save(built);
 
-		final Materials myOldMaterials = player.getMaterials();
-		final Materials myNewMaterials = myOldMaterials.substract(built.getBuilding().getCost());
+		Materials myOldMaterials = player.getMaterials();
+		Materials myNewMaterials = myOldMaterials.substract(built.getBuilding().getCost());
 
 		player.setMaterials(myNewMaterials);
 		this.keybladeWielderService.save(player);
 
 		return saved;
 	}
-	public void upgrade(final Built built) {
-		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
-		final Date today = new Date(System.currentTimeMillis() - 100);
+	public void upgrade(Built built) {
+		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+		Date today = new Date(System.currentTimeMillis() - 100);
 
 		Assert.notNull(built);
 		Assert.isTrue(built.getKeybladeWielder().equals(player), "error.message.built.creator");
@@ -95,17 +95,17 @@ public class BuiltService {
 
 		if (built.getLvl() == 0) {
 
-			final Long time1 = today.getTime() - built.getCreationDate().getTime();
-			final Long time2 = (long) (built.getBuilding().getTimeToConstruct() * 60 * 1000);
+			Long time1 = today.getTime() - built.getCreationDate().getTime();
+			Long time2 = (long) (built.getBuilding().getTimeToConstruct() * 60 * 1000);
 
 			Assert.isTrue(time1 >= time2, "error.message.built.working");
 		} else {
 
-			final Materials myOldMaterials = player.getMaterials();
+			Materials myOldMaterials = player.getMaterials();
 
 			Assert.isTrue(myOldMaterials.isHigherThan(built.getBuilding().getTotalMaterials(built.getLvl())), "error.message.built.materials");
 
-			final Materials myNewMaterials = myOldMaterials.substract(built.getBuilding().getTotalMaterials(built.getLvl()));
+			Materials myNewMaterials = myOldMaterials.substract(built.getBuilding().getTotalMaterials(built.getLvl()));
 
 			player.setMaterials(myNewMaterials);
 			this.keybladeWielderService.save(player);
@@ -114,7 +114,7 @@ public class BuiltService {
 		built.setLvl(built.getLvl() + 1);
 		this.BuiltRepository.save(built);
 	}
-	public Built findOne(final int BuiltId) {
+	public Built findOne(int BuiltId) {
 		Assert.notNull(BuiltId);
 
 		Built Built;
@@ -132,25 +132,25 @@ public class BuiltService {
 		return Builts;
 	}
 
-	public void delete(final Built built) {
+	public void delete(Built built) {
 		Assert.notNull(built);
 		Assert.isTrue(built.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
 
-		final Warehouse w = this.warehouseService.findOne(built.getBuilding().getId());
+		Warehouse w = this.warehouseService.findOne(built.getBuilding().getId());
 
 		if (w != null) {
-			final Collection<Recruited> recruiteds = this.recruitedService.getMyRecruited(built.getId());
-			for (final Recruited r : recruiteds)
+			Collection<Recruited> recruiteds = this.recruitedService.getMyRecruited(built.getId());
+			for (Recruited r : recruiteds)
 				this.recruitedService.delete(r);
 
-			final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
-			final Materials extra = this.extraMaterials();
-			final Materials base = this.configurationService.getConfiguration().getBaseMaterials();
-			final Materials esteWarehouse = w.getTotalSlotsMaterials(built.getLvl());
-			final Materials tenia = player.getMaterials();
+			KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+			Materials extra = this.extraMaterials();
+			Materials base = this.configurationService.getConfiguration().getBaseMaterials();
+			Materials esteWarehouse = w.getTotalSlotsMaterials(built.getLvl());
+			Materials tenia = player.getMaterials();
 			Materials total = base.add(extra);
 			total = total.substract(esteWarehouse);
-			final Materials tengo = tenia.removeExcess(total);
+			Materials tengo = tenia.removeExcess(total);
 
 			if (!tengo.equals(tenia)) {
 				player.setMaterials(tengo);
@@ -161,8 +161,8 @@ public class BuiltService {
 
 		this.BuiltRepository.delete(built);
 	}
-	public void startToCollect(final Built b) {
-		final Livelihood l = this.livelihoodService.findOne(b.getBuilding().getId());
+	public void startToCollect(Built b) {
+		Livelihood l = this.livelihoodService.findOne(b.getBuilding().getId());
 
 		Assert.notNull(l, "error.message.built.noBuilding");
 		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
@@ -173,9 +173,9 @@ public class BuiltService {
 
 		this.BuiltRepository.save(b);
 	}
-	public void startToRecruitTroop(final Built b, final Troop t) {
-		final Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
-		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+	public void startToRecruitTroop(Built b, Troop t) {
+		Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
+		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 
 		Assert.notNull(r, "error.message.built.noBuilding");
 		Assert.notNull(t, "error.message.built.noTroop");
@@ -188,8 +188,8 @@ public class BuiltService {
 		b.setActivationDate(new Date(System.currentTimeMillis()));
 		b.setTroop(t);
 
-		final Materials myOldMaterials = player.getMaterials();
-		final Materials myNewMaterials = myOldMaterials.substract(t.getCost());
+		Materials myOldMaterials = player.getMaterials();
+		Materials myNewMaterials = myOldMaterials.substract(t.getCost());
 
 		player.setMaterials(myNewMaterials);
 		this.keybladeWielderService.save(player);
@@ -197,9 +197,9 @@ public class BuiltService {
 		this.BuiltRepository.save(b);
 	}
 
-	public void startToRecruitGummiShip(final Built b, final GummiShip g) {
-		final Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
-		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+	public void startToRecruitGummiShip(Built b, GummiShip g) {
+		Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
+		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 
 		Assert.notNull(r, "error.message.built.noBuilding");
 		Assert.notNull(g, "error.message.built.noShip");
@@ -212,8 +212,8 @@ public class BuiltService {
 		b.setActivationDate(new Date(System.currentTimeMillis()));
 		b.setGummiShip(g);
 
-		final Materials myOldMaterials = player.getMaterials();
-		final Materials myNewMaterials = myOldMaterials.substract(g.getCost());
+		Materials myOldMaterials = player.getMaterials();
+		Materials myNewMaterials = myOldMaterials.substract(g.getCost());
 
 		player.setMaterials(myNewMaterials);
 		this.keybladeWielderService.save(player);
@@ -221,20 +221,20 @@ public class BuiltService {
 		this.BuiltRepository.save(b);
 	}
 
-	public void collect(final Built b) {
-		final Livelihood l = this.livelihoodService.findOne(b.getBuilding().getId());
-		final Long days = (long) 2592000;
-		final Date expiration = new Date(System.currentTimeMillis() + days * 1000);
-		final Date today = new Date(System.currentTimeMillis() - 1000);
-		final Long time1 = today.getTime() - b.getActivationDate().getTime();
-		final Long time2 = (long) (l.getTotalTime(b.getLvl()) * 60 * 1000);
+	public void collect(Built b) {
+		Livelihood l = this.livelihoodService.findOne(b.getBuilding().getId());
+		Long days = (long) 2592000;
+		Date expiration = new Date(System.currentTimeMillis() + days * 1000);
+		Date today = new Date(System.currentTimeMillis() - 1000);
+		Long time1 = today.getTime() - b.getActivationDate().getTime();
+		Long time2 = (long) (l.getTotalTime(b.getLvl()) * 60 * 1000);
 
 		Assert.notNull(l, "error.message.built.noBuilding");
 		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
 		Assert.notNull(b.getActivationDate(), "error.message.built.notInUse");
 		Assert.isTrue(time1 >= time2, "error.message.built.working");
 
-		final Prize p = new Prize();
+		Prize p = new Prize();
 		p.setDate(expiration);
 		p.setDescription("built.prize.defaultDescription");
 		p.setKeybladeWielder((KeybladeWielder) this.actorService.findByPrincipal());
@@ -246,11 +246,11 @@ public class BuiltService {
 		this.BuiltRepository.save(b);
 
 	}
-	public Recruited recruit(final Built b) {
+	public Recruited recruit(Built b) {
 		Recruited res;
-		final Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
-		final Date today = new Date(System.currentTimeMillis() - 1000);
-		final Long time1 = today.getTime() - b.getActivationDate().getTime();
+		Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
+		Date today = new Date(System.currentTimeMillis() - 1000);
+		Long time1 = today.getTime() - b.getActivationDate().getTime();
 		Long time2;
 		if (b.getTroop() != null)
 			time2 = (long) (b.getTroop().getTimeToRecruit() * 60 * 1000);
@@ -284,7 +284,7 @@ public class BuiltService {
 		return this.BuiltRepository.getMyFreeWarehousesGummi(this.actorService.findByPrincipal().getId());
 	}
 	public Materials extraMaterials() {
-		final Integer playerId = this.actorService.findByPrincipal().getId();
+		Integer playerId = this.actorService.findByPrincipal().getId();
 
 		Integer munny = this.BuiltRepository.getExtraMunny(playerId);
 		Integer coal = this.BuiltRepository.getExtraGummiCoal(playerId);
@@ -299,7 +299,7 @@ public class BuiltService {
 		if (coal == null || coal < 0)
 			coal = 0;
 
-		final Materials materials = new Materials();
+		Materials materials = new Materials();
 		materials.setMunny(munny);
 		materials.setMytrhil(mytrhil);
 		materials.setGummiCoal(coal);
@@ -307,8 +307,8 @@ public class BuiltService {
 		return materials;
 	}
 	public Materials maxMaterials() {
-		final Materials base = this.configurationService.getConfiguration().getBaseMaterials();
-		final Materials res = this.extraMaterials().add(base);
+		Materials base = this.configurationService.getConfiguration().getBaseMaterials();
+		Materials res = this.extraMaterials().add(base);
 
 		return res;
 

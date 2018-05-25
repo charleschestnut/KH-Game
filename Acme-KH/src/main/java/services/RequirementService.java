@@ -30,7 +30,7 @@ public class RequirementService {
 
 	// CRUD methods
 
-	public Requirement create(final Building b) {
+	public Requirement create(Building b) {
 		Requirement requirement;
 
 		requirement = new Requirement();
@@ -39,10 +39,10 @@ public class RequirementService {
 		return requirement;
 	}
 
-	public Requirement save(final Requirement Requirement) {
+	public Requirement save(Requirement Requirement) {
 		Assert.notNull(Requirement);
 		Assert.isTrue(Requirement.getMainBuilding().getContentManager().equals(this.actorService.findByPrincipal()), "error.message.req.creator");
-		Assert.isTrue(!Requirement.getMainBuilding().getIsFinal(), "error.message.req.final");
+		Assert.isTrue(!Requirement.getMainBuilding().getIsFinal(), "error.message.req.");
 		Assert.isTrue(!Requirement.getMainBuilding().equals(Requirement.getRequiredBuilding()), "error.message.req.sameBuilding");
 		Assert.isTrue(Requirement.getRequiredBuilding().getIsFinal(), "error.message.req.final2");
 		Assert.isTrue(Requirement.getId() == 0, "error.message.req.edit");
@@ -54,7 +54,7 @@ public class RequirementService {
 		return saved;
 	}
 
-	public Requirement findOne(final int RequirementId) {
+	public Requirement findOne(int RequirementId) {
 		Assert.notNull(RequirementId);
 
 		Requirement Requirement;
@@ -72,16 +72,16 @@ public class RequirementService {
 		return Requirements;
 	}
 
-	public void delete(final Requirement Requirement) {
+	public void delete(Requirement Requirement) {
 		Assert.notNull(Requirement);
 		Assert.isTrue(Requirement.getMainBuilding().getContentManager().equals(this.actorService.findByPrincipal()), "error.message.req.creator");
-		Assert.isTrue(!Requirement.getMainBuilding().getIsFinal(), "error.message.req.final");
+		Assert.isTrue(!Requirement.getMainBuilding().getIsFinal(), "error.message.req.");
 
 		this.RequirementRepository.delete(Requirement);
 	}
 
-	public Requirement reconstruct(Requirement requirement, final BindingResult binding) {
-		final Requirement original = this.findOne(requirement.getId());
+	public Requirement reconstruct(Requirement requirement, BindingResult binding) {
+		Requirement original = this.findOne(requirement.getId());
 
 		if (!original.getMainBuilding().getIsFinal()) {
 			if (requirement.getId() != 0)
@@ -98,22 +98,22 @@ public class RequirementService {
 
 	//other methods
 
-	public Collection<Requirement> getRequirementsByBuilding(final Integer buildingId) {
+	public Collection<Requirement> getRequirementsByBuilding(Integer buildingId) {
 		return this.RequirementRepository.getRequirementsForABuilt(buildingId);
 	}
 
-	public Boolean isTrue(final Requirement r) {
-		final Integer i = this.RequirementRepository.getIsTrueRequirement(r.getRequiredBuilding().getId(), r.getLvl(), this.actorService.findByPrincipal().getId());
+	public Boolean isTrue(Requirement r) {
+		Integer i = this.RequirementRepository.getIsTrueRequirement(r.getRequiredBuilding().getId(), r.getLvl(), this.actorService.findByPrincipal().getId());
 		Boolean res = true;
 		if (i == null || i < 1)
 			res = false;
 		return res;
 	}
 
-	public Boolean fulfillsRequirements(final Integer buildingId) {
+	public Boolean fulfillsRequirements(Integer buildingId) {
 		Boolean res = true;
 		if (this.getRequirementsByBuilding(buildingId).size() > 0) {
-			final Integer i = this.RequirementRepository.getBuildingFulfillsReqs(buildingId, this.actorService.findByPrincipal().getId());
+			Integer i = this.RequirementRepository.getBuildingFulfillsReqs(buildingId, this.actorService.findByPrincipal().getId());
 
 			if (i == null || i < 1)
 				res = false;

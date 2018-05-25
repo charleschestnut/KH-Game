@@ -24,8 +24,6 @@ public class DefenseService {
 	@Autowired
 	private DefenseRepository	DefenseRepository;
 	@Autowired
-	private BuildingService		buildingService;
-	@Autowired
 	private Validator			validator;
 	@Autowired
 	private ActorService		actorService;
@@ -42,7 +40,7 @@ public class DefenseService {
 
 		return Defense;
 	}
-	public Defense save(final Defense Defense) {
+	public Defense save(Defense Defense) {
 		Assert.notNull(Defense);
 		Assert.isTrue(Defense.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
 
@@ -53,7 +51,7 @@ public class DefenseService {
 		return saved;
 	}
 
-	public Defense findOne(final int DefenseId) {
+	public Defense findOne(int DefenseId) {
 		Assert.notNull(DefenseId);
 
 		Defense Defense;
@@ -71,14 +69,14 @@ public class DefenseService {
 		return Defenses;
 	}
 
-	public void delete(final Defense Defense) {
+	public void delete(Defense Defense) {
 		Assert.notNull(Defense);
 
 		this.DefenseRepository.delete(Defense);
 	}
 
-	public Defense reconstruct(Defense defense, final BindingResult binding) {
-		final Defense original = this.findOne(defense.getId());
+	public Defense reconstruct(Defense defense, BindingResult binding) {
+		Defense original = this.findOne(defense.getId());
 
 		if (defense.getId() == 0) {
 			defense.setContentManager((ContentManager) this.actorService.findByPrincipal());

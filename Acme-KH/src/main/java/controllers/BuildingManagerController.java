@@ -42,8 +42,8 @@ public class BuildingManagerController extends AbstractController {
 
 	@RequestMapping("/myList")
 	public ModelAndView myList() {
-		final ModelAndView res;
-		final Collection<Building> buildings = this.buildingService.getMyCreatedBuildings();
+		ModelAndView res;
+		Collection<Building> buildings = this.buildingService.getMyCreatedBuildings();
 
 		res = new ModelAndView("building/list");
 		res.addObject("buildings", buildings);
@@ -53,12 +53,12 @@ public class BuildingManagerController extends AbstractController {
 	}
 
 	@RequestMapping("/edit")
-	public ModelAndView edit(@RequestParam(required = false) final Integer buildingId, @RequestParam(required = false) final String buildingType) {
+	public ModelAndView edit(@RequestParam(required = false) Integer buildingId, @RequestParam(required = false) String buildingType) {
 		ModelAndView res = new ModelAndView("building/edit");
 		Defense defense;
 		Recruiter recruiter;
 		Livelihood livelihood;
-		final Warehouse warehouse;
+		Warehouse warehouse;
 
 		//============= EDITANDO UNO EXISTENTE ==============
 		if (buildingId != null)
@@ -125,7 +125,7 @@ public class BuildingManagerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", params = "savedefense", method = RequestMethod.POST)
-	public ModelAndView saveDefense(final Defense defense, final BindingResult binding, final Boolean saveFinal) {
+	public ModelAndView saveDefense(Defense defense, BindingResult binding, Boolean saveFinal) {
 		ModelAndView res;
 
 		this.defenseService.reconstruct(defense, binding);
@@ -135,14 +135,14 @@ public class BuildingManagerController extends AbstractController {
 		else
 			try {
 				if (defense.getId() != 0)
-					Assert.isTrue(!this.defenseService.findOne(defense.getId()).getIsFinal(), "error.message.building.final");
+					Assert.isTrue(!this.defenseService.findOne(defense.getId()).getIsFinal(), "error.message.building.");
 				if (saveFinal != null && saveFinal)
 					defense.setIsFinal(true);
 				this.defenseService.save(defense);
 				res = new ModelAndView("redirect:myList.do");
 
-			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
+			} catch (Throwable oops) {
+				String msg = this.getErrorMessage(oops);
 				res = this.createEditModelAndView(defense, null, null, null, "defense", msg);
 
 			}
@@ -151,7 +151,7 @@ public class BuildingManagerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", params = "saverecruiter", method = RequestMethod.POST)
-	public ModelAndView saveRecruiter(final Recruiter recruiter, final BindingResult binding, final Boolean saveFinal) {
+	public ModelAndView saveRecruiter(Recruiter recruiter, BindingResult binding, Boolean saveFinal) {
 		ModelAndView res;
 
 		this.recruiterService.reconstruct(recruiter, binding);
@@ -161,14 +161,14 @@ public class BuildingManagerController extends AbstractController {
 		else
 			try {
 				if (recruiter.getId() != 0)
-					Assert.isTrue(!this.recruiterService.findOne(recruiter.getId()).getIsFinal(), "error.message.building.final");
+					Assert.isTrue(!this.recruiterService.findOne(recruiter.getId()).getIsFinal(), "error.message.building.");
 				if (saveFinal != null && saveFinal)
 					recruiter.setIsFinal(true);
 				this.recruiterService.save(recruiter);
 				res = new ModelAndView("redirect:myList.do");
 
-			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
+			} catch (Throwable oops) {
+				String msg = this.getErrorMessage(oops);
 				res = this.createEditModelAndView(null, recruiter, null, null, "recruiter", msg);
 
 			}
@@ -177,7 +177,7 @@ public class BuildingManagerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", params = "savewarehouse", method = RequestMethod.POST)
-	public ModelAndView saveWarehouse(final Warehouse warehouse, final BindingResult binding, final Boolean saveFinal) {
+	public ModelAndView saveWarehouse(Warehouse warehouse, BindingResult binding, Boolean saveFinal) {
 		ModelAndView res;
 
 		this.warehouseService.reconstruct(warehouse, binding);
@@ -187,14 +187,14 @@ public class BuildingManagerController extends AbstractController {
 		else
 			try {
 				if (warehouse.getId() != 0)
-					Assert.isTrue(!this.warehouseService.findOne(warehouse.getId()).getIsFinal(), "error.message.building.final");
+					Assert.isTrue(!this.warehouseService.findOne(warehouse.getId()).getIsFinal(), "error.message.building.");
 				if (saveFinal != null && saveFinal)
 					warehouse.setIsFinal(true);
 				this.warehouseService.save(warehouse);
 				res = new ModelAndView("redirect:myList.do");
 
-			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
+			} catch (Throwable oops) {
+				String msg = this.getErrorMessage(oops);
 				res = this.createEditModelAndView(null, null, warehouse, null, "warehouse", msg);
 
 			}
@@ -203,7 +203,7 @@ public class BuildingManagerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", params = "savelivelihood", method = RequestMethod.POST)
-	public ModelAndView saveLivelihood(final Livelihood livelihood, final BindingResult binding, final Boolean saveFinal) {
+	public ModelAndView saveLivelihood(Livelihood livelihood, BindingResult binding, Boolean saveFinal) {
 		ModelAndView res;
 
 		this.livelihoodService.reconstruct(livelihood, binding);
@@ -213,14 +213,14 @@ public class BuildingManagerController extends AbstractController {
 		else
 			try {
 				if (livelihood.getId() != 0)
-					Assert.isTrue(!this.livelihoodService.findOne(livelihood.getId()).getIsFinal(), "error.message.building.final");
+					Assert.isTrue(!this.livelihoodService.findOne(livelihood.getId()).getIsFinal(), "error.message.building.");
 				if (saveFinal != null && saveFinal)
 					livelihood.setIsFinal(true);
 				this.livelihoodService.save(livelihood);
 				res = new ModelAndView("redirect:myList.do");
 
-			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
+			} catch (Throwable oops) {
+				String msg = this.getErrorMessage(oops);
 				res = this.createEditModelAndView(null, null, null, livelihood, "livelihood", msg);
 
 			}
@@ -228,18 +228,18 @@ public class BuildingManagerController extends AbstractController {
 		return res;
 	}
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final Integer buildingId) {
+	public ModelAndView delete(@RequestParam Integer buildingId) {
 		ModelAndView res;
 
-		final Building building = this.buildingService.findOne(buildingId);
+		Building building = this.buildingService.findOne(buildingId);
 
 		try {
 			Assert.notNull(building, "error.message.building.noExist");
 			this.buildingService.delete(building);
 			res = new ModelAndView("redirect:myList.do");
-		} catch (final Throwable oops) {
-			final String msg = this.getErrorMessage(oops);
-			final Collection<Building> buildings = this.buildingService.getMyCreatedBuildings();
+		} catch (Throwable oops) {
+			String msg = this.getErrorMessage(oops);
+			Collection<Building> buildings = this.buildingService.getMyCreatedBuildings();
 
 			res = new ModelAndView("building/list");
 			res.addObject("buildings", buildings);
@@ -249,11 +249,11 @@ public class BuildingManagerController extends AbstractController {
 
 		return res;
 	}
-	protected ModelAndView createEditModelAndView(final Defense defense, final Recruiter recruiter, final Warehouse warehouse, final Livelihood livelihood, final String buildingType) {
+	protected ModelAndView createEditModelAndView(Defense defense, Recruiter recruiter, Warehouse warehouse, Livelihood livelihood, String buildingType) {
 		return this.createEditModelAndView(defense, recruiter, warehouse, livelihood, buildingType, null);
 	}
-	protected ModelAndView createEditModelAndView(final Defense defense, final Recruiter recruiter, final Warehouse warehouse, final Livelihood livelihood, final String buildingType, final String message) {
-		final ModelAndView res;
+	protected ModelAndView createEditModelAndView(Defense defense, Recruiter recruiter, Warehouse warehouse, Livelihood livelihood, String buildingType, String message) {
+		ModelAndView res;
 
 		res = new ModelAndView("building/edit");
 

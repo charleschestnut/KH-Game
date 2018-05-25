@@ -29,13 +29,13 @@ public class RequirementController extends AbstractController {
 
 
 	@RequestMapping("/edit")
-	public ModelAndView edit(@RequestParam(required = false) final Integer buildingId, @RequestParam(required = false) final Integer requirementId) {
+	public ModelAndView edit(@RequestParam(required = false) Integer buildingId, @RequestParam(required = false) Integer requirementId) {
 		ModelAndView res = new ModelAndView("requirement/edit");
 		Requirement r = null;
-		final Collection<Building> buildings = this.buildingService.getAvailableBuildings();
+		Collection<Building> buildings = this.buildingService.getAvailableBuildings();
 
 		if (buildingId != null) { //Va a crear
-			final Building building = this.buildingService.findOne(buildingId);
+			Building building = this.buildingService.findOne(buildingId);
 			r = this.requirementService.create(building);
 
 		} else if (requirementId != null) { //Va a editar
@@ -52,7 +52,7 @@ public class RequirementController extends AbstractController {
 		return res;
 	}
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Requirement requirement, final BindingResult binding) {
+	public ModelAndView save(@Valid Requirement requirement, BindingResult binding) {
 		ModelAndView res;
 
 		if (binding.hasErrors())
@@ -61,8 +61,8 @@ public class RequirementController extends AbstractController {
 			try {
 				this.requirementService.save(requirement);
 				res = new ModelAndView("redirect:/building/display.do?buildingId=" + requirement.getMainBuilding().getId());
-			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
+			} catch (Throwable oops) {
+				String msg = this.getErrorMessage(oops);
 				res = this.createEditModelAndView(requirement, msg);
 			}
 
@@ -70,7 +70,7 @@ public class RequirementController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid final Requirement requirement, final BindingResult binding) {
+	public ModelAndView delete(@Valid Requirement requirement, BindingResult binding) {
 		ModelAndView res;
 
 		if (binding.hasErrors())
@@ -79,20 +79,20 @@ public class RequirementController extends AbstractController {
 			try {
 				this.requirementService.delete(requirement);
 				res = new ModelAndView("redirect:/building/display.do?buildingId=" + requirement.getMainBuilding().getId());
-			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
+			} catch (Throwable oops) {
+				String msg = this.getErrorMessage(oops);
 				res = this.createEditModelAndView(requirement, msg);
 			}
 
 		return res;
 	}
-	protected ModelAndView createEditModelAndView(final Requirement requirement) {
+	protected ModelAndView createEditModelAndView(Requirement requirement) {
 		return this.createEditModelAndView(requirement, null);
 	}
 
-	protected ModelAndView createEditModelAndView(final Requirement requirement, final String msg) {
-		final ModelAndView res;
-		final Collection<Building> buildings = this.buildingService.getAvailableBuildings();
+	protected ModelAndView createEditModelAndView(Requirement requirement, String msg) {
+		ModelAndView res;
+		Collection<Building> buildings = this.buildingService.getAvailableBuildings();
 
 		res = new ModelAndView("requirement/edit");
 		res.addObject("buildings", buildings);

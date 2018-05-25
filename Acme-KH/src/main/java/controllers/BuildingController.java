@@ -35,8 +35,8 @@ public class BuildingController extends AbstractController {
 
 	@RequestMapping("/list")
 	public ModelAndView list() {
-		final ModelAndView res;
-		final Collection<Building> buildings = this.buildingService.getAvailableBuildings();
+		ModelAndView res;
+		Collection<Building> buildings = this.buildingService.getAvailableBuildings();
 
 		res = new ModelAndView("building/list");
 		res.addObject("buildings", buildings);
@@ -46,12 +46,12 @@ public class BuildingController extends AbstractController {
 	}
 
 	@RequestMapping("/display")
-	public ModelAndView display(@RequestParam final Integer buildingId) {
+	public ModelAndView display(@RequestParam Integer buildingId) {
 		ModelAndView res = new ModelAndView("building/display");
 
-		final Building b = this.buildingService.findOne(buildingId);
+		Building b = this.buildingService.findOne(buildingId);
 		try {
-			//Si no existe el edificio o no es final y no soy el dueño pa fuera
+			//Si no existe el edificio o no es  y no soy el dueño pa fuera
 			if (b == null || (!b.getIsFinal() && !b.getContentManager().getUserAccount().equals(LoginService.getPrincipal())))
 				res = new ModelAndView("redirect:list.do");
 			else if (b instanceof Defense)
@@ -66,7 +66,7 @@ public class BuildingController extends AbstractController {
 			else
 				res.addObject("warehouse", true);
 
-		} catch (final Throwable oops) {
+		} catch (Throwable oops) {
 			res = new ModelAndView("redirect:list.do");
 		}
 

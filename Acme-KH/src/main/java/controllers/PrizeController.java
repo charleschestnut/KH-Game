@@ -23,8 +23,8 @@ public class PrizeController extends AbstractController {
 
 	@RequestMapping("/list")
 	public ModelAndView list() {
-		final ModelAndView res;
-		final Collection<Prize> prizes = this.prizeService.getMyPrizes();
+		ModelAndView res;
+		Collection<Prize> prizes = this.prizeService.getMyPrizes();
 
 		res = new ModelAndView("prize/list");
 		res.addObject("prizes", prizes);
@@ -33,9 +33,9 @@ public class PrizeController extends AbstractController {
 	}
 
 	@RequestMapping("/open")
-	public ModelAndView open(@RequestParam final Integer prizeId) {
+	public ModelAndView open(@RequestParam Integer prizeId) {
 		ModelAndView res;
-		final Prize p = this.prizeService.findOne(prizeId);
+		Prize p = this.prizeService.findOne(prizeId);
 
 		if (p == null)
 			res = new ModelAndView("redirect:list.do");
@@ -43,7 +43,7 @@ public class PrizeController extends AbstractController {
 			try {
 				this.prizeService.open(p);
 				res = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
+			} catch (Throwable oops) {
 				res = new ModelAndView("redirect:list.do");
 			}
 
@@ -51,10 +51,10 @@ public class PrizeController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/openAJAX", method = RequestMethod.GET)
-	public ModelAndView openAJAX(@RequestParam final Integer prizeId) {
+	public ModelAndView openAJAX(@RequestParam Integer prizeId) {
 		ModelAndView res;
-		final Prize prize;
-		final Collection<Prize> prizes;
+		Prize prize;
+		Collection<Prize> prizes;
 
 		prize = this.prizeService.findOne(prizeId);
 
@@ -64,7 +64,7 @@ public class PrizeController extends AbstractController {
 			try {
 				this.prizeService.open(prize);
 				res = new ModelAndView("prize/prizes");
-			} catch (final Throwable oops) {
+			} catch (Throwable oops) {
 				res = new ModelAndView("prize/prizes");
 			}
 

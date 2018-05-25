@@ -24,21 +24,12 @@ public class RecruitedService {
 	private RecruitedRepository	RecruitedRepository;
 
 	@Autowired
-	private ActorService		actorService;
-
-	@Autowired
-	private TroopService		troopService;
-
-	@Autowired
-	private GummiShipService	gummiShipService;
-
-	@Autowired
 	private BuiltService		builtService;
 
 
 	// CRUD methods
 
-	public Recruited create(final Built built) {
+	public Recruited create(Built built) {
 		Recruited recruited;
 		recruited = new Recruited();
 
@@ -50,9 +41,9 @@ public class RecruitedService {
 		return recruited;
 	}
 
-	public Recruited save(final Built built) {
-		final List<Built> warehouses;
-		final Recruited recruited = this.create(built);
+	public Recruited save(Built built) {
+		List<Built> warehouses;
+		Recruited recruited = this.create(built);
 
 		Assert.notNull(built);
 		Assert.isTrue(!(built.getGummiShip() == null && built.getTroop() == null));
@@ -80,7 +71,7 @@ public class RecruitedService {
 
 		return saved;
 	}
-	public Recruited findOne(final int RecruitedId) {
+	public Recruited findOne(int RecruitedId) {
 		Assert.notNull(RecruitedId);
 
 		Recruited Recruited;
@@ -98,7 +89,7 @@ public class RecruitedService {
 		return Recruiteds;
 	}
 
-	public void delete(final Recruited Recruited) {
+	public void delete(Recruited Recruited) {
 		Assert.notNull(Recruited);
 
 		this.RecruitedRepository.delete(Recruited);
@@ -106,15 +97,15 @@ public class RecruitedService {
 
 	// OTHER METHODS
 
-	public Collection<Recruited> getMyStoragedRecruitedTroops(final Integer builtId) {
+	public Collection<Recruited> getMyStoragedRecruitedTroops(Integer builtId) {
 		return this.RecruitedRepository.getMyStoragedRecruitedTroops(builtId);
 	}
 
-	public Collection<Recruited> getMyStoragedRecruitedGummiShip(final Integer builtId) {
+	public Collection<Recruited> getMyStoragedRecruitedGummiShip(Integer builtId) {
 		return this.RecruitedRepository.getMyStoragedRecruitedGummiShip(builtId);
 	}
 
-	public Collection<Recruited> getMyRecruited(final Integer builtId) {
+	public Collection<Recruited> getMyRecruited(Integer builtId) {
 		return this.RecruitedRepository.getMyRecruited(builtId);
 	}
 

@@ -36,7 +36,7 @@ public class BuildingService {
 
 		return building;
 	}
-	public Building save(final Building building) {
+	public Building save(Building building) {
 		Assert.notNull(building);
 		Assert.isTrue(building.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
 
@@ -47,7 +47,7 @@ public class BuildingService {
 		return saved;
 	}
 
-	public Building findOne(final int BuildingId) {
+	public Building findOne(int BuildingId) {
 		Assert.notNull(BuildingId);
 
 		Building Building;
@@ -65,10 +65,10 @@ public class BuildingService {
 		return Buildings;
 	}
 
-	public void delete(final Building building) {
+	public void delete(Building building) {
 		Assert.notNull(building);
 		Assert.isTrue(building.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
-		Assert.isTrue(!building.getIsFinal(), "error.message.building.final");
+		Assert.isTrue(!building.getIsFinal(), "error.message.building.");
 
 		this.BuildingRepository.delete(building);
 	}

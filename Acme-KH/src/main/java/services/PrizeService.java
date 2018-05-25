@@ -43,14 +43,14 @@ public class PrizeService {
 		return prize;
 	}
 
-	public Prize save(final Prize prize) {
+	public Prize save(Prize prize) {
 		Assert.notNull(prize);
 
 		Prize saved;
-		final Double extra = prize.getKeybladeWielder().getFaction().getExtraResources();
+		Double extra = prize.getKeybladeWielder().getFaction().getExtraResources();
 		if (extra != null && extra > 0) {
-			final Materials oldMaterials = prize.getMaterials();
-			final Materials newMaterials = oldMaterials.increase(extra);
+			Materials oldMaterials = prize.getMaterials();
+			Materials newMaterials = oldMaterials.increase(extra);
 
 			prize.setMaterials(newMaterials);
 		}
@@ -60,7 +60,7 @@ public class PrizeService {
 		return saved;
 	}
 
-	public Prize findOne(final int PrizeId) {
+	public Prize findOne(int PrizeId) {
 		Assert.notNull(PrizeId);
 
 		Prize Prize;
@@ -78,24 +78,24 @@ public class PrizeService {
 		return Prizes;
 	}
 
-	public void delete(final Prize Prize) {
+	public void delete(Prize Prize) {
 		Assert.notNull(Prize);
 
 		this.PrizeRepository.delete(Prize);
 	}
 
-	public void open(final Prize prize) {
-		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+	public void open(Prize prize) {
+		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 		Assert.isTrue(prize.getKeybladeWielder().equals(player), "error.message.owner");
 
 		if (prize.getDate().before(new Date(System.currentTimeMillis())))
 			this.PrizeRepository.delete(prize);
 		else {
 
-			final Materials max = this.builtService.maxMaterials();
-			final Materials old = player.getMaterials();
-			final Materials news = old.add(prize.getMaterials());
-			final Materials sinExceso = news.removeExcess(max);
+			Materials max = this.builtService.maxMaterials();
+			Materials old = player.getMaterials();
+			Materials news = old.add(prize.getMaterials());
+			Materials sinExceso = news.removeExcess(max);
 
 			player.setMaterials(sinExceso);
 			this.keybladeWielderService.save(player);
@@ -105,7 +105,7 @@ public class PrizeService {
 	}
 
 	public void createDailyPrizeForPrincipal() {
-		final Prize p = this.create();
+		Prize p = this.create();
 
 		p.setKeybladeWielder((KeybladeWielder) this.actorService.findByPrincipal());
 		p.setMaterials(this.configurationService.getConfiguration().getDailyMaterials());
@@ -117,11 +117,11 @@ public class PrizeService {
 	// Other methods
 
 	public Collection<Prize> getMyPrizes() {
-		final Integer playerId = this.actorService.findByPrincipal().getId();
+		Integer playerId = this.actorService.findByPrincipal().getId();
 
-		final Collection<Prize> trash = this.PrizeRepository.getTrashPrizeFromKeybladeWielder(playerId);
+		Collection<Prize> trash = this.PrizeRepository.getTrashPrizeFromKeybladeWielder(playerId);
 
-		for (final Prize p : trash)
+		for (Prize p : trash)
 			this.PrizeRepository.delete(p.getId());
 
 		return this.PrizeRepository.getPrizeFromKeybladeWielder(playerId);
@@ -130,15 +130,15 @@ public class PrizeService {
 
 	// Method to send prizes from prompt 
 	// Same as open() but without restrictions
-	public void sendPrize(final Prize prize) {
+	public void sendPrize(Prize prize) {
 		KeybladeWielder player;
 
 		player = prize.getKeybladeWielder();
 
-		final Materials max = this.builtService.maxMaterials();
-		final Materials old = player.getMaterials();
-		final Materials news = old.add(prize.getMaterials());
-		final Materials sinExceso = news.removeExcess(max);
+		Materials max = this.builtService.maxMaterials();
+		Materials old = player.getMaterials();
+		Materials news = old.add(prize.getMaterials());
+		Materials sinExceso = news.removeExcess(max);
 
 		player.setMaterials(sinExceso);
 		this.keybladeWielderService.save(player);
