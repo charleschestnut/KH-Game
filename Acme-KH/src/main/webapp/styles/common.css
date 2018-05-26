@@ -166,8 +166,8 @@ body{
 #prompt{
 	background-color:black;
 	color:white;
-	width: 80%;
-	height:20em;
+	width: 90%;
+	height:30em;
 	padding:0.5em;
 	overflow:auto;
 }
