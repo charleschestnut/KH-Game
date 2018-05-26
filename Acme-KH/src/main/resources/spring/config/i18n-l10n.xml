@@ -44,6 +44,9 @@
 		
 		
 		<!-- ÁNGEL LOZANO -->
+		<value>/views/faction/messages</value>
+		<value>/views/battle/messages</value>
+		
 		
 		<!-- SERGIO -->
 		<value>/views/keybladewielder/messages</value>

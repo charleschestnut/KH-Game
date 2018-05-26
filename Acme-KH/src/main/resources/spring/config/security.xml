@@ -94,6 +94,13 @@
 					 
 		
 		<!-- ÁNGEL LOZANO -->
+		<security:intercept-url pattern="/faction/display.do" access="hasRole('MANAGER')" />
+		<security:intercept-url pattern="/faction/list.do" access="hasRole('MANAGER')" />
+		<security:intercept-url pattern="/faction/edit.do" access="hasRole('MANAGER')" />
+		<security:intercept-url pattern="/battle/recruited.do" access="hasRole('PLAYER')" />
+		<security:intercept-url pattern="/battle/listPlayers.do" access="hasRole('PLAYER')" />
+		<security:intercept-url pattern="/battle/listBattles.do" access="hasRole('PLAYER')" />
+		<security:intercept-url pattern="/battle/display.do" access="hasRole('PLAYER')" />
 		
 		<!-- SERGIO -->
 		<security:intercept-url pattern="/profile/actor/display.do" access="isAuthenticated()" />

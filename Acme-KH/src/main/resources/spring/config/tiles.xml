@@ -44,6 +44,8 @@
 		<value>/views/prize/tiles.xml</value>
 		
 		<!-- ÁNGEL LOZANO -->
+		<value>/views/faction/tiles.xml</value>
+		<value>/views/battle/tiles.xml</value>
 		
 		<!-- SERGIO -->
 		<value>/views/keybladewielder/tiles.xml</value>
