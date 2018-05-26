@@ -95,4 +95,8 @@ public class LivelihoodService {
 
 		return l;
 	}
+
+	public void flush() {
+		this.LivelihoodRepository.flush();
+	}
 }

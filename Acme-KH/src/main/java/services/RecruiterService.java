@@ -131,8 +131,12 @@ public class RecruiterService {
 
 		return recruiter;
 	}
-	
-	public Collection<String> getRecruiterNames(){
+
+	public Collection<String> getRecruiterNames() {
 		return this.RecruiterRepository.getRecruiterNames();
+	}
+
+	public void flush() {
+		this.RecruiterRepository.flush();
 	}
 }

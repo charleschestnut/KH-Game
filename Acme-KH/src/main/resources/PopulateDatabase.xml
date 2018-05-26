@@ -541,6 +541,20 @@
 		<property name="extraDefensePerLvl" value="0.25" />
 	</bean>
 	
+	<bean id="defense3" class="domain.Defense">
+		<property name="name" value="Defense 3" />
+		<property name="description" value="Defensive towers" />
+		<property name="photo" value="http://clipart.coolclips.com/480/vectors/tf05247/CoolClips_vc036380.png" />
+		<property name="maxLvl" value="10" />
+		<property name="isFinal" value="false" />
+		<property name="cost" ref="material4" />
+		<property name="extraCostPerLvl" value="0.3" />
+		<property name="timeToConstruct" value="5" />
+		<property name="contentManager" ref="manager1" />
+		<property name="defense" value="100" />
+		<property name="extraDefensePerLvl" value="0.25" />
+	</bean>
+	
 	<bean id="livelihood1" class="domain.Livelihood">
 		<property name="name" value="Livelihood Number 1" />
 		<property name="description" value="This is the Livehood number 1" />

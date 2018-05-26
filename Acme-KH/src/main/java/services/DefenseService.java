@@ -95,4 +95,8 @@ public class DefenseService {
 
 		return defense;
 	}
+
+	public void flush() {
+		this.DefenseRepository.flush();
+	}
 }

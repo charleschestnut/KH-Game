@@ -97,4 +97,8 @@ public class WarehouseService {
 
 		return w;
 	}
+
+	public void flush() {
+		this.WarehouseRepository.flush();
+	}
 }
