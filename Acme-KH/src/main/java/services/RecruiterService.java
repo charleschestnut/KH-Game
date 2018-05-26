@@ -131,4 +131,28 @@ public class RecruiterService {
 
 		return recruiter;
 	}
+	
+	public Collection<String> getRecruiterNames(){
+		return this.RecruiterRepository.getRecruiterNames();
+	}
+	
+	public void addTroopFromGM(Recruiter r, Troop t) {
+		t = this.troopService.save(t);
+
+		Collection<Troop> troops = r.getTroops();
+		troops.add(t);
+
+		this.RecruiterRepository.save(r);
+
+	}
+	
+	public void addGummiShipFromGM(Recruiter r, GummiShip gs) {
+		gs = this.gummiShipService.save(gs);
+
+		Collection<GummiShip> gummies = r.getGummiShips();
+		gummies.add(gs);
+
+		this.RecruiterRepository.save(r);
+
+	}
 }

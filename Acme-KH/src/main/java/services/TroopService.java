@@ -118,5 +118,17 @@ public class TroopService {
 		return result;
 
 	}
+	
+	public Troop getTroopsFromRecruiter(String name){
+		return this.TroopRepository.getTroopByName(name);
+	}
+	
+	public Collection<String> getTroopsNames(){
+		return this.TroopRepository.getTroopsNames();
+	}
+	
+	public Troop getTroopByName(String name){
+		return this.TroopRepository.getTroopByName(name);
+	}
 
 }

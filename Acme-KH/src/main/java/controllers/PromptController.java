@@ -51,7 +51,7 @@ public class PromptController extends AbstractController {
 		try{
 			res = promptService.interpret(command);
 		}catch(Throwable e){
-			res = "Error while sending the prize";
+			res = "Error while executing command";
 		}
 
 		return res;

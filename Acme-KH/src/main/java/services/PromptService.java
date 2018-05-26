@@ -14,9 +14,12 @@ import security.Authority;
 import domain.Actor;
 import domain.Building;
 import domain.Built;
+import domain.GummiShip;
 import domain.KeybladeWielder;
 import domain.Materials;
 import domain.Prize;
+import domain.Recruiter;
+import domain.Troop;
 
 @Service
 @Transactional
@@ -30,6 +33,12 @@ public class PromptService {
 	private BuildingService			buildingService;
 	@Autowired
 	private BuiltService			builtService;
+	@Autowired
+	private RecruiterService		recruiterService;
+	@Autowired
+	private TroopService		    troopService;
+	@Autowired
+	private GummiShipService		gummiShipService;
 
 	public String interpret(String command) {
 		String res = "";
@@ -44,7 +53,11 @@ public class PromptService {
 					"-mn [gummyCoalQuantity]  <br/>"+
 					"-dt [dd/MM/yyyy]  > By default, date is set as current date plus one day<br/><br/>" +
 					"To send a building, use set [username] followed by next option:  <br/><br/>" +
-					"-b [buildingName]  <br/> > You can list the available building by executing 'list buildings' command" ;
+					"-b [buildingName]  <br/> > You can list the available building by executing 'list buildings' command<br/><br/>" +
+			"To send a recruiter with troops, gummiships or both, use set [username] followed by next option:  <br/><br/>" +
+			"-rc >[recruiterName]  > You can list the available building by executing 'list buildings' command <br/>" +
+			"-t >[troopName]  > You can list the available troops by executing 'list troops' command <br/>" +
+			"-gs >[gummishipName]  > You can list the available gummiships by executing 'list gumiships' command <br/>" ;
 		} else if (command.trim().startsWith("set") && (command.indexOf("-mn")>0 || command.indexOf("-mt")>0 || command.indexOf("-gc")>0)) {
 			Integer munny = 0;
 			Integer mythril = 0;
@@ -105,7 +118,6 @@ public class PromptService {
 					}
 					
 					saved = prizeService.save(prize);
-//					prizeService.sendPrize(saved);
 					res = "Prize sent";
 				}else{
 					res = "Command not understood";
@@ -127,7 +139,7 @@ public class PromptService {
 			if (player != null && new ArrayList<>(player.getUserAccount().getAuthorities()).get(0).getAuthority().equals(Authority.PLAYER)) {
 				String buildingName;
 				
-				buildingName = command.split("-b")[1].trim();
+				buildingName = command.split("-b")[1].trim().trim();
 				if(buildingsNames.contains(buildingName)){
 					Building building;
 					Built built;
@@ -150,10 +162,90 @@ public class PromptService {
 				res = "Player doesn't exist";
 			}
 			
+		}else if(command.trim().startsWith("set") && command.indexOf("-rc")>0 && (command.indexOf("-t")>0 || command.indexOf("-gs")>0)){
+			String username;
+			Actor player;
+			Collection<String> recruitersNames;
+			Collection<String> troopsNames;
+			Collection<String> gummishipsNames;
+			
+			username = command.split("\\s+")[1];
+			player = actorService.findByUserAccountUsername(username);
+			recruitersNames = recruiterService.getRecruiterNames();
+			troopsNames = troopService.getTroopsNames();
+			gummishipsNames = gummiShipService.getGummiShipsNames();
+			
+			if (player != null && new ArrayList<>(player.getUserAccount().getAuthorities()).get(0).getAuthority().equals(Authority.PLAYER)) {
+				String recruiterName, troopName, gummishipName;
+				
+				troopName = "";
+				gummishipName = "";
+				
+				recruiterName = command.split("-rc")[1].trim().split(">")[1].trim();
+				recruiterName = recruiterName.substring(0, recruiterName.length()-2).trim();
+				
+				if(command.indexOf("-t")>0){
+					troopName = command.split("-t")[1].trim().split(">")[1].trim();
+					if(troopName.contains("-gs")){
+						troopName = troopName.substring(0, troopName.length()-3).trim();
+					}
+				}
+				
+				if(command.indexOf("-gs")>0){
+					gummishipName = command.split("-gs")[1].trim().split(">")[1].trim();
+					
+					if(gummishipName.contains("-t")){
+						gummishipName = gummishipName.substring(0, gummishipName.length()-2).trim();
+					}
+				}
+				
+				if(!recruitersNames.contains(recruiterName) ){
+					res = "Recruiter doesn't exist";
+				}else if(command.indexOf("-t")>0 && !troopsNames.contains(troopName)){
+					res = "Troop doesn't exist";
+				}else if(command.indexOf("-gs")>0 && !gummishipsNames.contains(gummishipName)){
+					res = "GummiShip doesn't exist";
+				}else{
+					Recruiter recruiter;
+					Built built;
+					
+					recruiter = (Recruiter) buildingService.getBuildingByName(recruiterName);
+					
+					built = new Built();
+					built.setLvl(0);
+					built.setBuilding(recruiter);
+					built.setKeybladeWielder((KeybladeWielder) player);
+					built.setCreationDate(new Date(System.currentTimeMillis() - 1000));
+					
+					builtService.saveFromGM(built);
+					
+					if(command.indexOf("-t")>0){
+						Troop troop;
+						
+						troop = troopService.getTroopByName(troopName);
+						
+						recruiterService.addTroopFromGM(recruiter, troop);
+					}else if(command.indexOf("-gs")>0){
+						GummiShip gummiShip;
+						
+						gummiShip = gummiShipService.getGummiShipByName(gummishipName);
+						
+						recruiterService.addGummiShipFromGM(recruiter, gummiShip);
+					}
+					
+					res = "Recruiter sent";
+				}
+			}
+		}else if(command.equals("list troops")){
+			res = troopService.getTroopsNames().toString();
+		}else if(command.equals("list gummiships")){
+			res = gummiShipService.getGummiShipsNames().toString();
 		}else {
+		
 			res = "Command not understood";
 		}
 		
 		return res;
 	}
+		
 }

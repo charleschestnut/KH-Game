@@ -117,5 +117,13 @@ public class GummiShipService {
 		return result;
 
 	}
+	
+	public GummiShip getGummiShipByName(String name){
+		return this.gummiShipRepository.getGummiShipByName(name);
+	}
+	
+	public Collection<String> getGummiShipsNames(){
+		return this.gummiShipRepository.getGummiShipsNames();
+	}
 
 }
