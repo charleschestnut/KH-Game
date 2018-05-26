@@ -343,4 +343,32 @@ public class BuiltService {
 	public void saveFromGM(Built built){
 		BuiltRepository.save(built);
 	}
+	
+	public void startToRecruitTroopFromGM(Built b, Troop t, KeybladeWielder player) {
+		Recruiter r = null;
+
+		if (b.getBuilding() instanceof Recruiter)
+			r = (Recruiter) b.getBuilding();
+		else
+			Assert.notNull(r, "error.message.built.noBuilding");
+
+		b.setActivationDate(new Date(System.currentTimeMillis()));
+		b.setTroop(t);
+
+		this.BuiltRepository.save(b);
+	}
+
+	public void startToRecruitGummiShipFromGM(Built b, GummiShip g, KeybladeWielder player) {
+		Recruiter r = null;
+
+		if (b.getBuilding() instanceof Recruiter)
+			r = (Recruiter) b.getBuilding();
+		else
+			Assert.notNull(r, "error.message.built.noBuilding");
+
+		b.setActivationDate(new Date(System.currentTimeMillis()));
+		b.setGummiShip(g);
+
+		this.BuiltRepository.save(b);
+	}
 }

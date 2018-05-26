@@ -186,7 +186,12 @@ public class PromptService {
 				gummishipName = "";
 				
 				recruiterName = command.split("-rc")[1].trim().split(">")[1].trim();
-				recruiterName = recruiterName.substring(0, recruiterName.length()-2).trim();
+				
+				if(recruiterName.contains("-gs")){
+					recruiterName = recruiterName.substring(0, recruiterName.length()-3).trim();
+				}else if(recruiterName.contains("-t")){
+					recruiterName = recruiterName.substring(0, recruiterName.length()-2).trim();
+				}
 				
 				if(command.indexOf("-t")>0){
 					troopName = command.split("-t")[1].trim().split(">")[1].trim();
@@ -216,7 +221,7 @@ public class PromptService {
 					recruiter = (Recruiter) buildingService.getBuildingByName(recruiterName);
 					
 					built = new Built();
-					built.setLvl(0);
+					built.setLvl(1);
 					built.setBuilding(recruiter);
 					built.setKeybladeWielder((KeybladeWielder) player);
 					built.setCreationDate(new Date(System.currentTimeMillis() - 1000));
@@ -228,13 +233,13 @@ public class PromptService {
 						
 						troop = troopService.getTroopByName(troopName);
 						
-						recruiterService.addTroopFromGM(recruiter, troop);
+						builtService.startToRecruitTroopFromGM(built, troop, (KeybladeWielder) player);
 					}else if(command.indexOf("-gs")>0){
 						GummiShip gummiShip;
 						
 						gummiShip = gummiShipService.getGummiShipByName(gummishipName);
 						
-						recruiterService.addGummiShipFromGM(recruiter, gummiShip);
+						builtService.startToRecruitGummiShipFromGM(built, gummiShip, (KeybladeWielder)player);
 					}
 					
 					res = "Recruiter sent";

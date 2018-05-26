@@ -140,7 +140,7 @@
 						<a class="btn-sm btn btn-primary" href="built/recruit.do?builtId=${row.id }"><jstl:out value="${recruit}"></jstl:out></a>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.gummiShip!=null && !row.haTerminado(row.gummiShip.timeToRecruit) }">
-						<button type="button" class="btn-sm btn btn-primary" disabled><jstl:out value="${working }"></jstl:out></button>
+						<button type="button" class="btn-sm btn btn-primary" disabled><i style="font-size:20px;vertical-align:middle;" class="fa fa-gear fa-spin"></i>&nbsp;&nbsp;<jstl:out value="${working }"></jstl:out></button>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate==null }">
 						<%-- <a class="collect btn-sm btn btn-primary" href="built/startRecruit.do?builtId=${row.id}"><jstl:out value="${startRecruit}"></jstl:out></a> --%>
