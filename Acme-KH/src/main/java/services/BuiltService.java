@@ -248,7 +248,16 @@ public class BuiltService {
 	}
 	public Recruited recruit(Built b) {
 		Recruited res;
-		Recruiter r = this.recruiterService.findOne(b.getBuilding().getId());
+		Recruiter r = null;
+
+		if (b.getBuilding() instanceof Recruiter)
+			r = (Recruiter) b.getBuilding();
+		else
+			Assert.notNull(r, "error.message.built.noBuilding");
+
+		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
+		Assert.notNull(b.getActivationDate(), "error.message.built.notInUse");
+
 		Date today = new Date(System.currentTimeMillis() - 1000);
 		Long time1 = today.getTime() - b.getActivationDate().getTime();
 		Long time2;
@@ -257,9 +266,6 @@ public class BuiltService {
 		else
 			time2 = (long) (b.getGummiShip().getTimeToRecruit() * 60 * 1000);
 
-		Assert.notNull(r, "error.message.built.noBuilding");
-		Assert.isTrue(b.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.built.creator");
-		Assert.notNull(b.getActivationDate(), "error.message.built.notInUse");
 		Assert.isTrue(time1 >= time2, "error.message.built.working");
 
 		res = this.recruitedService.save(b);
