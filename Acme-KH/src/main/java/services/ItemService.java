@@ -44,12 +44,12 @@ public class ItemService {
 		item = new Item();
 		ContentManager contentManager = (ContentManager) this.actorService.findByPrincipal();
 		item.setContentManager(contentManager);
+		Assert.isTrue(item.getContentManager().getUserAccount().isAuthority("MANAGER"));
 		
-
 		return item;
 	}
 
-	public Item save(final Item item) {
+	public Item save(Item item) {
 		Assert.notNull(item);
 
 		Item saved;
