@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+<definition name="faction/list" extends="master.page">	
+		<put-attribute name="title" value="List of Factions" />
+		<put-attribute name="body" value="/views/built/list.jsp" />
+	</definition>
+		
+		
+	<definition name="built/display" extends="master.page">	
+		<put-attribute name="title" value="Displaying my building" />
+		<put-attribute name="body" value="/views/built/display.jsp" />
+	</definition>
+	
+	
+	<definition name="faction/edit" extends="master.page">	
+		<put-attribute name="title" value="Faction" />
+		<put-attribute name="body" value="/views/faction/edit.jsp" />
+	</definition>
+
+	
+</tiles-definitions>
