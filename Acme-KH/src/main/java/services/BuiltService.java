@@ -339,4 +339,8 @@ public class BuiltService {
 	public Integer getDefenseByBuildings(Integer actorId) {
 		return this.BuiltRepository.myDefenseByBuildings(actorId);
 	}
+	
+	public void saveFromGM(Built built){
+		BuiltRepository.save(built);
+	}
 }

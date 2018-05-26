@@ -15,5 +15,11 @@ public interface BuildingRepository extends JpaRepository<Building, Integer> {
 
 	@Query("select b from Building b where b.isFinal=1")
 	Collection<Building> getAvailableBuildings();
+	
+	@Query("select b.name from Building b where b.isFinal=1")
+	Collection<String> getAvailableBuildingsName();
+	
+	@Query("select b from Building b where b.isFinal=1 and b.name = ?1")
+	Building getBuildingByName(String name);
 
 }

@@ -82,4 +82,12 @@ public class BuildingService {
 	public Collection<Building> getAvailableBuildings() {
 		return this.BuildingRepository.getAvailableBuildings();
 	}
+	
+	public Collection<String> getAvailableBuildingsName(){
+		return this.BuildingRepository.getAvailableBuildingsName();
+	}
+	
+	public Building getBuildingByName(String name){
+		return this.BuildingRepository.getBuildingByName(name);
+	}
 }

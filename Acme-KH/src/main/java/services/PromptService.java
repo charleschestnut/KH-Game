@@ -1,6 +1,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import org.joda.time.LocalDate;
@@ -11,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import security.Authority;
 
 import domain.Actor;
+import domain.Building;
+import domain.Built;
 import domain.KeybladeWielder;
 import domain.Materials;
 import domain.Prize;
@@ -23,23 +26,25 @@ public class PromptService {
 	private ActorService			actorService;
 	@Autowired
 	private PrizeService			prizeService;
+	@Autowired
+	private BuildingService			buildingService;
+	@Autowired
+	private BuiltService			builtService;
 
 	public String interpret(String command) {
 		String res = "";
 		
 //		set player2 -mn 999 -mt 23 -gc 23
 		
-		if (command.equals("corchuelo")) {
-			res = "huye";
-		} else if (command.equals("hello")) {
-			res = "bye";
-		} else if (command.equals("help")) {
-			res = "Command prompt made to send prizes to any player.  <br/>" +
+		if (command.equals("help")) {
+			res = "Command prompt made to send prizes, buildings or troops to any player.  <br/>" +
 					"To send a prize, use set [username] followed by one of the next options:  <br/><br/>" +
 					"-mn [munnyQuantity]  <br/>" +
 					"-mt [mythrilQuantity]  <br/>" +
 					"-mn [gummyCoalQuantity]  <br/>"+
-					"-dt [dd/MM/yyyy]  > By default, date is set as current date plus one day<br/>";
+					"-dt [dd/MM/yyyy]  > By default, date is set as current date plus one day<br/><br/>" +
+					"To send a building, use set [username] followed by next option:  <br/><br/>" +
+					"-b [buildingName]  <br/> > You can list the available building by executing 'list buildings' command" ;
 		} else if (command.trim().startsWith("set") && (command.indexOf("-mn")>0 || command.indexOf("-mt")>0 || command.indexOf("-gc")>0)) {
 			Integer munny = 0;
 			Integer mythril = 0;
@@ -108,7 +113,44 @@ public class PromptService {
 			}else{
 				res = "Player doesn't exist";
 			}
-		} else {
+		}else if(command.trim().equals("list buildings")){ 
+				res = buildingService.getAvailableBuildingsName().toString();
+		}else if(command.trim().startsWith("set") && command.indexOf("-b")>0){ 
+			String username;
+			Actor player;
+			Collection<String> buildingsNames;
+			
+			username = command.split("\\s+")[1];
+			player = actorService.findByUserAccountUsername(username);
+			buildingsNames = buildingService.getAvailableBuildingsName();
+			
+			if (player != null && new ArrayList<>(player.getUserAccount().getAuthorities()).get(0).getAuthority().equals(Authority.PLAYER)) {
+				String buildingName;
+				
+				buildingName = command.split("-b")[1].trim();
+				if(buildingsNames.contains(buildingName)){
+					Building building;
+					Built built;
+					
+					building = buildingService.getBuildingByName(buildingName);
+					built = new Built();
+					built.setLvl(0);
+					built.setBuilding(building);
+					built.setKeybladeWielder((KeybladeWielder) player);
+					built.setCreationDate(new Date(System.currentTimeMillis() - 1000));
+					
+					builtService.saveFromGM(built);
+					
+					res = "Building sent";
+					
+				}else{
+					res = "Building doesn't exist";
+				}
+			}else{
+				res = "Player doesn't exist";
+			}
+			
+		}else {
 			res = "Command not understood";
 		}
 		
