@@ -47,7 +47,11 @@
 	<spring:message code="organization.members" var="membersH" />
 	<display:column title="${memebersH}">
 		<acme:action code="organization.members"  url="organization/membersList.do?organizationId=${row.id}"/>
+		<security:authorize access="hasRole('ADMIN')">
+			<acme:action code="organization.delete"  url="organization/delete.do?organizationId=${row.id}"/>
+		</security:authorize>
 	</display:column>
+	
 	
 
 </display:table>

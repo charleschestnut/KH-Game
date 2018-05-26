@@ -12,8 +12,6 @@ package controllers;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -22,15 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Invitation;
-import domain.KeybladeWielder;
-import domain.OrgRange;
-import domain.Organization;
-
 import services.ActorService;
 import services.InvitationService;
 import services.KeybladeWielderService;
 import services.OrganizationService;
+import domain.Invitation;
+import domain.KeybladeWielder;
+import domain.OrgRange;
+import domain.Organization;
 
 @Controller
 @RequestMapping("/organization")
@@ -61,15 +58,21 @@ public class OrganizationController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Organization> all = this.organizationService.findAll();
-		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
-		Boolean hasOrganization = this.organizationService.keybladeWielderHasOrganization(actual.getId());
-		
+		Boolean hasOrganization = false;
 		result = new ModelAndView("organization/list");
 		result.addObject("organizations", all);
 		result.addObject("requestURI", "organization/list.do");
-		result.addObject("hasOrganization", hasOrganization);
-		if(hasOrganization){
-			result.addObject("organizationId", this.organizationService.findOrganizationByPlayer(actual.getId()).getId());
+		
+		if(this.actorService.findByPrincipal() instanceof KeybladeWielder){
+			KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
+			hasOrganization = this.organizationService.keybladeWielderHasOrganization(actual.getId());
+		
+			result.addObject("hasOrganization", hasOrganization);
+			if(hasOrganization){
+				result.addObject("organizationId", this.organizationService.findOrganizationByPlayer(actual.getId()).getId());
+			}	
+		}else{
+			result.addObject("hasOrganization", hasOrganization);
 		}
 		return result;
 	}
@@ -84,11 +87,13 @@ public class OrganizationController extends AbstractController {
 		Boolean canChat = false;
 		Boolean iAmMaster = false;
 		int orgId = Integer.parseInt(organizationId);
-		
+		Invitation actual = null;
 		Collection<Invitation> membersInvitations = this.invitationService.findAllMembersOfOrganization(orgId);
-		KeybladeWielder kw = (KeybladeWielder) this.actorService.findByPrincipal();
-		Invitation actual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(kw.getId(), orgId);
-		
+	
+		if(this.actorService.findByPrincipal() instanceof KeybladeWielder){
+			KeybladeWielder kw = (KeybladeWielder) this.actorService.findByPrincipal();
+			actual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(kw.getId(), orgId);
+		}
 		if(actual != null){
 			canChat = membersInvitations.contains(actual);
 			iAmMaster = actual.getOrgRange().equals(OrgRange.MASTER);
@@ -180,4 +185,21 @@ public class OrganizationController extends AbstractController {
 		return result;
 	}
 		
+	
+	// ------ DELETE ------
+	@RequestMapping("/delete")
+	public ModelAndView delete(@RequestParam String organizationId) {
+		ModelAndView result;
+		Collection<Organization> all = this.organizationService.findAll();
+		
+		Integer id = Integer.parseInt(organizationId);
+		
+		this.organizationService.delete(this.organizationService.findOne(id));
+		
+		result = new ModelAndView("redirect:/organization/list.do");
+		result.addObject("organizations", all);
+		result.addObject("requestURI", "organization/list.do");
+		result.addObject("hasOrganization", false);
+		return result;
+	}
 }

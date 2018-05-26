@@ -14,6 +14,7 @@ import org.springframework.validation.Validator;
 
 import repositories.OrganizationRepository;
 import security.LoginService;
+import domain.Chatty;
 import domain.Invitation;
 import domain.KeybladeWielder;
 import domain.OrgRange;
@@ -36,6 +37,9 @@ public class OrganizationService {
 	
 	@Autowired
 	private InvitationService invitationService;
+	
+	@Autowired
+	private ChattyService chattyService;
 	
 	@Autowired
 	Validator						validator;
@@ -104,6 +108,12 @@ public class OrganizationService {
 		Collection<KeybladeWielder> members = this.keybladeWielderService.findMembersOfOrganization(organization.getId()); 
 		Assert.isTrue(members.size() == 0 || LoginService.getPrincipal().isAuthority("ADMIN"));
 		
+		if(LoginService.getPrincipal().isAuthority("ADMIN")){
+			Collection<Chatty> chattys = this.chattyService.getToDeleteOrganiation(organization.getId());
+			Collection<Invitation> invitations = this.invitationService.getToDeleteOrganization(organization.getId());
+			this.chattyService.deleteAll(chattys);
+			this.invitationService.deleteAll(invitations);
+		}
 		this.organizationRepository.delete(organization);
 	}
 

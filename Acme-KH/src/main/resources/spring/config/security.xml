@@ -50,6 +50,7 @@
 		<security:intercept-url pattern="/organization/membersList.do" access="hasAnyRole('PLAYER', 'ADMIN')" />
 		<security:intercept-url pattern="/organization/edit.do" access="hasAnyRole('PLAYER', 'ADMIN')" />
 		<security:intercept-url pattern="/organization/leaveOrganization.do" access="hasAnyRole('PLAYER')" />
+		<security:intercept-url pattern="/organization/delete.do" access="hasRole('ADMIN')" />
 		
 		<security:intercept-url pattern="/organization/chatty/list.do" access="hasAnyRole('PLAYER')" />
 		<security:intercept-url pattern="/organization/chatty/edit.do" access="hasRole('PLAYER')" />

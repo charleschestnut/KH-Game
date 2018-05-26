@@ -244,4 +244,15 @@ public class InvitationService {
 		return invitation;
 	}
 
+	public Collection<Invitation> getToDeleteOrganization(int id) {
+		return this.invitationRepository.toDeleteOrganization(id);
+	}
+
+	public void deleteAll(Collection<Invitation> invitations) {
+		for(Invitation i: invitations){
+			this.invitationRepository.delete(i);
+		}
+		
+	}
+
 }

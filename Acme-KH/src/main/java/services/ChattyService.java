@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import org.springframework.validation.BindingResult;
 
 import repositories.ChattyRepository;
 import domain.Chatty;
-import domain.Configuration;
 import domain.KeybladeWielder;
 import domain.Organization;
 
@@ -67,7 +65,7 @@ public class ChattyService {
 		Chatty saved;
 		
 		saved = chattyRepository.save(chatty);
-		this.deleteExtraChattyFromAnOrganization(chatty.getInvitation().getOrganization().getId());
+		//deleteExtraChattyFromAnOrganization(chatty.getInvitation().getOrganization().getId());
 		
 		return saved;
 	}
@@ -124,5 +122,17 @@ public class ChattyService {
 		if(all.size() >= chattyLimit){
 			this.chattyRepository.delete(all.get(chattyLimit));
 		}
+	}
+
+
+	public void deleteAll(Collection<Chatty> chattys) {
+		for(Chatty c: chattys){
+			this.chattyRepository.delete(c);
+		}
+		
+	}
+	
+	public Collection<Chatty> getToDeleteOrganiation(int orgId){
+		return this.chattyRepository.getChattyFromAnOrganization(orgId);
 	}
 }
