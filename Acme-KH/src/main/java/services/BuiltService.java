@@ -67,6 +67,7 @@ public class BuiltService {
 		Assert.isTrue(this.requirementService.fulfillsRequirements(built.getBuilding().getId()), "error.message.built.requirements");
 		Assert.isTrue(player.getMaterials().isHigherThan(built.getBuilding().getCost()), "error.message.built.materials");
 		Assert.isTrue(built.getKeybladeWielder().equals(player), "error.message.built.creator");
+		Assert.isTrue(built.getBuilding().getIsFinal());
 
 		Built saved;
 

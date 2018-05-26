@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.RequirementRepository;
+import security.LoginService;
 import domain.Building;
 import domain.Requirement;
 
@@ -41,8 +42,8 @@ public class RequirementService {
 
 	public Requirement save(Requirement Requirement) {
 		Assert.notNull(Requirement);
-		Assert.isTrue(Requirement.getMainBuilding().getContentManager().equals(this.actorService.findByPrincipal()), "error.message.req.creator");
-		Assert.isTrue(!Requirement.getMainBuilding().getIsFinal(), "error.message.req.");
+		Assert.isTrue(Requirement.getMainBuilding().getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.req.creator");
+		Assert.isTrue(!Requirement.getMainBuilding().getIsFinal(), "error.message.req.final");
 		Assert.isTrue(!Requirement.getMainBuilding().equals(Requirement.getRequiredBuilding()), "error.message.req.sameBuilding");
 		Assert.isTrue(Requirement.getRequiredBuilding().getIsFinal(), "error.message.req.final2");
 		Assert.isTrue(Requirement.getId() == 0, "error.message.req.edit");
@@ -74,8 +75,8 @@ public class RequirementService {
 
 	public void delete(Requirement Requirement) {
 		Assert.notNull(Requirement);
-		Assert.isTrue(Requirement.getMainBuilding().getContentManager().equals(this.actorService.findByPrincipal()), "error.message.req.creator");
-		Assert.isTrue(!Requirement.getMainBuilding().getIsFinal(), "error.message.req.");
+		Assert.isTrue(Requirement.getMainBuilding().getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.req.creator");
+		Assert.isTrue(!Requirement.getMainBuilding().getIsFinal(), "error.message.req.final");
 
 		this.RequirementRepository.delete(Requirement);
 	}
