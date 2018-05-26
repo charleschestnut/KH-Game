@@ -725,21 +725,38 @@
 	<bean id="recruited1" class="domain.Recruited">
 		<property name="storageBuilding" ref="built3" />
 		<property name="gummiShip" ref="gummiShip1" />
-		<property name="troop" ref="troop1" />
+		<!-- <property name="troop" ref="troop1" /> -->
 	</bean>
 	
 	<bean id="recruited2" class="domain.Recruited">
-		<property name="storageBuilding" ref="built2.3" />
-		<property name="gummiShip" ref="gummiShip2" />
-		<property name="troop" ref="troop2" />
+		<property name="storageBuilding" ref="built3" />
+		<!-- <property name="gummiShip" ref="gummiShip2" /> -->
+		<property name="troop" ref="troop1" />
 	</bean>
 	
 	<bean id="recruited3" class="domain.Recruited">
-		<property name="storageBuilding" ref="built3" />
-		<property name="gummiShip" ref="gummiShip1" />
+		<property name="storageBuilding" ref="built2.3" />
+		<property name="gummiShip" ref="gummiShip2" />
+		<!-- <property name="troop" ref="troop2" /> -->
+	</bean>
+	
+	<bean id="recruited4" class="domain.Recruited">
+		<property name="storageBuilding" ref="built2.3" />
+		<!-- <property name="gummiShip" ref="gummiShip2" /> -->
 		<property name="troop" ref="troop2" />
 	</bean>
 	
+	<bean id="recruited5" class="domain.Recruited">
+		<property name="storageBuilding" ref="built3" />
+		<!-- <property name="gummiShip" ref="gummiShip2" /> -->
+		<property name="troop" ref="troop2" />
+	</bean>
+	
+	<bean id="recruited5" class="domain.Recruited">
+		<property name="storageBuilding" ref="built3" />
+		<property name="gummiShip" ref="gummiShip2" />
+		<!-- <property name="troop" ref="troop1" /> -->
+	</bean>
 	
 	<!-- CONFIGURATION -->
 	<bean id="configuration" class="domain.Configuration">
