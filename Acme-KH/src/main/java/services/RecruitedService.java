@@ -29,7 +29,7 @@ public class RecruitedService {
 
 	// CRUD methods
 
-	public Recruited create(Built built) {
+	public Recruited create(final Built built) {
 		Recruited recruited;
 		recruited = new Recruited();
 
@@ -41,9 +41,9 @@ public class RecruitedService {
 		return recruited;
 	}
 
-	public Recruited save(Built built) {
+	public Recruited save(final Built built) {
 		List<Built> warehouses;
-		Recruited recruited = this.create(built);
+		final Recruited recruited = this.create(built);
 
 		Assert.notNull(built);
 		Assert.isTrue(!(built.getGummiShip() == null && built.getTroop() == null));
@@ -71,7 +71,7 @@ public class RecruitedService {
 
 		return saved;
 	}
-	public Recruited findOne(int RecruitedId) {
+	public Recruited findOne(final int RecruitedId) {
 		Assert.notNull(RecruitedId);
 
 		Recruited Recruited;
@@ -89,7 +89,7 @@ public class RecruitedService {
 		return Recruiteds;
 	}
 
-	public void delete(Recruited Recruited) {
+	public void delete(final Recruited Recruited) {
 		Assert.notNull(Recruited);
 
 		this.RecruitedRepository.delete(Recruited);
@@ -97,16 +97,20 @@ public class RecruitedService {
 
 	// OTHER METHODS
 
-	public Collection<Recruited> getMyStoragedRecruitedTroops(Integer builtId) {
+	public Collection<Recruited> getMyStoragedRecruitedTroops(final Integer builtId) {
 		return this.RecruitedRepository.getMyStoragedRecruitedTroops(builtId);
 	}
 
-	public Collection<Recruited> getMyStoragedRecruitedGummiShip(Integer builtId) {
+	public Collection<Recruited> getMyStoragedRecruitedGummiShip(final Integer builtId) {
 		return this.RecruitedRepository.getMyStoragedRecruitedGummiShip(builtId);
 	}
 
-	public Collection<Recruited> getMyRecruited(Integer builtId) {
+	public Collection<Recruited> getMyRecruited(final Integer builtId) {
 		return this.RecruitedRepository.getMyRecruited(builtId);
+	}
+
+	public Collection<Recruited> getAllRecruited(final int actorId) {
+		return this.RecruitedRepository.getAllRecruited(actorId);
 	}
 
 }

@@ -19,4 +19,6 @@ public interface RecruitedRepository extends JpaRepository<Recruited, Integer> {
 	@Query("select r from Recruited r where r.storageBuilding.id=?1")
 	public Collection<Recruited> getMyRecruited(Integer builtId);
 
+	@Query("select r from Recruited r where r.storageBuilding.keybladeWielder.id=?1")
+	public Collection<Recruited> getAllRecruited(Integer actorId);
 }
