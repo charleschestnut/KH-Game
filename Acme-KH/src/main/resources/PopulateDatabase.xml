@@ -842,6 +842,16 @@
 		<property name="contentManager" ref="manager1" />
 	</bean>
 	
+	<!-- BANNED -->
+	<bean id="banned1" class="domain.Banned">
+		<property name="banDate" value="01/04/2018 12:05" />
+		<property name="duration" value="99999999" />
+		<property name="reason" value="Cheats" />
+		<property name="isValid" value="true" />
+		<property name="actor" ref="player5" />
+	</bean>
+	
+	
 	<!-- REPORT -->
 		<bean id="report1" class="domain.Report">
 		<property name="isBug" value="false" />
