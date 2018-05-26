@@ -17,10 +17,12 @@ import services.ActorService;
 import services.BattleService;
 import services.GummiShipService;
 import services.KeybladeWielderService;
+import services.RecruitedService;
 import services.TroopService;
 import domain.Battle;
 import domain.GummiShip;
 import domain.KeybladeWielder;
+import domain.Recruited;
 import domain.Troop;
 import form.BattleForm;
 
@@ -38,23 +40,69 @@ public class BattleController extends AbstractController {
 	private GummiShipService		gummiShipService;
 	@Autowired
 	private KeybladeWielderService	keybladeWielderService;
+	@Autowired
+	private RecruitedService		recruitedService;
 
 
 	@RequestMapping("/recruited")
 	public ModelAndView recruited(@RequestParam(required = true) final String nickname) {
 		ModelAndView res;
-		final Collection<Troop> troops = this.troopService.findAll();
-		final Collection<GummiShip> gummiShips = this.gummiShipService.findAll();
-		final Collection<String> nombres = new ArrayList<String>();
+		Collection<Troop> troops = this.troopService.findAll();
+		Collection<GummiShip> gummiShips = this.gummiShipService.findAll();
+		Collection<String> nombres = new ArrayList<String>();
+		ArrayList<Integer> capacidadTropas = new ArrayList<Integer>();
+		ArrayList<Integer> capacidadNaves = new ArrayList<Integer>();
+		Collection<Recruited> attackRc = this.recruitedService.getAllRecruited(this.actorService.findByPrincipal().getId());
+		int index;
+		int n;
+		for (Troop a : troops) {
+			capacidadTropas.add(0);
+		}
+		for (GummiShip a : gummiShips) {
+			capacidadNaves.add(0);
+		}
+
+		for (Recruited ab : attackRc) {
+			index = 0;
+			if (ab.getTroop() != null) {
+				for (Troop t : troops) {
+					if (t.getName().equals(ab.getTroop().getName())) {
+						n = capacidadTropas.get(index);
+						capacidadTropas.remove(index);
+						capacidadTropas.add(index, n + 1);
+					}
+					index++;
+				}
+			} else {
+				for (GummiShip g : gummiShips) {
+					if (g.getName().equals(ab.getGummiShip().getName())) {
+						n = capacidadNaves.get(index);
+						capacidadNaves.remove(index);
+						capacidadNaves.add(index, n + 1);
+					}
+					index++;
+				}
+			}
+		}
+		for (Integer i : capacidadNaves) {
+			capacidadTropas.add(i);
+		}
 		String nom;
+		String capac = "";
+		Integer numero = 0;
 		for (final Troop t : troops) {
 			nom = '"' + t.getName() + '"';
 			nombres.add(nom);
+			capac = capac + t.getName() + " : " + capacidadTropas.get(numero) + " ";
+			numero++;
 		}
 		for (final GummiShip g : gummiShips) {
 			nom = '"' + g.getName() + '"';
 			nombres.add(nom);
+			capac = capac + g.getName() + " : " + capacidadTropas.get(numero) + " ";
+			numero++;
 		}
+
 		final BattleForm bf = new BattleForm();
 		bf.setEnemy(nickname);
 		System.out.println(bf.getEnemy());
@@ -68,23 +116,25 @@ public class BattleController extends AbstractController {
 		res.addObject("num", num);
 		res.addObject("nombres", nombres);
 		res.addObject("enemy", nickname);
+		res.addObject("capacidad", capac);
 		res.addObject("battleForm", bf);
+
+		System.out.println("Capac" + capac);
 
 		return res;
 	}
-
 	@RequestMapping(value = "/recruited", params = "save")
 	public ModelAndView save(@Valid final BattleForm battleForm, final BindingResult binding) {
 		ModelAndView res;
-		System.out.println(battleForm.getEnemy());
+		System.out.println("Tropas" + battleForm.getTroops());
 		System.out.println("Aqui ha entrao");
 		if (binding.hasErrors()) {
 			res = this.createEditModelAndView(battleForm);
 			System.out.println(binding.getAllErrors());
 		} else
 			try {
-				this.battleService.fight(battleForm);
-				res = new ModelAndView("redirect:list.do");
+				Battle b = this.battleService.fight(battleForm);
+				res = new ModelAndView("redirect:display.do?battleId=" + b.getId());
 				System.out.println("Intenta");
 			} catch (final Throwable oops) {
 				final String msg = this.getErrorMessage(oops);
@@ -136,8 +186,73 @@ public class BattleController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final BattleForm battle, final String messageCode) {
 		ModelAndView res;
+		Collection<Troop> troops = this.troopService.findAll();
+		Collection<GummiShip> gummiShips = this.gummiShipService.findAll();
+		Collection<String> nombres = new ArrayList<String>();
+		ArrayList<Integer> capacidadTropas = new ArrayList<Integer>();
+		ArrayList<Integer> capacidadNaves = new ArrayList<Integer>();
+		Collection<Recruited> attackRc = this.recruitedService.getAllRecruited(this.actorService.findByPrincipal().getId());
+		int index;
+		int n;
+		for (Troop a : troops) {
+			capacidadTropas.add(0);
+		}
+		for (GummiShip a : gummiShips) {
+			capacidadNaves.add(0);
+		}
+
+		for (Recruited ab : attackRc) {
+			index = 0;
+			if (ab.getTroop() != null) {
+				for (Troop t : troops) {
+					if (t.getName().equals(ab.getTroop().getName())) {
+						n = capacidadTropas.get(index);
+						capacidadTropas.remove(index);
+						capacidadTropas.add(index, n + 1);
+					}
+					index++;
+				}
+			} else {
+				for (GummiShip g : gummiShips) {
+					if (g.getName().equals(ab.getGummiShip().getName())) {
+						n = capacidadNaves.get(index);
+						capacidadNaves.remove(index);
+						capacidadNaves.add(index, n + 1);
+					}
+					index++;
+				}
+			}
+		}
+		for (Integer i : capacidadNaves) {
+			capacidadTropas.add(i);
+		}
+		String nom;
+		String capac = "";
+		Integer numero = 0;
+		for (final Troop t : troops) {
+			nom = '"' + t.getName() + '"';
+			nombres.add(nom);
+			capac = capac + t.getName() + " : " + capacidadTropas.get(numero) + " ";
+			numero++;
+		}
+		for (final GummiShip g : gummiShips) {
+			nom = '"' + g.getName() + '"';
+			nombres.add(nom);
+			capac = capac + g.getName() + " : " + capacidadTropas.get(numero) + " ";
+			numero++;
+		}
+
+		final int numT = troops.size();
+		final int numS = gummiShips.size();
+		final int num = numT + numS;
 
 		res = new ModelAndView("battle/recruited");
+		res.addObject("troops", troops);
+		res.addObject("gummiShips", gummiShips);
+		res.addObject("num", num);
+		res.addObject("nombres", nombres);
+		res.addObject("enemy", battle.getEnemy());
+		res.addObject("battleForm", battle);
 
 		return res;
 	}

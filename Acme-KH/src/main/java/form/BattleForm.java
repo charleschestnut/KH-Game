@@ -1,25 +1,25 @@
 
 package form;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 public class BattleForm {
 
-	private Collection<Integer>	troops;
+	private ArrayList<Integer>	troops;
 	private String				enemy;
 
 
-	public Collection<Integer> getTroops() {
+	public ArrayList<Integer> getTroops() {
 		return this.troops;
 	}
-	public void setTroops(Collection<Integer> troops) {
+	public void setTroops(final ArrayList<Integer> troops) {
 		this.troops = troops;
 	}
 
 	public String getEnemy() {
 		return this.enemy;
 	}
-	public void setEnemy(String enemy) {
+	public void setEnemy(final String enemy) {
 		this.enemy = enemy;
 	}
 }

@@ -11,27 +11,27 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-
+<jstl:out value="${capacidad }"/>
+  <br/>
 <jstl:forEach var="troo" items="${troops}">
-   <input type="number" name="${troo.name }" id="${troo.name }"min="1" max="100">
+    <jstl:out value="${troo.name }"/>
+   <input type="number" name="${troo.name }" id="${troo.name }"min="0" max="100" value = "0">
    <br/>
 </jstl:forEach>
 
 <jstl:forEach var="gumm" items="${gummiShips}">
-   <input type="number" name="${gumm.name }" id="${gumm.name }" min="1" max="100">
+   <jstl:out value="${gumm.name }"/>
+   <input type="number" name="${gumm.name }" id="${gumm.name }" min="0" max="100" value = "0">
    <br/>
 </jstl:forEach>
-
-
 
 <form:form action="battle/recruited.do" modelAttribute="battleForm" id="form">
 	<form:hidden path="troops" id="troops"/>
 	<form:hidden path="enemy" id="enemy"/>
-	<button onclick="set()">Hopla</button>
+	
 	<button onclick="set()" name="save" class="btn btn-primary">
 	<spring:message code="master.page.save" />
-</button>
-
+	</button>
 </form:form>
 
 <script>
@@ -39,7 +39,7 @@ function set()
 { 
 	var tr = [];
 
-    var a = ${nombres}
+    var a = ${nombres};
     var d = a[1];
 	var st = "\"";
 	var i = 0;
