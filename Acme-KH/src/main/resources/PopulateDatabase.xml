@@ -752,7 +752,7 @@
 		<property name="troop" ref="troop2" />
 	</bean>
 	
-	<bean id="recruited5" class="domain.Recruited">
+	<bean id="recruited6" class="domain.Recruited">
 		<property name="storageBuilding" ref="built3" />
 		<property name="gummiShip" ref="gummiShip2" />
 		<!-- <property name="troop" ref="troop1" /> -->
