@@ -41,26 +41,26 @@ public class BattleController extends AbstractController {
 
 
 	@RequestMapping("/recruited")
-	public ModelAndView recruited(@RequestParam(required = true) String nickname) {
+	public ModelAndView recruited(@RequestParam(required = true) final String nickname) {
 		ModelAndView res;
-		Collection<Troop> troops = this.troopService.findAll();
-		Collection<GummiShip> gummiShips = this.gummiShipService.findAll();
-		Collection<String> nombres = new ArrayList<String>();
+		final Collection<Troop> troops = this.troopService.findAll();
+		final Collection<GummiShip> gummiShips = this.gummiShipService.findAll();
+		final Collection<String> nombres = new ArrayList<String>();
 		String nom;
-		for (Troop t : troops) {
+		for (final Troop t : troops) {
 			nom = '"' + t.getName() + '"';
 			nombres.add(nom);
 		}
-		for (GummiShip g : gummiShips) {
+		for (final GummiShip g : gummiShips) {
 			nom = '"' + g.getName() + '"';
 			nombres.add(nom);
 		}
-		BattleForm bf = new BattleForm();
+		final BattleForm bf = new BattleForm();
 		bf.setEnemy(nickname);
 		System.out.println(bf.getEnemy());
-		int numT = troops.size();
-		int numS = gummiShips.size();
-		int num = numT + numS;
+		final int numT = troops.size();
+		final int numS = gummiShips.size();
+		final int num = numT + numS;
 
 		res = new ModelAndView("battle/recruited");
 		res.addObject("troops", troops);
@@ -98,7 +98,7 @@ public class BattleController extends AbstractController {
 	@RequestMapping("/listBattles")
 	public ModelAndView listBattles() {
 		final ModelAndView res;
-		KeybladeWielder keyblader = (KeybladeWielder) this.actorService.findByPrincipal();
+		final KeybladeWielder keyblader = (KeybladeWielder) this.actorService.findByPrincipal();
 		final Collection<Battle> battles = this.battleService.myBattles(keyblader.getId());
 
 		res = new ModelAndView("battle/listBattles");
@@ -109,7 +109,7 @@ public class BattleController extends AbstractController {
 	}
 
 	@RequestMapping("/display")
-	public ModelAndView display(@RequestParam(required = true) Integer battleId) {
+	public ModelAndView display(@RequestParam(required = true) final Integer battleId) {
 		final ModelAndView res;
 		final Battle battle = this.battleService.findOne(battleId);
 
@@ -130,11 +130,11 @@ public class BattleController extends AbstractController {
 
 		return res;
 	}
-	protected ModelAndView createEditModelAndView(BattleForm battle) {
+	protected ModelAndView createEditModelAndView(final BattleForm battle) {
 		return this.createEditModelAndView(battle, null);
 	}
 
-	protected ModelAndView createEditModelAndView(BattleForm battle, String messageCode) {
+	protected ModelAndView createEditModelAndView(final BattleForm battle, final String messageCode) {
 		ModelAndView res;
 
 		res = new ModelAndView("battle/recruited");

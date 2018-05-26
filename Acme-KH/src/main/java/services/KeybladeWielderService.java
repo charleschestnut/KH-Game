@@ -58,7 +58,7 @@ public class KeybladeWielderService {
 		return saved;
 	}
 
-	public KeybladeWielder saveFromCreate(Actor user, String worldName, String factionId) {
+	public KeybladeWielder saveFromCreate(final Actor user, final String worldName, final String factionId) {
 		KeybladeWielder result;
 
 		Assert.isTrue(this.actorService.findByUserAccountUsername(user.getUserAccount().getUsername()) == null, "error.message.duplicatedUsername");
@@ -77,7 +77,7 @@ public class KeybladeWielderService {
 		user.setHasConfirmedTerms(true);
 
 		//Actor to KW
-		KeybladeWielder kw = new KeybladeWielder();
+		final KeybladeWielder kw = new KeybladeWielder();
 		kw.setAvatar(user.getAvatar());
 		kw.setConfirmMoment(user.getConfirmMoment());
 		kw.setEmail(user.getEmail());
@@ -97,13 +97,13 @@ public class KeybladeWielderService {
 
 		kw.setWins(0);
 		kw.setLoses(0);
-		Materials materials = new Materials();
+		final Materials materials = new Materials();
 		materials.setGummiCoal(0);
 		materials.setMunny(0);
 		materials.setMytrhil(0);
 		kw.setMaterials(materials);
 		kw.setLastConnection(new Date(System.currentTimeMillis() - 1000));
-		Coordinates coordinates = new Coordinates();
+		final Coordinates coordinates = new Coordinates();
 
 		int g = 0;
 
@@ -174,7 +174,7 @@ public class KeybladeWielderService {
 
 	//Dashboard
 
-	public KeybladeWielder findByWorldName(String worldName) {
+	public KeybladeWielder findByWorldName(final String worldName) {
 		return this.KeybladeWielderRepository.findByWorldName(worldName);
 	}
 
@@ -199,5 +199,10 @@ public class KeybladeWielderService {
 
 	public Double avgOfWinRatio() {
 		return this.KeybladeWielderRepository.avgOfWinRatio();
+	}
+	public Collection<KeybladeWielder> playersToAttackt() {
+		final KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+		final String faction = player.getFaction().getName();
+		return this.KeybladeWielderRepository.playersToAttackt(faction);
 	}
 }

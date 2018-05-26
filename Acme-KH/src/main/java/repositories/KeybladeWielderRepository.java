@@ -36,4 +36,6 @@ public interface KeybladeWielderRepository extends JpaRepository<KeybladeWielder
 	@Query("select avg(1.0*(k.wins/(k.loses+k.wins))) from KeybladeWielder k")
 	Double avgOfWinRatio();
 
+	@Query("select k from KeybladeWielder k where k.faction.name != ?1")
+	Collection<KeybladeWielder> playersToAttackt(String faction);
 }
