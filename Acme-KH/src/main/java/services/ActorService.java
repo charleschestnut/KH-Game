@@ -112,8 +112,6 @@ public class ActorService {
 					Assert.isTrue(false, "error.message.notexist");
 			} else
 				new Throwable();
-			//Si no es ADMIN (Aqui no deberia llegar, porque solo puede entrar ADMIN o anonimos, y si es anonimo, salta el if y va al catch)
-
 		} catch (Throwable oops) {
 			accountType = "PLAYER";
 		}

@@ -160,7 +160,7 @@ public class KeybladeWielder extends Actor {
 		encoder = new Md5PasswordEncoder();
 		hash = encoder.encodePassword(this.getNickname() + this.getWorldName() + this.getWorldCoordinates().getX() + this.getWorldCoordinates().getY() + this.getWorldCoordinates().getZ(), null);
 		hash = hash.replaceAll("\\D+", "");
-		Long worldImageId = Long.parseLong(hash.substring(0, 17));
+		Long worldImageId = Long.parseLong(hash.substring(0, hash.length() > 17 ? 17 : hash.length()));
 		worldImageId = worldImageId % 34 + 1;
 
 		return worldImageId;

@@ -16,21 +16,24 @@
       
 <tiles-definitions>
 
-	<definition name="faction/list" extends="master.page">	
+	<definition name="faction/manager/display" extends="master.page">	
+		<put-attribute name="title" value="Facción" />
+		<put-attribute name="body" value="/views/faction/display.jsp" />
+	</definition>	
+	
+	<definition name="faction/manager/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar Facción" />
+		<put-attribute name="body" value="/views/faction/edit.jsp" />
+	</definition>	
+	
+	<definition name="faction/manager/create" extends="master.page">	
+		<put-attribute name="title" value="Crear Facción" />
+		<put-attribute name="body" value="/views/faction/edit.jsp" />
+	</definition>	
+	
+	<definition name="faction/manager/list" extends="master.page">	
 		<put-attribute name="title" value="Lista de Facciones" />
 		<put-attribute name="body" value="/views/faction/list.jsp" />
-	</definition>
+	</definition>		
 	
-	<definition name="faction/display" extends="master.page">	
-		<put-attribute name="title" value="Mostrando faccion" />
-		<put-attribute name="body" value="/views/faction/display.jsp" />
-	</definition>
-	
-	
-	<definition name="faction/edit" extends="master.page">	
-		<put-attribute name="title" value="Crear nueva faccion" />
-		<put-attribute name="body" value="/views/built/edit.jsp" />
-	</definition>
-	
-
 </tiles-definitions>

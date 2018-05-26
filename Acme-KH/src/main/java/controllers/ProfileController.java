@@ -11,12 +11,12 @@
 package controllers;
 
 import java.util.Collection;
-import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,36 +80,32 @@ public class ProfileController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam(required = false) String username, Locale locale) {
+	public ModelAndView display(@RequestParam(required = false) String username) {
 		ModelAndView result;
 		Actor actor;
+
+		result = new ModelAndView("profile/actor/display");
 
 		if (username == null)
 			actor = this.actorService.findByPrincipal();
 		else
 			try {
 				actor = this.actorService.findByUserAccountUsername(username);
+				Assert.notNull(actor, "error.message.notexist");
 			} catch (Throwable oops) { //Si mete un username invalido (nulo o no dentro de los limites [3, 32]), mostrar error o alternativa
 				result = new ModelAndView("redirect:list.do");
-
 				result.addObject("message", this.getErrorMessage(oops));
 				return result;
 			}
 
-		result = new ModelAndView("profile/actor/display");
 		if (actor instanceof KeybladeWielder) {
 			KeybladeWielder user = (KeybladeWielder) actor;
 			result.addObject("user", user);
-			result.addObject("maxMaterial", this.builtService.maxMaterials());
-			result.addObject("usernameInvitation", user.getUserAccount().getUsername());
 
 			//from: Carlos
-			if (username != null) {
-				result.addObject("hasOrganization", this.organizationService.keybladeWielderHasOrganization(user.getId()));
+			result.addObject("hasOrganization", this.organizationService.keybladeWielderHasOrganization(user.getId()));
+			if (this.actorService.findByPrincipal() instanceof KeybladeWielder)
 				result.addObject("puedoEnviarInvitation", this.organizationService.getCanSendInvitation());
-				System.out.println(this.organizationService.keybladeWielderHasOrganization(user.getId()));
-				System.out.println(this.organizationService.getCanSendInvitation());
-			}
 			//end
 		} else
 			result.addObject("user", actor);
@@ -187,27 +183,25 @@ public class ProfileController extends AbstractController {
 		return result;
 	}
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "register")
-	public ModelAndView signingup(Actor actor, @ModelAttribute("worldName") String worldName, @ModelAttribute("factionId") String factionId, BindingResult binding) {
+	public ModelAndView signingup(@ModelAttribute("worldName") String worldName, @ModelAttribute("factionId") String factionId, Actor actor, BindingResult binding) {
 		ModelAndView result;
 
 		actor = this.actorService.reconstruct(actor, binding);
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(actor, "error.message.commit");
+			result = this.createEditModelAndView(actor);
 		else
 			try {
 				if (actor.getUserAccount().isAuthority(Authority.GM))
-					this.gameMasterService.saveFromCreate(actor);
+					actor = this.gameMasterService.saveFromCreate(actor);
 				else if (actor.getUserAccount().isAuthority(Authority.MANAGER))
-					this.contentManagerService.saveFromCreate(actor);
+					actor = this.contentManagerService.saveFromCreate(actor);
 				else if (actor.getUserAccount().isAuthority(Authority.PLAYER))
-					this.keybladeWielderService.saveFromCreate(actor, worldName, factionId);
-				else
-					new Throwable("error.message.commit");
+					actor = this.keybladeWielderService.saveFromCreate(actor, worldName, factionId);
 
-				if (LoginService.getPrincipal().isAuthority(Authority.ADMIN))
-					result = new ModelAndView("welcome/index");
-				else
+				if (actor.getUserAccount().isAuthority("PLAYER"))
 					result = new ModelAndView("redirect:/security/login.do");
+				else
+					result = new ModelAndView("welcome/index");
 
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(actor, this.getErrorMessage(oops));

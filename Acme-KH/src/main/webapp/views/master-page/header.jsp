@@ -166,8 +166,9 @@
 					</div>
 					
 				</li>
+				</security:authorize>
 				
-				<security:authorize access="hasRole('PLAYER')">
+				<security:authorize access="isAuthenticated()">
 				<li class="nav-item"><a class="nav-link" href="profile/actor/list.do"> <img
 						src="https://kingdomhearts.com/img/header/icons/games-icon.png"
 						align="center" class="nav-icon" alt="home"> <spring:message
@@ -176,7 +177,6 @@
 			</security:authorize>
 					
 					
-			</security:authorize>
 
 			<security:authorize access="hasRole('MANAGER')">
 				<li class="nav-item dropdown"><a
@@ -204,6 +204,14 @@
 							href="gummiShip/contentManager/list.do"><spring:message
 								code="master.page.createdGummiShips" /></a>
 					</div></li>
+			</security:authorize>
+			
+			<security:authorize access="hasRole('MANAGER')">
+				<li class="nav-item"><a class="nav-link" href="faction/manager/list.do"> <img
+						src="https://kingdomhearts.com/img/header/icons/shop-icon.png"
+						align="center" class="nav-icon" alt="home"> <spring:message
+							code="faction" />s
+				</a></li>
 			</security:authorize>
 
 			<security:authorize access="hasRole('GM')">

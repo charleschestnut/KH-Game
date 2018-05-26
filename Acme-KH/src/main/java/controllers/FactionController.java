@@ -1,115 +1,153 @@
+/*
+ * ProfileController.java
+ * 
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
+ * http://www.tdg-seville.info/License.html
+ */
 
 package controllers;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.Authority;
 import services.ActorService;
+import services.BuiltService;
+import services.ContentManagerService;
 import services.FactionService;
+import services.GameMasterService;
+import services.KeybladeWielderService;
+import services.OrganizationService;
 import domain.Faction;
 
 @Controller
-@RequestMapping("/faction")
+@RequestMapping("/faction/manager")
 public class FactionController extends AbstractController {
 
 	@Autowired
-	private FactionService	factionService;
+	private ActorService			actorService;
+
 	@Autowired
-	private ActorService	actorService;
+	private KeybladeWielderService	keybladeWielderService;
+
+	@Autowired
+	private GameMasterService		gameMasterService;
+
+	@Autowired
+	private ContentManagerService	contentManagerService;
+
+	@Autowired
+	private OrganizationService		organizationService;
+
+	@Autowired
+	private BuiltService			builtService;
+
+	@Autowired
+	private FactionService			factionService;
 
 
-	@RequestMapping("/list")
+	// Actor ---------------------------------------------------------------	
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
-		final ModelAndView res;
-		final Collection<Faction> factions = this.factionService.findAll();
-
-		res = new ModelAndView("faction/list");
-		res.addObject("factions", factions);
-		res.addObject("requestURI", "faction/list.do");
-
-		return res;
-	}
-
-	@RequestMapping("/display")
-	public ModelAndView display(@RequestParam final Integer factionId) {
-		ModelAndView res = new ModelAndView("faction/display");
-
-		Faction faction = this.factionService.findOne(factionId);
-		try {
-			//Si no existe el edificio o no es final y no soy el dueño pa fuera
-			if (faction == null || (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER)))
-				res = new ModelAndView("redirect:list.do");
-			else
-				res.addObject("faction", faction);
-
-		} catch (final Throwable oops) {
-			res = new ModelAndView("redirect:list.do");
-		}
-		return res;
-	}
-
-	@RequestMapping("/create")
-	public ModelAndView create() {
-		ModelAndView res;
-		final Faction faction = this.factionService.create();
-
-		res = new ModelAndView("faction/edit");
-		res.addObject("faction", faction);
-
-		return res;
-	}
-
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int factionId) {
 		ModelAndView result;
-		Faction faction;
+		Collection<Faction> factions;
 
-		faction = this.factionService.findOne(factionId);
-		Assert.notNull(faction);
+		factions = this.factionService.findAll();
 
-		result = this.createEditModelAndView(faction);
-		result.addObject("contiene", faction);
+		result = new ModelAndView("faction/manager/list");
+		result.addObject("factions", factions);
 
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", params = "save")
-	public ModelAndView save(final Faction faction, final BindingResult binding) {
-		ModelAndView res;
-		Faction fact = this.factionService.reconstruct(faction, binding);
-		if (binding.hasErrors())
-			res = this.createEditModelAndView(faction);
-		else
-			try {
-				this.factionService.save(fact);
-				res = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
-				res = this.createEditModelAndView(faction, msg);
-			}
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam String factionId) {
+		ModelAndView result;
+		Faction faction;
 
-		return res;
+		try {
+			faction = this.factionService.findOne(Integer.parseInt(factionId));
+		} catch (Throwable o) {
+			return new ModelAndView("redirect:list.do");
+		}
+
+		result = new ModelAndView("faction/manager/display");
+		result.addObject("faction", faction);
+
+		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(Faction faction) {
-		return this.createEditModelAndView(faction, null);
+	// Edition  -------------------------------------
+
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView result;
+		Faction faction;
+
+		faction = this.factionService.create();
+		result = this.createEditModelAndViewForm(faction);
+
+		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(Faction faction, String messageCode) {
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam String factionId) {
+		ModelAndView result;
+		Faction faction;
+
+		try {
+			faction = this.factionService.findOne(Integer.parseInt(factionId));
+		} catch (Throwable o) {
+			return new ModelAndView("redirect:list.do");
+		}
+
+		result = this.createEditModelAndViewForm(faction);
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid Faction faction, BindingResult binding) {
 		ModelAndView result;
 
-		result = new ModelAndView("faction/edit");
+		if (binding.hasErrors())
+			result = this.createEditModelAndViewForm(faction);
+		else
+			try {
+				faction = this.factionService.save(faction);
+				result = new ModelAndView("redirect:display.do?factionId=" + faction.getId());
+			} catch (Throwable oops) {
+				result = this.createEditModelAndViewForm(faction, this.getErrorMessage(oops));
+			}
+
+		return result;
+	}
+
+	// Ancillary methods ------------------------------------------------------
+
+	protected ModelAndView createEditModelAndViewForm(Faction faction) {
+		ModelAndView result;
+		result = this.createEditModelAndViewForm(faction, null);
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndViewForm(Faction faction, String message) {
+		ModelAndView result;
+
+		result = new ModelAndView("faction/manager/edit");
 		result.addObject("faction", faction);
-		result.addObject("message", messageCode);
+		result.addObject("message", message);
 
 		return result;
 	}

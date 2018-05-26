@@ -16,22 +16,24 @@
        
 <tiles-definitions>
 
-<definition name="faction/list" extends="master.page">	
-		<put-attribute name="title" value="List of Factions" />
-		<put-attribute name="body" value="/views/built/list.jsp" />
-	</definition>
-		
-		
-	<definition name="built/display" extends="master.page">	
-		<put-attribute name="title" value="Displaying my building" />
-		<put-attribute name="body" value="/views/built/display.jsp" />
-	</definition>
-	
-	
-	<definition name="faction/edit" extends="master.page">	
+	<definition name="faction/manager/display" extends="master.page">	
 		<put-attribute name="title" value="Faction" />
+		<put-attribute name="body" value="/views/faction/display.jsp" />
+	</definition>	
+	
+	<definition name="faction/manager/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit Faction" />
 		<put-attribute name="body" value="/views/faction/edit.jsp" />
-	</definition>
-
+	</definition>	
+	
+	<definition name="faction/manager/create" extends="master.page">	
+		<put-attribute name="title" value="Create Faction" />
+		<put-attribute name="body" value="/views/faction/edit.jsp" />
+	</definition>	
+	
+	<definition name="faction/manager/list" extends="master.page">	
+		<put-attribute name="title" value="Factions List" />
+		<put-attribute name="body" value="/views/faction/list.jsp" />
+	</definition>	
 	
 </tiles-definitions>

@@ -12,7 +12,7 @@
 
 	<spring:message code="username" var="usernameH" />
 	<display:column title="${usernameH}" >
-	<img src="${row.getAvatarImage()}" width="32px" height="32px" alt="${row.userAccount.username}"/> <jstl:out value="${row.userAccount.username}"/>
+	<img src="${row.getAvatarImage()}" width="32px" height="32px" class="circular" alt="${row.userAccount.username}"/> <jstl:out value="${row.userAccount.username}"/>
 	</display:column>
 
 	<spring:message code="nickname" var="nicknameH" />

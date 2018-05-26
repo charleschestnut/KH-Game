@@ -108,6 +108,11 @@
 		<security:intercept-url pattern="/profile/actor/list.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/keybladewielder/world.do" access="isAuthenticated()" />
 		
+		<security:intercept-url pattern="/faction/manager/display.do" access="hasRole('MANAGER')" />
+		<security:intercept-url pattern="/faction/manager/create.do" access="hasRole('MANAGER')" />
+		<security:intercept-url pattern="/faction/manager/edit.do" access="hasRole('MANAGER')" />
+		<security:intercept-url pattern="/faction/manager/list.do" access="hasRole('MANAGER')" />
+		
 		<security:intercept-url pattern="/profile/actor/register.do" access="isAnonymous() || hasRole('ADMIN')" />
 		
 		<security:intercept-url pattern="/keybladewielder/updateMaterialsPanel.do" access="hasRole('PLAYER')" />

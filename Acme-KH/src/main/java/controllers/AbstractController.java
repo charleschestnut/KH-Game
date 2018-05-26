@@ -10,7 +10,8 @@
 
 package controllers;
 
-import java.security.Security;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +25,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.Authority;
-import security.LoginService;
 import services.ActorService;
 import services.BuiltService;
+import services.KeybladeWielderService;
 import domain.KeybladeWielder;
 
 @Controller
 public class AbstractController {
-	
+
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 	@Autowired
 	private BuiltService			builtService;
+	@Autowired
+	private KeybladeWielderService	keybladeWielderService;
+
 
 	// Panic handler ----------------------------------------------------------
 
@@ -59,26 +63,40 @@ public class AbstractController {
 
 		return res;
 	}
-	
+
 	@ModelAttribute
-	public void addPlayerToModel(Model model){
+	public void addPlayerToModel(Model model) {
 		SecurityContext context;
 		Boolean anonymous;
-		
-		try{
-		context = SecurityContextHolder.getContext();
-		anonymous = context.getAuthentication().getPrincipal().equals("anonymousUser");
-		
-			if(!anonymous && actorService.getPrincipalAuthority().equals(Authority.PLAYER)){
+
+		try {
+			context = SecurityContextHolder.getContext();
+			anonymous = context.getAuthentication().getPrincipal().equals("anonymousUser");
+
+			if (!anonymous && this.actorService.getPrincipalAuthority().equals(Authority.PLAYER)) {
 				KeybladeWielder player;
-				
-				player = (KeybladeWielder) actorService.findByPrincipal();
-				
+
+				player = (KeybladeWielder) this.actorService.findByPrincipal();
+
+				if (this.sumarRestarHorasFecha(player.getLastConnection(), 1).before(new Date())) {
+					player.setLastConnection(new Date());
+					player = this.keybladeWielderService.save(player);
+				}
+
 				model.addAttribute("playerFromAbstract", player);
-				model.addAttribute("maxMaterialsFromAbstract", builtService.maxMaterials());
+				model.addAttribute("maxMaterialsFromAbstract", this.builtService.maxMaterials());
 			}
-		}catch(Throwable e){
+		} catch (Throwable e) {
 			System.out.println("oh baia");
 		}
+	}
+
+	public Date sumarRestarHorasFecha(Date fecha, int horas) {
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha); // Configuramos la fecha que se recibe
+		calendar.add(Calendar.HOUR, horas);  // numero de horas a añadir, o restar en caso de horas<0
+		return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
+
 	}
 }

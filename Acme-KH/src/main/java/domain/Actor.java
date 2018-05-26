@@ -151,8 +151,8 @@ public class Actor extends DomainEntity {
 
 	@Transient
 	public String getAvatarImage() {
-		if (this.getAvatar() == null || this.avatar == "")
-			return "images/defaultAvatar.png";
+		if (this.getAvatar() == null || this.getAvatar().length() == 0 || this.getAvatar().matches("(^.png|.jpg|.gif|.jpeg|.svg)$"))
+			return "./images/defaultAvatar.png";
 		else
 			return this.getAvatar();
 	}

@@ -57,7 +57,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	private String					username;
 	private String					password;
 	private Collection<Authority>	authorities;
-	private boolean enabled;
+	private boolean					enabled;
 
 
 	@Size(min = 5, max = 32)

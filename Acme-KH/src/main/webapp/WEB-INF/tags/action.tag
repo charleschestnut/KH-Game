@@ -23,10 +23,14 @@
 <%-- Attributes --%> 
 <%@ attribute name="code" required="true" %>
 <%@ attribute name="url" required="true" %>
+<%@ attribute name="color" %>
 
+<jstl:if test="${color == null}">
+	<jstl:set var="color" value="primary" />
+</jstl:if>
 
 <%-- Definition --%>
-<button type="button" class="btn btn-primary" onclick="javascript: relativeRedir('${url}')" >
+<button type="button" class="btn btn-${color}" onclick="javascript: relativeRedir('${url}')" >
 <spring:message code="${code}"/>
 </button>
 

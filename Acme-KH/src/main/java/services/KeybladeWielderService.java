@@ -63,6 +63,9 @@ public class KeybladeWielderService {
 
 		Assert.isTrue(this.actorService.findByUserAccountUsername(user.getUserAccount().getUsername()) == null, "error.message.duplicatedUsername");
 		Assert.isTrue(this.actorService.findByNickname(user.getNickname()) == null, "error.message.duplicatedNickname");
+		Assert.isTrue(!worldName.isEmpty(), "error.message.worldName.empty");
+		Assert.isTrue(this.findByWorldName(worldName) == null, "error.message.worldExist");
+		Assert.isTrue(!factionId.isEmpty(), "error.message.validFaction");
 
 		//Password
 		Md5PasswordEncoder encoder;
@@ -105,30 +108,22 @@ public class KeybladeWielderService {
 		kw.setLastConnection(new Date(System.currentTimeMillis() - 1000));
 		final Coordinates coordinates = new Coordinates();
 
-		int g = 0;
+		Integer g = this.randomGalaxy(kw.getFaction());
+		while (this.checkIfGalaxyHas10Worlds(g) >= 10)
+			g = this.randomGalaxy(kw.getFaction());
 
-		switch (faction.getGalaxy()) {
-		case 0:
-			//cualquier galaxia
-			g = (int) (Math.random() * 100);
-		case 1:
-			//galaxias impares
-			g = (int) (Math.random() * 100);
-			g += (g % 2 == 0 ? 1 : 0);
-		case 2:
-			//galaxias pares
-			g += (g % 2 == 0 ? 0 : 1);
-		case 3:
-			//galaxias multiplo de 3
-			g *= (g % 3 == 0 ? 1 : 3);
+		Integer x = new Random().nextInt(10);
+		Integer y = new Random().nextInt(10);
+		while (this.checkIfCoodinatesAreInUseinGalaxy(x, y, g) > 1) {
+			x = new Random().nextInt(10);
+			y = new Random().nextInt(10);
 		}
-		coordinates.setX(new Random().nextInt(10));
-		coordinates.setY(new Random().nextInt(10));
+
+		coordinates.setX(x);
+		coordinates.setY(y);
 		coordinates.setZ(g);
 
 		kw.setWorldCoordinates(coordinates);
-
-		Assert.isTrue(this.findByWorldName(worldName) == null, "error.message.worldExist");
 		kw.setWorldName(worldName);
 
 		result = this.save(kw);
@@ -170,6 +165,33 @@ public class KeybladeWielderService {
 		if (org == null)
 			res = false;
 		return res;
+	}
+
+	public Integer checkIfGalaxyHas10Worlds(int g) {
+		return this.KeybladeWielderRepository.checkIfGalaxyHas10Worlds(g);
+	}
+
+	public Integer checkIfCoodinatesAreInUseinGalaxy(int x, int y, int g) {
+		return this.KeybladeWielderRepository.checkIfCoodinatesAreInUseinGalaxy(x, y, g);
+	}
+
+	public Integer randomGalaxy(Faction faction) {
+		Integer g = (int) (Math.random() * Integer.MAX_VALUE / 3);
+
+		switch (faction.getGalaxy()) {
+		case 0:
+			//cualquier galaxia
+		case 1:
+			//galaxias impares
+			g += (g % 2 == 0 ? 1 : 0);
+		case 2:
+			//galaxias pares
+			g += (g % 2 == 0 ? 0 : 1);
+		case 3:
+			//galaxias multiplo de 3
+			g *= (g % 3 == 0 ? 1 : 3);
+		}
+		return g;
 	}
 
 	//Dashboard

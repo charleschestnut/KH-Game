@@ -16,6 +16,12 @@ public interface KeybladeWielderRepository extends JpaRepository<KeybladeWielder
 	@Query("select a from KeybladeWielder a where a.worldName = ?1")
 	KeybladeWielder findByWorldName(String worldName);
 
+	@Query("select count(k) from KeybladeWielder k where k.worldCoordinates.z=?1")
+	Integer checkIfGalaxyHas10Worlds(int g);
+
+	@Query("select count(k) from KeybladeWielder k where k.worldCoordinates.x = ?1 and k.worldCoordinates.y = ?2 and k.worldCoordinates.z = ?3")
+	Integer checkIfCoodinatesAreInUseinGalaxy(int x, int y, int g);
+
 	//Dashboard
 
 	@Query("select 1.0*(select count(k)/(select count(u) from KeybladeWielder u) from KeybladeWielder k where k.faction.id=f.id) from Faction f")
