@@ -47,6 +47,7 @@
 			<acme:action code="troop.edit"  url="troop/contentManager/edit.do?recruiterId=${troop.recruiter.id}&troopId=${troop.id}"/>
 		</jstl:if>
 	
+		<acme:action code="troop.delete"  url="troop/contentManager/delete.do?troopId=${troop.id}"/>
 	</fieldset>
 </jstl:forEach>
 <br><br>

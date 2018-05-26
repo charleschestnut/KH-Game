@@ -44,4 +44,5 @@ public interface KeybladeWielderRepository extends JpaRepository<KeybladeWielder
 
 	@Query("select k from KeybladeWielder k where k.faction.name != ?1")
 	Collection<KeybladeWielder> playersToAttackt(String faction);
+
 }

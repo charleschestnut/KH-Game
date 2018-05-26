@@ -371,4 +371,13 @@ public class BuiltService {
 
 		this.BuiltRepository.save(b);
 	}
+
+	public void saveForTroopDeleting(Built storageBuilding) {
+		this.BuiltRepository.save(storageBuilding);
+		
+	}
+
+	public Collection<Built> findAllBuiltWithTroop(int id) {
+		return this.BuiltRepository.findAllBuiltWithTroop(id);
+	}
 }

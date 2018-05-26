@@ -131,7 +131,6 @@ public class OrganizationController extends AbstractController {
 		Organization org = this.organizationService.reconstruct(organization, binding);
 		
 		if(binding.hasErrors()){
-			System.out.println(binding.getAllErrors());
 			result = createEditModelAndView(organization);
 		}else{
 			try{

@@ -12,8 +12,6 @@ package controllers;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -22,23 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.GummiShip;
-import domain.Invitation;
-import domain.InvitationStatus;
-import domain.KeybladeWielder;
-import domain.OrgRange;
-import domain.Organization;
-import domain.Recruiter;
-import domain.Troop;
-
-import services.ActorService;
 import services.BuildingService;
-import services.BuiltService;
 import services.GummiShipService;
-import services.InvitationService;
-import services.OrganizationService;
 import services.RecruiterService;
-import services.TroopService;
+import domain.GummiShip;
+import domain.Recruiter;
 
 @Controller
 @RequestMapping("/gummiShip/contentManager")
@@ -102,7 +88,6 @@ public class GummiShipController extends AbstractController {
 		GummiShip gum = this.gummiShipService.reconstruct(g, binding);
 		
 		if(binding.hasErrors()){
-			System.out.println(binding.getAllErrors());
 			result = createEditModelAndView(g);
 		}else{
 			try{

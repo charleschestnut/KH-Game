@@ -113,4 +113,8 @@ public class RecruitedService {
 		return this.RecruitedRepository.getAllRecruited(actorId);
 	}
 
+	public Collection<Recruited> findAllRecruitedOfTroop(int id) {
+		return this.RecruitedRepository.findAllRecruitedOfTroop(id);
+	}
+
 }

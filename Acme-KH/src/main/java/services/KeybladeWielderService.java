@@ -227,4 +227,5 @@ public class KeybladeWielderService {
 		final String faction = player.getFaction().getName();
 		return this.KeybladeWielderRepository.playersToAttackt(faction);
 	}
+
 }

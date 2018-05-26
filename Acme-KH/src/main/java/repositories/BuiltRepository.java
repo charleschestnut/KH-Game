@@ -29,4 +29,7 @@ public interface BuiltRepository extends JpaRepository<Built, Integer> {
 	@Query("select sum(b.building.materialsSlots.gummiCoal * (1+(b.lvl-1)*b.building.extraSlotsPerLvl)) from Built b where b.keybladeWielder.id=?1 AND b.lvl>0  AND b.building in (select w from Warehouse w) ")
 	Integer getExtraGummiCoal(Integer playerId);
 
+	@Query("select b from Built b where b.troop.id=?1")
+	Collection<Built> findAllBuiltWithTroop(int id);
+
 }
