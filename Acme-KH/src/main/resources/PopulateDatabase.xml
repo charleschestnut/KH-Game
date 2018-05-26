@@ -863,6 +863,9 @@
 		</property>
 		<property name="date" value="05/04/2016"></property>
 		<property name="keybladeWielder" ref="player1"></property>
+		<property name="reportUpdates">
+			<list><ref bean="reportUpdate1"/></list>
+		</property>
 		</bean>
 		
 		<bean id="report2" class="domain.Report">
@@ -875,6 +878,9 @@
 		</property>
 		<property name="date" value="05/04/2016"></property>
 		<property name="keybladeWielder" ref="player2"></property>
+		<property name="reportUpdates">
+			<list><ref bean="reportUpdate2"/></list>
+		</property>
 		</bean>
 		
 	<!-- REPORTUPDATE -->
