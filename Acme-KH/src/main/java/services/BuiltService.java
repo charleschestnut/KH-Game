@@ -269,9 +269,9 @@ public class BuiltService {
 		Assert.isTrue(time1 >= time2, "error.message.built.working");
 
 		res = this.recruitedService.save(b);
-
+		if(res!=null){
 		b.setActivationDate(null);
-		this.BuiltRepository.save(b);
+		this.BuiltRepository.save(b);}
 
 		return res;
 
