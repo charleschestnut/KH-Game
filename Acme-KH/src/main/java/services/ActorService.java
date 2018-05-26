@@ -190,5 +190,9 @@ public class ActorService {
 
 		return auth;
 	}
+	
+	public void saveFromGM(Actor actor) {
+		actorRepository.save(actor);
+	}
 
 }

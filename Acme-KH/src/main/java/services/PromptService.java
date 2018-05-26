@@ -57,7 +57,11 @@ public class PromptService {
 			"To send a recruiter with troops, gummiships or both, use set [username] followed by next option:  <br/><br/>" +
 			"-rc >[recruiterName]  > You can list the available building by executing 'list buildings' command <br/>" +
 			"-t >[troopName]  > You can list the available troops by executing 'list troops' command <br/>" +
-			"-gs >[gummishipName]  > You can list the available gummiships by executing 'list gumiships' command <br/>" ;
+			"-gs >[gummishipName]  > You can list the available gummiships by executing 'list gumiships' command <br/><br/>" +
+			"To remove materials from a player, use rm [username] followed by one of the next options:  <br/><br/>" +
+			"-mn [munnyQuantity]  <br/>" +
+			"-mt [mythrilQuantity]  <br/>" +
+			"-mn [gummyCoalQuantity]  <br/>";
 		} else if (command.trim().startsWith("set") && (command.indexOf("-mn")>0 || command.indexOf("-mt")>0 || command.indexOf("-gc")>0)) {
 			Integer munny = 0;
 			Integer mythril = 0;
@@ -240,6 +244,66 @@ public class PromptService {
 			res = troopService.getTroopsNames().toString();
 		}else if(command.equals("list gummiships")){
 			res = gummiShipService.getGummiShipsNames().toString();
+		} else if (command.trim().startsWith("rm") && (command.indexOf("-mn")>0 || command.indexOf("-mt")>0 || command.indexOf("-gc")>0)) {
+			Integer munny = 0;
+			Integer mythril = 0;
+			Integer gummiCoal = 0;
+			String username;
+			Boolean valid;
+			Actor player;
+			
+			username = command.split("\\s+")[1];
+			player = actorService.findByUserAccountUsername(username);
+			valid = true;
+			
+			if (player != null && new ArrayList<>(player.getUserAccount().getAuthorities()).get(0).getAuthority().equals(Authority.PLAYER)) {
+				KeybladeWielder keybladeWielder;
+				
+				keybladeWielder = (KeybladeWielder) player;
+				
+				if (command.indexOf("-mn") < 0 || Integer.valueOf(command.split("-mn")[1].split("\\s+")[1].trim()) > keybladeWielder.getMaterials().getMunny()) {
+					munny = 0;
+				} else if(command.split("-mn")[1].split("\\s+")[1].trim().matches("^[1-9]\\d*$")){
+					munny = Integer.valueOf(command.split("-mn")[1].split("\\s+")[1].trim());
+				}else{
+					valid = false;
+				}
+
+				if (command.indexOf("-mt") < 0 || Integer.valueOf(command.split("-mt")[1].split("\\s+")[1].trim()) > keybladeWielder.getMaterials().getMytrhil()) {
+					mythril = 0;
+				} else if(command.split("-mt")[1].split("\\s+")[1].trim().matches("^[1-9]\\d*$")){
+					mythril = Integer.valueOf(command.split("-mt")[1].split("\\s+")[1].trim());
+				}else{
+					valid = false;
+				}
+
+				if (command.indexOf("-gc") < 0 || Integer.valueOf(command.split("-gc")[1].split("\\s+")[1].trim()) > keybladeWielder.getMaterials().getGummiCoal()) {
+					gummiCoal = 0;
+				} else if(command.split("-gc")[1].trim().matches("^[1-9]\\d*$")){
+					gummiCoal = Integer.valueOf(command.split("-gc")[1].split("\\s+")[1].trim());
+				}else{
+					valid = false;
+				}
+				
+				if(valid){
+					Materials materials;
+					
+					materials = new Materials();
+					
+					materials.setMunny(keybladeWielder.getMaterials().getMunny()-munny);
+					materials.setMytrhil(keybladeWielder.getMaterials().getMytrhil() -mythril);
+					materials.setGummiCoal(keybladeWielder.getMaterials().getGummiCoal()-gummiCoal);
+					
+					keybladeWielder.setMaterials(materials);
+					
+					actorService.saveFromGM(keybladeWielder);
+					
+					res = "Materials removed";
+				}else{
+					res = "Command not understood";
+				}
+			}
+				
 		}else {
 		
 			res = "Command not understood";
