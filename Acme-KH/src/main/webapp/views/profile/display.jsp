@@ -67,11 +67,24 @@
 	</jstl:if>
   </jstl:if>
   
-  
+  <div style="float:right">
    <jstl:if test="${user.userAccount.getOwner()}">
-   <div style="float:right">
+   
 	<acme:action code="master.page.edit" color="outline-primary"  url="/profile/actor/edit.do"/>
-	</div>
+	
 	</jstl:if>
+	<security:authorize access="hasRole('ADMIN')">
+		<jstl:if test="${not user.userAccount.getOwner()}">
+			<jstl:choose>
+						<jstl:when test="${user.userAccount.isEnabled()}">
+						<acme:action code="ban" color="outline-danger"  url="/administrator/banned/create.do?username=${user.userAccount.username}"/>
+						</jstl:when>
+						<jstl:otherwise>
+						<acme:action code="unban" color="outline-warning"  url="/administrator/banned/unban.do?username=${user.userAccount.username}"/>
+						</jstl:otherwise>
+			</jstl:choose>	
+		</jstl:if>
+	</security:authorize>
+	</div>
   </div>
 </div>

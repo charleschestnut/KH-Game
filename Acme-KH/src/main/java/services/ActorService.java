@@ -68,14 +68,12 @@ public class ActorService {
 
 	public Actor save(Actor actor) {
 		Assert.notNull(actor, "error.message.null");
-		if (actor.getId() != 0)
-			Assert.isTrue(actor.getUserAccount().equals(LoginService.getPrincipal()), "error.message.owner");
+
 		Actor res;
 
 		res = this.actorRepository.save(actor);
 		return res;
 	}
-
 	public Actor saveFromCreate(Actor user) {
 		Actor result;
 		Assert.isTrue(this.findByUserAccountUsername(user.getUserAccount().getUsername()) == null, "error.message.duplicatedUsername");

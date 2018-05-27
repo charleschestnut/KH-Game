@@ -14,7 +14,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
-	<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <nav style="background-color: #1a1e3d; font-size: 12px;"
 	class="text-uppercase navbar navbar-expand-md navbar-dark fixed-top justify-content-between">
@@ -65,16 +65,17 @@
 	<div style="font-size: 12px;" class="collapse navbar-collapse"
 		id="navbarsExampleDefault">
 		<ul class="navbar-nav ml-auto">
-			
+
 			<security:authorize access="isAuthenticated()">
 				<li class="nav-item"><a class="nav-link" href="#"> <img
 						src="https://kingdomhearts.com/img/header/icons/home-icon.png"
 						align="center" class="nav-icon" alt="home"> Home
 				</a></li>
 			</security:authorize>
-			
+
 			<security:authorize access="hasRole('PLAYER')">
-				<li class="nav-item"><a class="nav-link" href="keybladewielder/world.do"> <img
+				<li class="nav-item"><a class="nav-link"
+					href="keybladewielder/world.do"> <img
 						src="https://kingdomhearts.com/img/header/icons/worlds-icon.png"
 						align="center" class="nav-icon" alt="home"> <spring:message
 							code="master.page.myWorld" />
@@ -100,23 +101,23 @@
 					<div style="font-size: 12px;" class="dropdown-menu"
 						aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" href="report/list.do"><spring:message
-								code="report.list" /></a> 
-								<a class="dropdown-item"
-							href="profile/actor/register.do?accountType=GM">
-							<spring:message code="master.page.create.gm" /></a>
-							<a class="dropdown-item"
-							href="profile/actor/register.do?accountType=MANAGER">
-							<spring:message code="master.page.create.manager" /></a>
-								<a class="dropdown-item"
+								code="report.list" /></a> <a class="dropdown-item"
+							href="profile/actor/register.do?accountType=GM"> <spring:message
+								code="master.page.create.gm" /></a> <a class="dropdown-item"
+							href="profile/actor/register.do?accountType=MANAGER"> <spring:message
+								code="master.page.create.manager" /></a> <a class="dropdown-item"
 							href="reportUpdate/admin/listSuspicious.do"><spring:message
 								code="reportUpdate.list.suspicious" /></a> <a class="dropdown-item"
-							href="legaltext/index.do"><spring:message
-								code="master.page.terms" /></a> 
-							<a class="dropdown-item"
-							href="administrator/dashboard.do">Dashboard</a>
-							<a class="dropdown-item"
-							href="configuration/administrator/edit.do">
-							<spring:message code="master.page.configurationPage" /></a>
+							href="banned/administrator/index.do"><spring:message
+								code="master.page.banned" /></a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="administrator/dashboard.do">Dashboard</a>
+						<a class="dropdown-item"
+							href="configuration/administrator/edit.do"> <spring:message
+								code="master.page.configurationPage" />
+
+						</a> <a class="dropdown-item" href="legaltext/index.do"><spring:message
+								code="master.page.terms" /></a>
 					</div></li>
 			</security:authorize>
 
@@ -141,8 +142,7 @@
 							href="item/player/ownedItemsList.do"><spring:message
 								code="master.page.myItems" /></a> <a class="dropdown-item"
 							href="item/player/activeItemsList.do"><spring:message
-								code="master.page.activeItems" /></a>
-								<a class="dropdown-item"
+								code="master.page.activeItems" /></a> <a class="dropdown-item"
 							href="prize/list.do"><spring:message
 								code="master.page.prizes" /></a>
 					</div></li>
@@ -159,24 +159,22 @@
 					<div style="font-size: 12px;" class="dropdown-menu"
 						aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" href="organization/list.do"><spring:message
-								code="organization.list" /></a>
-			
-						<a class="dropdown-item" href="organization/invitation/list.do"><spring:message
+								code="organization.list" /></a> <a class="dropdown-item"
+							href="organization/invitation/list.do"><spring:message
 								code="master.page.myInvitations" /></a>
-					</div>
-					
-				</li>
-				</security:authorize>
-				
-				<security:authorize access="isAuthenticated()">
-				<li class="nav-item"><a class="nav-link" href="profile/actor/list.do"> <img
+					</div></li>
+			</security:authorize>
+
+			<security:authorize access="isAuthenticated()">
+				<li class="nav-item"><a class="nav-link"
+					href="profile/actor/list.do"> <img
 						src="https://kingdomhearts.com/img/header/icons/games-icon.png"
 						align="center" class="nav-icon" alt="home"> <spring:message
 							code="master.page.users" />
 				</a></li>
 			</security:authorize>
-					
-					
+
+
 
 			<security:authorize access="hasRole('MANAGER')">
 				<li class="nav-item dropdown"><a
@@ -191,23 +189,19 @@
 						<a class="dropdown-item" href="building/contentManager/myList.do"><spring:message
 								code="master.page.myBuilding" /></a> <a class="dropdown-item"
 							href="item/manager/create.do"><spring:message
-								code="master.page.createItem" /></a>
-						<a class="dropdown-item"
+								code="master.page.createItem" /></a> <a class="dropdown-item"
 							href="item/manager/createdItems.do"><spring:message
-								code="master.page.createdItems" /></a>
-						
-						<a class="dropdown-item"
+								code="master.page.createdItems" /></a> <a class="dropdown-item"
 							href="troop/contentManager/list.do"><spring:message
-								code="master.page.createdTroops" /></a>
-						
-						<a class="dropdown-item"
+								code="master.page.createdTroops" /></a> <a class="dropdown-item"
 							href="gummiShip/contentManager/list.do"><spring:message
 								code="master.page.createdGummiShips" /></a>
 					</div></li>
 			</security:authorize>
-			
+
 			<security:authorize access="hasRole('MANAGER')">
-				<li class="nav-item"><a class="nav-link" href="faction/manager/list.do"> <img
+				<li class="nav-item"><a class="nav-link"
+					href="faction/manager/list.do"> <img
 						src="https://kingdomhearts.com/img/header/icons/shop-icon.png"
 						align="center" class="nav-icon" alt="home"> <spring:message
 							code="faction" />s
@@ -221,8 +215,8 @@
 						align="center" class="nav-icon" alt="home"> <spring:message
 							code="report.list" />
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="gm/prompt/show.do">
-						<img
+				<li class="nav-item"><a class="nav-link"
+					href="gm/prompt/show.do"> <img
 						src="https://kingdomhearts.com/img/header/icons/worlds-icon.png"
 						align="center" class="nav-icon"> <spring:message
 							code="master.page.prompt" />
@@ -249,24 +243,26 @@
 								code="master.page.logout" /> </a>
 					</div></li>
 			</security:authorize>
-			
+
 		</ul>
 	</div>
 	<security:authorize access="isAuthenticated()">
 	&nbsp;
-	<acme:searchbox action="profile/actor/display.do"/>
+	<acme:searchbox action="profile/actor/display.do" />
 	</security:authorize>
 </nav>
 <!----------------->
 
 <div class="section home">
-      <div class="video-home" id="src">
-      <img src="https://kingdomhearts.com/img/header/kingdom-hearts-header-still.jpg" width="100%">
-      </div>
-        <img class="header-logo" src="./images/acme_battle.png" alt="KINGDOM HEARTS">
-    </div>
+	<div class="video-home" id="src">
+		<img
+			src="https://kingdomhearts.com/img/header/kingdom-hearts-header-still.jpg"
+			width="100%">
+	</div>
+	<img class="header-logo" src="./images/acme_battle.png"
+		alt="KINGDOM HEARTS">
+</div>
 <script type="text/javascript">
-
 	function preventRedirect(path) {
 		var currentUrl = window.location.href;
 

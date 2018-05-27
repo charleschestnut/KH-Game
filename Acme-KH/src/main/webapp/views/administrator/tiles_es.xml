@@ -21,4 +21,9 @@
 		<put-attribute name="body" value="/views/administrator/dashboard.jsp" />
 	</definition>
 	
+	<definition name="administrator/banned/list" extends="master.page">	
+		<put-attribute name="title" value="Usuarios Banneados" />
+		<put-attribute name="body" value="/views/administrator/listBanned.jsp" />
+	</definition>
+	
 </tiles-definitions>

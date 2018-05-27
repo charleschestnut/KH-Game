@@ -1,6 +1,7 @@
 
 package services;
 
+import java.sql.Date;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.BannedRepository;
+import security.UserAccount;
+import domain.Actor;
 import domain.Banned;
 
 @Service
@@ -20,27 +23,63 @@ public class BannedService {
 	@Autowired
 	private BannedRepository	bannedRepository;
 
+	@Autowired
+	private ActorService		actorService;
+
 
 	// CRUD methods
 
-	public Banned create() {
+	public Banned create(Actor actor) {
 		Banned banned;
+		Assert.notNull(actor);
 
 		banned = new Banned();
+		banned.setActor(actor);
+		banned.setIsValid(true);
+		banned.setBanDate(new Date(System.currentTimeMillis() - 1000));
+
+		Assert.isTrue(this.findBansByActor(banned.getActor().getId()) == 0, "error.message.alreadyBanned");
 
 		return banned;
 	}
 
-	public Banned save(Banned banned) {
+	public Banned unban(Banned banned) {
 		Assert.notNull(banned);
 
+		banned.setIsValid(false);
+
 		Banned saved;
+		Actor actor;
+		UserAccount ua;
 
 		saved = this.bannedRepository.save(banned);
+		actor = this.actorService.findOne(saved.getActor().getId());
+		ua = actor.getUserAccount();
+		ua.setEnabled(!saved.getIsValid());
+		actor.setUserAccount(ua);
+		this.actorService.save(actor);
 
 		return saved;
 	}
 
+	public Banned save(Banned banned) {
+		Assert.notNull(banned);
+		Assert.isTrue(!banned.getActor().getUserAccount().isAuthority("ADMIN"), "error.message.ban.admin");
+
+		Banned saved;
+		Actor actor;
+		UserAccount ua;
+
+		banned.setIsValid(true);
+		saved = this.bannedRepository.save(banned);
+		actor = this.actorService.findOne(saved.getActor().getId());
+		ua = actor.getUserAccount();
+		ua.setEnabled(!saved.getIsValid());
+		actor.setUserAccount(ua);
+		this.actorService.save(actor);
+
+		return saved;
+	}
 	public Banned findOne(int bannedId) {
 		Assert.notNull(bannedId);
 
@@ -65,8 +104,16 @@ public class BannedService {
 		this.bannedRepository.delete(banned);
 	}
 
-	public Banned findBanned(int actorId) {
-		return this.bannedRepository.findBanned(actorId);
+	public Integer findBansByActor(int actorId) {
+		return this.bannedRepository.findBansByActor(actorId);
+	}
+
+	public Banned findToUnbanByActor(int actorId) {
+		return this.bannedRepository.findToUnbanByActor(actorId);
+	}
+
+	public Collection<Actor> findAllBannedUsers() {
+		return this.bannedRepository.findAllBannedUsers();
 	}
 
 }
