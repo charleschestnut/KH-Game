@@ -113,7 +113,8 @@ public class ReportUpdateService {
 
 	public void markSuspicious(final ReportUpdate reportUpdate) {
 		Assert.notNull(reportUpdate);
-
+		Assert.isTrue(actorService.getPrincipalAuthority().equals("PLAYER"));
+		
 		reportUpdate.setIsSuspicious(true);
 		this.reportUpdateRepository.save(reportUpdate);
 	}
@@ -168,6 +169,10 @@ public class ReportUpdateService {
 
 	public Collection<ReportUpdate> getResolvedReportUpdates(final int reportId) {
 		return this.reportUpdateRepository.getResolvedReportUpdates(reportId);
+	}
+	
+	public void flush(){
+		this.reportUpdateRepository.flush();
 	}
 
 	//dashboard

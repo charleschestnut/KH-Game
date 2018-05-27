@@ -935,6 +935,21 @@
 		</property>
 		</bean>
 		
+		<bean id="report3" class="domain.Report">
+		<property name="isBug" value="false" />
+		<property name="status" value="ONHOLD" />
+		<property name="title" value="prueba" />
+		<property name="content" value="contenido de prueba" />
+		<property name="photos">
+			<list></list>
+		</property>
+		<property name="date" value="05/04/2016"></property>
+		<property name="keybladeWielder" ref="player2"></property>
+		<property name="reportUpdates">
+			<list><ref bean="reportUpdate3"/></list>
+		</property>
+		</bean>
+		
 	<!-- REPORTUPDATE -->
 	<bean id="reportUpdate1" class="domain.ReportUpdate">
 		<property name="status" value="RESOLVED" />
@@ -951,6 +966,15 @@
 		<property name="isSuspicious" value="false" />
 		<property name="administrator" ref="admin" />
 	</bean>
+	
+	<bean id="reportUpdate3" class="domain.ReportUpdate">
+		<property name="status" value="IRRESOLVABLE" />
+		<property name="content" value="Imagen caida resubida" />
+		<property name="date" value="01/05/2016 05:05" />
+		<property name="isSuspicious" value="false" />
+		<property name="gameMaster" ref="gm1" />
+	</bean>
+	
 	
 	<!-- PRIZE -->
 	<bean id="prize1" class="domain.Prize">
