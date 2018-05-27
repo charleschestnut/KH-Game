@@ -122,7 +122,7 @@ public abstract class AbstractTest {
 	}
 
 	protected boolean existsEntity(final String beanName) {
-		assert beanName != null && beanName.matches("^[A-Za-z0-9\\-]+$");
+		assert beanName != null && beanName.matches("^[A-Za-z0-90-90-90-9\\-]+$");
 
 		boolean result;
 
@@ -132,7 +132,7 @@ public abstract class AbstractTest {
 	}
 
 	protected int getEntityId(final String beanName) {
-		assert beanName != null && beanName.matches("^[A-Za-z0-9\\-]+$");
+		assert beanName != null && beanName.matches("^[A-Za-z0-90-90-9\\-]+$");
 		assert this.existsEntity(beanName);
 
 		int result;
