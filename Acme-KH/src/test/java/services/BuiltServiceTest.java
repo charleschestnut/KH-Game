@@ -27,6 +27,8 @@ public class BuiltServiceTest extends AbstractTest {
 
 
 	//El delete está en el test de building
+
+	//==================TEST CREACION==================
 	@Test
 	public void saveDriver() {
 		final Object testingData[][] = {
@@ -68,4 +70,44 @@ public class BuiltServiceTest extends AbstractTest {
 		}
 		this.checkExceptions(expected, caught);
 	}
+
+	//==================TEST DELETE==================
+	@Test
+	public void deleteDriver() {
+		final Object testingData[][] = {
+
+			{
+				"player1", "built1", null
+			}, //Creando
+			{
+				"player4", "built2", IllegalArgumentException.class
+			}
+		//No es suyo (único error)
+
+		};
+
+		for (int i = 0; i < testingData.length; i++) {
+
+			super.startTransaction();
+			this.templateDelete((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+		}
+	}
+
+	protected void templateDelete(String username, String buildingId, final Class<?> expected) {
+		Class<?> caught;
+
+		caught = null;
+		try {
+			super.authenticate(username);
+			Built b = this.builtService.findOne(super.getEntityId(buildingId));
+			this.builtService.delete(b);
+
+			super.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+
+		}
+		this.checkExceptions(expected, caught);
+	}
+
 }
