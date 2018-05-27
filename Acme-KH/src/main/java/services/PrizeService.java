@@ -38,7 +38,9 @@ public class PrizeService {
 		Prize prize;
 
 		prize = new Prize();
-		prize.setDate(new Date(System.currentTimeMillis() + 30 * 24 * 60 * 60 * 1000));
+		Long days = (long) 2592000;
+		Date expiration = new Date(System.currentTimeMillis() + days * 1000);
+		prize.setDate(expiration);
 
 		return prize;
 	}
@@ -144,5 +146,9 @@ public class PrizeService {
 		this.keybladeWielderService.save(player);
 
 		this.PrizeRepository.delete(prize);
+	}
+
+	public void flush() {
+		this.PrizeRepository.flush();
 	}
 }
