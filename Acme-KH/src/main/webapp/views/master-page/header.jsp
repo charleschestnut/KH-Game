@@ -21,7 +21,7 @@
 	<div class="headerbar-logo navbar-brand">
 		<a href="https://square-enix-games.com"> <img
 			class="headerbar-logo-img"
-			src="https://cdn.sqexeu.com/headerbar/images/SE_Logo_White.svg"
+			src="./images/SE_Logo_White.svg"
 			width="155px">
 		</a>
 	</div>
@@ -68,7 +68,7 @@
 
 			<security:authorize access="isAuthenticated()">
 				<li class="nav-item"><a class="nav-link" href="#"> <img
-						src="https://kingdomhearts.com/img/header/icons/home-icon.png"
+						src="./images/icons/home-icon.png"
 						align="center" class="nav-icon" alt="home"> Home
 				</a></li>
 			</security:authorize>
@@ -76,7 +76,7 @@
 			<security:authorize access="hasRole('PLAYER')">
 				<li class="nav-item"><a class="nav-link"
 					href="keybladewielder/world.do"> <img
-						src="https://kingdomhearts.com/img/header/icons/worlds-icon.png"
+						src="./images/icons/worlds-icon.png"
 						align="center" class="nav-icon" alt="home"> <spring:message
 							code="master.page.myWorld" />
 				</a></li>
@@ -95,7 +95,7 @@
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> <img
-						src="https://kingdomhearts.com/img/header/icons/games-icon.png"
+						src="./images/icons/games-icon.png"
 						align="center" class="nav-icon"> <spring:message
 							code="master.page.administrator" /></a>
 					<div style="font-size: 12px;" class="dropdown-menu"
@@ -126,7 +126,7 @@
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> <img
-						src="https://kingdomhearts.com/img/header/icons/shop-icon.png"
+						src="./images/icons/shop-icon.png"
 						align="center" class="nav-icon"> <spring:message
 							code="master.page.player" /></a>
 					<div style="font-size: 12px;" class="dropdown-menu"
@@ -153,7 +153,7 @@
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> <img
-						src="https://kingdomhearts.com/img/header/icons/connect-icon.png"
+						src="./images/icons/connect-icon.png"
 						align="center" class="nav-icon"> <spring:message
 							code="master.page.organization" /></a>
 					<div style="font-size: 12px;" class="dropdown-menu"
@@ -168,7 +168,7 @@
 			<security:authorize access="isAuthenticated()">
 				<li class="nav-item"><a class="nav-link"
 					href="profile/actor/list.do"> <img
-						src="https://kingdomhearts.com/img/header/icons/games-icon.png"
+						src="./images/icons/games-icon.png"
 						align="center" class="nav-icon" alt="home"> <spring:message
 							code="master.page.users" />
 				</a></li>
@@ -181,7 +181,7 @@
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> <img
-						src="https://kingdomhearts.com/img/header/icons/connect-icon.png"
+						src="./images/icons/connect-icon.png"
 						align="center" class="nav-icon"> <spring:message
 							code="master.page.manager" /></a>
 					<div style="font-size: 12px;" class="dropdown-menu"
@@ -202,7 +202,7 @@
 			<security:authorize access="hasRole('MANAGER')">
 				<li class="nav-item"><a class="nav-link"
 					href="faction/manager/list.do"> <img
-						src="https://kingdomhearts.com/img/header/icons/shop-icon.png"
+						src="./images/icons/shop-icon.png"
 						align="center" class="nav-icon" alt="home"> <spring:message
 							code="faction" />s
 				</a></li>
@@ -211,13 +211,13 @@
 			<security:authorize access="hasRole('GM')">
 				<li class="nav-item"><a class="nav-link" href="report/list.do">
 						<img
-						src="https://kingdomhearts.com/img/header/icons/connect-icon.png"
+						src="./images/icons/connect-icon.png"
 						align="center" class="nav-icon" alt="home"> <spring:message
 							code="report.list" />
 				</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="gm/prompt/show.do"> <img
-						src="https://kingdomhearts.com/img/header/icons/worlds-icon.png"
+						src="./images/icons/worlds-icon.png"
 						align="center" class="nav-icon"> <spring:message
 							code="master.page.prompt" />
 				</a></li>
@@ -228,7 +228,7 @@
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> <img
-						src="https://kingdomhearts.com/img/header/icons/characters-icon.png"
+						src="./images/icons/characters-icon.png"
 						align="center" class="nav-icon"> <spring:message
 							code="master.page.profile" /> (<security:authentication
 							property="principal.username" />)
@@ -256,7 +256,7 @@
 <div class="section home">
 	<div class="video-home" id="src">
 		<img
-			src="https://kingdomhearts.com/img/header/kingdom-hearts-header-still.jpg"
+			src="./images/kingdom-hearts-header-still.jpg"
 			width="100%">
 	</div>
 	<img class="header-logo" src="./images/acme_battle.png"

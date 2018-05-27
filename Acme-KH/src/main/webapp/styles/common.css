@@ -111,7 +111,7 @@ form{
 	font-size: 2.3vw;
 }
 body{
-	background-image:url("http://i.imgur.com/fKW8NxE.png");
+	background-image:url("../images/bg.png");
 	color:white;
 	background-repeat: round;
 	font-family: 'Montserrat', sans-serif;
@@ -376,7 +376,7 @@ hr{
     display: block;
     position: relative;
     margin: 0 auto;
-    background-image: url(https://kingdomhearts.com/img/components/kingdom-hearts-section-header-separator.png);
+    background-image: url(../images/kingdom-hearts-section-header-separator.png);
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;

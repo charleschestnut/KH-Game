@@ -29,18 +29,18 @@
 
 	
 
- <link rel="apple-touch-icon" sizes="57x57" href="https://kingdomhearts.com/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://kingdomhearts.com/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://kingdomhearts.com/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://kingdomhearts.com/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://kingdomhearts.com/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://kingdomhearts.com/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://kingdomhearts.com/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://kingdomhearts.com/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://kingdomhearts.com/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://kingdomhearts.com/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://kingdomhearts.com/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://kingdomhearts.com/favicon-16x16.png">
+ <link rel="apple-touch-icon" sizes="57x57" href="./images/favicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="./images/favicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="./images/favicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="./images/favicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="./images/favicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="./images/favicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="./images/favicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./images/favicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./images/favicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="./images/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicons/favicon-16x16.png">
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- <script type="text/javascript" src="scripts/jquery-ui.js"></script> -->
@@ -77,7 +77,7 @@ function showErrorMessage(){
 	
 	var videodiv = document.getElementById("src");
 	if('<tiles:insertAttribute name="title" ignore="true" />' == 'Welcome!' || '<tiles:insertAttribute name="title" ignore="true" />' == '¡Bienvenidos!')
-	videodiv.innerHTML = '<video id="src" autoplay="" muted="" loop="" poster="https://kingdomhearts.com/img/header/kingdom-hearts-header-still.jpg"><source src="https://cdn.sqexeu.com/sea/kh/KH_Franchise_Video_Header-2.mp4" type="video/mp4"> Your browser does not support the video tag.</video>';
+	videodiv.innerHTML = '<video id="src" autoplay="" muted="" loop="" poster="./images/kingdom-hearts-header-still.jpg"><source src="https://cdn.sqexeu.com/sea/kh/KH_Franchise_Video_Header-2.mp4" type="video/mp4"> Your browser does not support the video tag.</video>';
 	
 	if(msg != ""){
 		div.style.display = '';
