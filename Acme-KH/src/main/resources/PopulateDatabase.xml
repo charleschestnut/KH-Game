@@ -588,8 +588,8 @@
 	</bean>
 	
 	<bean id="warehouse3" class="domain.Warehouse">
-		<property name="name" value="Warehouse Number 2" />
-		<property name="description" value="This is the Warehouse number 2" />
+		<property name="name" value="Warehouse Number 3" />
+		<property name="description" value="This is the Warehouse number 3" />
 		<property name="photo" value="http://www.pngmart.com/files/3/Warehouse-PNG-Clipart.png" />
 		<property name="maxLvl" value="10" />
 		<property name="isFinal" value="false" />
@@ -626,8 +626,8 @@
 	</bean>
 	
 	<bean id="defense2" class="domain.Defense">
-		<property name="name" value="Defense Towers" />
-		<property name="description" value="Defensive towers" />
+		<property name="name" value="Defense Towers 2" />
+		<property name="description" value="Defensive towers 2" />
 		<property name="photo" value="http://clipart.coolclips.com/480/vectors/tf05247/CoolClips_vc036380.png" />
 		<property name="maxLvl" value="10" />
 		<property name="isFinal" value="true" />
@@ -641,7 +641,7 @@
 	
 	<bean id="livelihood2" class="domain.Livelihood">
 		<property name="name" value="Livelihood Number 2" />
-		<property name="description" value="This is the Livehood number 1" />
+		<property name="description" value="This is the Livehood number 2" />
 		<property name="photo" value="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Livelihood_-_The_Noun_Project.svg/2000px-Livelihood_-_The_Noun_Project.svg.png" />
 		<property name="maxLvl" value="10" />
 		<property name="isFinal" value="true" />
@@ -656,8 +656,8 @@
 	</bean>
 	
 	<bean id="warehouse2" class="domain.Warehouse">
-		<property name="name" value="Warehouse Number 1" />
-		<property name="description" value="This is the Warehouse number 1" />
+		<property name="name" value="Warehouse Number 2" />
+		<property name="description" value="This is the Warehouse number 2" />
 		<property name="photo" value="http://www.pngmart.com/files/3/Warehouse-PNG-Clipart.png" />
 		<property name="maxLvl" value="10" />
 		<property name="isFinal" value="true" />
@@ -672,8 +672,8 @@
 	</bean>
 	
 	<bean id="recruiter2" class="domain.Recruiter">
-		<property name="name" value="Recruiter Number 1" />
-		<property name="description" value="This is the Recruiter number 1" />
+		<property name="name" value="Recruiter Number 2" />
+		<property name="description" value="This is the Recruiter number 2" />
 		<property name="photo" value="http://www.mckinnon.com/images/new-recruiting-page1.png" />
 		<property name="maxLvl" value="10" />
 		<property name="isFinal" value="true" />
