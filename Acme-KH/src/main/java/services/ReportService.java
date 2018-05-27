@@ -53,6 +53,7 @@ public class ReportService {
 
 		if (report.getId() == 0) {
 			Assert.isTrue(this.actorService.getPrincipalAuthority().equals("PLAYER"));
+			Assert.isTrue(this.actorService.findByPrincipal().equals(report.getKeybladeWielder()));
 			Assert.isTrue(report.getStatus().equals(ReportStatus.ONHOLD));
 
 			if (report.getPhotos() != null) {
@@ -64,6 +65,9 @@ public class ReportService {
 			}
 		} else {
 			Assert.isTrue(this.actorService.getPrincipalAuthority().equals("PLAYER") || this.actorService.getPrincipalAuthority().equals("GM") || this.actorService.getPrincipalAuthority().equals("ADMIN"));
+			if(this.actorService.getPrincipalAuthority().equals("PLAYER")){
+				Assert.isTrue(this.actorService.findByPrincipal().equals(report.getKeybladeWielder()));
+			}
 			Assert.isTrue(report.getStatus() != ReportStatus.ONHOLD);
 
 		}
@@ -160,6 +164,10 @@ public class ReportService {
 	
 	public Page<Report> getReportsByStatusAndPlayer(final ReportStatus status, final int playerId, Pageable pageable) {
 		return this.reportRepository.getReportsByStatusAndPlayer(status, playerId, pageable);
+	}
+	
+	public void flush(){
+		this.reportRepository.flush();
 	}
 
 	//Dashboard
