@@ -108,7 +108,7 @@
 								code="master.page.create.manager" /></a> <a class="dropdown-item"
 							href="reportUpdate/admin/listSuspicious.do"><spring:message
 								code="reportUpdate.list.suspicious" /></a> <a class="dropdown-item"
-							href="banned/administrator/index.do"><spring:message
+							href="administrator/banned/list.do"><spring:message
 								code="master.page.banned" /></a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="administrator/dashboard.do">Dashboard</a>

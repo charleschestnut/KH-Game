@@ -11,6 +11,7 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -110,7 +111,7 @@ public class AdministratorController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/banned/create", method = RequestMethod.GET)
-	public ModelAndView create(@RequestParam String username) {
+	public ModelAndView create(@RequestParam String username, Locale locale) {
 		ModelAndView result;
 		Actor actor;
 		Banned banned;
@@ -120,7 +121,7 @@ public class AdministratorController extends AbstractController {
 			banned = this.bannedService.create(actor);
 		} catch (Throwable oops) {
 			result = new ModelAndView("redirect:/administrator/banned/list.do");
-			result.addObject("message", this.getErrorMessage(oops));
+			result.addObject("message", this.showDetails(locale, this.getErrorMessage(oops)));
 			return result;
 		}
 
@@ -131,7 +132,7 @@ public class AdministratorController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/banned/unban", method = RequestMethod.GET)
-	public ModelAndView unban(@RequestParam String username) {
+	public ModelAndView unban(@RequestParam String username, Locale locale) {
 		ModelAndView result;
 		Actor actor;
 		Banned banned;
@@ -142,7 +143,7 @@ public class AdministratorController extends AbstractController {
 			banned = this.bannedService.findToUnbanByActor(actor.getId());
 			banned = this.bannedService.unban(banned);
 		} catch (Throwable oops) {
-			result.addObject("message", this.getErrorMessage(oops));
+			result.addObject("message", this.showDetails(locale, this.getErrorMessage(oops)));
 		}
 
 		return result;

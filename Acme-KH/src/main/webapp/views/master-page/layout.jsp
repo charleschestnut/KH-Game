@@ -72,6 +72,7 @@ function getUrlParameter(name) {
 
 function showErrorMessage(){
 	var msg = getUrlParameter("message");
+	msg = atob(msg);
 	var div = document.getElementById("alertMessage");
 	
 	var videodiv = document.getElementById("src");

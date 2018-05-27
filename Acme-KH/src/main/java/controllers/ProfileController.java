@@ -11,6 +11,7 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -35,7 +36,6 @@ import services.KeybladeWielderService;
 import services.OrganizationService;
 import domain.Actor;
 import domain.KeybladeWielder;
-import domain.Prize;
 import form.ActorForm;
 
 @Controller
@@ -80,7 +80,7 @@ public class ProfileController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam(required = false) String username) {
+	public ModelAndView display(@RequestParam(required = false) String username, Locale locale) {
 		ModelAndView result;
 		Actor actor;
 
@@ -94,7 +94,7 @@ public class ProfileController extends AbstractController {
 				Assert.notNull(actor, "error.message.notexist");
 			} catch (Throwable oops) { //Si mete un username invalido (nulo o no dentro de los limites [3, 32]), mostrar error o alternativa
 				result = new ModelAndView("redirect:list.do");
-				result.addObject("message", this.getErrorMessage(oops));
+				result.addObject("message", this.showDetails(locale, this.getErrorMessage(oops)));
 				return result;
 			}
 
@@ -254,5 +254,5 @@ public class ProfileController extends AbstractController {
 
 		return result;
 	}
-	
+
 }

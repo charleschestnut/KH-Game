@@ -20,3 +20,5 @@
 	<a href="profile/actor/display.do?username=${row.userAccount.username}"><spring:message code="master.page.view"/></a>
 	</display:column>
 </display:table>
+<br><br>
+<acme:action code="master.page.users"   url="/profile/actor/list.do"/>

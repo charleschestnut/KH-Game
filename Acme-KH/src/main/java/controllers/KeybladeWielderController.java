@@ -10,6 +10,8 @@
 
 package controllers;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -42,7 +44,7 @@ public class KeybladeWielderController extends AbstractController {
 	// Actor ---------------------------------------------------------------	
 
 	@RequestMapping(value = "/world", method = RequestMethod.GET)
-	public ModelAndView world(@RequestParam(required = false) String username) {
+	public ModelAndView world(@RequestParam(required = false) String username, Locale locale) {
 		ModelAndView result;
 		Actor actor;
 
@@ -54,7 +56,7 @@ public class KeybladeWielderController extends AbstractController {
 				Assert.notNull(actor, "error.message.notexist");
 			} catch (Throwable oops) { //Si mete un username invalido (nulo o no dentro de los limites [3, 32]), mostrar error o alternativa
 				result = new ModelAndView("redirect:/profile/actor/list.do");
-				result.addObject("message", this.getErrorMessage(oops));
+				result.addObject("message", this.showDetails(locale, this.getErrorMessage(oops)));
 				return result;
 			}
 
@@ -113,16 +115,16 @@ public class KeybladeWielderController extends AbstractController {
 
 		return result;
 	}
-	
+
 	//Update materials panels
-	
+
 	@RequestMapping(value = "/updateMaterialsPanel", method = RequestMethod.GET)
 	public ModelAndView updateMaterialsPanel() {
 		ModelAndView res;
 		KeybladeWielder player;
-		
-		player = (KeybladeWielder) actorService.findByPrincipal();
-		
+
+		player = (KeybladeWielder) this.actorService.findByPrincipal();
+
 		res = new ModelAndView("keybladewielder/materials-panel");
 		res.addObject("playerFromAbstract", player);
 

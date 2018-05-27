@@ -12,9 +12,11 @@ package controllers;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,8 @@ import domain.KeybladeWielder;
 @Controller
 public class AbstractController {
 
+	@Autowired
+	private MessageSource			messageSource;
 	@Autowired
 	private ActorService			actorService;
 	@Autowired
@@ -91,6 +95,9 @@ public class AbstractController {
 		}
 	}
 
+	public String showDetails(Locale locale, String code) {
+		return new String(org.springframework.security.crypto.codec.Base64.encode(this.messageSource.getMessage(code, null, locale).getBytes()));
+	}
 	public Date sumarRestarHorasFecha(Date fecha, int horas) {
 
 		Calendar calendar = Calendar.getInstance();

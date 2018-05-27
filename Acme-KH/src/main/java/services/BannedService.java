@@ -65,6 +65,8 @@ public class BannedService {
 	public Banned save(Banned banned) {
 		Assert.notNull(banned);
 		Assert.isTrue(!banned.getActor().getUserAccount().isAuthority("ADMIN"), "error.message.ban.admin");
+		if (banned.getId() == 0)
+			Assert.isTrue(this.findBansByActor(banned.getActor().getId()) == 0, "error.message.alreadyBanned");
 
 		Banned saved;
 		Actor actor;

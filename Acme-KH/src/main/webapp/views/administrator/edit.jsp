@@ -17,9 +17,7 @@
 	<acme:textbox code="banDate" path="banDate"/>
 	<acme:textbox  code="duration" path="duration"/>
 	<acme:textbox code="reason" path="reason"/>
-	<spring:message code="status"/>
-
-	<br/><br/>
+	<br/>
 	<acme:submit code="master.page.save"  name="save"/>
 	
 </form:form>
