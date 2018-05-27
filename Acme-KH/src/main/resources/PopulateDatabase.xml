@@ -239,7 +239,7 @@
 		<property name="email" value="julitomambo@gmail.com" />
 		<property name="userAccount" ref="userAccount6" />
 		<property name="lastConnection" value="07/06/2017 11:05" />
-		<property name="materials" ref="material1" />
+		<property name="materials" ref="material5" />
 		<property name="wins" value="10" />
 		<property name="loses" value="9" />
 		<property name="worldCoordinates" ref="coordinates3" />
@@ -343,6 +343,11 @@
 		<property name="mytrhil" value="30" />
 		<property name="gummiCoal" value="15" />
 	</bean>
+	<bean id="material5" class="domain.Materials">
+		<property name="munny" value="0" />
+		<property name="mytrhil" value="0" />
+		<property name="gummiCoal" value="0" />
+	</bean>
 	
 	<!-- FACTION -->
 	<bean id="faction1" class="domain.Faction">
@@ -432,7 +437,7 @@
 	
 	<!-- BUILT -->
 	<bean id="built1" class="domain.Built">
-		<property name="lvl" value="1" />
+		<property name="lvl" value="10" />
 		<property name="creationDate" value="05/04/2018" />
 		<!-- <property name="activationDate" value="" /> -->
 		<property name="keybladeWielder" ref="player1" />
@@ -813,7 +818,7 @@
 		<property name="percentageWinAttacker" value="0.6" />
 		<property name="percentageWinDefender" value="0.5" />
 		<property name="lostLvlsDeffender" value="1" />
-		<property name="worldSlots" value="6" />
+		<property name="worldSlots" value="7" />
 	</bean>
 	
 	<!-- ITEMS -->
