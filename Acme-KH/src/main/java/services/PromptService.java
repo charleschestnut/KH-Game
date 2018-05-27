@@ -8,6 +8,7 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import security.Authority;
 
@@ -41,6 +42,7 @@ public class PromptService {
 	private GummiShipService		gummiShipService;
 
 	public String interpret(String command) {
+		Assert.isTrue(actorService.getPrincipalAuthority().equals("GM"));
 		String res = "";
 		
 //		set player2 -mn 999 -mt 23 -gc 23

@@ -17,7 +17,67 @@
 	<jstl:set value="blueText" var="blueText" />
 </jstl:if>
 
-<fieldset>
+<div class="card" style="color: #212529;">
+  <div class="card-body">
+  <div class="row">
+  <div class="col-9">
+  	<ul class="list-group list-group-flush">
+  	  <li class="list-group-item"><div class="row"><div class="col-6"><b><spring:message code="report.type"/>:</b></div>	<div class="col-6">
+  	  <jstl:if test="${report.isBug eq true}">
+  	  <jstl:out value="Bug"/>
+  	  </jstl:if>
+  	   <jstl:if test="${report.isBug eq false}">
+  	   <spring:message code="report.asistence" />
+  	  </jstl:if>
+  	  </div></div></li>
+  	  <li class="list-group-item"><div class="row"><div class="col-6"><b><spring:message code="content"/>:</b></div>	<div class="col-6"><jstl:out value="${reportUpdate.content}"/></div></div></li>
+  	  <li class="list-group-item"><div class="row"><div class="col-6"><b><spring:message code="date"/>:</b></div>		<div class="col-6"><jstl:out value="${reportUpdate.date}"/></div></div></li>
+  	  <li class="list-group-item"><div class="row"><div class="col-6"><b><spring:message code="report.creator"/>:</b></div>		<div class="col-6"><jstl:out value="${reportUpdate.getCreator().nickname}"/></div></div></li>
+      <li class="list-group-item"><div class="row"><div class="col-6"><b><spring:message code="status"/>:</b></div>
+  	 <div class="col-6"> <jstl:if test="${reportUpdate.status eq 'ONHOLD'}">
+			<div class="row"><div class="col-6"><spring:message code="report.onhold" /></div></div></li>
+		</jstl:if> 
+		<jstl:if test="${reportUpdate.status eq 'RESOLVED'}">
+			<div class="row"><div class="col-6"><spring:message code="report.resolved" />
+		</jstl:if> 
+		<jstl:if test="${reportUpdate.status eq 'IRRESOLVABLE'}">
+			<div class="row"><div class="col-6"><spring:message code="report.irresolvable" />
+		</jstl:if> 
+		<jstl:if test="${reportUpdate.status eq 'WORKING'}">
+			<div class="row"><div class="col-6"><spring:message code="report.working" />
+		</jstl:if> <jstl:if test="${reportUpdate.status eq 'SUSPICIOUS'}">
+			<div class="row"><div class="col-6"><spring:message code="report.suspicious" />
+		</jstl:if>
+		</div></div></li>
+	</ul>
+  </div>
+  </div>
+  </div>
+  <div class="card-footer text-muted">
+ <security:authorize access="hasRole('PLAYER')">
+	<jstl:if
+		test="${reportUpdate.isSuspicious eq false and report.status ne 'RESOLVED'}">
+		<a
+			href="reportUpdate/player/markSuspicious.do?reportUpdateId=${reportUpdate.id}&reportId=${report.id}&reportDisplay=false"><spring:message
+				code="reportUpdate.mark.suspicious" /></a>
+	</jstl:if>
+</security:authorize>
+
+<br />
+<jstl:if test="${reportUpdate.isSuspicious eq true}">
+	<spring:message code="reportUpdate.marked.suspicious" />
+	<br />
+</jstl:if>
+
+<jstl:if test="${report.status ne 'RESOLVED' and ownUpdate eq true}">
+	<acme:action url="reportUpdate/edit.do?reportUpdateId=${reportUpdate.id}&reportId=${report.id}" code="master.page.edit" color="pink"/>
+</jstl:if>
+
+<acme:goback />
+  </div>
+</div>
+
+<%-- <fieldset>
 	<legend>
 		<spring:message code="report"></spring:message>
 	</legend>
@@ -88,4 +148,4 @@
 			code="master.page.edit" /></a>
 </jstl:if>
 
-<acme:goback />
+<acme:goback /> --%>
