@@ -170,13 +170,18 @@ public class BuiltService {
 		else
 			Assert.notNull(l, "error.message.built.noBuilding");
 
-		b.setActivationDate(new Date(System.currentTimeMillis() - 2000));
+		b.setActivationDate(new Date(System.currentTimeMillis() - 100));
 
 		this.BuiltRepository.save(b);
 	}
 	public void startToRecruitTroop(Built b, Troop t) {
 		Recruiter r = null;
 		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+
+		if (b.getBuilding() instanceof Recruiter)
+			r = (Recruiter) b.getBuilding();
+		else
+			Assert.notNull(r, "error.message.built.noBuilding");
 
 		Assert.notNull(t, "error.message.built.noTroop");
 		Assert.isNull(b.getActivationDate(), "error.message.built.alreadyInUse");
@@ -185,12 +190,7 @@ public class BuiltService {
 		Assert.isTrue(b.getLvl() > 0, "error.message.built.unbuilt");
 		Assert.isTrue(player.getMaterials().isHigherThan(t.getCost()), "error.message.built.materials");
 
-		if (b.getBuilding() instanceof Recruiter)
-			r = (Recruiter) b.getBuilding();
-		else
-			Assert.notNull(r, "error.message.built.noBuilding");
-
-		b.setActivationDate(new Date(System.currentTimeMillis()));
+		b.setActivationDate(new Date(System.currentTimeMillis() - 100));
 		b.setTroop(t);
 
 		Materials myOldMaterials = player.getMaterials();
@@ -206,6 +206,11 @@ public class BuiltService {
 		Recruiter r = null;
 		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 
+		if (b.getBuilding() instanceof Recruiter)
+			r = (Recruiter) b.getBuilding();
+		else
+			Assert.notNull(r, "error.message.built.noBuilding");
+
 		Assert.notNull(g, "error.message.built.noShip");
 		Assert.isNull(b.getActivationDate(), "error.message.built.alreadyInUse");
 		Assert.isTrue(b.getKeybladeWielder().equals(player), "error.message.built.creator");
@@ -213,12 +218,7 @@ public class BuiltService {
 		Assert.isTrue(b.getLvl() > 0, "error.message.built.unbuilt");
 		Assert.isTrue(player.getMaterials().isHigherThan(g.getCost()), "error.message.built.materials");
 
-		if (b.getBuilding() instanceof Recruiter)
-			r = (Recruiter) b.getBuilding();
-		else
-			Assert.notNull(r, "error.message.built.noBuilding");
-
-		b.setActivationDate(new Date(System.currentTimeMillis()));
+		b.setActivationDate(new Date(System.currentTimeMillis() - 100));
 		b.setGummiShip(g);
 
 		Materials myOldMaterials = player.getMaterials();
@@ -339,11 +339,11 @@ public class BuiltService {
 	public Integer getDefenseByBuildings(Integer actorId) {
 		return this.BuiltRepository.myDefenseByBuildings(actorId);
 	}
-	
-	public void saveFromGM(Built built){
-		BuiltRepository.save(built);
+
+	public void saveFromGM(Built built) {
+		this.BuiltRepository.save(built);
 	}
-	
+
 	public void startToRecruitTroopFromGM(Built b, Troop t, KeybladeWielder player) {
 		Recruiter r = null;
 
@@ -374,7 +374,7 @@ public class BuiltService {
 
 	public void saveForTroopDeleting(Built storageBuilding) {
 		this.BuiltRepository.save(storageBuilding);
-		
+
 	}
 
 	public Collection<Built> findAllBuiltWithTroop(int id) {
