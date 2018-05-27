@@ -273,12 +273,13 @@ footer{
 
 .dropdown-menu {
 	top: 97%;
+	color: #fff;
 	 box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-	background-color: #1a1e3d;
+	background-color: #716992;
 	border-top: none;
 	 border-top-left-radius: 0;
 	 border-top-right-radius: 0;
-	 left: -2px;
+	 left: -1px;
 	}
 	
 .dropdown-item{
@@ -291,8 +292,9 @@ footer{
 }
 
 .dropdown-item:hover{
-	background-color: #716992;
-	color: #fff;
+	color:#fff;
+	background-color: #1a1e3d;
+	
 }
 
 .popover-header{
