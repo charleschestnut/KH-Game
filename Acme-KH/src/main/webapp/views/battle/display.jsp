@@ -23,7 +23,7 @@
 <jstl:out value="${battle.attackerOwner }"></jstl:out><br>
 
 <spring:message code="battle.isWon"></spring:message>: 
-<jstl:out value="${battle.extraResources}"></jstl:out><br>
+<jstl:out value="${battle.isWon}"></jstl:out><br>
 
 <spring:message code="battle.wonOrLostMaterials"></spring:message>: 
-<jstl:out value="${battle.extraAttack }"></jstl:out>/
+<jstl:out value="${battle.wonOrLostMaterials }"></jstl:out>/

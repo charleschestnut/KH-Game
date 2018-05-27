@@ -14,7 +14,6 @@ import org.springframework.validation.Validator;
 import repositories.ItemRepository;
 import domain.ContentManager;
 import domain.Item;
-import domain.ItemType;
 import domain.KeybladeWielder;
 import domain.Purchase;
 
@@ -45,7 +44,7 @@ public class ItemService {
 		ContentManager contentManager = (ContentManager) this.actorService.findByPrincipal();
 		item.setContentManager(contentManager);
 		Assert.isTrue(item.getContentManager().getUserAccount().isAuthority("MANAGER"));
-		
+
 		return item;
 	}
 
@@ -85,48 +84,38 @@ public class ItemService {
 	}
 
 	// OTROS METODOS -----------------
-	
+
 	// Items de la tienda
 	public Collection<Item> shopItems() {
 		return this.itemRepository.shopItems();
 	}
 
 	// Comprar un item de la tienda
-		public Purchase buyItem(Item item) {
-			KeybladeWielder player = (KeybladeWielder) this.actorService
-					.findByPrincipal();
-			// Solo lo podremos comprar si disponemos del Munny que cuesta el item
-			Assert.isTrue(item.getMunnyCost() <= player.getMaterials().getMunny());
-			Assert.isTrue(item.getOnSell() == true);
-			Purchase p = this.purchaseService.create();
-			Date currentDate = new Date(System.currentTimeMillis()-100);
+	public Purchase buyItem(Item item) {
+		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
+		// Solo lo podremos comprar si disponemos del Munny que cuesta el item
+		Assert.isTrue(item.getMunnyCost() <= player.getMaterials().getMunny());
+		Assert.isTrue(item.getOnSell() == true);
+		Purchase p = this.purchaseService.create();
+		Date currentDate = new Date(System.currentTimeMillis() - 100);
 
-			p.setPlayer(player);
-			p.setPurchaseDate(currentDate);
-			p.setItem(item);
-			player.getMaterials().setMunny(
-					player.getMaterials().getMunny() - item.getMunnyCost());
+		p.setPlayer(player);
+		p.setPurchaseDate(currentDate);
+		p.setItem(item);
+		player.getMaterials().setMunny(player.getMaterials().getMunny() - item.getMunnyCost());
 
-			// Hacemos set de la que sera la fecha en la que el objeto expirara
-			Date expirationDate = new Date(currentDate.getTime()
-					+ p.getItem().getExpiration() * 24 * 60 * 60 * 1000);
-			p.setExpirationDate(expirationDate);
+		// Hacemos set de la que sera la fecha en la que el objeto expirara
+		Date expirationDate = new Date(currentDate.getTime() + p.getItem().getExpiration() * 24 * 60 * 60 * 1000);
+		p.setExpirationDate(expirationDate);
 
-			this.purchaseService.save(p);
-			
-			
-			if(item.getType().equals(ItemType.SHIELD)) {
-				player.getShield().setName(item.getName());
-				player.getShield().setDuration(item.getDuration());
-				player.getShield().setDate(currentDate);
-			}
-			
-			this.keybladeWielderService.save(player);
+		this.purchaseService.save(p);
 
-			return p;
+		this.keybladeWielderService.save(player);
 
-		}
-		
+		return p;
+
+	}
+
 	// Items que han sido comprados
 	public Collection<Item> itemsPurchased() {
 		return this.itemRepository.itemsPurchased();

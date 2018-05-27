@@ -24,7 +24,7 @@ public class Materials {
 		return this.munny;
 	}
 
-	public void setMunny( Integer munny) {
+	public void setMunny(final Integer munny) {
 		this.munny = munny;
 	}
 	@NotNull
@@ -33,7 +33,7 @@ public class Materials {
 		return this.mytrhil;
 	}
 
-	public void setMytrhil( Integer mytrhil) {
+	public void setMytrhil(final Integer mytrhil) {
 		this.mytrhil = mytrhil;
 	}
 	@NotNull
@@ -42,12 +42,12 @@ public class Materials {
 		return this.gummiCoal;
 	}
 
-	public void setGummiCoal( Integer gummiCoal) {
+	public void setGummiCoal(final Integer gummiCoal) {
 		this.gummiCoal = gummiCoal;
 	}
 
 	@Transient
-	public Boolean isHigherThan( Materials materials) {
+	public Boolean isHigherThan(final Materials materials) {
 		Boolean res = false;
 		if (this.getGummiCoal() > materials.getGummiCoal() && this.getMunny() > materials.getMunny() && this.getMytrhil() > materials.getMytrhil())
 			res = true;
@@ -56,12 +56,12 @@ public class Materials {
 	}
 
 	@Transient
-	public Materials substract( Materials materials) {
-		 Integer munny = this.getMunny() - materials.getMunny();
-		 Integer gummi = this.getGummiCoal() - materials.getGummiCoal();
-		 Integer mythril = this.getMytrhil() - materials.getMytrhil();
+	public Materials substract(final Materials materials) {
+		final Integer munny = this.getMunny() - materials.getMunny();
+		final Integer gummi = this.getGummiCoal() - materials.getGummiCoal();
+		final Integer mythril = this.getMytrhil() - materials.getMytrhil();
 
-		 Materials res = new Materials();
+		final Materials res = new Materials();
 		res.setMunny(munny);
 		res.setGummiCoal(gummi);
 		res.setMytrhil(mythril);
@@ -70,27 +70,12 @@ public class Materials {
 
 	}
 	@Transient
-	public Materials add( Materials materials) {
-		 Integer munny = this.getMunny() + materials.getMunny();
-		 Integer gummi = this.getGummiCoal() + materials.getGummiCoal();
-		 Integer mythril = this.getMytrhil() + materials.getMytrhil();
+	public Materials add(final Materials materials) {
+		final Integer munny = this.getMunny() + materials.getMunny();
+		final Integer gummi = this.getGummiCoal() + materials.getGummiCoal();
+		final Integer mythril = this.getMytrhil() + materials.getMytrhil();
 
-		 Materials res = new Materials();
-		res.setMunny(munny);
-		res.setGummiCoal(gummi);
-		res.setMytrhil(mythril);
-
-		return res;
-
-	}
-
-	@Transient
-	public Materials increase( Double extraPercentage) {
-		 Integer munny = (int) (this.getMunny() * (1 + extraPercentage));
-		 Integer gummi = (int) (this.getGummiCoal() * (1 + extraPercentage));
-		 Integer mythril = (int) (this.getMytrhil() * (1 + extraPercentage));
-
-		 Materials res = new Materials();
+		final Materials res = new Materials();
 		res.setMunny(munny);
 		res.setGummiCoal(gummi);
 		res.setMytrhil(mythril);
@@ -100,11 +85,26 @@ public class Materials {
 	}
 
 	@Transient
-	public Materials removeExcess( Materials max) {
-		 Materials res = new Materials();
-		 Integer munny = this.getMunny();
-		 Integer coal = this.getGummiCoal();
-		 Integer mytrhil = this.getMytrhil();
+	public Materials increase(final Double extraPercentage) {
+		final Integer munny = (int) (this.getMunny() * (1 + extraPercentage));
+		final Integer gummi = (int) (this.getGummiCoal() * (1 + extraPercentage));
+		final Integer mythril = (int) (this.getMytrhil() * (1 + extraPercentage));
+
+		final Materials res = new Materials();
+		res.setMunny(munny);
+		res.setGummiCoal(gummi);
+		res.setMytrhil(mythril);
+
+		return res;
+
+	}
+
+	@Transient
+	public Materials removeExcess(final Materials max) {
+		final Materials res = new Materials();
+		final Integer munny = this.getMunny();
+		final Integer coal = this.getGummiCoal();
+		final Integer mytrhil = this.getMytrhil();
 
 		if (munny <= max.getMunny())
 			res.setMunny(munny);
@@ -132,7 +132,7 @@ public class Materials {
 	@Transient
 	@Override
 	public int hashCode() {
-		 int prime = 31;
+		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((this.gummiCoal == null) ? 0 : this.gummiCoal.hashCode());
 		result = prime * result + ((this.munny == null) ? 0 : this.munny.hashCode());
@@ -141,14 +141,14 @@ public class Materials {
 	}
 	@Transient
 	@Override
-	public boolean equals( Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (this.getClass() != obj.getClass())
 			return false;
-		 Materials other = (Materials) obj;
+		final Materials other = (Materials) obj;
 		if (this.gummiCoal == null) {
 			if (other.gummiCoal != null)
 				return false;

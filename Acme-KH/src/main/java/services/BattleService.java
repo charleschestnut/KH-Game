@@ -125,6 +125,10 @@ public class BattleService {
 		this.MasTropasQueCapacidad(bat);
 		//-----------------------------Combustible necesario supera el actual----------------------------------------------
 		Assert.isTrue(atacante.getMaterials().getGummiCoal() > combustible, "message.error.exceedsGummiCoal");
+		//-----------------------------------Enemigo tiene un escudo-------------------------------------------------------
+		if (defensor.getShield() != null) {
+			Assert.isTrue(false, "message.error.defenderShield");
+		}
 		//----------------------------------------Fin de Asserts-----------------------------------------------------------
 		//Antes de nada, actualizamos el combustible del atacante
 		System.out.println("Pasamos los asserts");
@@ -225,11 +229,10 @@ public class BattleService {
 			atacante.setWins(atacante.getWins() + 1);
 			defensor.setLoses(defensor.getLoses() + 1);
 			//Guardamos los atacantes y defensores al final, para hacer solo un save
-			for (Recruited des : defenseRc)
-				if (des.getGummiShip() != null)
-					this.gummiShipService.delete(des.getGummiShip());
-				else
-					this.troopService.delete(des.getTroop());
+			//Eliminamos todos los recurited del defensor
+			for (Recruited des : defenseRc) {
+				this.recruitedService.delete(des);
+			}
 			//Eliminamos las tropas del atacante con un 33% de probabilidad de muerte en caso de que gane el atacante
 			System.out.println("Tropas atacantes: " + tropasAtacante);
 			for (Recruited arc : attackRc) {
