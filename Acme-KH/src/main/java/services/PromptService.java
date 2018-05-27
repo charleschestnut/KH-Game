@@ -266,24 +266,30 @@ public class PromptService {
 				
 				keybladeWielder = (KeybladeWielder) player;
 				
-				if (command.indexOf("-mn") < 0 || Integer.valueOf(command.split("-mn")[1].split("\\s+")[1].trim()) > keybladeWielder.getMaterials().getMunny()) {
+				if (command.indexOf("-mn") < 0) {
 					munny = 0;
-				} else if(command.split("-mn")[1].split("\\s+")[1].trim().matches("^[1-9]\\d*$")){
+				}else if(Integer.valueOf(command.split("-mn")[1].split("\\s+")[1].trim()) > keybladeWielder.getMaterials().getMunny()){
+					munny = keybladeWielder.getMaterials().getMunny();
+				}else if(command.split("-mn")[1].split("\\s+")[1].trim().matches("^[1-9]\\d*$")){
 					munny = Integer.valueOf(command.split("-mn")[1].split("\\s+")[1].trim());
 				}else{
 					valid = false;
 				}
 
-				if (command.indexOf("-mt") < 0 || Integer.valueOf(command.split("-mt")[1].split("\\s+")[1].trim()) > keybladeWielder.getMaterials().getMytrhil()) {
+				if (command.indexOf("-mt") < 0) {
 					mythril = 0;
+				}else if(Integer.valueOf(command.split("-mt")[1].split("\\s+")[1].trim()) > keybladeWielder.getMaterials().getMytrhil()){
+					mythril = keybladeWielder.getMaterials().getMytrhil();
 				} else if(command.split("-mt")[1].split("\\s+")[1].trim().matches("^[1-9]\\d*$")){
 					mythril = Integer.valueOf(command.split("-mt")[1].split("\\s+")[1].trim());
 				}else{
 					valid = false;
 				}
 
-				if (command.indexOf("-gc") < 0 || Integer.valueOf(command.split("-gc")[1].split("\\s+")[1].trim()) > keybladeWielder.getMaterials().getGummiCoal()) {
+				if (command.indexOf("-gc") < 0) {
 					gummiCoal = 0;
+				}else if(Integer.valueOf(command.split("-gc")[1].split("\\s+")[1].trim()) > keybladeWielder.getMaterials().getGummiCoal()){
+					gummiCoal = keybladeWielder.getMaterials().getGummiCoal();
 				} else if(command.split("-gc")[1].trim().matches("^[1-9]\\d*$")){
 					gummiCoal = Integer.valueOf(command.split("-gc")[1].split("\\s+")[1].trim());
 				}else{

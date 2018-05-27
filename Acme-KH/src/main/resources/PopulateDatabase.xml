@@ -640,7 +640,7 @@
 	</bean>
 	
 	<bean id="livelihood2" class="domain.Livelihood">
-		<property name="name" value="Livelihood Number 1" />
+		<property name="name" value="Livelihood Number 2" />
 		<property name="description" value="This is the Livehood number 1" />
 		<property name="photo" value="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Livelihood_-_The_Noun_Project.svg/2000px-Livelihood_-_The_Noun_Project.svg.png" />
 		<property name="maxLvl" value="10" />
