@@ -42,10 +42,9 @@
     <link rel="icon" type="image/png" sizes="96x96" href="./images/favicons/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicons/favicon-16x16.png">
     
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- <script type="text/javascript" src="scripts/jquery-ui.js"></script> -->
+<script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="styles/bootstrap.min.css" type="text/css">
 
 <!-- Custom styles for this template -->
 <link href="https://getbootstrap.com/docs/4.0/examples/jumbotron/jumbotron.css" rel="stylesheet">
@@ -53,9 +52,6 @@
 <link rel="stylesheet" href="styles/prizes.css" type="text/css">
 <link rel="stylesheet" href="styles/jmenu.css" media="screen" type="text/css" />
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
-
-<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
