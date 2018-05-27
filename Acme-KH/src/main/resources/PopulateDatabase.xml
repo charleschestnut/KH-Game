@@ -525,7 +525,13 @@
 		<property name="troop" ref="troop2" />
 		<property name="building" ref="recruiter2" />
 	</bean>
+	<!-- REQUIREMENT -->
+	<bean id="requirement1" class="domain.Requirement">
+		<property name="lvl" value="1" />
+		<property name="mainBuilding" ref="recruiter1"></property>
+		<property name="requiredBuilding" ref="warehouse1"></property>
 	
+	</bean>
 	<!-- BUILDING -->
 	<bean id="defense1" class="domain.Defense">
 		<property name="name" value="Defense Towers" />
