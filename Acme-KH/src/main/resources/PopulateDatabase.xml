@@ -532,6 +532,13 @@
 		<property name="requiredBuilding" ref="warehouse1"></property>
 	
 	</bean>
+	
+	<bean id="requirement2" class="domain.Requirement">
+		<property name="lvl" value="1" />
+		<property name="mainBuilding" ref="defense3"></property>
+		<property name="requiredBuilding" ref="defense2"></property>
+	
+	</bean>
 	<!-- BUILDING -->
 	<bean id="defense1" class="domain.Defense">
 		<property name="name" value="Defense Towers" />
