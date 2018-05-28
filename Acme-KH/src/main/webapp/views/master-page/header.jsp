@@ -167,7 +167,7 @@
 					</div></li>
 			</security:authorize>
 
-			<security:authorize access="hasRole('PLAYER')">
+			<security:authorize access="hasAnyRole('PLAYER', 'ADMIN')">
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
