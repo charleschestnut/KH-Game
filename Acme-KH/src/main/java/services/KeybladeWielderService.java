@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -143,6 +145,14 @@ public class KeybladeWielderService {
 		Collection<KeybladeWielder> KeybladeWielders;
 
 		KeybladeWielders = this.KeybladeWielderRepository.findAll();
+
+		return KeybladeWielders;
+	}
+	
+	public Page<KeybladeWielder> findAll(Pageable p) {
+		Page<KeybladeWielder> KeybladeWielders;
+
+		KeybladeWielders = this.KeybladeWielderRepository.findAll(p);
 
 		return KeybladeWielders;
 	}

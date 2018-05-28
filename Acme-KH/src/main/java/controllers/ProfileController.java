@@ -10,12 +10,14 @@
 
 package controllers;
 
-import java.util.Collection;
 import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -67,14 +69,20 @@ public class ProfileController extends AbstractController {
 	// Actor ---------------------------------------------------------------	
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam(required=false, defaultValue="0") Integer page) {
 		ModelAndView result;
-		Collection<KeybladeWielder> players;
+		Page<KeybladeWielder> players;
+		Pageable pageable;
 
-		players = this.keybladeWielderService.findAll();
+		pageable = new PageRequest(page, 5);
+
+		players = this.keybladeWielderService.findAll(pageable);
 
 		result = new ModelAndView("profile/actor/list");
-		result.addObject("players", players);
+		result.addObject("players", players.getContent());
+		result.addObject("page", page);
+		result.addObject("requestURI", "profile/actor/list.do?page=");
+		result.addObject("pageNum", players.getTotalPages());
 
 		return result;
 	}

@@ -7,6 +7,10 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+<acme:pagination page="${page}" pageNum="${pageNum}" requestURI="${requestURI}"/>
+
 <display:table pagesize="5" class="displaytag" 
 	name="players" requestURI="profile/actor/list.do" id="row">
 
