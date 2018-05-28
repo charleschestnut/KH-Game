@@ -18,11 +18,11 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <jstl:if test="${canChat}">
-	<acme:action code="organization.chat"  url="organization/chatty/list.do?organizationId=${organizationId}"/>
+	<acme:action code="organization.chat"  url="organization/chatty/list.do?organizationId=${orgId}"/>
 	<acme:action code="organization.leave"  url="organization/leaveOrganization.do"/>
 </jstl:if>
 
-<display:table pagesize="${pageSize}" class="displaytag" 
+<display:table pagesize="5" class="displaytag" 
 	name="membersInvitations" requestURI="${requestURI}" id="row">
 
 	<spring:message code="master.page.name" var="nameH" />
@@ -32,7 +32,7 @@
 	
 	<spring:message code="invitation.orgRange" var="orgRangeH" />
 	<display:column title="${orgRangeH}" sortable="true">
-		<jstl:out value="${row.orgRange.toString()}"/> 
+		<jstl:out value="${row.orgRange}"/> 
 	</display:column>
 	
 	<spring:message code="master.page.actions" var="actionsH" />

@@ -66,7 +66,7 @@ public class Chatty extends DomainEntity {
 		this.date = date;
 	}
 
-	@ManyToOne(optional = false)
+	@ManyToOne( optional = false)
 	public Invitation getInvitation() {
 		return this.invitation;
 	}

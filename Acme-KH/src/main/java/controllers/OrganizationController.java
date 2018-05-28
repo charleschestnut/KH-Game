@@ -99,11 +99,11 @@ public class OrganizationController extends AbstractController {
 			iAmMaster = actual.getOrgRange().equals(OrgRange.MASTER);
 		}
 		result = new ModelAndView("organization/membersList");
-		result.addObject("organizationId", orgId);
-		result.addObject("requestURI", "organization/membersList.do?organizationId="+organizationId);
+		result.addObject("requestURI", "/organization/membersList.do?organizationId="+organizationId);
 		result.addObject("membersInvitations", membersInvitations);
 		result.addObject("canChat", canChat);
 		result.addObject("iAmMaster", iAmMaster);
+		result.addObject("orgId", orgId);
 		
 		return result;
 	}

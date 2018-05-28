@@ -23,8 +23,8 @@
 <display:table pagesize="${pageSize}" class="displaytag" 
 	name="invitations" requestURI="${requestURI}" id="row">
 
-	<spring:message code="master.page.name" var="nameH" />
-	<display:column title="${nameh}">
+	<spring:message code="name" var="nameH" />
+	<display:column title="${nameH}">
 		<jstl:out value="${row.organization.name}"/> 
 	</display:column>
 	

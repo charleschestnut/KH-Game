@@ -132,8 +132,10 @@ public class OrganizationService {
 		Organization organization = this.findOne(organizationId);
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 		Invitation invitationActual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(actual.getId(), organizationId);
+		this.chattyService.deleteAll(this.chattyService.findForLeavingOrganization(invitationActual.getId()));
 		
 		if(this.keybladeWielderService.findMembersOfOrganization(organizationId).size()==1){ // Si sólo queda él, se borra la organización también.
+			
 			this.invitationService.delete(invitationActual);
 			this.organizationRepository.delete(organization);
 		}else{

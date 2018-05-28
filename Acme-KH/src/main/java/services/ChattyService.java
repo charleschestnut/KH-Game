@@ -135,4 +135,9 @@ public class ChattyService {
 	public Collection<Chatty> getToDeleteOrganiation(int orgId){
 		return this.chattyRepository.getChattyFromAnOrganization(orgId);
 	}
+
+
+	public Collection<Chatty> findForLeavingOrganization(int id) {
+		return this.chattyRepository.findForLeavingOrganization(id);
+	}
 }

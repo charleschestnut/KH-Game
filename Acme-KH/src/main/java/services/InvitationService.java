@@ -135,10 +135,10 @@ public class InvitationService {
 	public Collection<Invitation> findInvitationsByKeybladeWielderId(
 			int playerId) {
 		Collection<Invitation> actual = this.invitationRepository
-				.findCorrectInvitationsByKeybladeWielder(playerId);
+				.findCorrectInvitationsByKeybladeWielder(playerId, new Date(System.currentTimeMillis()-864000000));
 
 		Collection<Invitation> toDelete = this.invitationRepository
-				.findDeleteableInvitationsByKeybladeWielder(playerId);
+				.findDeleteableInvitationsByKeybladeWielder(playerId, new Date(System.currentTimeMillis()-864000000));
 
 		for (Invitation i : toDelete) {
 			this.invitationRepository.delete(i);
