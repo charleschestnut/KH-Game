@@ -53,27 +53,28 @@
   </div>
   </div>
   </div>
-  <div class="card-footer text-muted">
+  <div class="card-footer text-muted row">
  <security:authorize access="hasRole('PLAYER')">
 	<jstl:if
 		test="${reportUpdate.isSuspicious eq false and report.status ne 'RESOLVED'}">
-		<a
+		<%-- <a
 			href="reportUpdate/player/markSuspicious.do?reportUpdateId=${reportUpdate.id}&reportId=${report.id}&reportDisplay=false"><spring:message
-				code="reportUpdate.mark.suspicious" /></a>
+				code="reportUpdate.mark.suspicious" /></a> --%>
+				<acme:action color="warning" code="reportUpdate.mark.suspicious" url="reportUpdate/player/markSuspicious.do?reportUpdateId=${reportUpdate.id}&reportId=${report.id}&reportDisplay=false"/>&nbsp;
 	</jstl:if>
 </security:authorize>
 
 <br />
-<jstl:if test="${reportUpdate.isSuspicious eq true}">
-	<spring:message code="reportUpdate.marked.suspicious" />
-	<br />
-</jstl:if>
 
 <jstl:if test="${report.status ne 'RESOLVED' and ownUpdate eq true}">
 	<acme:action url="reportUpdate/edit.do?reportUpdateId=${reportUpdate.id}&reportId=${report.id}" code="master.page.edit" color="pink"/>
 </jstl:if>
 
 <acme:goback />
+<jstl:if test="${reportUpdate.isSuspicious eq true}">
+	&nbsp;&nbsp;<spring:message code="reportUpdate.marked.suspicious" />
+	<br />
+</jstl:if>
   </div>
 </div>
 
