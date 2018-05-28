@@ -47,7 +47,7 @@ public class BuiltController extends AbstractController {
 
 
 	@RequestMapping("/list")
-	public ModelAndView list(@RequestParam(required=false, defaultValue="0") Integer page) {
+	public ModelAndView list(@RequestParam(required = false, defaultValue = "0") Integer page) {
 		ModelAndView res;
 		Page<Built> builts;
 		Pageable pageable;
@@ -55,7 +55,7 @@ public class BuiltController extends AbstractController {
 		pageable = new PageRequest(page, 6);
 		builts = this.builtService.getMyBuiltsPageable(pageable);
 		res = new ModelAndView("built/list");
-		
+
 		res.addObject("builts", builts.getContent());
 		res.addObject("page", page);
 		res.addObject("requestURI", "built/list.do?page=");
@@ -295,10 +295,20 @@ public class BuiltController extends AbstractController {
 	}
 	protected ModelAndView createListModelAndView(String msg) {
 		ModelAndView res;
-		Collection<Built> builts = this.builtService.getMyBuilts();
+		Page<Built> builts;
+		Pageable pageable;
+		Integer page = 0;
+
+		pageable = new PageRequest(page, 6);
+		builts = this.builtService.getMyBuiltsPageable(pageable);
 
 		res = new ModelAndView("built/list");
-		res.addObject("builts", builts);
+
+		res.addObject("builts", builts.getContent());
+		res.addObject("page", page);
+		res.addObject("requestURI", "built/list.do?page=");
+		res.addObject("pageNum", builts.getTotalPages());
+
 		res.addObject("message", msg);
 
 		return res;

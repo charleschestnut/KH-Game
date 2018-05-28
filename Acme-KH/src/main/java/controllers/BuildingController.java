@@ -83,7 +83,7 @@ public class BuildingController extends AbstractController {
 		res.addObject("requestURI", "building/display.do?buildingId=" + buildingId + "&page=");
 		res.addObject("pageNum", requirements.getTotalPages());
 		res.addObject("page", page);
-		res.addObject("requirements", requirements);
+		res.addObject("requirements", requirements.getContent());
 
 		return res;
 	}
