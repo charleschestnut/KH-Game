@@ -27,3 +27,6 @@
 
 <spring:message code="battle.wonOrLostMaterials"></spring:message>: 
 <jstl:out value="${battle.wonOrLostMaterials }"></jstl:out>/
+<br/>
+<spring:message code="battle.balance"></spring:message>: 
+<jstl:out value="${battle.balance }"></jstl:out>/

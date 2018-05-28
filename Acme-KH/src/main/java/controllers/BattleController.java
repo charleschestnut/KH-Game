@@ -119,37 +119,41 @@ public class BattleController extends AbstractController {
 		res.addObject("capacidad", capac);
 		res.addObject("battleForm", bf);
 
-		System.out.println("Capac" + capac);
-
 		return res;
 	}
 	@RequestMapping(value = "/recruited", params = "save")
 	public ModelAndView save(@Valid final BattleForm battleForm, final BindingResult binding) {
 		ModelAndView res;
-		System.out.println("Tropas" + battleForm.getTroops());
-		System.out.println("Aqui ha entrao");
 		if (binding.hasErrors()) {
 			res = this.createEditModelAndView(battleForm);
-			System.out.println(binding.getAllErrors());
 		} else
 			try {
 				Battle b = this.battleService.fight(battleForm);
 				res = new ModelAndView("redirect:display.do?battleId=" + b.getId());
-				System.out.println("Intenta");
 			} catch (final Throwable oops) {
 				final String msg = this.getErrorMessage(oops);
 				res = this.createEditModelAndView(battleForm, msg);
-				System.out.println("catch");
-				System.out.println(oops.getMessage());
 			}
 
 		return res;
 	}
-	@RequestMapping("/listBattles")
-	public ModelAndView listBattles() {
+	@RequestMapping("/listBattlesAttack")
+	public ModelAndView listBattlesAttack() {
 		final ModelAndView res;
 		final KeybladeWielder keyblader = (KeybladeWielder) this.actorService.findByPrincipal();
-		final Collection<Battle> battles = this.battleService.myBattles(keyblader.getId());
+		final Collection<Battle> battles = this.battleService.myBattlesAttack(keyblader.getId());
+
+		res = new ModelAndView("battle/listBattles");
+		res.addObject("battles", battles);
+		res.addObject("requestURI", "battle/listBattles.do");
+
+		return res;
+	}
+	@RequestMapping("/listBattlesDefense")
+	public ModelAndView listBattlesDefense() {
+		final ModelAndView res;
+		final KeybladeWielder keyblader = (KeybladeWielder) this.actorService.findByPrincipal();
+		final Collection<Battle> battles = this.battleService.myBattlesDefense(keyblader.getId());
 
 		res = new ModelAndView("battle/listBattles");
 		res.addObject("battles", battles);
@@ -252,7 +256,9 @@ public class BattleController extends AbstractController {
 		res.addObject("num", num);
 		res.addObject("nombres", nombres);
 		res.addObject("enemy", battle.getEnemy());
+		res.addObject("capacidad", capac);
 		res.addObject("battleForm", battle);
+		res.addObject("message", messageCode);
 
 		return res;
 	}

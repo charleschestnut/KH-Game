@@ -13,9 +13,11 @@ import org.springframework.util.Assert;
 import repositories.BattleRepository;
 import domain.Battle;
 import domain.GummiShip;
+import domain.ItemType;
 import domain.KeybladeWielder;
 import domain.Materials;
 import domain.Prize;
+import domain.Purchase;
 import domain.Recruited;
 import domain.Troop;
 import form.BattleForm;
@@ -44,6 +46,10 @@ public class BattleService {
 	private ConfigurationService	configurationService;
 	@Autowired
 	private PrizeService			prizeService;
+	@Autowired
+	private PurchaseService			purchaseService;
+	@Autowired
+	private ShieldService			shieldService;
 
 
 	// CRUD methods
@@ -127,7 +133,17 @@ public class BattleService {
 		Assert.isTrue(atacante.getMaterials().getGummiCoal() > combustible, "message.error.exceedsGummiCoal");
 		//-----------------------------------Enemigo tiene un escudo-------------------------------------------------------
 		if (defensor.getShield() != null) {
-			Assert.isTrue(false, "message.error.defenderShield");
+			Long days = (long) defensor.getShield().getDuration();
+			Date expiration = new Date(System.currentTimeMillis() - days * 1000);
+			if (!defensor.getShield().getDate().after(expiration)) {
+				this.shieldService.delete(defensor.getShield());
+			} else {
+				Assert.isTrue(false, "message.error.defenderShield");
+			}
+		}
+		//-----------------------------------Enemigo de la misma faccion-------------------------------------------------------
+		if (defensor.getFaction().equals(atacante.getFaction())) {
+			Assert.isTrue(false, "message.error.sameFaction");
 		}
 		//----------------------------------------Fin de Asserts-----------------------------------------------------------
 		//Antes de nada, actualizamos el combustible del atacante
@@ -166,15 +182,29 @@ public class BattleService {
 		final int extraAttackFaccionAtacante = (int) (atacante.getFaction().getExtraAttack() * ataqueAtacante);
 		final int extraDefenseFaccionAtacante = (int) (atacante.getFaction().getExtraDefense() * defensaAtacante);
 
-		ataqueAtacante = ataqueAtacante + extraAttackFaccionAtacante;
-		defensaAtacante = defensaAtacante + extraDefenseFaccionAtacante;
-		System.out.println("Ataques y defensas de atacante");
+		//ataqueAtacante = ataqueAtacante + extraAttackFaccionAtacante;
+		//defensaAtacante = defensaAtacante + extraDefenseFaccionAtacante;
 		//--Extra por suerte
 		final Double suerteAtacante = (double) (((int) Math.random() * 100) / 100);
 		final int extraAttackSuerteAtacante = (int) (suerteAtacante * ataqueAtacante);
 		final int extraDefenseSuerteAtacante = (int) (suerteAtacante * defensaAtacante);
-		ataqueAtacante = ataqueAtacante + extraAttackSuerteAtacante;
-		defensaAtacante = defensaAtacante + extraDefenseSuerteAtacante;
+		//ataqueAtacante = ataqueAtacante + extraAttackSuerteAtacante;
+		//defensaAtacante = defensaAtacante + extraDefenseSuerteAtacante;
+
+		//--Extra por items
+		Collection<Purchase> purchaseAtacante = this.purchaseService.activePurchasesByPlayer(atacante.getId());
+		int extraAttackBoostAtacante = 0;
+		int extraDefenseBoostAtacante = 0;
+		for (Purchase p : purchaseAtacante) {
+			if (p.getItem().getType().equals(ItemType.ATTACKBOOST)) {
+				extraAttackBoostAtacante = (int) (extraAttackBoostAtacante + ataqueAtacante * p.getItem().getExtra());
+			} else if (p.getItem().getType().equals(ItemType.DEFENSEBOOST)) {
+				extraDefenseBoostAtacante = (int) (extraDefenseBoostAtacante + defensaAtacante * p.getItem().getExtra());
+			}
+		}
+		ataqueAtacante = ataqueAtacante + extraAttackFaccionAtacante + extraAttackSuerteAtacante + extraAttackBoostAtacante;
+		defensaAtacante = defensaAtacante + extraDefenseFaccionAtacante + extraDefenseSuerteAtacante + extraDefenseBoostAtacante;
+		System.out.println("Ataques y defensas de atacante");
 
 		//Calculamos ataque y defensa de defensor
 		int ataqueDefensor = 0;
@@ -208,15 +238,29 @@ public class BattleService {
 		//---Extra por faccion
 		final int extraAttackFaccionDefensor = (int) (defensor.getFaction().getExtraAttack() * ataqueDefensor);
 		final int extraDefenseFaccionDefensor = (int) (defensor.getFaction().getExtraDefense() * defensaDefensor);
-		ataqueDefensor = ataqueDefensor + extraAttackFaccionDefensor;
-		defensaDefensor = defensaDefensor + extraDefenseFaccionDefensor;
+		//ataqueDefensor = ataqueDefensor + extraAttackFaccionDefensor;
+		//defensaDefensor = defensaDefensor + extraDefenseFaccionDefensor;
 		//--Extra por suerte
 		final Double suerteDefensor = (double) (((int) Math.random() * 100) / 100);
 		final int extraAttackSuerteDefensor = (int) (suerteDefensor * ataqueDefensor);
 		final int extraDefenseSuerteDefensor = (int) (suerteDefensor * defensaDefensor);
-		ataqueDefensor = ataqueDefensor + extraAttackSuerteDefensor;
-		defensaDefensor = defensaDefensor + extraDefenseSuerteDefensor;
+		//ataqueDefensor = ataqueDefensor + extraAttackSuerteDefensor;
+		//defensaDefensor = defensaDefensor + extraDefenseSuerteDefensor;
 
+		//--Extra por items
+		Collection<Purchase> purchaseDefensor = this.purchaseService.activePurchasesByPlayer(defensor.getId());
+		int extraAttackBoostDefensor = 0;
+		int extraDefenseBoostDefensor = 0;
+		for (Purchase p : purchaseAtacante) {
+			if (p.getItem().getType().equals(ItemType.ATTACKBOOST)) {
+				extraAttackBoostDefensor = (int) (extraAttackBoostDefensor + ataqueDefensor * p.getItem().getExtra());
+			} else if (p.getItem().getType().equals(ItemType.DEFENSEBOOST)) {
+				extraDefenseBoostDefensor = (int) (extraDefenseBoostDefensor + defensaDefensor * p.getItem().getExtra());
+			}
+		}
+		ataqueDefensor = ataqueDefensor + extraAttackFaccionDefensor + extraAttackSuerteDefensor + extraAttackBoostDefensor;
+		defensaDefensor = defensaDefensor + extraDefenseFaccionDefensor + extraDefenseSuerteDefensor + extraDefenseBoostDefensor;
+		//Calculo de diferencias
 		final int ataque = ataqueAtacante - defensaDefensor;
 		final int defensa = ataqueDefensor - defensaAtacante;
 		boolean winner = false;
@@ -358,7 +402,7 @@ public class BattleService {
 		final Battle battle = this.create();
 		final Battle battleDefen = this.create();
 		final Materials materiales = new Materials();
-		final Prize recompensa = new Prize();
+		final Prize recompensa = this.prizeService.create();
 		if (winner) {
 
 			final Materials mLoss = defensor.getMaterials();
@@ -385,7 +429,6 @@ public class BattleService {
 			//this.keybladeWielderService.save(defensor); Ya guardamos al final del metodo
 
 			//Creamos un prize si gana atacante
-			recompensa.setDate(new Date(System.currentTimeMillis() - 1000));
 			recompensa.setDescription("Premio recibido al ganar el combate");
 			recompensa.setKeybladeWielder(atacante);
 			recompensa.setMaterials(materiales);
@@ -395,7 +438,6 @@ public class BattleService {
 			materiales.setMunny((int) (materialesNaves.getMunny() * this.configurationService.getConfiguration().getPercentageWinDefender()));
 			materiales.setMytrhil((int) (materialesNaves.getMytrhil() * this.configurationService.getConfiguration().getPercentageWinDefender()));
 
-			recompensa.setDate(new Date(System.currentTimeMillis() - 1000));
 			recompensa.setDescription("Premio recibido al ganar el combate");
 			recompensa.setKeybladeWielder(defensor);
 			recompensa.setMaterials(materiales);
@@ -410,9 +452,9 @@ public class BattleService {
 		System.out.println("Guardo los keyblader");
 		//-----------------------------------------------------------------
 		//Si hay guardados mas de 10 combates, borramos el ultimo
-		if (this.myBattles(atacante.getId()).size() > 10) {
+		if (this.myBattlesAttack(atacante.getId()).size() > 10) {
 			int idMenor = Integer.MAX_VALUE;
-			for (final Battle b : this.myBattles(atacante.getId()))
+			for (final Battle b : this.myBattlesAttack(atacante.getId()))
 				if (b.getId() < idMenor)
 					idMenor = b.getId();
 			this.delete(this.findOne(idMenor));
@@ -434,9 +476,9 @@ public class BattleService {
 		//Si hay guardados mas de 10 combates, borramos el ultimo
 		System.out.println("Guardo battle 1");
 
-		if (this.myBattles(defensor.getId()).size() > 10) {
+		if (this.myBattlesDefense(defensor.getId()).size() > 10) {
 			int idMenorD = Integer.MAX_VALUE;
-			for (final Battle b : this.myBattles(defensor.getId()))
+			for (final Battle b : this.myBattlesDefense(defensor.getId()))
 				if (b.getId() < idMenorD)
 					idMenorD = b.getId();
 			this.delete(this.findOne(idMenorD));
@@ -595,7 +637,11 @@ public class BattleService {
 		return tropas;
 	}
 
-	public Collection<Battle> myBattles(final int actorId) {
-		return this.BattleRepository.myBattles(actorId);
+	public Collection<Battle> myBattlesAttack(final int actorId) {
+		return this.BattleRepository.myBattlesAttack(actorId);
+	}
+
+	public Collection<Battle> myBattlesDefense(final int actorId) {
+		return this.BattleRepository.myBattlesDefense(actorId);
 	}
 }

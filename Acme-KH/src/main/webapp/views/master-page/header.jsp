@@ -128,6 +128,25 @@
 					aria-haspopup="true" aria-expanded="false"> <img
 						src="./images/icons/shop-icon.png"
 						align="center" class="nav-icon"> <spring:message
+							code="master.page.battle" /></a>
+					<div style="font-size: 12px;" class="dropdown-menu"
+						aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="battle/listPlayers.do"><spring:message
+								code="master.page.attack" /></a> <a class="dropdown-item"
+							href="battle/listBattlesAttack.do"><spring:message
+								code="master.page.battleAttack" /></a> <a class="dropdown-item"
+							href="battle/listBattlesDefense.do"><spring:message
+								code="master.page.battleDefense" /></a> 
+					</div></li>
+			</security:authorize>
+
+			<security:authorize access="hasRole('PLAYER')">
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#"
+					id="navbarDropdownMenuLink" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> <img
+						src="./images/icons/shop-icon.png"
+						align="center" class="nav-icon"> <spring:message
 							code="master.page.player" /></a>
 					<div style="font-size: 12px;" class="dropdown-menu"
 						aria-labelledby="navbarDropdownMenuLink">

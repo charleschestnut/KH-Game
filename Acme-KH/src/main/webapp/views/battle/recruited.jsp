@@ -11,20 +11,27 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<spring:message code="battle.tropasDisponibles" />
 <jstl:out value="${capacidad }"/>
-  <br/>
+<br/>
+<br/>
+  <spring:message code="battle.troops" />
+<br/>
 <jstl:forEach var="troo" items="${troops}">
     <jstl:out value="${troo.name }"/>
    <input type="number" name="${troo.name }" id="${troo.name }"min="0" max="100" value = "0">
    <br/>
 </jstl:forEach>
-
+   <br/>
+  <spring:message code="battle.gummiShip" />
+<br/>
 <jstl:forEach var="gumm" items="${gummiShips}">
    <jstl:out value="${gumm.name }"/>
    <input type="number" name="${gumm.name }" id="${gumm.name }" min="0" max="100" value = "0">
    <br/>
 </jstl:forEach>
 
+   <br/>
 <form:form action="battle/recruited.do" modelAttribute="battleForm" id="form">
 	<form:hidden path="troops" id="troops"/>
 	<form:hidden path="enemy" id="enemy"/>

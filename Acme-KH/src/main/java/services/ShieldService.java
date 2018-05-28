@@ -43,9 +43,7 @@ public class ShieldService {
 		final Shield res = this.create();
 		res.setName(item.getName());
 		res.setDate(new Date(System.currentTimeMillis() - 1000));
-		final String duration = item.getName().replace("Escudo ", "");
-		final int dur = Integer.parseInt(duration);
-		res.setDuration(dur * 60);
+		res.setDuration(item.getDuration());
 		Shield saved;
 
 		saved = this.ShieldRepository.save(res);

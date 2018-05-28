@@ -102,7 +102,8 @@
 		<security:intercept-url pattern="/faction/edit.do" access="hasRole('MANAGER')" />
 		<security:intercept-url pattern="/battle/recruited.do" access="hasRole('PLAYER')" />
 		<security:intercept-url pattern="/battle/listPlayers.do" access="hasRole('PLAYER')" />
-		<security:intercept-url pattern="/battle/listBattles.do" access="hasRole('PLAYER')" />
+		<security:intercept-url pattern="/battle/listBattlesDefense.do" access="hasRole('PLAYER')" />
+		<security:intercept-url pattern="/battle/listBattlesAttack.do" access="hasRole('PLAYER')" />
 		<security:intercept-url pattern="/battle/display.do" access="hasRole('PLAYER')" />
 		
 		<!-- SERGIO -->

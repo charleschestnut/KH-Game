@@ -453,3 +453,10 @@ body[class=home] .section.home .video-home:after
 .card {
     color: red;
 }
+.true {
+	background-color: green;
+}
+
+.false {
+	background-color: red;
+}

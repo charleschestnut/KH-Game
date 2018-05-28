@@ -1,3 +1,4 @@
+
 package repositories;
 
 import java.util.Collection;
@@ -24,7 +25,7 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Integer> {
 	// Los purchases que estan activados y en uso
 	@Query("select p from Purchase p where p.player.id =?1 and p.activationDate != null and (CURRENT_TIMESTAMP < p.activationDate)")
 	Collection<Purchase> activePurchasesByPlayer(int playerId);
-	
+
 	// Los purchases que estan activados pero se ha acabado su duracion
 	@Query("select p from Purchase p where p.player.id =?1 and p.activationDate != null and (CURRENT_TIMESTAMP > p.activationDate)")
 	Collection<Purchase> activeExpiredPurchasesByPlayer(int playerId);

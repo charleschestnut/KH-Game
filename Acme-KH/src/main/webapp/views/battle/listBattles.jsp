@@ -11,16 +11,24 @@
 <display:table pagesize="5" class="displaytag" 
 	name="battles" requestURI="battle/listBattles.do" id="row">
 
-	<spring:message code="attackerOwner" var="attackerOwnerH" />
-	<display:column property="attackerOwner" title="${attackerOwnerH}" >
-	</display:column>
 
-	<spring:message code="isWon" var="isWonHeader" />
-	<display:column property="isWon" title="${isWonHeader}" />
+	<spring:message code="battle.attacker" var="attackerH" />
+	<display:column title="${attackerH}" class="${row.isWon}">
+			<jstl:out value="${row.attacker.userAccount.username}"></jstl:out>
+	</display:column>
+	
+		<spring:message code="battle.deffender" var="deffenderH" />
+	<display:column title="${deffenderH}" class="${row.isWon}">
+			<jstl:out value="${row.deffender.userAccount.username}"></jstl:out>
+	</display:column>
+	
+
+	<spring:message code="battle.isWon" var="isWonHeader" />
+	<display:column property="isWon" title="${isWonHeader}" class="${row.isWon}"/>
 
 
 	<spring:message code="master.page.actions" var="actionsH" />
-	<display:column title="${actionsH}">
+	<display:column title="${actionsH}" class="${row.isWon}">
 	<a href="battle/display.do?battleId=${row.id}"><spring:message code="master.page.view"/></a>
 	</display:column>
 	
