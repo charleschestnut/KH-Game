@@ -83,7 +83,7 @@ public class AbstractController {
 				player = (KeybladeWielder) this.actorService.findByPrincipal();
 
 				if (this.sumarRestarHorasFecha(player.getLastConnection(), 1).before(new Date())) {
-					player.setLastConnection(new Date());
+					player.setLastConnection(new Date(System.currentTimeMillis() - 1000));
 					player = this.keybladeWielderService.save(player);
 				}
 
