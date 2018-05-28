@@ -136,7 +136,7 @@ public class OrganizationService {
 		
 		if(this.keybladeWielderService.findMembersOfOrganization(organizationId).size()==1){ // Si sólo queda él, se borra la organización también.
 			
-			this.invitationService.delete(invitationActual);
+			this.invitationService.deleteAll(this.invitationService.getToDeleteOrganization(organizationId));
 			this.organizationRepository.delete(organization);
 		}else{
 			List<Invitation> allOfficers = (List<Invitation>) this.invitationService.findOfficersInOrganization(organizationId);

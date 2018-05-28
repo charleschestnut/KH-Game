@@ -36,5 +36,6 @@ public interface InvitationRepository extends JpaRepository<Invitation, Integer>
 	
 	@Query("select i from Invitation i where i.organization.id=?1")
 	Collection<Invitation> toDeleteOrganization(int orgId);
+
 	
 }
