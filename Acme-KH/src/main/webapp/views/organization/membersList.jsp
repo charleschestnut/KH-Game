@@ -18,7 +18,7 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <jstl:if test="${canChat}">
-	<acme:action code="organization.chat"  url="organization/chatty/list.do?organizationId=${orgId}"/>
+	<acme:action code="organization.chat"  url="organization/chatty/list.do?organizationId=${algo}"/>
 	<acme:action code="organization.leave"  url="organization/leaveOrganization.do"/>
 </jstl:if>
 
