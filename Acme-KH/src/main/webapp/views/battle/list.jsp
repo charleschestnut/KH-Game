@@ -23,7 +23,7 @@
 	
 	<spring:message code="master.page.actions" var="actionsH" />
 	<display:column title="${actionsH}">
-	<a href="battle/recruited.do?nickname=${row.userAccount.username}"><spring:message code="master.page.battle"/></a>
+	<a href="battle/recruited.do?nickname=${row.userAccount.username}"><spring:message code="master.page.attack"/></a>
 	</display:column>
 	
 

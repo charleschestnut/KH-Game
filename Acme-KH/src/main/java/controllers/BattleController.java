@@ -3,11 +3,13 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,7 @@ import services.GummiShipService;
 import services.KeybladeWielderService;
 import services.RecruitedService;
 import services.TroopService;
+import domain.Actor;
 import domain.Battle;
 import domain.GummiShip;
 import domain.KeybladeWielder;
@@ -45,7 +48,7 @@ public class BattleController extends AbstractController {
 
 
 	@RequestMapping("/recruited")
-	public ModelAndView recruited(@RequestParam(required = true) final String nickname) {
+	public ModelAndView recruited(@RequestParam(required = true) final String nickname, Locale locale) {
 		ModelAndView res;
 		Collection<Troop> troops = this.troopService.findAll();
 		Collection<GummiShip> gummiShips = this.gummiShipService.findAll();
@@ -53,6 +56,17 @@ public class BattleController extends AbstractController {
 		ArrayList<Integer> capacidadTropas = new ArrayList<Integer>();
 		ArrayList<Integer> capacidadNaves = new ArrayList<Integer>();
 		Collection<Recruited> attackRc = this.recruitedService.getAllRecruited(this.actorService.findByPrincipal().getId());
+		if (nickname == "") {
+			try {
+				Actor actor = this.actorService.findByUserAccountUsername(nickname);
+				Assert.notNull(actor, "error.message.notexist");
+			} catch (Throwable oops) {
+				res = new ModelAndView("redirect:listPlayers.do");
+				res.addObject("message", this.showDetails(locale, this.getErrorMessage(oops)));
+				return res;
+			}
+		}
+		System.out.println("nickname " + nickname);
 		int index;
 		int n;
 		for (Troop a : troops) {
