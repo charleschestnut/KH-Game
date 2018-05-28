@@ -4,6 +4,8 @@ package services;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -79,15 +81,23 @@ public class BuildingService {
 		return this.BuildingRepository.getMyCreatedBuildings(this.actorService.findByPrincipal().getId());
 	}
 
+	public Page<Building> getMyCreatedBuildingsPaginated(Pageable p) {
+		return this.BuildingRepository.getMyCreatedBuildingsPaginated(this.actorService.findByPrincipal().getId(), p);
+	}
+
 	public Collection<Building> getAvailableBuildings() {
 		return this.BuildingRepository.getAvailableBuildings();
 	}
-	
-	public Collection<String> getAvailableBuildingsName(){
+
+	public Page<Building> getAvailableBuildingsPaginated(Pageable p) {
+		return this.BuildingRepository.getAvailableBuildingsPaginated(p);
+	}
+
+	public Collection<String> getAvailableBuildingsName() {
 		return this.BuildingRepository.getAvailableBuildingsName();
 	}
-	
-	public Building getBuildingByName(String name){
+
+	public Building getBuildingByName(String name) {
 		return this.BuildingRepository.getBuildingByName(name);
 	}
 }

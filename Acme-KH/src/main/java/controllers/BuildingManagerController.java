@@ -4,6 +4,9 @@ package controllers;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -41,13 +44,17 @@ public class BuildingManagerController extends AbstractController {
 
 
 	@RequestMapping("/myList")
-	public ModelAndView myList() {
+	public ModelAndView myList(@RequestParam(required = false, defaultValue = "0") Integer page) {
 		ModelAndView res;
-		Collection<Building> buildings = this.buildingService.getMyCreatedBuildings();
+
+		Pageable p = new PageRequest(page, 5);
+		Page<Building> buildings = this.buildingService.getMyCreatedBuildingsPaginated(p);
 
 		res = new ModelAndView("building/list");
-		res.addObject("buildings", buildings);
-		res.addObject("requestURI", "building/contentManager/myList.do");
+		res.addObject("buildings", buildings.getContent());
+		res.addObject("pageNum", buildings.getTotalPages());
+		res.addObject("page", page);
+		res.addObject("requestURI", "building/contentManager/myList.do?page=");
 
 		return res;
 	}

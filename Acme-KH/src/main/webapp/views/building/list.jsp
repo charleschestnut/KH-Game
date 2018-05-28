@@ -17,6 +17,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<acme:pagination page="${page}" pageNum="${pageNum}" requestURI="${requestURI}"/>
 <display:table name="buildings" id="row" pagesize="5" requestURI="${requestURI}">
 
 	<spring:message code="building.name" var="nameHeader"></spring:message>
@@ -38,7 +39,7 @@
 	</display:column>
 	
 	<security:authorize access="hasRole('MANAGER')">
-		<jstl:if test="${requestURI=='building/contentManager/myList.do'}">
+		<jstl:if test="${requestURI=='building/contentManager/myList.do?page='}">
 			<spring:message code="master.page.edit" var="editHeader"></spring:message>
 			<display:column title="${editHeader}">
 			<jstl:if test="${!row.isFinal }">
@@ -79,7 +80,7 @@
 
 </display:table>
 
-<jstl:if test="${requestURI=='building/contentManager/myList.do'}">
+<jstl:if test="${requestURI=='building/contentManager/myList.do?page='}">
 	<acme:cancel url="building/contentManager/edit.do" code="master.page.create"/>
 </jstl:if>
 

@@ -1,8 +1,6 @@
 
 package controllers;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,13 +36,17 @@ public class BuildingController extends AbstractController {
 
 
 	@RequestMapping("/list")
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam(required = false, defaultValue = "0") Integer page) {
 		ModelAndView res;
-		Collection<Building> buildings = this.buildingService.getAvailableBuildings();
+
+		Pageable p = new PageRequest(page, 5);
+		Page<Building> buildings = this.buildingService.getAvailableBuildingsPaginated(p);
 
 		res = new ModelAndView("building/list");
-		res.addObject("buildings", buildings);
-		res.addObject("requestURI", "building/list.do");
+		res.addObject("buildings", buildings.getContent());
+		res.addObject("pageNum", buildings.getTotalPages());
+		res.addObject("page", page);
+		res.addObject("requestURI", "building/list.do?page=");
 
 		return res;
 	}
