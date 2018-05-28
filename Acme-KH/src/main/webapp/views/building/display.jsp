@@ -149,9 +149,12 @@
 </jstl:if>
 
 
-<jstl:if test="${requirements != null && requirements.size()>0 }">
+<jstl:if test="${requirements != null}">
+<div id="container">
+
+<acme:pagination page="${page}" pageNum="${pageNum}" requestURI="${requestURI}"/>
 	<spring:message code="building.requirements"></spring:message>
-	<display:table name="requirements" id="row" pagesize="5" requestURI="building/display.do">
+	<display:table name="requirements" id="row" pagesize="5" requestURI="${requestURI}">
 	
 		<spring:message code="building.building" var="buildingHeader"></spring:message>
 		<display:column title="${buildingHeader}">
@@ -164,5 +167,6 @@
 		<!-- TODO: ¿SE CUMPLE EL REQUISITO? -->
 	
 	</display:table>
+	</div>
 </jstl:if>
 

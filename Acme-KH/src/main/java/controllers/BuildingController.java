@@ -4,6 +4,9 @@ package controllers;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +21,7 @@ import domain.Building;
 import domain.Defense;
 import domain.Livelihood;
 import domain.Recruiter;
+import domain.Requirement;
 
 @Controller
 @RequestMapping("/building")
@@ -46,7 +50,10 @@ public class BuildingController extends AbstractController {
 	}
 
 	@RequestMapping("/display")
-	public ModelAndView display(@RequestParam Integer buildingId) {
+	public ModelAndView display(@RequestParam Integer buildingId, @RequestParam(required = false, defaultValue = "0") Integer page) {
+		Page<Requirement> requirements;
+		Pageable pageable;
+
 		ModelAndView res = new ModelAndView("building/display");
 
 		Building b = this.buildingService.findOne(buildingId);
@@ -69,9 +76,14 @@ public class BuildingController extends AbstractController {
 		} catch (Throwable oops) {
 			res = new ModelAndView("redirect:list.do");
 		}
+		pageable = new PageRequest(page, 5);
+		requirements = this.requirementService.getRequirementsByBuilding(buildingId, pageable);
 
-		res.addObject("requirements", this.requirementService.getRequirementsByBuilding(buildingId));
 		res.addObject("building", b);
+		res.addObject("requestURI", "building/display.do?buildingId=" + buildingId + "&page=");
+		res.addObject("pageNum", requirements.getTotalPages());
+		res.addObject("page", page);
+		res.addObject("requirements", requirements);
 
 		return res;
 	}
