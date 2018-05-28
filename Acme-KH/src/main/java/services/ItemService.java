@@ -164,6 +164,10 @@ public class ItemService {
 		return result;
 
 	}
+	
+	public void flush(){
+		this.itemRepository.flush();
+	}
 
 	//dashboard
 
