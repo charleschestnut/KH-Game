@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -28,12 +29,14 @@ public class Configuration extends DomainEntity {
 
 	/**
 	 * 
-	 * @return los materiales que seran otorgado a los jugadores por iniciar sesión cada dia
+	 * @return los materiales que seran otorgado a los jugadores por iniciar sesiÃ³n cada dia
 	 */
 	@AttributeOverrides({
 		@AttributeOverride(name = "munny", column = @Column(name = "dailyMunny")), @AttributeOverride(name = "mytrhil", column = @Column(name = "dailyMytrhil")), @AttributeOverride(name = "gummiCoal", column = @Column(name = "dailyGummiCoal"))
 
 	})
+	
+	@Valid
 	public Materials getDailyMaterials() {
 		return this.dailyMaterials;
 	}
@@ -43,12 +46,14 @@ public class Configuration extends DomainEntity {
 	}
 	/**
 	 * 
-	 * @return los materiales que puede conservar un jugador por defecto, a este valor se le ha de sumar el valor de cada jugador según sus edifcios.
+	 * @return los materiales que puede conservar un jugador por defecto, a este valor se le ha de sumar el valor de cada jugador segÃºn sus edifcios.
 	 */
 	@AttributeOverrides({
 		@AttributeOverride(name = "munny", column = @Column(name = "baseMunny")), @AttributeOverride(name = "mytrhil", column = @Column(name = "baseMytrhil")), @AttributeOverride(name = "gummiCoal", column = @Column(name = "baseGummiCoal"))
 
 	})
+	
+	@Valid
 	public Materials getBaseMaterials() {
 		return this.baseMaterials;
 	}
@@ -58,7 +63,7 @@ public class Configuration extends DomainEntity {
 	}
 	/**
 	 * 
-	 * @return número de mensajes que serán almacenados en una organización
+	 * @return nÃºmero de mensajes que serÃ¡n almacenados en una organizaciÃ³n
 	 */
 	@Range(min = 5)
 	@NotNull
