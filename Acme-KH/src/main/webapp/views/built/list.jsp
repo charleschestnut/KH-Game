@@ -78,6 +78,8 @@
 <spring:message code="building.name" var="nameHeader"></spring:message>
 <spring:message code="master.page.display" var="displayHeader"></spring:message>
 
+<acme:pagination page="${page}" pageNum="${pageNum}" requestURI="${requestURI}"/>
+
 <div class="row row-width">
 <jstl:forEach items="${builts}" var="row">
 	<div class="card card-built" style="width: 19rem;color:black;border:0;border-radius:10px;">

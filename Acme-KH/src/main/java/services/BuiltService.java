@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -297,6 +299,11 @@ public class BuiltService {
 	public Collection<Built> getMyBuilts() {
 		return this.BuiltRepository.getMyBuildings(this.actorService.findByPrincipal().getId());
 	}
+	
+	public Page<Built> getMyBuiltsPageable(Pageable p) {
+		return this.BuiltRepository.getMyBuildingsPageable(this.actorService.findByPrincipal().getId(), p);
+	}
+	
 	public Integer getMyDefenseByBuildings() {
 		return this.BuiltRepository.myDefenseByBuildings(this.actorService.findByPrincipal().getId());
 	}

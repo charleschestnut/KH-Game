@@ -6,6 +6,9 @@ import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,12 +47,19 @@ public class BuiltController extends AbstractController {
 
 
 	@RequestMapping("/list")
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam(required=false, defaultValue="0") Integer page) {
 		ModelAndView res;
-		Collection<Built> builts = this.builtService.getMyBuilts();
+		Page<Built> builts;
+		Pageable pageable;
 
+		pageable = new PageRequest(page, 6);
+		builts = this.builtService.getMyBuiltsPageable(pageable);
 		res = new ModelAndView("built/list");
-		res.addObject("builts", builts);
+		
+		res.addObject("builts", builts.getContent());
+		res.addObject("page", page);
+		res.addObject("requestURI", "built/list.do?page=");
+		res.addObject("pageNum", builts.getTotalPages());
 
 		return res;
 
