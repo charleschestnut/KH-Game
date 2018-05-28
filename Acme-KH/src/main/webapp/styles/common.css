@@ -451,15 +451,16 @@ body[class=home] .section.home .video-home:after
 }
 
 .card {
-    color: red;
+    color: #FF8A80;
 }
 .true {
-	background-color: green;
+	background-color: #c6f68d;
 }
 
 .false {
-	background-color: red;
+	background-color: #FF8A80;
 }
+
 
 .helpCommand{
 	color:blue;

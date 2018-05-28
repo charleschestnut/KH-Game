@@ -19,7 +19,7 @@
 <br/>
 <jstl:forEach var="troo" items="${troops}">
     <jstl:out value="${troo.name }"/>
-   <input type="number" name="${troo.name }" id="${troo.name }"min="0" max="100" value = "0">
+   <input type="number" name="${troo.name }" id="${troo.name }"min="0" max="100" value = "0" class="form-control">
    <br/>
 </jstl:forEach>
    <br/>
@@ -27,7 +27,7 @@
 <br/>
 <jstl:forEach var="gumm" items="${gummiShips}">
    <jstl:out value="${gumm.name }"/>
-   <input type="number" name="${gumm.name }" id="${gumm.name }" min="0" max="100" value = "0">
+   <input type="number" name="${gumm.name }" id="${gumm.name }" min="0" max="100" value = "0" class="form-control">
    <br/>
 </jstl:forEach>
 

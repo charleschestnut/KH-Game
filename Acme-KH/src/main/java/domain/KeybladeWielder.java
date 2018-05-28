@@ -65,7 +65,7 @@ public class KeybladeWielder extends Actor {
 		return this.lastConnection;
 	}
 
-	public void setLastConnection( Date lastConnection) {
+	public void setLastConnection(Date lastConnection) {
 		this.lastConnection = lastConnection;
 	}
 	/**
@@ -80,7 +80,7 @@ public class KeybladeWielder extends Actor {
 		return this.materials;
 	}
 
-	public void setMaterials( Materials materials) {
+	public void setMaterials(Materials materials) {
 		this.materials = materials;
 	}
 	/**
@@ -93,7 +93,7 @@ public class KeybladeWielder extends Actor {
 		return this.wins;
 	}
 
-	public void setWins( Integer wins) {
+	public void setWins(Integer wins) {
 		this.wins = wins;
 	}
 	/**
@@ -106,7 +106,7 @@ public class KeybladeWielder extends Actor {
 		return this.loses;
 	}
 
-	public void setLoses( Integer loses) {
+	public void setLoses(Integer loses) {
 		this.loses = loses;
 	}
 	@Valid
@@ -114,7 +114,7 @@ public class KeybladeWielder extends Actor {
 		return this.worldCoordinates;
 	}
 
-	public void setWorldCoordinates( Coordinates worldCoordinates) {
+	public void setWorldCoordinates(Coordinates worldCoordinates) {
 		this.worldCoordinates = worldCoordinates;
 	}
 
@@ -124,7 +124,7 @@ public class KeybladeWielder extends Actor {
 		return this.worldName;
 	}
 
-	public void setWorldName( String worldName) {
+	public void setWorldName(String worldName) {
 		this.worldName = worldName;
 	}
 
@@ -134,7 +134,7 @@ public class KeybladeWielder extends Actor {
 		return this.faction;
 	}
 
-	public void setFaction( Faction faction) {
+	public void setFaction(Faction faction) {
 		this.faction = faction;
 	}
 
@@ -144,7 +144,7 @@ public class KeybladeWielder extends Actor {
 		return this.shield;
 	}
 
-	public void setShield( Shield shield) {
+	public void setShield(Shield shield) {
 		this.shield = shield;
 	}
 
@@ -161,7 +161,7 @@ public class KeybladeWielder extends Actor {
 		hash = encoder.encodePassword(this.getNickname() + this.getWorldName() + this.getWorldCoordinates().getX() + this.getWorldCoordinates().getY() + this.getWorldCoordinates().getZ(), null);
 		hash = hash.replaceAll("\\D+", "");
 		Long worldImageId = Long.parseLong(hash.substring(0, hash.length() > 17 ? 17 : hash.length()));
-		worldImageId = worldImageId % 34 + 1;
+		worldImageId = worldImageId % 29 + 1;
 
 		return worldImageId;
 	}

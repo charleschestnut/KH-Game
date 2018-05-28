@@ -23,7 +23,7 @@ public class ActorForm {
 		return this.name;
 	}
 
-	public void setName( String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	@NotBlank
@@ -31,7 +31,7 @@ public class ActorForm {
 		return this.surname;
 	}
 
-	public void setSurname( String surname) {
+	public void setSurname(String surname) {
 		this.surname = surname;
 	}
 
@@ -41,7 +41,7 @@ public class ActorForm {
 		return this.email;
 	}
 
-	public void setEmail( String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
@@ -50,10 +50,11 @@ public class ActorForm {
 		return this.phone;
 	}
 
-	public void setPhone( String phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
+	@Pattern(regexp = "^$|.+.(jpg|jpeg|gif|png)", message = "(jpg, jpeg, gif, png)")
 	public String getAvatar() {
 		return this.avatar;
 	}

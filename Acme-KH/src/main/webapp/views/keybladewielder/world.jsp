@@ -68,17 +68,17 @@
          <br/>
                   <div class="btn btn-material" data-trigger="hover" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<spring:message code='munny'/>">
                      <img title="Munny" src="./images/materials/munny.png" width="50px"
-                        height="50px" /> <span class="badge badge-warning">${user.materials.munny}/${maxMaterialsFromAbstract.munny}</span>
+                        height="50px" /> <span class="badge badge-warning">${user.materials.munny}</span>
                   </div>
 
                   <div class="btn  btn-material" data-trigger="hover" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<spring:message code='mythril'/>">
                      <img title="Mythril" src="./images/materials/mythril.png"
-                        width="50px" height="50px" /> <span class="badge badge-info">${user.materials.mytrhil}/${maxMaterialsFromAbstract.mytrhil}</span>
+                        width="50px" height="50px" /> <span class="badge badge-info">${user.materials.mytrhil}</span>
                   </div>
 
                   <div class="btn btn-material" data-trigger="hover" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<spring:message code='gummiCoal'/>">
                      <img title="Gummi Coal" src="./images/materials/gummiCoal.png"
-                        width="50px" height="50px" /> <span class="badge badge-dark">${user.materials.gummiCoal}/${maxMaterialsFromAbstract.gummiCoal}</span>
+                        width="50px" height="50px" /> <span class="badge badge-dark">${user.materials.gummiCoal}</span>
                   </div>
          </div>
       </div>

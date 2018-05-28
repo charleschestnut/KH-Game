@@ -126,7 +126,7 @@
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> <img
-						src="./images/icons/shop-icon.png"
+						src="./images/icons/battle-icon.png"
 						align="center" class="nav-icon"> <spring:message
 							code="master.page.battle" /></a>
 					<div style="font-size: 12px;" class="dropdown-menu"
