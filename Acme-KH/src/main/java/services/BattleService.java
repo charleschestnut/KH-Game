@@ -115,13 +115,17 @@ public class BattleService {
 		final int saltosGalaxia = (atacante.getWorldCoordinates().getZ() - defensor.getWorldCoordinates().getZ()) / 5;
 		//Aqui falta cuanto combustible va a costar cada salto de 5 galacias
 		final int combustible = saltosGalaxia * 10;
-
+		boolean todoCero = true;
 		//Pnemos en una arrayList, las tropas que el atacante envia
 		for (final Integer ra : ta)
-			if (ra == null)
+			if (ra == null) {
 				tropasAtacante.add(0);
-			else
+			} else {
+				if (ra != 0) {
+					todoCero = false;
+				}
 				tropasAtacante.add(ra);
+			}
 		System.out.println("Tropas atacantes: " + bat.getTroops());
 		System.out.println("Tropas atacantes1: " + tropasAtacante);
 
@@ -131,7 +135,8 @@ public class BattleService {
 		this.MasTropasQueCapacidad(bat);
 		//-----------------------------Combustible necesario supera el actual----------------------------------------------
 		Assert.isTrue(atacante.getMaterials().getGummiCoal() > combustible, "message.error.exceedsGummiCoal");
-		//-----------------------------------Enemigo tiene un escudo-------------------------------------------------------
+		//-----------------------------------Defensor tiene un escudo-------------------------------------------------------
+
 		if (defensor.getShield() != null) {
 			Long days = (long) defensor.getShield().getDuration();
 			Date expiration = new Date(System.currentTimeMillis() - days * 1000);
@@ -141,11 +146,17 @@ public class BattleService {
 				Assert.isTrue(false, "message.error.defenderShield");
 			}
 		}
-		//-----------------------------------Enemigo de la misma faccion-------------------------------------------------------
+		//-----------------------------------Atacante tiene un escudo-------------------------------------------------------
+		if (atacante.getShield() != null) {
+			this.shieldService.delete(atacante.getShield());
+		}
+		//-----------------------------------Enemigo de la misma faccion-----------------------------------------------------
 		if (defensor.getFaction().equals(atacante.getFaction())) {
 			Assert.isTrue(false, "message.error.sameFaction");
 		}
-		//----------------------------------------Fin de Asserts-----------------------------------------------------------
+		//-----------------------------------Todas las tropas van a 0--------------------------------------------------------
+		Assert.isTrue(!todoCero, "message.error.notTroops");
+		//----------------------------------------Fin de Asserts-------------------------------------------------------------
 		//Antes de nada, actualizamos el combustible del atacante
 		System.out.println("Pasamos los asserts");
 		final Materials nuevoCombustible = atacante.getMaterials();
@@ -578,19 +589,19 @@ public class BattleService {
 				error = true;
 			nu++;
 		}
-		System.out.println("Tropas atacantes3: " + tropasTotalesAtacante);
+		System.out.println("Maaaaaaaaaaaaaas tropas?: " + error);
 
 		Assert.isTrue(!error, "message.error.moreTrops");
 	}
 
 	private void MasTropasQueCapacidad(final BattleForm bat) {
-		final Collection<Integer> ta = bat.getTroops();
-		final ArrayList<Integer> tropasAtacante = new ArrayList<>();
-		final Collection<Troop> troops = this.troopService.findAll();
-		final Collection<GummiShip> gummiShips = this.gummiShipService.findAll();
+		Collection<Integer> ta = bat.getTroops();
+		ArrayList<Integer> tropasAtacante = new ArrayList<>();
+		Collection<Troop> troops = this.troopService.findAll();
+		Collection<GummiShip> gummiShips = this.gummiShipService.findAll();
 		int numTropas = 0;
 		int capacidad = 0;
-		final boolean error = false;
+		boolean error = false;
 
 		for (final Integer ra : ta)
 			tropasAtacante.add(ra);
@@ -603,6 +614,9 @@ public class BattleService {
 		for (final GummiShip gr : gummiShips) {
 			capacidad = capacidad + gr.getSlots() * tropasAtacante.get(index);
 			index++;
+		}
+		if (capacidad < numTropas) {
+			error = true;
 		}
 		System.out.println("Tropas atacantes3: " + tropasAtacante);
 

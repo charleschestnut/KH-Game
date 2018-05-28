@@ -131,7 +131,14 @@ public class BattleController extends AbstractController {
 				Battle b = this.battleService.fight(battleForm);
 				res = new ModelAndView("redirect:display.do?battleId=" + b.getId());
 			} catch (final Throwable oops) {
-				final String msg = this.getErrorMessage(oops);
+				String msg = "error.message.commit";
+				String a = oops.getMessage();
+				String e = "message.error";
+				System.out.println(a.contains(e));
+				if (a.contains(e))
+					msg = a;
+				System.out.println("msg " + msg);
+				System.out.println("oops " + oops.getMessage());
 				res = this.createEditModelAndView(battleForm, msg);
 			}
 

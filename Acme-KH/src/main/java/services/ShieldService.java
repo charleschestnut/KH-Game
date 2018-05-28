@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.ShieldRepository;
 import domain.Item;
+import domain.KeybladeWielder;
 import domain.Shield;
 
 @Service
@@ -46,8 +47,11 @@ public class ShieldService {
 		res.setDuration(item.getDuration());
 		Shield saved;
 
-		saved = this.ShieldRepository.save(res);
+		KeybladeWielder keyBlader = (KeybladeWielder) this.actorService.findByPrincipal();
 
+		saved = this.ShieldRepository.save(res);
+		keyBlader.setShield(saved);
+		this.actorService.save(keyBlader);
 		return saved;
 	}
 
@@ -71,7 +75,9 @@ public class ShieldService {
 
 	public void delete(final Shield Shield) {
 		Assert.notNull(Shield);
-
+		KeybladeWielder keyW = (KeybladeWielder) this.actorService.findByPrincipal();
+		keyW.setShield(null);
+		this.actorService.save(keyW);
 		this.ShieldRepository.delete(Shield);
 	}
 
