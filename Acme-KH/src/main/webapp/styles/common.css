@@ -460,3 +460,8 @@ body[class=home] .section.home .video-home:after
 .false {
 	background-color: red;
 }
+
+.helpCommand{
+	color:blue;
+	font-weight:bold;
+}

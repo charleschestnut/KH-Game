@@ -49,21 +49,21 @@ public class PromptService {
 		
 		if (command.equals("help")) {
 			res = "Command prompt made to send prizes, buildings or troops to any player.  <br/>" +
-					"To send a prize, use set [username] followed by one of the next options:  <br/><br/>" +
-					"-mn [munnyQuantity]  <br/>" +
-					"-mt [mythrilQuantity]  <br/>" +
-					"-mn [gummyCoalQuantity]  <br/>"+
-					"-dt [dd/MM/yyyy]  > By default, date is set as current date plus one day<br/><br/>" +
-					"To send a building, use set [username] followed by next option:  <br/><br/>" +
-					"-b [buildingName]  <br/> > You can list the available building by executing 'list buildings' command<br/><br/>" +
-			"To send a recruiter with troops, gummiships or both, use set [username] followed by next option:  <br/><br/>" +
-			"-rc >[recruiterName]  > You can list the available building by executing 'list buildings' command <br/>" +
-			"-t >[troopName]  > You can list the available troops by executing 'list troops' command <br/>" +
-			"-gs >[gummishipName]  > You can list the available gummiships by executing 'list gumiships' command <br/><br/>" +
-			"To remove materials from a player, use rm [username] followed by one of the next options:  <br/><br/>" +
-			"-mn [munnyQuantity]  <br/>" +
-			"-mt [mythrilQuantity]  <br/>" +
-			"-mn [gummyCoalQuantity]  <br/>";
+					"To send a prize, use <span class='helpCommand'>set [username]</span> followed by one of the next options:  <br/><br/>" +
+					"<span class='helpCommand'>-mn [munnyQuantity]</span>  <br/>" +
+					"<span class='helpCommand'>-mt [mythrilQuantity]</span>  <br/>" +
+					"<span class='helpCommand'>-mn [gummyCoalQuantity]</span>  <br/>"+
+					"<span class='helpCommand'>-dt [dd/MM/yyyy]</span>  > By default, date is set as current date plus one day<br/><br/>" +
+					"To send a building, use <span class='helpCommand'>set [username]</span> followed by next option:  <br/><br/>" +
+					"<span class='helpCommand'>-b [buildingName]</span>  <br/> > You can list the available building by executing <span class='helpCommand'>list buildings</span> command<br/><br/>" +
+			"To send a recruiter with troops, gummiships or both, use <span class='helpCommand'>set [username]</span> followed by next option:  <br/><br/>" +
+			"<span class='helpCommand'>-rc >[recruiterName]</span>  > You can list the available building by executing <span class='helpCommand'>list buildings</span> command <br/>" +
+			"<span class='helpCommand'>-t >[troopName]</span>  > You can list the available troops by executing <span class='helpCommand'>list troops</span> command <br/>" +
+			"<span class='helpCommand'>-gs >[gummishipName]</span>  > You can list the available gummiships by executing <span class='helpCommand'>list gumiships</span> command <br/><br/>" +
+			"To remove materials from a player, use <span class='helpCommand'>rm [username]</span> followed by one of the next options:  <br/><br/>" +
+			"<span class='helpCommand'>-mn [munnyQuantity]</span>  <br/>" +
+			"<span class='helpCommand'>-mt [mythrilQuantity]</span>  <br/>" +
+			"<span class='helpCommand'>-mn [gummyCoalQuantity]</span>  <br/>";
 		} else if (command.trim().startsWith("set") && (command.indexOf("-mn")>0 || command.indexOf("-mt")>0 || command.indexOf("-gc")>0)) {
 			Integer munny = 0;
 			Integer mythril = 0;
