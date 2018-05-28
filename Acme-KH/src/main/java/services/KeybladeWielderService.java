@@ -213,19 +213,19 @@ public class KeybladeWielderService {
 	public Collection<Double> ratioOfUserPerFaction() {
 		return this.KeybladeWielderRepository.ratioOfUserPerFaction();
 	}
-	public Collection<KeybladeWielder> getTopWinsPlayers() {
+	public Collection<String> getTopWinsPlayers() {
 		return this.KeybladeWielderRepository.getTopWinsPlayers();
 	}
 
-	public Collection<KeybladeWielder> getTopWinRatioPlayers() {
+	public Collection<String> getTopWinRatioPlayers() {
 		return this.KeybladeWielderRepository.getTopWinRatioPlayers();
 	}
 
-	public Collection<KeybladeWielder> getTopMunnyPlayers() {
+	public Collection<String> getTopMunnyPlayers() {
 		return this.KeybladeWielderRepository.getTopMunnyPlayers();
 	}
 
-	public Collection<KeybladeWielder> getTopMytrhilPlayers() {
+	public Collection<String> getTopMytrhilPlayers() {
 		return this.KeybladeWielderRepository.getTopMythrilPlayers();
 	}
 
