@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -37,6 +39,7 @@ public class Item extends DomainEntity {
 
 	private ContentManager	contentManager;
 
+
 	/**
 	 * 
 	 * Tiempo que durará el objeto <b>EN MINUTOS<b>
@@ -47,7 +50,7 @@ public class Item extends DomainEntity {
 		return this.duration;
 	}
 
-	public void setDuration( Integer duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 	/**
@@ -60,7 +63,7 @@ public class Item extends DomainEntity {
 		return this.expiration;
 	}
 
-	public void setExpiration( Integer expiration) {
+	public void setExpiration(Integer expiration) {
 		this.expiration = expiration;
 	}
 	/**
@@ -74,7 +77,7 @@ public class Item extends DomainEntity {
 		return this.extra;
 	}
 
-	public void setExtra( Double extra) {
+	public void setExtra(Double extra) {
 		this.extra = extra;
 	}
 	@Range(min = 0)
@@ -83,7 +86,7 @@ public class Item extends DomainEntity {
 		return this.munnyCost;
 	}
 
-	public void setMunnyCost( Integer munnyCost) {
+	public void setMunnyCost(Integer munnyCost) {
 		this.munnyCost = munnyCost;
 	}
 	/**
@@ -97,24 +100,26 @@ public class Item extends DomainEntity {
 		return this.type;
 	}
 
-	public void setType( ItemType type) {
+	public void setType(ItemType type) {
 		this.type = type;
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
 		return this.name;
 	}
 
-	public void setName( String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getDescription() {
 		return this.description;
 	}
 
-	public void setDescription( String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 	/**
@@ -125,7 +130,7 @@ public class Item extends DomainEntity {
 		return this.onSell;
 	}
 
-	public void setOnSell( boolean onSell) {
+	public void setOnSell(boolean onSell) {
 		this.onSell = onSell;
 	}
 	@Valid
@@ -134,7 +139,7 @@ public class Item extends DomainEntity {
 		return this.contentManager;
 	}
 
-	public void setContentManager( ContentManager contentManager) {
+	public void setContentManager(ContentManager contentManager) {
 		this.contentManager = contentManager;
 	}
 

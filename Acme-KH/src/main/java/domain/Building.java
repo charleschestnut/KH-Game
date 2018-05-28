@@ -15,6 +15,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -37,7 +38,7 @@ public class Building extends DomainEntity {
 	private ContentManager	contentManager;
 
 
-	@SafeHtml()
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	@NotBlank
 	public String getName() {
 		return this.name;
@@ -46,7 +47,7 @@ public class Building extends DomainEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
-	@SafeHtml()
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	@NotBlank
 	public String getDescription() {
 		return this.description;
@@ -55,7 +56,7 @@ public class Building extends DomainEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	@SafeHtml()
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	@Pattern(regexp = ".+.(jpg|jpeg|gif|png)", message = "(jpg, jpeg, gif, png)")
 	public String getPhoto() {
 		return this.photo;

@@ -20,6 +20,8 @@ import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
@@ -120,6 +122,7 @@ public class KeybladeWielder extends Actor {
 
 	@NotBlank
 	@Column(unique = true)
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getWorldName() {
 		return this.worldName;
 	}

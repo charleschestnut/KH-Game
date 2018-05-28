@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 /**
  * 
@@ -27,19 +29,21 @@ public class Faction extends DomainEntity {
 
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
 		return this.name;
 	}
 
-	public void setName( String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getPowerUpDescription() {
 		return this.powerUpDescription;
 	}
 
-	public void setPowerUpDescription( String powerUpDescription) {
+	public void setPowerUpDescription(String powerUpDescription) {
 		this.powerUpDescription = powerUpDescription;
 	}
 	@NotNull
@@ -48,7 +52,7 @@ public class Faction extends DomainEntity {
 		return this.extraResources;
 	}
 
-	public void setExtraResources( Double extraResources) {
+	public void setExtraResources(Double extraResources) {
 		this.extraResources = extraResources;
 	}
 	@NotNull
@@ -57,7 +61,7 @@ public class Faction extends DomainEntity {
 		return this.extraAttack;
 	}
 
-	public void setExtraAttack( Double extraAttack) {
+	public void setExtraAttack(Double extraAttack) {
 		this.extraAttack = extraAttack;
 	}
 	@NotNull
@@ -66,7 +70,7 @@ public class Faction extends DomainEntity {
 		return this.extraDefense;
 	}
 
-	public void setExtraDefense( Double extraDefense) {
+	public void setExtraDefense(Double extraDefense) {
 		this.extraDefense = extraDefense;
 	}
 	/**
@@ -82,7 +86,7 @@ public class Faction extends DomainEntity {
 		return this.galaxy;
 	}
 
-	public void setGalaxy( Integer galaxy) {
+	public void setGalaxy(Integer galaxy) {
 		this.galaxy = galaxy;
 	}
 

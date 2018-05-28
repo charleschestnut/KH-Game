@@ -22,6 +22,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import security.UserAccount;
@@ -44,47 +46,52 @@ public class Actor extends DomainEntity {
 
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
 		return this.name;
 	}
 
-	public void setName( String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getSurname() {
 		return this.surname;
 	}
 
-	public void setSurname( String surname) {
+	public void setSurname(String surname) {
 		this.surname = surname;
 	}
 
 	@NotBlank
 	@Column(unique = true)
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getNickname() {
 		return this.nickname;
 	}
 
-	public void setNickname( String nickname) {
+	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
 	@NotBlank
 	@Email
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getEmail() {
 		return this.email;
 	}
 
-	public void setEmail( String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
 	@Pattern(regexp = "(^\\+?\\d+)?")
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getPhone() {
 		return this.phone;
 	}
 
-	public void setPhone( String phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
@@ -105,10 +112,11 @@ public class Actor extends DomainEntity {
 		return this.confirmMoment;
 	}
 
-	public void setConfirmMoment( Date confirmMoment) {
+	public void setConfirmMoment(Date confirmMoment) {
 		this.confirmMoment = confirmMoment;
 	}
 
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getAvatar() {
 		return this.avatar;
 	}

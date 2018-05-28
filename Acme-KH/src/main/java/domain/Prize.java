@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
@@ -46,20 +47,20 @@ public class Prize extends DomainEntity {
 		return this.materials;
 	}
 
-	public void setMaterials( Materials materials) {
+	public void setMaterials(Materials materials) {
 		this.materials = materials;
 	}
 	/**
 	 * 
 	 * Por si algun empleado quiere mandar premios a los jugadores o eventos... (en batallas poner una descripción tipo en plan, has ganado contra: X y por tanto recibes: Y)
 	 */
-	@SafeHtml()
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	@NotBlank
 	public String getDescription() {
 		return this.description;
 	}
 
-	public void setDescription( String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 	/**
@@ -73,7 +74,7 @@ public class Prize extends DomainEntity {
 		return this.date;
 	}
 
-	public void setDate( Date date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -82,7 +83,7 @@ public class Prize extends DomainEntity {
 		return this.keybladeWielder;
 	}
 
-	public void setKeybladeWielder( KeybladeWielder keybladeWielder) {
+	public void setKeybladeWielder(KeybladeWielder keybladeWielder) {
 		this.keybladeWielder = keybladeWielder;
 	}
 

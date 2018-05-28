@@ -9,6 +9,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 /**
  * 
@@ -36,11 +38,12 @@ public class Battle extends DomainEntity {
 	 * 
 	 * @return Indicará un poco las tropas que se enviaron a la batalla y las que se perdieron
 	 */
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getBalance() {
 		return this.balance;
 	}
 
-	public void setBalance( String balance) {
+	public void setBalance(String balance) {
 		this.balance = balance;
 	}
 
@@ -54,7 +57,7 @@ public class Battle extends DomainEntity {
 		return this.luckAttacker;
 	}
 
-	public void setLuckAttacker( Double luckAttacker) {
+	public void setLuckAttacker(Double luckAttacker) {
 		this.luckAttacker = luckAttacker;
 	}
 	/**
@@ -67,7 +70,7 @@ public class Battle extends DomainEntity {
 		return this.luckDeffender;
 	}
 
-	public void setLuckDeffender( Double luckDeffender) {
+	public void setLuckDeffender(Double luckDeffender) {
 		this.luckDeffender = luckDeffender;
 	}
 	/**
@@ -80,7 +83,7 @@ public class Battle extends DomainEntity {
 		return this.isWon;
 	}
 
-	public void setIsWon( Boolean isWon) {
+	public void setIsWon(Boolean isWon) {
 		this.isWon = isWon;
 	}
 	/**
@@ -93,7 +96,7 @@ public class Battle extends DomainEntity {
 		return this.attackerOwner;
 	}
 
-	public void setAttackerOwner( Boolean attackerOwner) {
+	public void setAttackerOwner(Boolean attackerOwner) {
 		this.attackerOwner = attackerOwner;
 	}
 	/**
@@ -105,7 +108,7 @@ public class Battle extends DomainEntity {
 		return this.wonOrLostMaterials;
 	}
 
-	public void setWonOrLostMaterials( Materials wonOrLostMaterials) {
+	public void setWonOrLostMaterials(Materials wonOrLostMaterials) {
 		this.wonOrLostMaterials = wonOrLostMaterials;
 	}
 	/**
@@ -118,7 +121,7 @@ public class Battle extends DomainEntity {
 		return this.attacker;
 	}
 
-	public void setAttacker( KeybladeWielder attacker) {
+	public void setAttacker(KeybladeWielder attacker) {
 		this.attacker = attacker;
 	}
 	/**
@@ -131,7 +134,7 @@ public class Battle extends DomainEntity {
 		return this.deffender;
 	}
 
-	public void setDeffender( KeybladeWielder deffender) {
+	public void setDeffender(KeybladeWielder deffender) {
 		this.deffender = deffender;
 	}
 
