@@ -11,10 +11,14 @@
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="actor" />
-	<form:hidden path="isValid" />
 	
-	<acme:textbox code="banDate" path="banDate"/>
+	<!--  -->
+	<form:hidden path="actor" />
+	
+	<!-- This parameters will be set default when save, there are here for validator. -->
+	<form:hidden path="isValid" />
+	<form:hidden path="banDate" />
+	
 	<acme:textbox  code="duration" path="duration"/>
 	<acme:textbox code="reason" path="reason"/>
 	<br/>

@@ -1,8 +1,8 @@
 
 package services;
 
-import java.sql.Date;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +39,7 @@ public class BannedService {
 		banned.setBanDate(new Date(System.currentTimeMillis() - 1000));
 
 		Assert.isTrue(this.findBansByActor(banned.getActor().getId()) == 0, "error.message.alreadyBanned");
+		Assert.isTrue(!banned.getActor().getUserAccount().isAuthority("ADMIN"), "error.message.ban.admin");
 
 		return banned;
 	}
@@ -73,6 +74,7 @@ public class BannedService {
 		UserAccount ua;
 
 		banned.setIsValid(true);
+		banned.setBanDate(new Date(System.currentTimeMillis() - 1000));
 		saved = this.bannedRepository.save(banned);
 		actor = this.actorService.findOne(saved.getActor().getId());
 		ua = actor.getUserAccount();

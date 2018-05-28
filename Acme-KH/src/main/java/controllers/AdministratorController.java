@@ -154,7 +154,7 @@ public class AdministratorController extends AbstractController {
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndViewForm(banned);
+			result = this.createEditModelAndViewForm(banned, "error.message.commit");
 		else
 			try {
 				banned = this.bannedService.save(banned);
