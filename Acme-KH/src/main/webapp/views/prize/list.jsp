@@ -44,6 +44,7 @@ function openChest(id){
 
 </script>   
 
+<acme:pagination page="${page}" pageNum="${pageNum}" requestURI="${requestURI}"/>
 <div id="container">
 <div class="row row-width-prize prize-container">
 <jstl:forEach items="${prizes}" var="row">

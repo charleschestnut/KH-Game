@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -127,6 +129,18 @@ public class PrizeService {
 			this.PrizeRepository.delete(p.getId());
 
 		return this.PrizeRepository.getPrizeFromKeybladeWielder(playerId);
+
+	}
+	
+	public Page<Prize> getMyPrizesPageable(Pageable page) {
+		Integer playerId = this.actorService.findByPrincipal().getId();
+
+		Collection<Prize> trash = this.PrizeRepository.getTrashPrizeFromKeybladeWielder(playerId);
+
+		for (Prize p : trash)
+			this.PrizeRepository.delete(p.getId());
+
+		return this.PrizeRepository.getPrizeFromKeybladeWielderPageable(playerId, page);
 
 	}
 

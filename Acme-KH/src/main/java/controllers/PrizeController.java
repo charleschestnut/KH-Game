@@ -4,6 +4,9 @@ package controllers;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.PrizeService;
+import domain.Item;
 import domain.Prize;
 
 @Controller
@@ -22,12 +26,20 @@ public class PrizeController extends AbstractController {
 
 
 	@RequestMapping("/list")
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam(required=false, defaultValue="0") Integer page) {
 		ModelAndView res;
-		Collection<Prize> prizes = this.prizeService.getMyPrizes();
+		Page<Prize> prizes;
+		Pageable pageable;
+
+		pageable = new PageRequest(page, 5);
+		
+		prizes = this.prizeService.getMyPrizesPageable(pageable);
 
 		res = new ModelAndView("prize/list");
-		res.addObject("prizes", prizes);
+		res.addObject("prizes", prizes.getContent());
+		res.addObject("page", page);
+		res.addObject("requestURI", "prize/list.do?page=");
+		res.addObject("pageNum", prizes.getTotalPages());
 
 		return res;
 	}
@@ -51,10 +63,14 @@ public class PrizeController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/openAJAX", method = RequestMethod.GET)
-	public ModelAndView openAJAX(@RequestParam Integer prizeId) {
+	public ModelAndView openAJAX(@RequestParam Integer prizeId,
+			@RequestParam(required=false, defaultValue="0") Integer page) {
 		ModelAndView res;
 		Prize prize;
-		Collection<Prize> prizes;
+		Page<Prize> prizes;
+		Pageable pageable;
+
+		pageable = new PageRequest(page, 5);
 
 		prize = this.prizeService.findOne(prizeId);
 
@@ -68,8 +84,11 @@ public class PrizeController extends AbstractController {
 				res = new ModelAndView("prize/prizes");
 			}
 
-		prizes = this.prizeService.getMyPrizes();
-		res.addObject("prizes", prizes);
+		prizes = this.prizeService.getMyPrizesPageable(pageable);
+		res.addObject("prizes", prizes.getContent());
+		res.addObject("page", page);
+		res.addObject("requestURI", "prize/list.do?page=");
+		res.addObject("pageNum", prizes.getTotalPages());
 
 		return res;
 	}

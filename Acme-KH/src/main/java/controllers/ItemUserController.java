@@ -2,6 +2,9 @@ package controllers;
 
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,16 +32,22 @@ public class ItemUserController extends AbstractController{
 	
 	// Listar los objetos que se pueden comprar en la tienda
 	@RequestMapping(value = "/shopItemsList", method = RequestMethod.GET)
-	public ModelAndView shopItemsList() {
+	public ModelAndView shopItemsList(@RequestParam(required=false, defaultValue="0") Integer page) {
 		ModelAndView result;
-		Collection<Item> items;
+		Page<Item> items;
+		Pageable pageable;
 
-		items = this.itemService.shopItems();
+		pageable = new PageRequest(page, 5);
+
+		items = this.itemService.shopItemsPageable(pageable);
 		KeybladeWielder player = (KeybladeWielder) this.actorService.findByPrincipal();
 		Integer playerMunny = player.getMaterials().getMunny();
 
 		result = new ModelAndView("item/player/shopItemsList");
-		result.addObject("items", items);
+		result.addObject("items", items.getContent());
+		result.addObject("page", page);
+		result.addObject("requestURI", "item/player/shopItemsList.do?page=");
+		result.addObject("pageNum", items.getTotalPages());
 		result.addObject("playerMunny", playerMunny);
 		//result.addObject("requestURI", "item/player/shopItemsList.do");
 		return result;

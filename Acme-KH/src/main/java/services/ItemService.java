@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -88,6 +90,10 @@ public class ItemService {
 	// Items de la tienda
 	public Collection<Item> shopItems() {
 		return this.itemRepository.shopItems();
+	}
+	
+	public Page<Item> shopItemsPageable(Pageable p) {
+		return this.itemRepository.shopItemsPageable(p);
 	}
 
 	// Comprar un item de la tienda
