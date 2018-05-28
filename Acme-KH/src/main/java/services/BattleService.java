@@ -507,8 +507,10 @@ public class BattleService {
 		//--------------------------------------------------
 		this.save(battleDefen);
 		System.out.println("Guardo los battle");
-
+		//Activamos un escudo para el defensor
+		this.shieldService.saveForAttack(defensor);
 		return battleSaved;
+
 	}
 	private void enviaMasTropas(final BattleForm bat) {
 		final KeybladeWielder atacante = (KeybladeWielder) this.actorService.findByPrincipal();

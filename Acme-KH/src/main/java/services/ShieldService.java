@@ -55,6 +55,23 @@ public class ShieldService {
 		return saved;
 	}
 
+	public Shield saveForAttack(KeybladeWielder keyblader) {
+		Assert.notNull(keyblader);
+		//Assert.isTrue(this.itemService.myItems(this.actorService.findByPrincipal().getId()).contains(item));
+		final Shield res = this.create();
+		res.setName("Traversed Town Area");
+		res.setDate(new Date(System.currentTimeMillis() - 1000));
+		res.setDuration(60);
+		Shield saved;
+
+		//KeybladeWielder keyBlader = (KeybladeWielder) this.actorService.findByPrincipal();
+
+		saved = this.ShieldRepository.save(res);
+		keyblader.setShield(saved);
+		this.actorService.save(keyblader);
+		return saved;
+	}
+
 	public Shield findOne(final int ShieldId) {
 		Assert.notNull(ShieldId);
 
