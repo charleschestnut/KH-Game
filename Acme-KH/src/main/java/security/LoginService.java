@@ -10,6 +10,9 @@
 
 package security;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -21,6 +24,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import services.ActorService;
+import services.BannedService;
+import domain.Actor;
+import domain.Banned;
+
 @Service
 @Transactional
 public class LoginService implements UserDetailsService {
@@ -29,6 +37,12 @@ public class LoginService implements UserDetailsService {
 
 	@Autowired
 	UserAccountRepository	userRepository;
+
+	@Autowired
+	BannedService			bannedService;
+
+	@Autowired
+	ActorService			actorService;
 
 
 	// Business methods -------------------------------------------------------
@@ -41,13 +55,22 @@ public class LoginService implements UserDetailsService {
 
 		result = this.userRepository.findByUsername(username);
 		Assert.notNull(result);
+		Actor actor = this.actorService.findByUserAccountUsername(result.getUsername());
+		Banned banned = this.bannedService.findToUnbanByActor(actor.getId());
+
+		if (banned != null) {
+			Date releaseDate = this.sumarRestarHorasFecha(banned.getBanDate(), banned.getDuration() * 24);
+
+			if (releaseDate.before(new Date()))
+				this.bannedService.unban(banned);
+		}
+
 		// WARNING: The following sentences prevent lazy initialisation problems!
 		Assert.notNull(result.getAuthorities());
 		result.getAuthorities().size();
 
 		return result;
 	}
-
 	public static UserAccount getPrincipal() {
 		UserAccount result;
 		SecurityContext context;
@@ -72,6 +95,15 @@ public class LoginService implements UserDetailsService {
 		Assert.isTrue(result.getId() != 0);
 
 		return result;
+	}
+
+	private Date sumarRestarHorasFecha(Date fecha, int horas) {
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha); // Configuramos la fecha que se recibe
+		calendar.add(Calendar.HOUR, horas);  // numero de horas a añadir, o restar en caso de horas<0
+		return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
+
 	}
 
 }
