@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -125,6 +126,9 @@ public class AdministratorController extends AbstractController {
 
 		try {
 			actor = this.actorService.findByUserAccountUsername(username);
+			Assert.isTrue(!actor.getUserAccount().isAuthority("ADMIN"), "error.message.ban.admin");
+			Assert.isTrue(!actor.getUserAccount().isAuthority("GM"), "error.message.ban.admin");
+			Assert.isTrue(!actor.getUserAccount().isAuthority("MANAGER"), "error.message.ban.admin");
 			banned = this.bannedService.create(actor);
 		} catch (Throwable oops) {
 			result = new ModelAndView("redirect:/administrator/banned/list.do");

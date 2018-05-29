@@ -36,7 +36,7 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 @Table(uniqueConstraints = {
 	@UniqueConstraint(columnNames = "worldName")
 }, indexes = {
-	@Index(columnList = "materials, worldName, worldCoordinates"), @Index(columnList = "userAccount_id")
+	@Index(columnList = "worldName, x, y, z"), @Index(columnList = "userAccount_id")
 })
 public class KeybladeWielder extends Actor {
 
