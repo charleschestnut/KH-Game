@@ -1,11 +1,7 @@
+
 package controllers;
 
-import java.util.Collection;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,32 +16,32 @@ import org.springframework.web.servlet.ModelAndView;
 import security.Authority;
 import services.ActorService;
 import services.ReportService;
-import domain.Actor;
 import domain.Report;
 import domain.ReportStatus;
 
 @Controller()
 @RequestMapping("/report")
 public class ReportController extends AbstractController {
-	
+
 	@Autowired
 	private ReportService	reportService;
-	
+
 	@Autowired
-	private ActorService		actorService;
+	private ActorService	actorService;
+
 
 	// Listing ----------------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required=false, defaultValue="0") Integer page) {
+	public ModelAndView list(@RequestParam(required = false, defaultValue = "0") Integer page) {
 		ModelAndView result;
 		Page<Report> reports;
 		Pageable pageable;
-		
+
 		pageable = new PageRequest(page, 5);
-		reports = reportService.findAll(pageable);
+		reports = this.reportService.findAll(pageable);
 		result = new ModelAndView("report/list");
-		
+
 		result.addObject("reports", reports.getContent());
 		result.addObject("user", "all");
 		result.addObject("page", page);
@@ -54,41 +50,39 @@ public class ReportController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/listByStatus", method = RequestMethod.GET)
-	public ModelAndView listByStatus(@RequestParam(required=false, defaultValue="0") Integer page,
-			@RequestParam (required = false) String status) {
+	public ModelAndView listByStatus(@RequestParam(required = false, defaultValue = "0") Integer page, @RequestParam(required = false) String status) {
 		ModelAndView result;
 		Page<Report> reports;
 		Pageable pageable;
-		
+
 		pageable = new PageRequest(page, 5);
 
-		if(!status.equals("all")){
-			reports = reportService.getReportsByStatus(ReportStatus.valueOf(status), pageable);
-		}else{
-			reports = reportService.findAll(pageable);
-		}
-		
+		if (!status.equals("all"))
+			reports = this.reportService.getReportsByStatus(ReportStatus.valueOf(status), pageable);
+		else
+			reports = this.reportService.findAll(pageable);
+
 		result = new ModelAndView("report/table");
 		result.addObject("reports", reports);
 		result.addObject("user", "all");
-		result.addObject("requestURI", "report/listByStatus.do?status="+ status + "&page=");
+		result.addObject("requestURI", "report/listByStatus.do?status=" + status + "&page=");
 		result.addObject("page", page);
 		result.addObject("pageNum", reports.getTotalPages());
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/player/list", method = RequestMethod.GET)
-	public ModelAndView playerList(@RequestParam(required=false, defaultValue="0") Integer page) {
+	public ModelAndView playerList(@RequestParam(required = false, defaultValue = "0") Integer page) {
 		ModelAndView result;
 		Page<Report> reports;
 		Pageable pageable;
-		
+
 		pageable = new PageRequest(page, 5);
 
-		reports = reportService.findReportsByPlayer(actorService.findByPrincipal().getId(), pageable);
+		reports = this.reportService.findReportsByPlayer(this.actorService.findByPrincipal().getId(), pageable);
 		result = new ModelAndView("report/list");
 		result.addObject("requestURI", "report/player/list.do?page=");
 		result.addObject("reports", reports);
@@ -98,24 +92,22 @@ public class ReportController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/player/listByStatus", method = RequestMethod.GET)
-	public ModelAndView playerListByStatus(@RequestParam (required = false) String status,
-			@RequestParam(required=false, defaultValue="0") Integer page) {
+	public ModelAndView playerListByStatus(@RequestParam(required = false) String status, @RequestParam(required = false, defaultValue = "0") Integer page) {
 		ModelAndView result;
 		Page<Report> reports;
 		Pageable pageable;
-		
+
 		pageable = new PageRequest(page, 5);
 
-		if(!status.equals("all")){
-			reports = reportService.getReportsByStatusAndPlayer(ReportStatus.valueOf(status), actorService.findByPrincipal().getId(), pageable);
-		}else{
-			reports = reportService.findReportsByPlayer(actorService.findByPrincipal().getId(),pageable);
-		}
-		
+		if (!status.equals("all"))
+			reports = this.reportService.getReportsByStatusAndPlayer(ReportStatus.valueOf(status), this.actorService.findByPrincipal().getId(), pageable);
+		else
+			reports = this.reportService.findReportsByPlayer(this.actorService.findByPrincipal().getId(), pageable);
+
 		result = new ModelAndView("report/table");
-		result.addObject("requestURI", "report/player/listByStatus.do?status="+ status + "&page=");
+		result.addObject("requestURI", "report/player/listByStatus.do?status=" + status + "&page=");
 		result.addObject("reports", reports);
 		result.addObject("user", "player");
 		result.addObject("page", page);
@@ -123,28 +115,26 @@ public class ReportController extends AbstractController {
 
 		return result;
 	}
-	
+
 	// Display ----------------------------------------------------------------
 	@RequestMapping(value = "display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam(required = false) Integer reportId) {
 		ModelAndView result;
 		Report report;
 		String auth;
-		
-		auth = actorService.getPrincipalAuthority();
+
+		auth = this.actorService.getPrincipalAuthority();
 		Assert.isTrue(auth.equals("PLAYER") || auth.equals("GM") || auth.equals("ADMIN"));
 
-		report = reportService.findOne(reportId);
-		
-		if(auth.equals("PLAYER")){
-			Assert.isTrue(report.getKeybladeWielder().equals(actorService.findByPrincipal()),"error.message.owner");
-		}
-		
+		report = this.reportService.findOne(reportId);
+
+		if (auth.equals("PLAYER"))
+			Assert.isTrue(report.getKeybladeWielder().equals(this.actorService.findByPrincipal()), "error.message.owner");
+
 		result = new ModelAndView("report/display");
-		
-		
-		result.addObject("report",report);
-		
+
+		result.addObject("report", report);
+
 		return result;
 	}
 
@@ -154,10 +144,10 @@ public class ReportController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		Report report;
-		Assert.isTrue(actorService.getPrincipalAuthority().equals(Authority.PLAYER));
+		Assert.isTrue(this.actorService.getPrincipalAuthority().equals(Authority.PLAYER));
 
-		report = reportService.create();
-		result = createEditModelAndView(report);
+		report = this.reportService.create();
+		result = this.createEditModelAndView(report);
 
 		return result;
 	}
@@ -169,9 +159,9 @@ public class ReportController extends AbstractController {
 		ModelAndView result;
 		Report report;
 
-		report = reportService.findOne(reportId);
+		report = this.reportService.findOne(reportId);
 		Assert.notNull(report);
-		result = createEditModelAndView(report);
+		result = this.createEditModelAndView(report);
 
 		return result;
 	}
@@ -181,31 +171,29 @@ public class ReportController extends AbstractController {
 		ModelAndView result = null;
 
 		this.reportService.reconstruct(report, binding);
-		
-		if (binding.hasErrors()) {
-			result = createEditModelAndView(report);
-		} else {
+
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(report);
+		else
 			try {
-				
-				reportService.save(report);
-				if(actorService.getPrincipalAuthority().equals(Authority.PLAYER)){
+
+				this.reportService.save(report);
+				if (this.actorService.getPrincipalAuthority().equals(Authority.PLAYER)) {
 					result = new ModelAndView("redirect:player/list.do");
 					result.addObject("requestURI", "player/list.do");
-				}else if(actorService.getPrincipalAuthority().equals(Authority.GM)){
+				} else if (this.actorService.getPrincipalAuthority().equals(Authority.GM)) {
 					result = new ModelAndView("redirect:gm/list.do");
 					result.addObject("requestURI", "gm/list.do");
 				}
-				
+
 			} catch (Throwable oops) {
 				String message = "error.commit";
-				
-				if(oops.getMessage().contains("error.message") || oops.getMessage().contains("org.hibernate.validator")){
+
+				if (oops.getMessage().contains("error.message") || oops.getMessage().contains("org.hibernate.validator"))
 					message = oops.getMessage();
-				}
-				
-				result = createEditModelAndView(report, message);
+
+				result = this.createEditModelAndView(report, message);
 			}
-		}
 
 		return result;
 	}
@@ -215,27 +203,26 @@ public class ReportController extends AbstractController {
 		ModelAndView result;
 
 		try {
-			reportService.delete(report);
+			this.reportService.delete(report);
 			result = new ModelAndView("redirect:list.do");
 		} catch (Throwable oops) {
-			result = createEditModelAndView(report, "bulletin.commit.error");
+			result = this.createEditModelAndView(report, "bulletin.commit.error");
 		}
 
 		return result;
 	}
-	
+
 	// Ancillary methods ------------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(Report report) {
 		ModelAndView result;
 
-		result = createEditModelAndView(report, null);
+		result = this.createEditModelAndView(report, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(Report report,
-			String message) {
+	protected ModelAndView createEditModelAndView(Report report, String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("report/edit");

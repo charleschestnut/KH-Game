@@ -1,8 +1,6 @@
 
 package controllers;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.PrizeService;
-import domain.Item;
 import domain.Prize;
 
 @Controller
@@ -26,13 +23,13 @@ public class PrizeController extends AbstractController {
 
 
 	@RequestMapping("/list")
-	public ModelAndView list(@RequestParam(required=false, defaultValue="0") Integer page) {
+	public ModelAndView list(@RequestParam(required = false, defaultValue = "0") Integer page) {
 		ModelAndView res;
 		Page<Prize> prizes;
 		Pageable pageable;
 
 		pageable = new PageRequest(page, 5);
-		
+
 		prizes = this.prizeService.getMyPrizesPageable(pageable);
 
 		res = new ModelAndView("prize/list");
@@ -63,8 +60,7 @@ public class PrizeController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/openAJAX", method = RequestMethod.GET)
-	public ModelAndView openAJAX(@RequestParam Integer prizeId,
-			@RequestParam(required=false, defaultValue="0") Integer page) {
+	public ModelAndView openAJAX(@RequestParam Integer prizeId, @RequestParam(required = false, defaultValue = "0") Integer page) {
 		ModelAndView res;
 		Prize prize;
 		Page<Prize> prizes;

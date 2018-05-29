@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -118,6 +120,10 @@ public class BannedService {
 
 	public Collection<Actor> findAllBannedUsers() {
 		return this.bannedRepository.findAllBannedUsers();
+	}
+
+	public Page<Actor> findAllBannedUsers(Pageable pageable) {
+		return this.bannedRepository.findAllBannedUsers(pageable);
 	}
 
 }

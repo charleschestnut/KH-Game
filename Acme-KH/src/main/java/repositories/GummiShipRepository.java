@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import domain.GummiShip;
-import domain.Troop;
 
 public interface GummiShipRepository extends JpaRepository<GummiShip, Integer> {
 
@@ -22,10 +21,10 @@ public interface GummiShipRepository extends JpaRepository<GummiShip, Integer> {
 
 	@Query("select g from GummiShip g where g.recruiter.id=?1 and g.recruiterRequiredLvl<=?2")
 	Collection<GummiShip> getGummiShipsAvailableFromRecruiterAndLvl(Integer recruiterId, Integer lvl);
-	
+
 	@Query("select t from GummiShip t where t.name=?1")
 	GummiShip getGummiShipByName(String name);
-	
+
 	@Query("select t.name from GummiShip t")
 	Collection<String> getGummiShipsNames();
 

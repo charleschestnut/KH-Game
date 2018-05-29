@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
-import services.KeybladeWielderService;
-import services.OrganizationService;
 import domain.Actor;
 import domain.KeybladeWielder;
 import form.ActorForm;
@@ -32,13 +30,7 @@ import form.ActorForm;
 public class KeybladeWielderController extends AbstractController {
 
 	@Autowired
-	private ActorService			actorService;
-
-	@Autowired
-	private KeybladeWielderService	keybladeWielderService;
-
-	@Autowired
-	private OrganizationService		organizationService;
+	private ActorService	actorService;
 
 
 	// Actor ---------------------------------------------------------------	

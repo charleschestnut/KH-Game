@@ -24,7 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.BuildingService;
 import services.BuiltService;
-import services.KeybladeWielderService;
 import services.RecruitedService;
 import services.RecruiterService;
 import services.TroopService;
@@ -39,26 +38,23 @@ import domain.Troop;
 public class TroopController extends AbstractController {
 
 	// SERVICES -----------------------------------------------
-	
+
 	@Autowired
-	private TroopService troopService;
-	
+	private TroopService		troopService;
+
 	@Autowired
-	private RecruiterService recruiterService;
-	
+	private RecruiterService	recruiterService;
+
 	@Autowired
-	private BuildingService buildingService;
-	
+	private BuildingService		buildingService;
+
 	@Autowired
-	private KeybladeWielderService keybladeWielderService;
-	
+	private RecruitedService	recruitedService;
+
 	@Autowired
-	private RecruitedService recruitedService;
-	
-	@Autowired
-	private BuiltService builtService;
-	
-	
+	private BuiltService		builtService;
+
+
 	// Constructors -----------------------------------------------------------
 
 	public TroopController() {
@@ -71,59 +67,60 @@ public class TroopController extends AbstractController {
 	public ModelAndView action1() {
 		ModelAndView result;
 		Collection<Troop> all = this.troopService.findAll();
-		
+
 		result = new ModelAndView("troop/contentManager/list");
-		result.addObject("troops",all);
+		result.addObject("troops", all);
 		return result;
 	}
 
 	// Action-2 ---------------------------------------------------------------		
 	@RequestMapping("/edit")
-	public ModelAndView create(String recruiterId, @RequestParam (required=false) String troopId) {
+	public ModelAndView create(String recruiterId, @RequestParam(required = false) String troopId) {
 		ModelAndView result;
 		Troop t;
 		int rId = Integer.parseInt(recruiterId);
-		
-		if(troopId == null){
+
+		if (troopId == null) {
 			Recruiter r = (Recruiter) this.buildingService.findOne(rId);
 			t = this.troopService.create(r);
-			
-		}else{
+
+		} else {
 			int tId = Integer.parseInt(troopId);
 			t = this.troopService.findOne(tId);
-			
+
 		}
 		result = new ModelAndView("troop/contentManager/edit");
 		result.addObject("troop", t);
-		
+
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Troop troop, BindingResult binding/*,
-			@RequestParam (required=true) int troopId*/) {
+	public ModelAndView save(@Valid Troop troop, BindingResult binding/*
+																	 * ,
+																	 * 
+																	 * @RequestParam (required=true) int troopId
+																	 */) {
 		ModelAndView result;
 		Troop trp = this.troopService.reconstruct(troop, binding);
-		
-		if(binding.hasErrors()){
-			result = createEditModelAndView(troop);
-		}else{
-			try{
-				
-				
+
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(troop);
+		else
+			try {
+
 				this.recruiterService.addTroop(trp.getRecruiter(), trp);
-				
+
 				result = new ModelAndView("redirect:/troop/contentManager/list.do");
-			}catch(Throwable oops){
-				result = createEditModelAndView(troop, "troop.commit.error");
+			} catch (Throwable oops) {
+				result = this.createEditModelAndView(troop, "troop.commit.error");
 			}
-		}
 		return result;
 	}
-	
+
 	private ModelAndView createEditModelAndView(Troop troop) {
-		
-		return createEditModelAndView(troop, null);
+
+		return this.createEditModelAndView(troop, null);
 	}
 
 	private ModelAndView createEditModelAndView(Troop troop, String msg) {
@@ -134,43 +131,39 @@ public class TroopController extends AbstractController {
 		result.addObject("message", msg);
 		return result;
 	}
-	
-	
+
 	@RequestMapping("/delete")
 	public ModelAndView delete(String troopId) {
 		ModelAndView result;
 		Troop t = this.troopService.findOne(Integer.parseInt(troopId));
-		
-		if(t.getRecruiter().getIsFinal()){
+
+		if (t.getRecruiter().getIsFinal()) {
 			Collection<Recruited> recs = this.recruitedService.findAllRecruitedOfTroop(t.getId());
 			Materials toAdd = new Materials();
-			toAdd.setMunny((int) (t.getCost().getMunny()*1.1));
-			toAdd.setMytrhil((int) (t.getCost().getMytrhil()*1.1));
-			toAdd.setGummiCoal((int) (t.getCost().getGummiCoal()*1.1));
-			
-			for(Recruited r: recs){
+			toAdd.setMunny((int) (t.getCost().getMunny() * 1.1));
+			toAdd.setMytrhil((int) (t.getCost().getMytrhil() * 1.1));
+			toAdd.setGummiCoal((int) (t.getCost().getGummiCoal() * 1.1));
+
+			for (Recruited r : recs) {
 				r.getStorageBuilding().getKeybladeWielder().getMaterials().add(toAdd);
 				r.getStorageBuilding().setTroop(null);
 				this.builtService.saveForTroopDeleting(r.getStorageBuilding());
 				this.recruitedService.delete(r);
 			}
-			
+
 			Collection<Built> recsBults = this.builtService.findAllBuiltWithTroop(t.getId());
-			for(Built b: recsBults){
+			for (Built b : recsBults) {
 				b.setTroop(null);
 				this.builtService.saveForTroopDeleting(b);
 			}
-			
+
 		}
 		this.troopService.delete(t);
-		
+
 		Collection<Troop> all = this.troopService.findAll();
 		result = new ModelAndView("redirect:/troop/contentManager/list.do");
-		result.addObject("troops",all);
+		result.addObject("troops", all);
 		return result;
 	}
-	
 
-	
-	
 }

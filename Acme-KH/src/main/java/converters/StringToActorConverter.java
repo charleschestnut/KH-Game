@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.ActorRepository;
-import repositories.AdministratorRepository;
-
 import domain.Actor;
 
 @Component
@@ -27,7 +25,7 @@ public class StringToActorConverter implements Converter<String, Actor> {
 		try {
 			id = Integer.valueOf(text);
 			result = this.repository.findOne(id);
-		} catch ( Throwable oops) {
+		} catch (Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
 

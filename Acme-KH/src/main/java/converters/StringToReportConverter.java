@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.ReportRepository;
-import domain.LegalText;
 import domain.Report;
 
 @Component
@@ -26,7 +25,7 @@ public class StringToReportConverter implements Converter<String, Report> {
 		try {
 			id = Integer.valueOf(text);
 			result = this.repository.findOne(id);
-		} catch ( Throwable oops) {
+		} catch (Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
 

@@ -22,8 +22,7 @@ public class ShieldService {
 
 	@Autowired
 	private ShieldRepository	ShieldRepository;
-	@Autowired
-	private ItemService			itemService;
+
 	@Autowired
 	private ActorService		actorService;
 

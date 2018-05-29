@@ -30,7 +30,6 @@ import org.springframework.web.servlet.ModelAndView;
 import security.Authority;
 import security.LoginService;
 import services.ActorService;
-import services.BuiltService;
 import services.ContentManagerService;
 import services.FactionService;
 import services.GameMasterService;
@@ -60,16 +59,13 @@ public class ProfileController extends AbstractController {
 	private OrganizationService		organizationService;
 
 	@Autowired
-	private BuiltService			builtService;
-
-	@Autowired
 	private FactionService			factionService;
 
 
 	// Actor ---------------------------------------------------------------	
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required=false, defaultValue="0") Integer page) {
+	public ModelAndView list(@RequestParam(required = false, defaultValue = "0") Integer page) {
 		ModelAndView result;
 		Page<KeybladeWielder> players;
 		Pageable pageable;

@@ -24,9 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.ChattyService;
-import services.KeybladeWielderService;
 import services.OrganizationService;
-
 import domain.Chatty;
 import domain.KeybladeWielder;
 import domain.Organization;
@@ -36,17 +34,16 @@ import domain.Organization;
 public class ChattyController extends AbstractController {
 
 	// SERVICIOS PARA CONTROLADOR ---------------------------------------------
-		@Autowired
-		private ChattyService chattyService;
-		
-		@Autowired
-		private ActorService actorService;
-		
-		@Autowired
-		private OrganizationService organizationService;
-		
-		
-		
+	@Autowired
+	private ChattyService		chattyService;
+
+	@Autowired
+	private ActorService		actorService;
+
+	@Autowired
+	private OrganizationService	organizationService;
+
+
 	// Constructors -----------------------------------------------------------
 
 	public ChattyController() {
@@ -60,7 +57,7 @@ public class ChattyController extends AbstractController {
 		ModelAndView result;
 		int orgId = Integer.parseInt(organizationId);
 		Collection<Chatty> all = this.chattyService.getChattyFromAnOrganization(orgId);
-		
+
 		result = new ModelAndView("organization/chatty/list");
 		result.addObject("chattys", all);
 		result.addObject("organizationId", orgId);
@@ -74,41 +71,40 @@ public class ChattyController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
-		
-		if(!this.organizationService.keybladeWielderHasOrganization(actual.getId()))
+
+		if (!this.organizationService.keybladeWielderHasOrganization(actual.getId()))
 			return new ModelAndView("organization/list");
-		
+
 		Chatty c = this.chattyService.create();
 		result = new ModelAndView("organization/chatty/edit");
 		result.addObject("chatty", c);
 		result.addObject("organizationId", this.organizationService.findOrganizationByPlayer(actual.getId()).getId());
-		
+
 		return result;
 	}
-		
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Chatty chatty, BindingResult binding) {
 		ModelAndView result;
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 		Organization org = this.organizationService.findOrganizationByPlayer(actual.getId());
-		if(binding.hasErrors()){
-			result = createEditModelAndView(chatty);
-		}else{
-			try{				
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(chatty);
+		else
+			try {
 				chatty = this.chattyService.save(chatty);
-				result = new ModelAndView("redirect:/organization/chatty/list.do?organizationId="+org.getId());
+				result = new ModelAndView("redirect:/organization/chatty/list.do?organizationId=" + org.getId());
 				result.addObject("organizationId", this.organizationService.findOrganizationByPlayer(actual.getId()));
-				
-			}catch(Throwable oops){
-				result = createEditModelAndView(chatty, "organization.commit.error");
+
+			} catch (Throwable oops) {
+				result = this.createEditModelAndView(chatty, "organization.commit.error");
 			}
-		}
 		return result;
 	}
-	
+
 	private ModelAndView createEditModelAndView(Chatty chatty) {
-		
-		return createEditModelAndView(chatty, null);
+
+		return this.createEditModelAndView(chatty, null);
 	}
 
 	private ModelAndView createEditModelAndView(Chatty chatty, String msg) {

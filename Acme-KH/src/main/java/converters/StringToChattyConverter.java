@@ -6,11 +6,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import repositories.ActorRepository;
-import repositories.AdministratorRepository;
 import repositories.ChattyRepository;
-
-import domain.Actor;
 import domain.Chatty;
 
 @Component
@@ -29,7 +25,7 @@ public class StringToChattyConverter implements Converter<String, Chatty> {
 		try {
 			id = Integer.valueOf(text);
 			result = this.repository.findOne(id);
-		} catch ( Throwable oops) {
+		} catch (Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
 

@@ -10,12 +10,14 @@
 
 package controllers;
 
-import java.util.Collection;
 import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -98,14 +100,19 @@ public class AdministratorController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/banned/list", method = RequestMethod.GET)
-	public ModelAndView bannedList() {
+	public ModelAndView bannedList(@RequestParam(required = false, defaultValue = "0") Integer page) {
 		ModelAndView result;
-		Collection<Actor> bannedUsers;
+		Page<Actor> bannedUsers;
+		Pageable pageable;
 
-		bannedUsers = this.bannedService.findAllBannedUsers();
-
+		pageable = new PageRequest(page, 5);
+		bannedUsers = this.bannedService.findAllBannedUsers(pageable);
 		result = new ModelAndView("administrator/banned/list");
-		result.addObject("users", bannedUsers);
+
+		result.addObject("users", bannedUsers.getContent());
+		result.addObject("page", page);
+		result.addObject("requestURI", "administrator/banned/list.do?page=");
+		result.addObject("pageNum", bannedUsers.getTotalPages());
 
 		return result;
 	}

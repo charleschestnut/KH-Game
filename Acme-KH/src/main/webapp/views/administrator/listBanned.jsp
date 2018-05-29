@@ -9,6 +9,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<acme:pagination page="${page}" pageNum="${pageNum}" requestURI="${requestURI}"/>
+
 <display:table pagesize="5" class="displaytag" 
 	name="users" requestURI="administrator/banned/list.do" id="row">
 
@@ -18,6 +20,8 @@
 	<spring:message code="master.page.actions" var="actionsH" />
 	<display:column title="${actionsH}">
 	<a href="profile/actor/display.do?username=${row.userAccount.username}"><spring:message code="master.page.view"/></a>
+	|
+	<a href="administrator/banned/unban.do?username=${row.userAccount.username}"><spring:message code="unban"/></a>
 	</display:column>
 </display:table>
 <br><br>

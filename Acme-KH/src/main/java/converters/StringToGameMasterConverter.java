@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import repositories.GameMasterRepository;
 import domain.GameMaster;
-import domain.Report;
 
 @Component
 @Transactional
@@ -26,7 +25,7 @@ public class StringToGameMasterConverter implements Converter<String, GameMaster
 		try {
 			id = Integer.valueOf(text);
 			result = this.repository.findOne(id);
-		} catch ( Throwable oops) {
+		} catch (Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
 

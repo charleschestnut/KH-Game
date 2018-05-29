@@ -22,13 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ActorService;
-import services.BuiltService;
-import services.ContentManagerService;
 import services.FactionService;
-import services.GameMasterService;
-import services.KeybladeWielderService;
-import services.OrganizationService;
 import domain.Faction;
 
 @Controller
@@ -36,25 +30,7 @@ import domain.Faction;
 public class FactionController extends AbstractController {
 
 	@Autowired
-	private ActorService			actorService;
-
-	@Autowired
-	private KeybladeWielderService	keybladeWielderService;
-
-	@Autowired
-	private GameMasterService		gameMasterService;
-
-	@Autowired
-	private ContentManagerService	contentManagerService;
-
-	@Autowired
-	private OrganizationService		organizationService;
-
-	@Autowired
-	private BuiltService			builtService;
-
-	@Autowired
-	private FactionService			factionService;
+	private FactionService	factionService;
 
 
 	// Actor ---------------------------------------------------------------	
