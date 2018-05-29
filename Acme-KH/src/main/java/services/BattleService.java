@@ -112,7 +112,7 @@ public class BattleService {
 		materialesNaves.setMytrhil(0);
 		//int defenseId = this.actorService.findByUserAccountUsername(bat.getEnemy()).getId();
 		attackRc = this.recruitedService.getAllRecruited(atacante.getId());
-		final int saltosGalaxia = (atacante.getWorldCoordinates().getZ() - defensor.getWorldCoordinates().getZ()) / 5;
+		final int saltosGalaxia = ((atacante.getWorldCoordinates().getZ() % 5) - (defensor.getWorldCoordinates().getZ()) % 5);
 		//Aqui falta cuanto combustible va a costar cada salto de 5 galacias
 		final int combustible = saltosGalaxia * 10;
 		boolean todoCero = true;
