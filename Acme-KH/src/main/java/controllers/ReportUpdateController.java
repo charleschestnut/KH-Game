@@ -117,17 +117,25 @@ public class ReportUpdateController extends AbstractController {
 		ReportUpdate reportUpdate;
 		Report report;
 		Boolean ownUpdate = false;
+		Boolean myReport = false;
 
 		report = reportService.findReportsByReportUpdate(reportUpdateId);
 		reportUpdate = reportUpdateService.findOne(reportUpdateId);
 		result = new ModelAndView("reportUpdate/display");
+		
+		if(actorService.getPrincipalAuthority().equals("PLAYER")){
+			Assert.isTrue(report.getKeybladeWielder().equals(actorService.findByPrincipal()));
+		}
 		if (reportUpdate.getCreator().equals(actorService.findByPrincipal())) {
 			ownUpdate = true;
+		}else if(report.getKeybladeWielder().equals(actorService.findByPrincipal())){
+			myReport = true;
 		}
 
 		result.addObject("reportUpdate", reportUpdate);
 		result.addObject("report", report);
 		result.addObject("ownUpdate", ownUpdate);
+		result.addObject("myReport", myReport);
 
 		return result;
 	}
@@ -239,8 +247,6 @@ public class ReportUpdateController extends AbstractController {
 		report = reportService.findOne(reportId);
 
 		try {
-			Assert.isTrue(report.getStatus() != ReportStatus.RESOLVED,
-					"error.message.suspicious");
 			Assert.isTrue(report.getKeybladeWielder().equals(actorService.findByPrincipal()),"error.message.owner");
 			reportUpdateService.markSuspicious(reportUpdate);
 			if(!reportDisplay){
