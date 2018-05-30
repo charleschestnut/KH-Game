@@ -22,8 +22,6 @@ public class ItemServiceTest extends AbstractTest {
 	@Autowired
 	private ItemService itemService;
 
-	
-	
 	// In this test we create an Item
 	@Test
 	public void ItemCreateTest() {
@@ -45,7 +43,7 @@ public class ItemServiceTest extends AbstractTest {
 
 		super.unauthenticate();
 	}
-	
+
 	// We create an item with the name in blank (restriction)
 	@Test(expected = ConstraintViolationException.class)
 	public void ItemWrongNameCreateTest() {
@@ -67,7 +65,7 @@ public class ItemServiceTest extends AbstractTest {
 
 		super.unauthenticate();
 	}
-	
+
 	// Extra must be in the range (0,1)
 	@Test(expected = ConstraintViolationException.class)
 	public void ItemWrongExtraCreateTest() {
@@ -89,8 +87,8 @@ public class ItemServiceTest extends AbstractTest {
 
 		super.unauthenticate();
 	}
-	
-	
+
+	// Positive test for buying an item
 	@Test
 	public void BuyItemTest() {
 
@@ -105,17 +103,67 @@ public class ItemServiceTest extends AbstractTest {
 		item.setName("Ataque");
 		item.setDescription("Potencia ataque");
 		item.setOnSell(true);
-		
-		this.itemService.save(item);
-	//	this.itemService.flush();
+
+		Item saved = this.itemService.save(item);
 		super.unauthenticate();
-	//	Item item = this.itemService.findOne(1027);
+
 		super.authenticate("player1");
-		this.itemService.buyItem(item);
+		this.itemService.buyItem(saved);
 		this.itemService.flush();
-		
+
 		super.unauthenticate();
 	}
 
+	// Negative test Buy an item : You must have the enough quantity of munny
+	@Test(expected = IllegalArgumentException.class)
+	public void BuyItemWrongMunnyTest() {
+
+		super.authenticate("manager1");
+		Item item = this.itemService.create();
+
+		item.setDuration(10);
+		item.setExpiration(20);
+		item.setExtra(0.2);
+		item.setMunnyCost(9999999);
+		item.setType(ItemType.ATTACKBOOST);
+		item.setName("Ataque");
+		item.setDescription("Potencia ataque");
+		item.setOnSell(true);
+
+		Item saved = this.itemService.save(item);
+		super.unauthenticate();
+
+		super.authenticate("player1");
+		this.itemService.buyItem(saved);
+		this.itemService.flush();
+
+		super.unauthenticate();
+	}
+
+	// Negative test Buy an item : The item must be on sell
+	@Test(expected = IllegalArgumentException.class)
+	public void BuyItemNotOnSellTest() {
+
+		super.authenticate("manager1");
+		Item item = this.itemService.create();
+
+		item.setDuration(10);
+		item.setExpiration(20);
+		item.setExtra(0.2);
+		item.setMunnyCost(120);
+		item.setType(ItemType.ATTACKBOOST);
+		item.setName("Ataque");
+		item.setDescription("Potencia ataque");
+		item.setOnSell(false);
+
+		Item saved = this.itemService.save(item);
+		super.unauthenticate();
+
+		super.authenticate("player1");
+		this.itemService.buyItem(saved);
+		this.itemService.flush();
+
+		super.unauthenticate();
+	}
 
 }
