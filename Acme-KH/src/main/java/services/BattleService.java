@@ -29,7 +29,7 @@ public class BattleService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private BattleRepository		BattleRepository;
+	private BattleRepository		battleRepository;
 	@Autowired
 	private ActorService			actorService;
 	@Autowired
@@ -67,7 +67,7 @@ public class BattleService {
 
 		Battle saved;
 
-		saved = this.BattleRepository.save(Battle);
+		saved = this.battleRepository.save(Battle);
 
 		return saved;
 	}
@@ -77,7 +77,7 @@ public class BattleService {
 
 		Battle Battle;
 
-		Battle = this.BattleRepository.findOne(BattleId);
+		Battle = this.battleRepository.findOne(BattleId);
 
 		return Battle;
 	}
@@ -85,7 +85,7 @@ public class BattleService {
 	public Collection<Battle> findAll() {
 		Collection<Battle> Battles;
 
-		Battles = this.BattleRepository.findAll();
+		Battles = this.battleRepository.findAll();
 
 		return Battles;
 	}
@@ -93,7 +93,7 @@ public class BattleService {
 	public void delete(final Battle Battle) {
 		Assert.notNull(Battle);
 
-		this.BattleRepository.delete(Battle);
+		this.battleRepository.delete(Battle);
 	}
 
 	public Battle fight(final BattleForm bat) {
@@ -654,10 +654,14 @@ public class BattleService {
 	}
 
 	public Collection<Battle> myBattlesAttack(final int actorId) {
-		return this.BattleRepository.myBattlesAttack(actorId);
+		return this.battleRepository.myBattlesAttack(actorId);
 	}
 
 	public Collection<Battle> myBattlesDefense(final int actorId) {
-		return this.BattleRepository.myBattlesDefense(actorId);
+		return this.battleRepository.myBattlesDefense(actorId);
+	}
+
+	public void flush() {
+		this.battleRepository.flush();
 	}
 }
