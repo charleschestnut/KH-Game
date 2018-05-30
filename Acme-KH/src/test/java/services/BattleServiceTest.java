@@ -99,8 +99,6 @@ public class BattleServiceTest extends AbstractTest {
 		else if (test == 2)
 			bat.setTroops(tropas3);
 
-		System.out.println("Test : " + test);
-
 		bat.setEnemy(defensor);
 		return bat;
 	}

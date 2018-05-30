@@ -97,8 +97,6 @@ public class BattleService {
 	}
 
 	public Battle fight(final BattleForm bat) {
-		System.out.println("Se llama a figth");
-		System.out.println(bat.getEnemy());
 		final KeybladeWielder atacante = (KeybladeWielder) this.actorService.findByPrincipal();
 		final KeybladeWielder defensor = (KeybladeWielder) this.actorService.findByUserAccountUsername(bat.getEnemy());
 		final Collection<Integer> ta = bat.getTroops();
@@ -126,8 +124,6 @@ public class BattleService {
 				}
 				tropasAtacante.add(ra);
 			}
-		System.out.println("Tropas atacantes: " + bat.getTroops());
-		System.out.println("Tropas atacantes1: " + tropasAtacante);
 
 		//--------------------------------Assert tropas de mas en ataque---------------------------------------------------
 		this.enviaMasTropas(bat);
@@ -158,7 +154,6 @@ public class BattleService {
 		Assert.isTrue(!todoCero, "message.error.notTroops");
 		//----------------------------------------Fin de Asserts-------------------------------------------------------------
 		//Antes de nada, actualizamos el combustible del atacante
-		System.out.println("Pasamos los asserts");
 		final Materials nuevoCombustible = atacante.getMaterials();
 		nuevoCombustible.setGummiCoal(nuevoCombustible.getGummiCoal() - combustible);
 		atacante.setMaterials(nuevoCombustible);
@@ -167,9 +162,6 @@ public class BattleService {
 		Collection<Recruited> defenseRc = new ArrayList<>();
 		//int defenseId = this.actorService.findByUserAccountUsername(bat.getEnemy()).getId();
 		defenseRc = this.recruitedService.getAllRecruited(defensor.getId());
-		System.out.println("Se llama a figth5");
-		System.out.println("Defensas: " + defenseRc);
-		System.out.println("Tropas atacantes2: " + tropasAtacante);
 
 		int ataqueAtacante = 0;
 		int defensaAtacante = 0;
@@ -177,12 +169,9 @@ public class BattleService {
 		int i = 0;
 
 		for (final Troop t : troops) {
-			System.out.println("iteracion: " + i);
 			numTropa = tropasAtacante.get(i);
-			System.out.println("num tropas: " + numTropa);
 			ataqueAtacante = numTropa * t.getAttack() + ataqueAtacante;
 			defensaAtacante = numTropa * t.getDefense() + defensaAtacante;
-			System.out.println("ataque: " + ataqueAtacante + " defensa: " + defensaAtacante);
 			i++;
 			if (i >= troops.size())
 				break;
@@ -215,7 +204,6 @@ public class BattleService {
 		}
 		ataqueAtacante = ataqueAtacante + extraAttackFaccionAtacante + extraAttackSuerteAtacante + extraAttackBoostAtacante;
 		defensaAtacante = defensaAtacante + extraDefenseFaccionAtacante + extraDefenseSuerteAtacante + extraDefenseBoostAtacante;
-		System.out.println("Ataques y defensas de atacante");
 
 		//Calculamos ataque y defensa de defensor
 		int ataqueDefensor = 0;
@@ -223,28 +211,21 @@ public class BattleService {
 		final int numTropaDef;
 		int d = 0;
 
-		System.out.println("Tropas del defensor: " + defenseRc);
-
 		for (final Recruited r : defenseRc) {
-			System.out.println("Vamos a calcular ataques del defensor");
 
 			if (r.getTroop() != null) {
-				System.out.println(r.getTroop());
 				ataqueDefensor = ataqueDefensor + r.getTroop().getAttack();
 				defensaDefensor = defensaDefensor + r.getTroop().getDefense();
 				d++;
 			}
 		}
-		System.out.println("defensaDefensor1 " + defensaDefensor);
 		//Defensas por construcciones
 
 		if (this.builtService.getDefenseByBuildings(defensor.getId()) != null) {
 			final int defensaDefensorEdificios = this.builtService.getDefenseByBuildings(defensor.getId());
-			System.out.println("defensaDefensor edificios " + defensaDefensorEdificios);
 
 			defensaDefensor = defensaDefensor + defensaDefensorEdificios;
 		}
-		System.out.println("defensaDefensor2 " + defensaDefensor);
 		//Extra del ataque y defensa del defensor
 		//---Extra por faccion
 		final int extraAttackFaccionDefensor = (int) (defensor.getFaction().getExtraAttack() * ataqueDefensor);
@@ -279,7 +260,6 @@ public class BattleService {
 
 		//Gana el que sea mayor
 		if (ataque > defensa) {
-			System.out.println("ataque > defensa");
 			//Añadimos victoria a atacante, derrota a defensor
 			atacante.setWins(atacante.getWins() + 1);
 			defensor.setLoses(defensor.getLoses() + 1);
@@ -289,34 +269,25 @@ public class BattleService {
 				this.recruitedService.delete(des);
 			}
 			//Eliminamos las tropas del atacante con un 33% de probabilidad de muerte en caso de que gane el atacante
-			System.out.println("Tropas atacantes: " + tropasAtacante);
 			for (Recruited arc : attackRc) {
-				System.out.println("Entra al for");
 				int cont = 0;
 				//		if (cont < troops.size()) {
 				//		System.out.println("Recruited: " + arc.getTroop().getName());
 				if (arc.getTroop() != null) {
-					System.out.println("entramos a eliminar tropa");
 					for (final Troop tr : troops) {
-						System.out.println(tropasAtacante.get(cont) + " Tropas quedan");
 						if (tropasAtacante.get(cont) > 0) {
-							System.out.println("Entra");
 							if (arc.getTroop().getName().equals(tr.getName())) {
 								int numero = (int) (Math.random() * 100);
 								if (numero < 30) {
 									this.recruitedService.delete(arc);
-									System.out.println("eliminamos");
 
-									System.out.println("Termina el for 1");
 								}
 							}
 						}
-						System.out.println("trops: " + tropasAtacante);
 
 						cont = cont++;
 					}
 				} else {
-					System.out.println("entramos a eliminar gummiship");
 					cont = troops.size();
 					if (arc.getGummiShip() != null)
 						for (final GummiShip gr : gummiShips) {
@@ -337,46 +308,37 @@ public class BattleService {
 			looser = false;
 			//Gana el defensor
 		} else {
-			System.out.println("defensa > ataque");
+			//System.out.println("defensa > ataque");
 			//Collection<Recruited> attackRc = new ArrayList<>();
 			//int attackId = this.actorService.findByPrincipal().getId();
 			//attackRc = this.recruitedService.getAllRecruited(attackId);
-			System.out.println("Tropas atacantes: " + tropasAtacante);
 			//Añadimos una victoria a defensor, y una derrota a atacante
 			defensor.setWins(defensor.getWins() + 1);
 			atacante.setLoses(atacante.getLoses() + 1);
 			//Eliminamos todas las tropas del atacante
 			//A medida que vamos eliminando tropas, vamos añadiendo los materiales destruidos de las naves, para la recompensa del defensor
 			for (final Recruited arc : attackRc) {
-				System.out.println("Recruited: " + arc);
 
 				int cont = 0;
 				//if (cont < troops.size()) {
 				if (arc.getTroop() != null) {
-					System.out.println("entramos a eliminar tropa");
 					for (final Troop tr : troops) {
-						System.out.println(tropasAtacante.get(cont) + " Tropas quedan");
 						if (tropasAtacante.get(cont) > 0) {
-							System.out.println("Entra");
 							if (arc.getTroop().getName().equals(tr.getName())) {
 								this.recruitedService.delete(arc);
 								final int a = tropasAtacante.get(cont) - 1;
 								tropasAtacante.remove(cont);
 								tropasAtacante.add(cont, a);
-								System.out.println("eliminamos");
 								materialesNaves.setGummiCoal(materialesNaves.getGummiCoal() + tr.getCost().getGummiCoal());
 								materialesNaves.setMunny(materialesNaves.getMunny() + tr.getCost().getMunny());
 								materialesNaves.setMytrhil(materialesNaves.getMytrhil() + tr.getCost().getMytrhil());
-								System.out.println("Termina el for 1");
 
 							}
 						}
-						System.out.println("trops: " + tropasAtacante);
 
 						cont = cont++;
 					}
 				} else {
-					System.out.println("entramos a eliminar gummiship");
 					cont = troops.size();
 					if (arc.getGummiShip() != null)
 						for (final GummiShip gr : gummiShips) {
@@ -397,12 +359,7 @@ public class BattleService {
 						}
 					//cont = cont++;
 				}
-				System.out.println("Contador: " + cont);
 			}
-
-			System.out.println("tropas: " + this.recruitedService.getAllRecruited(atacante.getId()));
-
-			System.out.println("Terminamos de eliminar tropas");
 
 			//Eliminamos las tropas del defensor con un 33% de probabilidad de muerte en caso de que gane el defensor
 			for (final Recruited des : defenseRc)
@@ -456,11 +413,9 @@ public class BattleService {
 		}
 		//Guardamos la recompensa
 		Prize pz = this.prizeService.save(recompensa);
-		System.out.println("El putito premio: " + pz.getKeybladeWielder().getUserAccount().getUsername() + " ja " + pz.getDescription());
 		//Guardamos al atacante y defensor, por los distintos cambios ocurridos en ellos
 		this.keybladeWielderService.save(atacante);
 		this.keybladeWielderService.save(defensor);
-		System.out.println("Guardo los keyblader");
 		//-----------------------------------------------------------------
 		//Si hay guardados mas de 10 combates, borramos el ultimo
 		if (this.myBattlesAttack(atacante.getId()).size() > 10) {
@@ -470,7 +425,6 @@ public class BattleService {
 					idMenor = b.getId();
 			this.delete(this.findOne(idMenor));
 		}
-		System.out.println("Pasamos estro");
 
 		final String balance = this.tropasEnviadas(bat);
 
@@ -485,7 +439,6 @@ public class BattleService {
 
 		Battle battleSaved = this.save(battle);
 		//Si hay guardados mas de 10 combates, borramos el ultimo
-		System.out.println("Guardo battle 1");
 
 		if (this.myBattlesDefense(defensor.getId()).size() > 10) {
 			int idMenorD = Integer.MAX_VALUE;
@@ -506,7 +459,6 @@ public class BattleService {
 
 		//--------------------------------------------------
 		this.save(battleDefen);
-		System.out.println("Guardo los battle");
 		//Activamos un escudo para el defensor
 		this.shieldService.saveForAttack(defensor);
 		return battleSaved;
@@ -538,9 +490,7 @@ public class BattleService {
 			if (ra.getTroop() != null)
 				for (final Troop tp : troops) {
 					if (tp.getName().equals(ra.getTroop().getName())) {
-						System.out.println("Son iguales: RA: " + tp.getName());
 						final int add = tropasTotalesAtacante.get(indiceT) + 1;
-						System.out.println("add: " + add);
 						tropasTotalesAtacante.remove(indiceT);
 						tropasTotalesAtacante.add(indiceT, add);
 					}
@@ -563,35 +513,14 @@ public class BattleService {
 		for (final Integer n : navesTotalesAtacante)
 			tropasTotalesAtacante.add(n);
 
-		System.out.println("Tropas atacante Totales, a comprobar " + tropasTotalesAtacante);
-		System.out.println("Naves atacante Totales, a comprobar " + navesTotalesAtacante);
-		System.out.println("Pasamos parte 1");
 		int nu = 0;
 		final int in = 0;
 		boolean error = false;
 		for (final Integer a : ta) {
-			System.out.println("nu: " + nu);
-			System.out.println("tamaño trops: " + troops.size());
-
-			//tropasAtacante.add(a);
-			/*
-			 * if (nu < troops.size()) {
-			 * System.out.println("Comprobamos tropa");
-			 * if (a > tropasTotalesAtacante.get(nu))
-			 * error = true;
-			 * nu++;
-			 * } else {
-			 * System.out.println("Comprobamos naves");
-			 * if (a > navesTotalesAtacante.get(in))
-			 * error = true;
-			 * in++;
-			 * }
-			 */
 			if (a > tropasTotalesAtacante.get(nu))
 				error = true;
 			nu++;
 		}
-		System.out.println("Maaaaaaaaaaaaaas tropas?: " + error);
 
 		Assert.isTrue(!error, "message.error.moreTrops");
 	}
@@ -620,7 +549,6 @@ public class BattleService {
 		if (capacidad < numTropas) {
 			error = true;
 		}
-		System.out.println("Tropas atacantes3: " + tropasAtacante);
 
 		Assert.isTrue(!error, "message.error.exceedsCapacity");
 	}

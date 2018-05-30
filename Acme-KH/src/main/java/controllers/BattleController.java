@@ -66,7 +66,6 @@ public class BattleController extends AbstractController {
 				return res;
 			}
 		}
-		System.out.println("nickname " + nickname);
 		int index;
 		int n;
 		for (Troop a : troops) {
@@ -119,7 +118,6 @@ public class BattleController extends AbstractController {
 
 		final BattleForm bf = new BattleForm();
 		bf.setEnemy(nickname);
-		System.out.println(bf.getEnemy());
 		final int numT = troops.size();
 		final int numS = gummiShips.size();
 		final int num = numT + numS;
@@ -148,11 +146,8 @@ public class BattleController extends AbstractController {
 				String msg = "error.message.commit";
 				String a = oops.getMessage();
 				String e = "message.error";
-				System.out.println(a.contains(e));
 				if (a.contains(e))
 					msg = a;
-				System.out.println("msg " + msg);
-				System.out.println("oops " + oops.getMessage());
 				res = this.createEditModelAndView(battleForm, msg);
 			}
 
