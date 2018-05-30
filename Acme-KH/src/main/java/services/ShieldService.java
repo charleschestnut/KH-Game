@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.ShieldRepository;
 import domain.Item;
+import domain.ItemType;
 import domain.KeybladeWielder;
 import domain.Shield;
 
@@ -26,6 +27,9 @@ public class ShieldService {
 	@Autowired
 	private ActorService		actorService;
 
+	@Autowired
+	private ItemService			itemService;
+
 
 	// CRUD methods
 
@@ -39,7 +43,8 @@ public class ShieldService {
 
 	public Shield save(final Item item) {
 		Assert.notNull(item);
-		//Assert.isTrue(this.itemService.myItems(this.actorService.findByPrincipal().getId()).contains(item));
+		Assert.isTrue(this.itemService.myItems(this.actorService.findByPrincipal().getId()).contains(item));
+		Assert.isTrue(item.getType().equals(ItemType.SHIELD));
 		final Shield res = this.create();
 		res.setName(item.getName());
 		res.setDate(new Date(System.currentTimeMillis() - 1000));
@@ -95,6 +100,10 @@ public class ShieldService {
 		keyW.setShield(null);
 		this.actorService.save(keyW);
 		this.ShieldRepository.delete(Shield);
+	}
+
+	public void flush() {
+		this.ShieldRepository.flush();
 	}
 
 }
