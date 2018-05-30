@@ -100,5 +100,9 @@ public class ConfigurationService {
 	public Configuration getConfiguration() {
 		return this.configurationRepository.getConfiguration();
 	}
+	
+	public void flush(){
+		this.configurationRepository.flush();
+	}
 
 }
