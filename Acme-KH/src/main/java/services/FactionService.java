@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.FactionRepository;
+import domain.Actor;
 import domain.Faction;
 
 @Service
@@ -19,6 +20,9 @@ public class FactionService {
 
 	@Autowired
 	private FactionRepository	FactionRepository;
+
+	@Autowired
+	private ActorService		actorService;
 
 
 	// CRUD methods
@@ -39,6 +43,8 @@ public class FactionService {
 		Assert.notNull(Faction);
 
 		Faction saved;
+		Actor contentManager = this.actorService.findByPrincipal();
+		Assert.isTrue(contentManager.getUserAccount().isAuthority("MANAGER"));
 
 		saved = this.FactionRepository.save(Faction);
 
@@ -69,6 +75,10 @@ public class FactionService {
 		Assert.notNull(Faction);
 
 		this.FactionRepository.delete(Faction);
+	}
+
+	public void flush() {
+		this.FactionRepository.flush();
 	}
 
 }
