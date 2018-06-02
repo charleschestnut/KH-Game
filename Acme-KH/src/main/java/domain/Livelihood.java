@@ -9,9 +9,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 import javax.validation.Valid;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -36,7 +36,7 @@ public class Livelihood extends Building {
 		return this.materials;
 	}
 
-	public void setMaterials( Materials materials) {
+	public void setMaterials(Materials materials) {
 		this.materials = materials;
 	}
 	/**
@@ -44,12 +44,13 @@ public class Livelihood extends Building {
 	 * Devuelve el extra de materiales que dará por cada nivel, <b>SIEMPRE</b> se aplica al de nivel 1.
 	 */
 	@NotNull
-	@Range(min = 0, max = 1)
+	@DecimalMin("0.0")
+	@DecimalMax("1.0")
 	public Double getExtraMaterialsPerLvl() {
 		return this.extraMaterialsPerLvl;
 	}
 
-	public void setExtraMaterialsPerLvl( Double extraMaterialsPerLvl) {
+	public void setExtraMaterialsPerLvl(Double extraMaterialsPerLvl) {
 		this.extraMaterialsPerLvl = extraMaterialsPerLvl;
 	}
 	/**
@@ -61,20 +62,21 @@ public class Livelihood extends Building {
 		return this.timeToRecollect;
 	}
 
-	public void setTimeToRecollect( Integer timeToRecollect) {
+	public void setTimeToRecollect(Integer timeToRecollect) {
 		this.timeToRecollect = timeToRecollect;
 	}
 	/**
 	 * 
 	 * Devuelve cuanto se reducirá el tiempo de recolección cada vez que se sube el nivel
 	 */
-	@Range(min = 0, max = 1)
+	@DecimalMin("0.0")
+	@DecimalMax("1.0")
 	@NotNull
 	public Double getLessTimePerLvl() {
 		return this.LessTimePerLvl;
 	}
 
-	public void setLessTimePerLvl( Double lessTimePerLvl) {
+	public void setLessTimePerLvl(Double lessTimePerLvl) {
 		this.LessTimePerLvl = lessTimePerLvl;
 	}
 	/**
@@ -84,12 +86,12 @@ public class Livelihood extends Building {
 	 * @return Los materiales totales este edificio de nivel "lvl" recolecta
 	 */
 	@Transient
-	public Materials getTotalCollectMaterials( Integer lvl) {
-		 Materials res = new Materials();
+	public Materials getTotalCollectMaterials(Integer lvl) {
+		Materials res = new Materials();
 
-		 Integer munny = this.getMaterials().getMunny();
-		 Integer mythril = this.getMaterials().getMytrhil();
-		 Integer coal = this.getMaterials().getGummiCoal();
+		Integer munny = this.getMaterials().getMunny();
+		Integer mythril = this.getMaterials().getMytrhil();
+		Integer coal = this.getMaterials().getGummiCoal();
 
 		res.setMunny((int) (munny + this.extraMaterialsPerLvl * munny * (lvl - 1)));
 		res.setMytrhil((int) (mythril + this.extraMaterialsPerLvl * mythril * (lvl - 1)));
@@ -105,7 +107,7 @@ public class Livelihood extends Building {
 	 * @return El tiempo total de este edificio de nivel "lvl" tarda en recolectar
 	 */
 	@Transient
-	public Integer getTotalTime( Integer lvl) {
+	public Integer getTotalTime(Integer lvl) {
 
 		Integer res = (int) (this.getTimeToRecollect() - (this.getTimeToRecollect() * (lvl - 1) * this.getLessTimePerLvl()));
 		if (res < 0)

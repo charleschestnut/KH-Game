@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -107,7 +109,8 @@ public class Building extends DomainEntity {
 	 * Cuanto más cuesta mejorar un edificio<b> SIEMPRE </b>se aplica al de nivel 1
 	 */
 	@NotNull
-	@Range(min = 0, max = 1)
+	@DecimalMin("0.0")
+	@DecimalMax("1.0")
 	public Double getExtraCostPerLvl() {
 		return this.extraCostPerLvl;
 	}

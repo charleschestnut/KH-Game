@@ -5,6 +5,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
@@ -23,16 +25,17 @@ public class Defense extends Building {
 		return this.defense;
 	}
 
-	public void setDefense( Integer defense) {
+	public void setDefense(Integer defense) {
 		this.defense = defense;
 	}
 	@NotNull
-	@Range(min = 0, max = 1)
+	@DecimalMin("0.0")
+	@DecimalMax("1.0")
 	public Double getExtraDefensePerLvl() {
 		return this.extraDefensePerLvl;
 	}
 
-	public void setExtraDefensePerLvl( Double extraDefensePerLvl) {
+	public void setExtraDefensePerLvl(Double extraDefensePerLvl) {
 		this.extraDefensePerLvl = extraDefensePerLvl;
 	}
 	/**
@@ -42,9 +45,9 @@ public class Defense extends Building {
 	 * @return La defensa total de este edificio de nivel "lvl"
 	 */
 	@Transient
-	public Integer getTotalDefense( Integer lvl) {
+	public Integer getTotalDefense(Integer lvl) {
 
-		 Integer res = (int) (this.defense + this.defense * (lvl - 1) * this.extraDefensePerLvl);
+		Integer res = (int) (this.defense + this.defense * (lvl - 1) * this.extraDefensePerLvl);
 
 		return res;
 

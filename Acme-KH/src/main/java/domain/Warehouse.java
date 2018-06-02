@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 import javax.validation.Valid;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
@@ -36,7 +38,7 @@ public class Warehouse extends Building {
 		return this.materialsSlots;
 	}
 
-	public void setMaterialsSlots( Materials materialsSlots) {
+	public void setMaterialsSlots(Materials materialsSlots) {
 		this.materialsSlots = materialsSlots;
 	}
 	/**
@@ -49,7 +51,7 @@ public class Warehouse extends Building {
 		return this.troopSlots;
 	}
 
-	public void setTroopSlots( Integer troopSlots) {
+	public void setTroopSlots(Integer troopSlots) {
 		this.troopSlots = troopSlots;
 	}
 	/**
@@ -62,16 +64,17 @@ public class Warehouse extends Building {
 		return this.gummiSlots;
 	}
 
-	public void setGummiSlots( Integer gummiSlots) {
+	public void setGummiSlots(Integer gummiSlots) {
 		this.gummiSlots = gummiSlots;
 	}
 	@NotNull
-	@Range(min = 0, max = 1)
+	@DecimalMin("0.0")
+	@DecimalMax("1.0")
 	public Double getExtraSlotsPerLvl() {
 		return this.extraSlotsPerLvl;
 	}
 
-	public void setExtraSlotsPerLvl( Double extraSlotsPerLvl) {
+	public void setExtraSlotsPerLvl(Double extraSlotsPerLvl) {
 		this.extraSlotsPerLvl = extraSlotsPerLvl;
 	}
 	/**
@@ -81,12 +84,12 @@ public class Warehouse extends Building {
 	 * @return Cuantos materiales puede almacenar en total el edificio de nivel "lvl"
 	 */
 	@Transient
-	public Materials getTotalSlotsMaterials( Integer lvl) {
-		 Materials res = new Materials();
+	public Materials getTotalSlotsMaterials(Integer lvl) {
+		Materials res = new Materials();
 
-		 Integer munny = this.getMaterialsSlots().getMunny();
-		 Integer mythril = this.getMaterialsSlots().getMytrhil();
-		 Integer coal = this.getMaterialsSlots().getGummiCoal();
+		Integer munny = this.getMaterialsSlots().getMunny();
+		Integer mythril = this.getMaterialsSlots().getMytrhil();
+		Integer coal = this.getMaterialsSlots().getGummiCoal();
 
 		res.setMunny((int) (munny + this.extraSlotsPerLvl * munny * (lvl - 1)));
 		res.setMytrhil((int) (mythril + this.extraSlotsPerLvl * mythril * (lvl - 1)));
@@ -100,9 +103,9 @@ public class Warehouse extends Building {
 	 * @return Cuantas tropas puede almacenar en total el edificio de nivel "lvl"
 	 */
 	@Transient
-	public Integer getTotalTroopSlots( Integer lvl) {
+	public Integer getTotalTroopSlots(Integer lvl) {
 
-		 Integer res = (int) (this.troopSlots + this.troopSlots * (lvl - 1) * this.extraSlotsPerLvl);
+		Integer res = (int) (this.troopSlots + this.troopSlots * (lvl - 1) * this.extraSlotsPerLvl);
 
 		return res;
 
@@ -112,9 +115,9 @@ public class Warehouse extends Building {
 	 * @return Cuantas tropas puede almacenar en total el edificio de nivel "lvl"
 	 */
 	@Transient
-	public Integer getTotalGummiSlots( Integer lvl) {
+	public Integer getTotalGummiSlots(Integer lvl) {
 
-		 Integer res = (int) (this.gummiSlots + this.gummiSlots * (lvl - 1) * this.extraSlotsPerLvl);
+		Integer res = (int) (this.gummiSlots + this.gummiSlots * (lvl - 1) * this.extraSlotsPerLvl);
 
 		return res;
 
