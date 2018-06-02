@@ -169,6 +169,10 @@ public class ReportService {
 	public void flush(){
 		this.reportRepository.flush();
 	}
+	
+	public Page<Report> getMyAnsweredReports(int creatorId, Pageable p){
+		return this.reportRepository.getMyAnsweredReports(creatorId, p);
+	}
 
 	//Dashboard
 

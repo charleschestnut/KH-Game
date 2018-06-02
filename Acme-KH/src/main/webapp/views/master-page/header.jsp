@@ -101,7 +101,10 @@
 					<div style="font-size: 12px;" class="dropdown-menu"
 						aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" href="report/list.do"><spring:message
-								code="report.list" /></a> <a class="dropdown-item"
+								code="report.list" /></a> 
+						<a class="dropdown-item" href="report/listMyAnsweredReports.do"><spring:message
+								code="report.myAnswered" /></a> 
+								<a class="dropdown-item"
 							href="profile/actor/register.do?accountType=GM"> <spring:message
 								code="master.page.create.gm" /></a> <a class="dropdown-item"
 							href="profile/actor/register.do?accountType=MANAGER"> <spring:message
@@ -231,12 +234,21 @@
 			</security:authorize>
 
 			<security:authorize access="hasRole('GM')">
-				<li class="nav-item"><a class="nav-link" href="report/list.do">
-						<img
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#"
+					id="navbarDropdownMenuLink" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> <img
 						src="./images/icons/connect-icon.png"
-						align="center" class="nav-icon" alt="home"> <spring:message
+						align="center" class="nav-icon"> <spring:message
 							code="report.list" />
-				</a></li>
+				</a>
+					<div style="font-size: 12px;" class="dropdown-menu"
+						aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="report/list.do"> <spring:message
+								code="report.list"></spring:message></a> <a
+							class="dropdown-item" href="report/listMyAnsweredReports.do"> <spring:message
+								code="report.myAnswered"></spring:message></a>
+					</div></li>
 				<li class="nav-item"><a class="nav-link"
 					href="gm/prompt/show.do"> <img
 						src="./images/icons/worlds-icon.png"

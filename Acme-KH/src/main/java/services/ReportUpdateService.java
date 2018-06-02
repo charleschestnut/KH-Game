@@ -56,7 +56,8 @@ public class ReportUpdateService {
 		suspiciousUpdates = this.getSuspiciousReportUpdatesByReportId(reportId);
 		
 		Assert.isTrue(report.getStatus() != ReportStatus.RESOLVED
-				|| (actorService.getPrincipalAuthority().equals("ADMIN") && suspiciousUpdates.size()>0));
+				|| (actorService.getPrincipalAuthority().equals("ADMIN") && suspiciousUpdates.size()>0)
+				|| (actorService.getPrincipalAuthority().equals("ADMIN") && report.getStatus() != ReportStatus.RESOLVED));
 
 		if (reportUpdate.getId() != 0)
 			Assert.isTrue(report.getReportUpdates().contains(reportUpdate), "error.message.distincReport");

@@ -21,7 +21,10 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
 
 	@Query("select r from Report r join r.reportUpdates ru where ru IN (select rupd from ReportUpdate rupd where rupd.id=?1)")
 	Report findReportsByReportUpdate(int reportUpdateId);
-
+	
+	@Query("select r from Report r join r.reportUpdates ru where ru IN (select ru from ReportUpdate ru where (ru.administrator.id = ?1 or ru.gameMaster.id = ?1))")
+	Page<Report> getMyAnsweredReports(int creatorId, Pageable p);
+	
 	@Query("select r from Report r where r.status = ?1")
 	Collection<Report> getReportsByStatus(ReportStatus status);
 	

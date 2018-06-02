@@ -36,7 +36,7 @@
 	}
 	
 </script>
-
+<jstl:if test="${empty myAnswered}">
 <select id="type" onchange="javascript: reloadTable(event, '${user}',0)">
 	<option value="all"><spring:message code="reportUpdate.showAll"/></option>
 	<option value="ONHOLD"><spring:message code="report.onhold"/></option>
@@ -44,12 +44,13 @@
 	<option value="RESOLVED"><spring:message code="report.resolved"/></option>
 	<option value="IRRESOLVABLE"><spring:message code="report.irresolvable"/></option>
 </select>
-
+</jstl:if>
 
 
 <!-- Listing grid -->
 
 <div id="container">
+
 <acme:paginationAjax page="${page}" pageNum="${pageNum}" requestURI="${requestURI}"/>
 
 <display:table name="reports" id="row" 
@@ -92,7 +93,7 @@
 	<a href="reportUpdate/list.do?reportId=<jstl:out value="${row.id}" />" ><jstl:out value="${seeUpdates}" /></a>
 	</display:column>
 	
-	<security:authorize access="hasRole('GM') or hasRole('ADMIN')">
+	<%-- <security:authorize access="hasRole('GM') or hasRole('ADMIN')">
 	<spring:message code="reportUpdate.create" var="createUpdate" />
 	<display:column title="${createUpdate}">
 	<jstl:if test="${row.status == 'RESOLVED'}">
@@ -102,7 +103,7 @@
 	<a href="reportUpdate/create.do?reportId=<jstl:out value="${row.id}" />" ><jstl:out value="${createUpdate}" /></a>
 	</jstl:if>
 	</display:column>
-	</security:authorize>
+	</security:authorize> --%>
 
 
 </display:table>

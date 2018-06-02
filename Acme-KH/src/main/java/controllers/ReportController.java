@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import security.Authority;
 import services.ActorService;
 import services.ReportService;
+import services.ReportUpdateService;
 import domain.Report;
 import domain.ReportStatus;
 
@@ -25,6 +26,8 @@ public class ReportController extends AbstractController {
 
 	@Autowired
 	private ReportService	reportService;
+	@Autowired
+	private ReportUpdateService	reportUpdateService;
 
 	@Autowired
 	private ActorService	actorService;
@@ -115,6 +118,26 @@ public class ReportController extends AbstractController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/listMyAnsweredReports", method = RequestMethod.GET)
+	public ModelAndView listMyAnswered(@RequestParam(required = false, defaultValue = "0") Integer page) {
+		ModelAndView result;
+		Page<Report> reports;
+		Pageable pageable;
+
+		pageable = new PageRequest(page, 5);
+		reports = this.reportService.getMyAnsweredReports(actorService.findByPrincipal().getId(), pageable);
+		result = new ModelAndView("report/list");
+
+		result.addObject("reports", reports.getContent());
+		result.addObject("user", "all");
+		result.addObject("page", page);
+		result.addObject("requestURI", "report/list.do?page=");
+		result.addObject("pageNum", reports.getTotalPages());
+		result.addObject("myAnswered", true);
+
+		return result;
+	}
 
 	// Display ----------------------------------------------------------------
 	@RequestMapping(value = "display", method = RequestMethod.GET)
@@ -122,7 +145,9 @@ public class ReportController extends AbstractController {
 		ModelAndView result;
 		Report report;
 		String auth;
-
+		Boolean suspicious = false;
+		
+		suspicious = reportUpdateService.getSuspiciousReportUpdatesByReportId(reportId).size()>0;
 		auth = this.actorService.getPrincipalAuthority();
 		Assert.isTrue(auth.equals("PLAYER") || auth.equals("GM") || auth.equals("ADMIN"));
 
@@ -134,6 +159,7 @@ public class ReportController extends AbstractController {
 		result = new ModelAndView("report/display");
 
 		result.addObject("report", report);
+		result.addObject("suspicious", suspicious);
 
 		return result;
 	}

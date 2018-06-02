@@ -95,19 +95,6 @@ public class ReportUpdateController extends AbstractController {
 		return result;
 	}
 
-	//
-	// @RequestMapping(value = "/player/list", method = RequestMethod.GET)
-	// public ModelAndView playerList() {
-	// ModelAndView result;
-	// Collection<Report> reports;
-	//
-	// reports =
-	// reportService.findReportsByPlayer(actorService.findByPrincipal().getId());
-	// result = new ModelAndView("report/list");
-	// result.addObject("reports", reports);
-	//
-	// return result;
-	// }
 
 	// Display ----------------------------------------------------------------
 	@RequestMapping(value = "display", method = RequestMethod.GET)
@@ -154,8 +141,9 @@ public class ReportUpdateController extends AbstractController {
 		suspiciousUpdates = reportUpdateService.getSuspiciousReportUpdatesByReportId(reportId);
 		report = reportService.findOne(reportId);
 
-		Assert.isTrue(report.getStatus() != ReportStatus.RESOLVED 
-				|| (actorService.getPrincipalAuthority().equals("ADMIN") && suspiciousUpdates.size()>0));
+		Assert.isTrue((report.getStatus() != ReportStatus.RESOLVED && report.getStatus() != ReportStatus.IRRESOLVABLE)
+				|| (actorService.getPrincipalAuthority().equals("ADMIN") && suspiciousUpdates.size()>0)
+				|| (actorService.getPrincipalAuthority().equals("ADMIN") && report.getStatus() != ReportStatus.RESOLVED));
 
 		result.addObject("reportId", reportId);
 

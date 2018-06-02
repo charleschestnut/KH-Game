@@ -124,3 +124,5 @@ function interpret(command) {
 <div contenteditable="false" id="default"><span id="demo"></span><br/><br/></div>
 <div class="parent"><span class="arrow">></span><div contenteditable="true" class="commandLine" id="commandLine"></div></div>
 </div>
+<br/>
+<i><spring:message code="prompt.help"/></i>
