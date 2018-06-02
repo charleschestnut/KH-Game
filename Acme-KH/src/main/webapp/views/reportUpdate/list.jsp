@@ -72,13 +72,11 @@
 </div>
 <!-- Action links -->
 
-<div>
+<div class="row">
 	<security:authorize access="hasRole('GM') or hasRole('ADMIN')">
-	<jstl:if test="${report.status ne 'RESOLVED' and !suspiciousList}">
-		<a href="reportUpdate/create.do?reportId=${report.id}"> <spring:message
-				code="reportUpdate.create" />
-		</a>
-		<br />
+	<jstl:if test="${report.status ne 'RESOLVED'}">
+		<acme:action color="success" url="reportUpdate/create.do?reportId=${report.id}" code="reportUpdate.create"/>
+		<br />&nbsp;&nbsp;&nbsp;
 	</jstl:if>
 	</security:authorize>
 	<acme:goback />
