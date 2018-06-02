@@ -42,7 +42,7 @@ public class Item extends DomainEntity {
 
 	/**
 	 * 
-	 * Tiempo que durar· el objeto <b>EN MINUTOS<b>
+	 * Tiempo que durar√° el objeto <b>EN MINUTOS<b>
 	 */
 	@Range(min = 0)
 	@NotNull
@@ -68,7 +68,7 @@ public class Item extends DomainEntity {
 	}
 	/**
 	 * 
-	 * Beneficio extra que dependar· del tipo. Recordar que los "features" hay que programarlos, no se pueden crear features.
+	 * Beneficio extra que dependar√° del tipo. Recordar que los "features" hay que programarlos, no se pueden crear features.
 	 */
 	@DecimalMin("0.1")
 	@DecimalMax("0.9")
@@ -80,7 +80,7 @@ public class Item extends DomainEntity {
 	public void setExtra(Double extra) {
 		this.extra = extra;
 	}
-	@Range(min = 0)
+	@Range(min = 1)
 	@NotNull
 	public Integer getMunnyCost() {
 		return this.munnyCost;
@@ -91,9 +91,9 @@ public class Item extends DomainEntity {
 	}
 	/**
 	 * 
-	 * <b> Feature: </b> Hay que programarlos, como el nombre ser· unico podremos ver por ahi que feature se esta usando, ademas no se podr·n crear en tiempo de ejecuciÛn. <br>
-	 * <b> Shield: </b> El escudo que se crear· tendr· el nombre y duraciÛn que tenga el objeto <br>
-	 * <b> Boost: </b> Segun el boost pues se aplicar· en un sitio u otro.
+	 * <b> Feature: </b> Hay que programarlos, como el nombre ser√° unico podremos ver por ahi que feature se esta usando, ademas no se podr√°n crear en tiempo de ejecuci√≥n. <br>
+	 * <b> Shield: </b> El escudo que se crear√° tendr√° el nombre y duraci√≥n que tenga el objeto <br>
+	 * <b> Boost: </b> Segun el boost pues se aplicar√° en un sitio u otro.
 	 */
 	@Enumerated(EnumType.STRING)
 	public ItemType getType() {
