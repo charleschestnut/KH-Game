@@ -29,7 +29,9 @@ import org.springframework.web.servlet.ModelAndView;
 import security.Authority;
 import services.ActorService;
 import services.BuiltService;
+import services.ConfigurationService;
 import services.KeybladeWielderService;
+import services.PrizeService;
 import domain.KeybladeWielder;
 
 @Controller
@@ -37,6 +39,10 @@ public class AbstractController {
 
 	@Autowired
 	private MessageSource			messageSource;
+	@Autowired
+	private PrizeService			prizeService;
+	@Autowired
+	private ConfigurationService	configurationService;
 	@Autowired
 	private ActorService			actorService;
 	@Autowired
@@ -82,9 +88,14 @@ public class AbstractController {
 
 				player = (KeybladeWielder) this.actorService.findByPrincipal();
 
+				Date today = new Date(System.currentTimeMillis());
+				if (today.getDate() != player.getLastConnection().getDate() || today.getMonth() != player.getLastConnection().getMonth() || today.getYear() != player.getLastConnection().getYear())
+					this.prizeService.createDailyPrizeForPrincipal();
+
 				if (this.sumarRestarHorasFecha(player.getLastConnection(), 1).before(new Date())) {
 					player.setLastConnection(new Date(System.currentTimeMillis() - 1000));
 					player = this.keybladeWielderService.save(player);
+
 				}
 
 				model.addAttribute("playerFromAbstract", player);
@@ -94,7 +105,6 @@ public class AbstractController {
 			System.out.println("oh baia");
 		}
 	}
-
 	public String showDetails(Locale locale, String code) {
 		return new String(org.springframework.security.crypto.codec.Base64.encode(this.messageSource.getMessage(code, null, locale).getBytes()));
 	}

@@ -48,8 +48,18 @@ function openChest(id){
 <div id="container">
 <div class="row row-width-prize prize-container">
 <jstl:forEach items="${prizes}" var="row">
+
+<jstl:if test="${row.description.contains('defaultDescription') }">
+			<spring:message code="${row.description}" var="descriptionMessage"></spring:message>
+		</jstl:if>
+		<jstl:if test="${!row.description.contains('defaultDescription')}">
+			<jstl:set value="${row.description }"  var="descriptionMessage"></jstl:set>
+		
+		</jstl:if>
+
+
 <div id="all${row.id}" class="all" data-trigger="hover"
-		data-toggle="popover" data-trigger="focus" data-placement="top" data-content="${row.description}">
+		data-toggle="popover" data-trigger="focus" data-placement="top" data-content="${descriptionMessage}">
 	<img class="shadowfilter" src="./images/chests/${row.getPrizeImage()}.png"/><div id="div${row.id}" onclick='javascript: openChest(${row.id})' class="centered-prize heart"></div>
 	<div class="prize-info" id="info${row.id}">
 	<spring:message code="master.page.munny"/>:
