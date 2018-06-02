@@ -54,6 +54,6 @@
 	<acme:textarea code="report.content" path="content"/><br/>
 	
 	<acme:submit code="master.page.save"  name="save" />
-	<acme:cancel code="master.page.return" url="/report/gm/list.do" />
+	<acme:cancel code="master.page.return" url="/report/list.do" />
 
 </form:form>
