@@ -52,6 +52,7 @@ public class InvitationService {
 	public Invitation save(Invitation invitation) {
 		Assert.notNull(invitation);
 		Assert.notNull(invitation.getInvitationStatus());
+		Assert.isTrue(canSendInvitationAgain(invitation.getKeybladeWielder().getId()));
 		Assert.isTrue(!invitation.getOrgRange().equals(OrgRange.MASTER),
 				"error.message.invitation.notBeMaster");
 		KeybladeWielder principal = (KeybladeWielder) this.actorService
@@ -253,6 +254,15 @@ public class InvitationService {
 			this.invitationRepository.delete(i);
 		}
 		
+	}
+	
+	public Boolean canSendInvitationAgain(int playerId){
+		KeybladeWielder kw = (KeybladeWielder) this.actorService.findByPrincipal();
+		Organization org = this.organizationService.findOrganizationByPlayer(kw.getId());
+		Invitation inv = this.invitationRepository.findInvitationFromOrganizationAgain(org.getId(), playerId);
+		if(inv == null)
+			return true;
+		return false;
 	}
 
 }
