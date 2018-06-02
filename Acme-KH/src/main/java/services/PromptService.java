@@ -44,6 +44,8 @@ public class PromptService {
 	private GummiShipService		gummiShipService;
 	@Autowired
 	private RecruitedService		recruitedService;
+	@Autowired
+	private ConfigurationService	configurationService;
 
 	public String interpret(String command) {
 		Assert.isTrue(actorService.getPrincipalAuthority().equals("GM"));
@@ -185,6 +187,10 @@ public class PromptService {
 			troopsNames = troopService.getTroopsNames();
 			gummishipsNames = gummiShipService.getGummiShipsNames();
 			
+			if(builtService.getPlayerBuilts(player.getId()) < this.configurationService.getConfiguration().getWorldSlots()){
+				res = "Player doesn't have slots enough";
+			}else{
+			
 			if (player != null && new ArrayList<>(player.getUserAccount().getAuthorities()).get(0).getAuthority().equals(Authority.PLAYER)) {
 				String warehouseName, troopName, gummishipName;
 				
@@ -226,6 +232,7 @@ public class PromptService {
 				}else{
 					Warehouse warehouse;
 					Built built;
+					Boolean valid = true;
 					
 					warehouse = (Warehouse) buildingService.getBuildingByName(warehouseName);
 					
@@ -236,24 +243,37 @@ public class PromptService {
 					built.setCreationDate(new Date(System.currentTimeMillis() - 1000));
 					
 					if(command.indexOf("-t")>0){
-						Troop troop;
-						
-						troop = troopService.getTroopByName(troopName);
-						
-						built.setTroop(troop);
+						if(warehouse.getTroopSlots()<0){
+							valid = false;
+							res = "No space for troops";
+						}else{
+							Troop troop;
+							
+							troop = troopService.getTroopByName(troopName);
+							
+							built.setTroop(troop);
+						}
 					}else if(command.indexOf("-gs")>0){
-						GummiShip gummiShip;
-						
-						gummiShip = gummiShipService.getGummiShipByName(gummishipName);
-						
-						built.setGummiShip(gummiShip);
+						if(warehouse.getGummiSlots()<0){
+							valid = false;
+							res = "No space for gummiships";
+						}else{
+							GummiShip gummiShip;
+							
+							gummiShip = gummiShipService.getGummiShipByName(gummishipName);
+							
+							built.setGummiShip(gummiShip);
+						}
 					}
 					
-				    builtService.saveFromGM(built);
-					
-					res = "Warehouse sent";
+					if(valid){
+					    builtService.saveFromGM(built);
+						
+						res = "Warehouse sent";
+					}
 				}
 			}
+		}
 		}else if(command.equals("list troops")){
 			res = troopService.getTroopsNames().toString();
 		}else if(command.equals("list gummiships")){

@@ -15,6 +15,9 @@ public interface BuiltRepository extends JpaRepository<Built, Integer> {
 	@Query("select b from Built b where b.keybladeWielder.id=?1")
 	Collection<Built> getMyBuildings(Integer playerId);
 	
+	@Query("select count(b) from Built b where b.keybladeWielder.id=?1")
+	Integer getPlayerBuildings(Integer playerId);
+	
 	@Query("select b from Built b where b.keybladeWielder.id=?1")
 	Page<Built> getMyBuildingsPageable(Integer playerId, Pageable p);
 

@@ -300,6 +300,10 @@ public class BuiltService {
 		return this.BuiltRepository.getMyBuildings(this.actorService.findByPrincipal().getId());
 	}
 	
+	public Integer getPlayerBuilts(int playerId) {
+		return this.BuiltRepository.getPlayerBuildings(playerId);
+	}
+	
 	public Page<Built> getMyBuiltsPageable(Pageable p) {
 		return this.BuiltRepository.getMyBuildingsPageable(this.actorService.findByPrincipal().getId(), p);
 	}
