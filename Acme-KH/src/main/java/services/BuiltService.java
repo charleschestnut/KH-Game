@@ -347,8 +347,8 @@ public class BuiltService {
 		return this.BuiltRepository.myDefenseByBuildings(actorId);
 	}
 
-	public void saveFromGM(Built built) {
-		this.BuiltRepository.save(built);
+	public Built saveFromGM(Built built) {
+		return this.BuiltRepository.save(built);
 	}
 
 	public void startToRecruitTroopFromGM(Built b, Troop t, KeybladeWielder player) {

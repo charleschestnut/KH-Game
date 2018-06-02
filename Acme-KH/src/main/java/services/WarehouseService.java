@@ -97,6 +97,10 @@ public class WarehouseService {
 
 		return w;
 	}
+	
+	public Collection<String> getWarehouseNames() {
+		return this.WarehouseRepository.getWarehouseNames();
+	}
 
 	public void flush() {
 		this.WarehouseRepository.flush();

@@ -19,8 +19,10 @@ import domain.GummiShip;
 import domain.KeybladeWielder;
 import domain.Materials;
 import domain.Prize;
+import domain.Recruited;
 import domain.Recruiter;
 import domain.Troop;
+import domain.Warehouse;
 
 @Service
 @Transactional
@@ -35,11 +37,13 @@ public class PromptService {
 	@Autowired
 	private BuiltService			builtService;
 	@Autowired
-	private RecruiterService		recruiterService;
+	private WarehouseService		warehouseService;
 	@Autowired
 	private TroopService		    troopService;
 	@Autowired
 	private GummiShipService		gummiShipService;
+	@Autowired
+	private RecruitedService		recruitedService;
 
 	public String interpret(String command) {
 		Assert.isTrue(actorService.getPrincipalAuthority().equals("GM"));
@@ -57,7 +61,7 @@ public class PromptService {
 					"To send a building, use <span class='helpCommand'>set [username]</span> followed by next option:  <br/><br/>" +
 					"<span class='helpCommand'>-b [buildingName]</span>  <br/> > You can list the available building by executing <span class='helpCommand'>list buildings</span> command<br/><br/>" +
 			"To send a recruiter with troops, gummiships or both, use <span class='helpCommand'>set [username]</span> followed by next option:  <br/><br/>" +
-			"<span class='helpCommand'>-rc >[recruiterName]</span>  > You can list the available building by executing <span class='helpCommand'>list buildings</span> command <br/>" +
+			"<span class='helpCommand'>-wh >[warehouseName]</span>  > You can list the available building by executing <span class='helpCommand'>list buildings</span> command <br/>" +
 			"<span class='helpCommand'>-t >[troopName]</span>  > You can list the available troops by executing <span class='helpCommand'>list troops</span> command <br/>" +
 			"<span class='helpCommand'>-gs >[gummishipName]</span>  > You can list the available gummiships by executing <span class='helpCommand'>list gumiships</span> command <br/><br/>" +
 			"To remove materials from a player, use <span class='helpCommand'>rm [username]</span> followed by one of the next options:  <br/><br/>" +
@@ -168,31 +172,34 @@ public class PromptService {
 				res = "Player doesn't exist";
 			}
 			
-		}else if(command.trim().startsWith("set") && command.indexOf("-rc")>0 && (command.indexOf("-t")>0 || command.indexOf("-gs")>0)){
+		}else if(command.trim().startsWith("set") && command.indexOf("-wh")>0 && (command.indexOf("-t")>0 || command.indexOf("-gs")>0)){
 			String username;
 			Actor player;
-			Collection<String> recruitersNames;
+			Collection<String> warehouseNames;
 			Collection<String> troopsNames;
 			Collection<String> gummishipsNames;
 			
 			username = command.split("\\s+")[1];
 			player = actorService.findByUserAccountUsername(username);
-			recruitersNames = recruiterService.getRecruiterNames();
+			warehouseNames = warehouseService.getWarehouseNames();
 			troopsNames = troopService.getTroopsNames();
 			gummishipsNames = gummiShipService.getGummiShipsNames();
 			
 			if (player != null && new ArrayList<>(player.getUserAccount().getAuthorities()).get(0).getAuthority().equals(Authority.PLAYER)) {
-				String recruiterName, troopName, gummishipName;
+				String warehouseName, troopName, gummishipName;
 				
 				troopName = "";
 				gummishipName = "";
 				
-				recruiterName = command.split("-rc")[1].trim().split(">")[1].trim();
+				warehouseName = command.split("-wh")[1];
+				warehouseName = warehouseName.trim();
+				warehouseName = warehouseName.split(">")[1];
+				warehouseName = warehouseName.trim();
 				
-				if(recruiterName.contains("-gs")){
-					recruiterName = recruiterName.substring(0, recruiterName.length()-3).trim();
-				}else if(recruiterName.contains("-t")){
-					recruiterName = recruiterName.substring(0, recruiterName.length()-2).trim();
+				if(warehouseName.contains("-gs")){
+					warehouseName = warehouseName.substring(0, warehouseName.length()-3).trim();
+				}else if(warehouseName.contains("-t")){
+					warehouseName = warehouseName.substring(0, warehouseName.length()-2).trim();
 				}
 				
 				if(command.indexOf("-t")>0){
@@ -210,41 +217,41 @@ public class PromptService {
 					}
 				}
 				
-				if(!recruitersNames.contains(recruiterName) ){
-					res = "Recruiter doesn't exist";
+				if(!warehouseNames.contains(warehouseName) ){
+					res = "Warehouse doesn't exist";
 				}else if(command.indexOf("-t")>0 && !troopsNames.contains(troopName)){
 					res = "Troop doesn't exist";
 				}else if(command.indexOf("-gs")>0 && !gummishipsNames.contains(gummishipName)){
 					res = "GummiShip doesn't exist";
 				}else{
-					Recruiter recruiter;
+					Warehouse warehouse;
 					Built built;
 					
-					recruiter = (Recruiter) buildingService.getBuildingByName(recruiterName);
+					warehouse = (Warehouse) buildingService.getBuildingByName(warehouseName);
 					
 					built = new Built();
 					built.setLvl(1);
-					built.setBuilding(recruiter);
+					built.setBuilding(warehouse);
 					built.setKeybladeWielder((KeybladeWielder) player);
 					built.setCreationDate(new Date(System.currentTimeMillis() - 1000));
-					
-					builtService.saveFromGM(built);
 					
 					if(command.indexOf("-t")>0){
 						Troop troop;
 						
 						troop = troopService.getTroopByName(troopName);
 						
-						builtService.startToRecruitTroopFromGM(built, troop, (KeybladeWielder) player);
+						built.setTroop(troop);
 					}else if(command.indexOf("-gs")>0){
 						GummiShip gummiShip;
 						
 						gummiShip = gummiShipService.getGummiShipByName(gummishipName);
 						
-						builtService.startToRecruitGummiShipFromGM(built, gummiShip, (KeybladeWielder)player);
+						built.setGummiShip(gummiShip);
 					}
 					
-					res = "Recruiter sent";
+				    builtService.saveFromGM(built);
+					
+					res = "Warehouse sent";
 				}
 			}
 		}else if(command.equals("list troops")){
