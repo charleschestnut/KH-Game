@@ -146,13 +146,16 @@ public class ReportUpdateController extends AbstractController {
 	public ModelAndView create(@RequestParam int reportId) {
 		ModelAndView result;
 		ReportUpdate reportUpdate;
+		Collection<ReportUpdate> suspiciousUpdates;
 		Report report;
 
 		reportUpdate = reportUpdateService.create();
 		result = createEditModelAndView(reportUpdate);
+		suspiciousUpdates = reportUpdateService.getSuspiciousReportUpdatesByReportId(reportId);
 		report = reportService.findOne(reportId);
 
-		Assert.isTrue(report.getStatus() != ReportStatus.RESOLVED);
+		Assert.isTrue(report.getStatus() != ReportStatus.RESOLVED 
+				|| (actorService.getPrincipalAuthority().equals("ADMIN") && suspiciousUpdates.size()>0));
 
 		result.addObject("reportId", reportId);
 

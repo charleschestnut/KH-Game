@@ -74,9 +74,10 @@
 
 <div class="row">
 	<security:authorize access="hasRole('GM') or hasRole('ADMIN')">
-	<jstl:if test="${report.status ne 'RESOLVED'}">
+	<jstl:if test="${report.status ne 'RESOLVED' and !suspiciousList}">
 		<acme:action color="success" url="reportUpdate/create.do?reportId=${report.id}" code="reportUpdate.create"/>
-		<br />&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<br />
 	</jstl:if>
 	</security:authorize>
 	<acme:goback />

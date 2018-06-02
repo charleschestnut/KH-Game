@@ -66,6 +66,12 @@
 <jstl:if test="${report.status ne 'RESOLVED' and ownUpdate eq true}">
 	<acme:action url="reportUpdate/edit.do?reportUpdateId=${reportUpdate.id}&reportId=${report.id}" code="master.page.edit" color="pink"/>
 </jstl:if>
+<security:authorize access="hasRole('ADMIN')">
+	<jstl:set var="admin" value="true"/>
+</security:authorize>
+<jstl:if test="${report.status ne 'RESOLVED' or (reportUpdate.isSuspicious eq true and admin eq true)}">
+	<acme:action color="success" url="reportUpdate/create.do?reportId=${report.id}" code="reportUpdate.create"/>
+</jstl:if>
 
 <acme:goback />
 <jstl:if test="${reportUpdate.isSuspicious eq true}">

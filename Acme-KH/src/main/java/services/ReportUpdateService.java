@@ -50,9 +50,13 @@ public class ReportUpdateService {
 		Assert.notNull(reportUpdate);
 		Report report;
 		ReportUpdate saved;
+		Collection<ReportUpdate> suspiciousUpdates;
 
 		report = this.reportService.findOne(reportId);
-		Assert.isTrue(report.getStatus() != ReportStatus.RESOLVED, "error.message.noUpdate");
+		suspiciousUpdates = this.getSuspiciousReportUpdatesByReportId(reportId);
+		
+		Assert.isTrue(report.getStatus() != ReportStatus.RESOLVED
+				|| (actorService.getPrincipalAuthority().equals("ADMIN") && suspiciousUpdates.size()>0));
 
 		if (reportUpdate.getId() != 0)
 			Assert.isTrue(report.getReportUpdates().contains(reportUpdate), "error.message.distincReport");
@@ -169,6 +173,10 @@ public class ReportUpdateService {
 
 	public Collection<ReportUpdate> getResolvedReportUpdates(final int reportId) {
 		return this.reportUpdateRepository.getResolvedReportUpdates(reportId);
+	}
+	
+	public Collection<ReportUpdate> getSuspiciousReportUpdatesByReportId(int reportId){
+		return this.reportUpdateRepository.getSuspiciousReportUpdatesByReportId(reportId);
 	}
 	
 	public void flush(){
