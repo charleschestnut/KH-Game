@@ -43,11 +43,12 @@
 		<jstl:out value="${level}: ${troop.recruiterRequiredLvl }"></jstl:out>
 		<br>
 		
-		<jstl:if test="${!troop.recruiter.isFinal }">
+		<jstl:if test="${troop.soyDueno()}">
 			<acme:action code="troop.edit"  url="troop/contentManager/edit.do?recruiterId=${troop.recruiter.id}&troopId=${troop.id}"/>
+			<acme:action code="troop.delete"  url="troop/contentManager/delete.do?troopId=${troop.id}"/>
 		</jstl:if>
 	
-		<acme:action code="troop.delete"  url="troop/contentManager/delete.do?troopId=${troop.id}"/>
+		
 	</fieldset>
 </jstl:forEach>
 <br><br>

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
 
@@ -14,6 +15,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+
+import security.LoginService;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -89,4 +92,8 @@ public class GummiShip extends DomainEntity {
 		this.recruiter = recruiter;
 	}
 
+	@Transient
+	public Boolean soyDueno(){
+		return LoginService.getPrincipal().equals(recruiter.getContentManager().getUserAccount());
+	}
 }

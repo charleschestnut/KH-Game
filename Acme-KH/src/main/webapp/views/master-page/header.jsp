@@ -178,9 +178,12 @@
 					<div style="font-size: 12px;" class="dropdown-menu"
 						aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" href="organization/list.do"><spring:message
-								code="organization.list" /></a> <a class="dropdown-item"
+								code="organization.list" /></a> 
+						<security:authorize access="hasRole('PLAYER')">
+						<a class="dropdown-item"
 							href="organization/invitation/list.do"><spring:message
 								code="master.page.myInvitations" /></a>
+						</security:authorize>
 					</div></li>
 			</security:authorize>
 

@@ -17,9 +17,11 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<jstl:if test="${!hasOrganization}">
-	<acme:action code="organization.create"  url="organization/edit.do"/>
-</jstl:if>
+<security:authorize access="hasRole('PLAYER')">
+	<jstl:if test="${!hasOrganization}">
+		<acme:action code="organization.create"  url="organization/edit.do"/>
+	</jstl:if>
+</security:authorize>
 
 <jstl:if test="${hasOrganization}">
 	<acme:action code="organization.enter"  url="organization/membersList.do?organizationId=${organizationId}"/>

@@ -56,6 +56,9 @@ public class ChattyController extends AbstractController {
 	public ModelAndView list(@RequestParam String organizationId) {
 		ModelAndView result;
 		int orgId = Integer.parseInt(organizationId);
+		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
+		if(this.organizationService.findOrganizationByPlayer(actual.getId()) ==null)
+			return new ModelAndView("redirect:/organization/list.do");
 		Collection<Chatty> all = this.chattyService.getChattyFromAnOrganization(orgId);
 
 		result = new ModelAndView("organization/chatty/list");

@@ -27,7 +27,7 @@
 
 	<spring:message code="master.page.name" var="nameH" />
 	<display:column title="${nameH}">
-		<jstl:out value="${row.keybladeWielder.worldName}"/> 
+		<jstl:out value="${row.keybladeWielder.name}"/> 
 	</display:column>
 	
 	<spring:message code="invitation.orgRange" var="orgRangeH" />

@@ -38,7 +38,7 @@
 		<spring:message code="gummiSlots" var="slots" />
 		<jstl:out value="${slots}: ${gummi.slots}"></jstl:out>
 		<br>
-		<jstl:if test="${!troop.recruiter.isFinal }">
+		<jstl:if test="${gummi.soyDueno()}">
 			<acme:action code="gummiShip.edit"  url="gummiShip/contentManager/edit.do?recruiterId=${gummi.recruiter.id}&gummiShipId=${gummi.id}"/>
 		</jstl:if>
 		<br>

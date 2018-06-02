@@ -80,7 +80,6 @@ public class RecruiterService {
 	}
 
 	public void addTroop(Recruiter r, Troop t) {
-		Assert.isTrue(!r.getIsFinal(), "error.message.building.");
 		Assert.isTrue(r.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
 		Assert.isTrue(r.equals(t.getRecruiter()), "error.message.recruiter.addTroop");
 		Assert.isTrue(t.getRecruiterRequiredLvl() <= r.getMaxLvl(), "error.message.recruiter.highLevel");
@@ -95,7 +94,6 @@ public class RecruiterService {
 	}
 
 	public void addGummiShip(Recruiter r, GummiShip gs) {
-		Assert.isTrue(!r.getIsFinal(), "error.message.building.");
 		Assert.isTrue(r.getContentManager().getUserAccount().equals(LoginService.getPrincipal()), "error.message.building.creator");
 		Assert.isTrue(r.equals(gs.getRecruiter()), "error.message.recruiter.addGummiShip");
 		Assert.isTrue(gs.getRecruiterRequiredLvl() <= r.getMaxLvl(), "error.message.recruiter.highLevel");

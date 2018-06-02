@@ -20,7 +20,7 @@
 
 <jstl:forEach var="chatty" items="${chattys}" >
 	<fieldset>
-		<legend title="${chatty.invitation.keybladeWielder.worldName }"><jstl:out value="${chatty.invitation.keybladeWielder.worldName }"/></legend>
+		<legend title="${chatty.invitation.keybladeWielder.name }"><jstl:out value="${chatty.invitation.keybladeWielder.name }"/></legend>
 		<jstl:out value="${chatty.content }"></jstl:out>
 	</fieldset>
 </jstl:forEach>

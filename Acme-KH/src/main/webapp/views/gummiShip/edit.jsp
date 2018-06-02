@@ -27,13 +27,17 @@
 	
 	<acme:textbox code="name" path="name" />
 	<br>
+	
+	<spring:message code="legendTimeToRecruit" var="TTRMinutes" />
+	<i><jstl:out value="${TTRMinutes}"></jstl:out></i>
 	<acme:textbox code="timeToRecruit" path="timeToRecruit" />
 	<br>
-	<acme:textbox code="munny" path="cost.munny" />
+	
+	<acme:textbox code="costMunny" path="cost.munny" />
 	<br>
-	<acme:textbox code="mythril" path="cost.mytrhil" />
+	<acme:textbox code="costMythril" path="cost.mytrhil" />
 	<br>
-	<acme:textbox code="gummiCoal" path="cost.gummiCoal" />
+	<acme:textbox code="costGummiCoal" path="cost.gummiCoal" />
 	<br>
 	<acme:textbox code="recruiterRequiredLvl" path="recruiterRequiredLvl" />
 	<br>
