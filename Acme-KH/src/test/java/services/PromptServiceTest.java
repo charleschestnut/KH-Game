@@ -59,7 +59,7 @@ public class PromptServiceTest extends AbstractTest {
 			}, //A gm removes materials from player1
 			{
 				"gamemaster1", "set player1 -rc >TEST", IllegalArgumentException.class
-			}, //A gm sends a recruiter that doesn't exist
+			}, //A gm sends a warehouse that doesn't exist
 		};
 
 		for (int i = 0; i < testingData.length; i++) {
@@ -118,7 +118,7 @@ public class PromptServiceTest extends AbstractTest {
 				
 				output = promptService.interpret(command);
 				
-				Assert.isTrue(output.equals("Recruiter doesn't exist"));
+				Assert.isTrue(output.equals("Warehouse doesn't exist"));
 			}
 			else{
 				promptService.interpret(command);

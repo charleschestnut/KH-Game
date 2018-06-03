@@ -119,7 +119,7 @@ public class PromptService {
 					materials.setGummiCoal(gummiCoal);
 					materials.setMunny(munny);
 					materials.setMytrhil(mythril);
-					prize.setDescription("Prize from gamemaster");
+					prize.setDescription("prize.gm.defaultDescription");
 					prize.setMaterials(materials);
 					prize.setKeybladeWielder(keybladeWielder);
 					
@@ -148,6 +148,10 @@ public class PromptService {
 			player = actorService.findByUserAccountUsername(username);
 			buildingsNames = buildingService.getAvailableBuildingsName();
 			
+			if(builtService.getPlayerBuilts(player.getId()) >= this.configurationService.getConfiguration().getWorldSlots()){
+				res = "Player doesn't have slots enough";
+			}else{
+			
 			if (player != null && new ArrayList<>(player.getUserAccount().getAuthorities()).get(0).getAuthority().equals(Authority.PLAYER)) {
 				String buildingName;
 				
@@ -173,7 +177,7 @@ public class PromptService {
 			}else{
 				res = "Player doesn't exist";
 			}
-			
+		}
 		}else if(command.trim().startsWith("set") && command.indexOf("-wh")>0 && (command.indexOf("-t")>0 || command.indexOf("-gs")>0)){
 			String username;
 			Actor player;
@@ -187,7 +191,7 @@ public class PromptService {
 			troopsNames = troopService.getTroopsNames();
 			gummishipsNames = gummiShipService.getGummiShipsNames();
 			
-			if(builtService.getPlayerBuilts(player.getId()) < this.configurationService.getConfiguration().getWorldSlots()){
+			if(builtService.getPlayerBuilts(player.getId()) >= this.configurationService.getConfiguration().getWorldSlots()){
 				res = "Player doesn't have slots enough";
 			}else{
 			
