@@ -356,7 +356,7 @@
 		<property name="extraResources" value="0.1" />
 		<property name="extraAttack" value="0.0" />
 		<property name="extraDefense" value="0.0" />
-		<property name="galaxy" value="0" />
+		<property name="galaxy" value="1" />
 	</bean>
 	
 	<bean id="faction2" class="domain.Faction">
@@ -365,7 +365,7 @@
 		<property name="extraResources" value="0.0" />
 		<property name="extraAttack" value="0.05" />
 		<property name="extraDefense" value="0.0" />
-		<property name="galaxy" value="0" />
+		<property name="galaxy" value="2" />
 	</bean>
 	
 	<!-- BATTLE -->
