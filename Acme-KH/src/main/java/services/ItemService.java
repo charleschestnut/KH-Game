@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ItemRepository;
+import security.LoginService;
 import domain.ContentManager;
 import domain.Item;
 import domain.KeybladeWielder;
@@ -53,9 +54,10 @@ public class ItemService {
 	public Item save(Item item) {
 		Assert.notNull(item);
 
-		Item saved;
+		// Solo el que ha creado el item puede modificarlo
+		Assert.isTrue(LoginService.getPrincipal().equals(item.getContentManager().getUserAccount()),"error.message.itemOwner");
 
-		saved = this.itemRepository.save(item);
+		Item saved = this.itemRepository.save(item);
 
 		return saved;
 	}
@@ -145,17 +147,7 @@ public class ItemService {
 			result = item;
 			result.setContentManager((ContentManager) this.actorService.findByPrincipal());
 		} else {
-			result = this.itemRepository.findOne(item.getId());
-
-			result.setName(item.getName());
-			result.setDescription(item.getDescription());
-			result.setOnSell(item.getOnSell());
-			result.setType(item.getType());
-			result.setDuration(item.getDuration());
-			result.setExpiration(item.getExpiration());
-			result.setExtra(item.getExtra());
-			result.setMunnyCost(item.getMunnyCost());
-
+			result = item;
 			result.setContentManager(original.getContentManager());
 
 		}

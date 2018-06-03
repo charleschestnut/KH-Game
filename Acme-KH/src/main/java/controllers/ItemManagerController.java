@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -96,8 +95,7 @@ public class ItemManagerController extends AbstractController {
 				this.itemService.save(item);
 				result = new ModelAndView("redirect:/item/manager/createdItems.do");
 			} catch (Throwable oops) {
-				System.out.println("--------------------------: " + ExceptionUtils.getStackTrace(oops));
-				result = this.createEditModelAndView(item, oops.getMessage());
+				result = this.createEditModelAndView(item, this.getErrorMessage(oops));
 
 			}
 		return result;
