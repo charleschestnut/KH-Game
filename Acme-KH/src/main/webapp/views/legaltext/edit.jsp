@@ -26,7 +26,7 @@
 	<form:hidden path="type" />
 	<form:hidden path="codeLanguage" />
 	
-	<acme:textarea path="body" code="master.page.body"/>
+	<acme:textarea path="body" code="content"/>
 	
 		<acme:submit code="master.page.save"  name="save"/>
 		<acme:cancel code="master.page.cancel"  url="legaltext/index.do"/>
