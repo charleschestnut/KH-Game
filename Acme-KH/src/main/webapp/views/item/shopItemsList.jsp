@@ -44,11 +44,11 @@
 	<spring:message code="item.munnyCost" var="munnyCostHeader" />
 	<display:column property="munnyCost" title="${munnyCostHeader}" />
 	
-	<jstl:if test="${row.munnyCost <= playerMunny}">
 	<display:column>
+	<jstl:if test="${row.munnyCost <= playerMunny}">
 	<a href="item/player/buy.do?itemId=${row.id}"><spring:message code="item.buy"/></a>
-	</display:column>
 	</jstl:if>
+	</display:column>
 	
 	</jstl:if>
 
