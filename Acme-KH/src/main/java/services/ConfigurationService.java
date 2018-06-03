@@ -64,7 +64,12 @@ public class ConfigurationService {
 		
 		if (configuration.getId() == 0)
 			this.configurationRepository.deleteAll();
-
+		
+		Assert.isTrue(configuration.getWorldSlots() >= this.configurationRepository.getConfiguration().getWorldSlots(),"error.message.wordSlotsError");
+		Assert.isTrue(configuration.getBaseMaterials().getGummiCoal() >= this.configurationRepository.getConfiguration().getBaseMaterials().getGummiCoal(),"error.message.GummiCoalError");
+		Assert.isTrue(configuration.getBaseMaterials().getMunny() >= this.configurationRepository.getConfiguration().getBaseMaterials().getMunny(),"error.message.MunnyError");
+		Assert.isTrue(configuration.getBaseMaterials().getMytrhil() >= this.configurationRepository.getConfiguration().getBaseMaterials().getMytrhil(),"error.message.MytrhilError");
+		
 		result = this.configurationRepository.save(configuration);
 		Assert.notNull(result);
 		return result;

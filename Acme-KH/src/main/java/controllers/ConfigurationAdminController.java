@@ -44,7 +44,7 @@ public class ConfigurationAdminController extends AbstractController {
 				this.configurationService.save(configuration);
 				result = new ModelAndView("redirect:edit.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(configuration, "configuration.commit.error");
+				result = this.createEditModelAndView(configuration, this.getErrorMessage(oops));
 			}
 		return result;
 	}
