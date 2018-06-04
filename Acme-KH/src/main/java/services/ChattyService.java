@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 
 import repositories.ChattyRepository;
 import domain.Chatty;
+import domain.Invitation;
 import domain.InvitationStatus;
 import domain.KeybladeWielder;
 import domain.Organization;
@@ -59,14 +60,15 @@ public class ChattyService {
 		Assert.notNull(chatty.getInvitation(), "error.message.chatty.invitation");
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 		Organization org = this.organizationService.findOrganizationByPlayer(actual.getId());
+		Invitation invActual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(actual.getId(), chatty.getInvitation().getOrganization().getId());
 		
 		Assert.isTrue(org.equals(chatty.getInvitation().getOrganization()) && chatty.getInvitation().getInvitationStatus().equals(InvitationStatus.ACCEPTED), "error.message.chatty.sameOrganization"); // Deben ser de la misma organización.
+		Assert.isTrue(chatty.getInvitation().equals(invActual) && invActual.getInvitationStatus().equals(InvitationStatus.ACCEPTED));
 		chatty.setDate(new Date(System.currentTimeMillis()-1000));
 		
 		Chatty saved;
 		
 		saved = chattyRepository.save(chatty);
-		//deleteExtraChattyFromAnOrganization(chatty.getInvitation().getOrganization().getId());
 		
 		return saved;
 	}

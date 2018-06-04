@@ -65,14 +65,19 @@ public class OrganizationService {
 		if(organization.getId()!=0){  // Si quiere editar la organización, debe ser MASTER de esa organización
 			
 			Invitation actual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(this.actorService.findByPrincipal().getId(), organization.getId());
+			Invitation invActual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(actual.getId(), organization.getId());
+			Boolean tieneOrganizacion = this.keybladeWielderHasOrganization(actual.getId());
+			
+			Assert.isTrue(!tieneOrganizacion, "error.message.invitation.hasOrganization");
+			Assert.isTrue(invActual.getOrgRange().equals(OrgRange.MASTER),"error.message.invitation.notMaster");
 			Assert.isTrue(actual.getOrgRange().equals(OrgRange.MASTER) && actual.getOrganization().equals(organization), "error.message.invitation.notMaster");
+			
 			saved = organizationRepository.save(organization);
+			
 		
 		}else{  //Si está creando una organización, el principal no debe tener organización.
+			KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 			
-			organization.setCreationDate(new Date(System.currentTimeMillis()-1000));
-			Boolean tieneOrganizacion = this.keybladeWielderHasOrganization(this.actorService.findByPrincipal().getId());
-			Assert.isTrue(!tieneOrganizacion, "error.message.invitation.hasOrganization");
 			//Tengo que crear una invitación aceptada automáticamente para mí.
 			saved = organizationRepository.save(organization);
 			this.invitationService.createForOrganizationCreation(this.actorService.findByPrincipal().getId(), saved.getId()); 

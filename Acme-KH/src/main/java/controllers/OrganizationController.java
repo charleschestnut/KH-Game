@@ -119,6 +119,10 @@ public class OrganizationController extends AbstractController {
 			return new ModelAndView("redirect:/organization/list.do");
 		
 		if(organizationId!= null){
+			Invitation invActual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(actual.getId(), Integer.parseInt(organizationId));
+			if(invActual == null || !invActual.getOrgRange().equals(OrgRange.MASTER)){ //Si no es el master de la organización, lo echamos hacia fuera
+				return new ModelAndView("redirect:/organization/list.do");
+			}
 			Organization o = this.organizationService.findOne(Integer.parseInt(organizationId));
 			result = new ModelAndView("organization/edit");
 			result.addObject("organization", o);
@@ -145,7 +149,6 @@ public class OrganizationController extends AbstractController {
 				toSave = this.organizationService.save(org);
 				
 				result = new ModelAndView("redirect:/organization/membersList.do?organizationId="+toSave.getId());
-				result.addObject("members", this.keybladeWielderService.findMembersOfOrganization(organization.getId()));
 			}catch(Throwable oops){
 				result = createEditModelAndView(organization, "organization.commit.error");
 			}
