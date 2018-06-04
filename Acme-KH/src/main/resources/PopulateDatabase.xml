@@ -135,6 +135,19 @@
 		<property name="enabled" value="true" />
 	</bean>
 	
+	<bean id="userAccount10" class="security.UserAccount">
+		<property name="username" value="player6" />
+		<property name="password" value="9d470eed6fd655c08563e806848cdc6d" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+						<property name="authority" value="PLAYER" />
+				</bean>
+			</list>
+		</property>
+		<property name="enabled" value="true" />
+	</bean>
+	
 
 
 	
@@ -288,6 +301,25 @@
 		<!-- <property name="shield" ref="shield2" /> -->
 	</bean>
 	
+	<bean id="player6" class="domain.KeybladeWielder">
+		<property name="name" value="Jack" />
+		<property name="surname" value="Sparrow" />
+		<property name="nickname" value="Jack" />
+		<property name="phone" value="3259245623" />
+		<property name="email" value="jack@gmail.com" />
+		<property name="userAccount" ref="userAccount10" />
+		<property name="lastConnection" value="02/07/2017 08:32" />
+		<property name="materials" ref="material1" />
+		<property name="wins" value="10" />
+		<property name="loses" value="20" />
+		<property name="worldCoordinates" ref="coordinates1" />
+		<property name="worldName" value="Caribe" />
+		<property name="faction" ref="faction1" />
+		<property name="hasConfirmedTerms" value="true" />
+		<property name="confirmMoment" value="20/02/2016 00:00" />
+		<!-- <property name="shield" ref="shield1" /> -->
+	</bean>
+	
 	<!-- COORDINATES -->
 	<bean id="coordinates1" class="domain.Coordinates">
 		<property name="x" value="1" />
@@ -317,6 +349,12 @@
 		<property name="x" value="5" />
 		<property name="y" value="1" />
 		<property name="z" value="4" />
+	</bean>
+	
+	<bean id="coordinates6" class="domain.Coordinates">
+		<property name="x" value="7" />
+		<property name="y" value="2" />
+		<property name="z" value="5" />
 	</bean>
 	
 	<!-- MATERIALS -->
