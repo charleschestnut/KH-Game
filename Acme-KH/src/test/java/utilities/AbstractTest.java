@@ -24,6 +24,8 @@ import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
@@ -31,6 +33,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import security.LoginService;
 import utilities.internal.EclipseConsole;
 
+@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 public abstract class AbstractTest {
 
 	// Supporting services --------------------------------
