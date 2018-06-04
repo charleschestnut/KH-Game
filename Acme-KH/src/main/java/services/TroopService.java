@@ -10,8 +10,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.BuiltRepository;
-import repositories.RecruitedRepository;
 import repositories.TroopRepository;
 import domain.Built;
 import domain.Materials;
@@ -27,19 +25,21 @@ public class TroopService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private TroopRepository	TroopRepository;
-	
-	@Autowired
-	private BuiltService builtService;
-	
-	@Autowired
-	private RecruitedService recruitedService;
-	
-	@Autowired
-	private PrizeService prizeService;
+	private TroopRepository		TroopRepository;
 
 	@Autowired
-	Validator				validator;
+	private BuiltService		builtService;
+
+	@Autowired
+	private RecruitedService	recruitedService;
+	@Autowired
+	private RecruiterService	recruiterService;
+
+	@Autowired
+	private PrizeService		prizeService;
+
+	@Autowired
+	Validator					validator;
 
 
 	// CRUD methods
@@ -132,23 +132,23 @@ public class TroopService {
 		return result;
 
 	}
-	
-	public Troop getTroopsFromRecruiter(String name){
+
+	public Troop getTroopsFromRecruiter(String name) {
 		return this.TroopRepository.getTroopByName(name);
 	}
-	
-	public Collection<String> getTroopsNames(){
+
+	public Collection<String> getTroopsNames() {
 		return this.TroopRepository.getTroopsNames();
 	}
-	
-	public Troop getTroopByName(String name){
+
+	public Troop getTroopByName(String name) {
 		return this.TroopRepository.getTroopByName(name);
 	}
 
 	public void deleteCompleto(Troop t) {
-		Assert.isTrue((t.getRecruiter().getIsFinal() && t.getRecruiter().getTroops().size()>1) || !t.getRecruiter().getIsFinal(), "error.message.restrictionsDeleteTroop");
-		
-		if (t.getRecruiter().getIsFinal() && t.getRecruiter().getTroops().size()>1) {
+		Assert.isTrue((t.getRecruiter().getIsFinal() && t.getRecruiter().getTroops().size() > 1) || !t.getRecruiter().getIsFinal(), "error.message.restrictionsDeleteTroop");
+
+		if (t.getRecruiter().getIsFinal() && t.getRecruiter().getTroops().size() > 1) {
 			Collection<Recruited> recs = this.recruitedService.findAllRecruitedOfTroop(t.getId());
 			Materials toAdd = new Materials();
 			toAdd.setMunny((int) (t.getCost().getMunny() * 1.1));
@@ -161,18 +161,18 @@ public class TroopService {
 				b.setActivationDate(null);
 				this.builtService.saveForTroopDeleting(b);
 			}
-			
+
 			for (Recruited r : recs) {
-				Prize p =this.prizeService.create();
+				Prize p = this.prizeService.create();
 				p.setKeybladeWielder(r.getStorageBuilding().getKeybladeWielder());
-				p.setDescription("Sorry, we have deleted "+r.getTroop().getName()+ "from the game. We have given you a 110% of the cost that it had.");
+				p.setDescription("Sorry, we have deleted " + r.getTroop().getName() + "from the game. We have given you a 110% of the cost that it had.");
 				p.setMaterials(toAdd);
 				this.prizeService.save(p);
 				this.recruitedService.delete(r);
 			}
 
-			
 		}
+		this.recruiterService.removeTroop(t);
 		this.TroopRepository.delete(t);
 	}
 

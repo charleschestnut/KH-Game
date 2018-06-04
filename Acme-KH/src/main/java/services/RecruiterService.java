@@ -106,6 +106,16 @@ public class RecruiterService {
 
 	}
 
+	public void removeTroop(Troop t) {
+		Recruiter r = t.getRecruiter();
+		Collection<Troop> troops = r.getTroops();
+		troops.remove(t);
+
+		r.setTroops(troops);
+
+		this.RecruiterRepository.save(r);
+	}
+
 	public Recruiter reconstruct(Recruiter recruiter, BindingResult binding) {
 		Recruiter original = this.findOne(recruiter.getId());
 
