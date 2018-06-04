@@ -267,4 +267,9 @@ public class InvitationService {
 		return false;
 	}
 
+	public Collection<Invitation> findInvitationsSentByOrganization(Integer id) {
+		deleteAll(this.invitationRepository.findDeleteInvitationsSentByOrganization(id, new Date(System.currentTimeMillis()-864000000)));
+		return this.invitationRepository.findCorrectInvitationsSentByOrganization(id, new Date(System.currentTimeMillis()-864000000));
+	}
+
 }

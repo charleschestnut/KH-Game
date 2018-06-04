@@ -111,17 +111,23 @@ public class OrganizationController extends AbstractController {
 	// Action-2 ---------------------------------------------------------------		
 
 	@RequestMapping("/edit")
-	public ModelAndView create() {
+	public ModelAndView create(@RequestParam(required = false) String organizationId) {
 		ModelAndView result;
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 		
-		if(this.organizationService.keybladeWielderHasOrganization(actual.getId()))
+		if(this.organizationService.keybladeWielderHasOrganization(actual.getId()) && organizationId==null)
 			return new ModelAndView("redirect:/organization/list.do");
 		
-		Organization o = this.organizationService.create();
-		result = new ModelAndView("organization/edit");
-		result.addObject("organization", o);
-		
+		if(organizationId!= null){
+			Organization o = this.organizationService.findOne(Integer.parseInt(organizationId));
+			result = new ModelAndView("organization/edit");
+			result.addObject("organization", o);
+		}else{
+
+			Organization o = this.organizationService.create();
+			result = new ModelAndView("organization/edit");
+			result.addObject("organization", o);
+		}
 		return result;
 	}
 		

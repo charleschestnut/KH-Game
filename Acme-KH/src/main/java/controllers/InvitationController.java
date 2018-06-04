@@ -27,6 +27,7 @@ import domain.Invitation;
 import domain.InvitationStatus;
 import domain.KeybladeWielder;
 import domain.OrgRange;
+import domain.Organization;
 
 @Controller
 @RequestMapping("/organization/invitation")
@@ -204,4 +205,24 @@ public class InvitationController extends AbstractController {
 		}
 	}
 	
+	
+	@RequestMapping("/orgList")
+	public ModelAndView orgList(@RequestParam String organizationId) {
+		ModelAndView result;
+		Integer id = Integer.decode(organizationId);
+		Organization org = this.organizationService.findOne(id);
+		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
+		try{
+			if(!this.organizationService.findOrganizationByPlayer(actual.getId()).equals(org)){
+				return new ModelAndView("redirect:organization/invitation/list.do");
+			}
+		}catch(Throwable oops){}
+		
+		Collection<Invitation> all = this.invitationService.findInvitationsSentByOrganization(id);
+		
+		result = new ModelAndView("organization/invitation/orgList");
+		result.addObject("invitations", all);
+
+		return result;
+	}
 }

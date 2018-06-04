@@ -19,6 +19,10 @@
 
 <jstl:if test="${canChat}">
 	<acme:action code="organization.chat"  url="organization/chatty/list.do?organizationId=${algo}"/>
+	<acme:action code="organization.invitations"  url="organization/invitation/orgList.do?organizationId=${algo}"/>
+	<jstl:if test="${iAmMaster}">
+		<acme:action code="organization.edit"  url="organization/edit.do?organizationId=${algo}"/>
+	</jstl:if>
 	<acme:action code="organization.leave"  url="organization/leaveOrganization.do"/>
 </jstl:if>
 

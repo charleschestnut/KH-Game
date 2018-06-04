@@ -58,6 +58,7 @@
 		<security:intercept-url pattern="/organization/chatty/edit.do" access="hasRole('PLAYER')" />
 		
 		<security:intercept-url pattern="/organization/invitation/list.do" access="hasRole('PLAYER')" />
+		<security:intercept-url pattern="/organization/invitation/orgList.do" access="hasRole('PLAYER')" />
 		<security:intercept-url pattern="/organization/invitation/edit.do" access="hasRole('PLAYER')" />
 		<security:intercept-url pattern="/organization/invitation/accept.do" access="hasRole('PLAYER')" />
 		<security:intercept-url pattern="/organization/invitation/decline.do" access="hasRole('PLAYER')" />

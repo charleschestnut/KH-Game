@@ -21,6 +21,11 @@
 		<put-attribute name="body" value="/views/invitation/list.jsp" />
 	</definition>
 	
+	<definition name="organization/invitation/orgList" extends="master.page">	
+		<put-attribute name="title" value="Sent invitations" />
+		<put-attribute name="body" value="/views/invitation/organizationList.jsp" />
+	</definition>
+	
 	
 	<definition name="organization/invitation/edit" extends="master.page">	
 		<put-attribute name="title" value="Edit invitation" />

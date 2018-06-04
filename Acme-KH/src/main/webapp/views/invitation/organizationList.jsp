@@ -43,13 +43,5 @@
 		<jstl:out value="${row.invitationStatus}"/> 
 	</display:column>
 	
-	<spring:message code="master.page.actions" var="actionsH" />
-	<display:column title="${actionsH}">
-		<jstl:if test="${!hasOrganization and row.isPending()}">
-			<acme:action code="invitation.accept"  url="organization/invitation/accept.do?invitationId=${row.id}"/>
-			<acme:action code="invitation.decline"  url="organization/invitation/decline.do?invitationId=${row.id}"/>
-		</jstl:if>
-	</display:column>
-	
 
 </display:table>
