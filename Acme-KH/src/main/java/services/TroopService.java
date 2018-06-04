@@ -15,6 +15,7 @@ import repositories.RecruitedRepository;
 import repositories.TroopRepository;
 import domain.Built;
 import domain.Materials;
+import domain.Prize;
 import domain.Recruited;
 import domain.Recruiter;
 import domain.Troop;
@@ -33,6 +34,9 @@ public class TroopService {
 	
 	@Autowired
 	private RecruitedService recruitedService;
+	
+	@Autowired
+	private PrizeService prizeService;
 
 	@Autowired
 	Validator				validator;
@@ -151,18 +155,23 @@ public class TroopService {
 			toAdd.setMytrhil((int) (t.getCost().getMytrhil() * 1.1));
 			toAdd.setGummiCoal((int) (t.getCost().getGummiCoal() * 1.1));
 
-			for (Recruited r : recs) {
-				r.getStorageBuilding().getKeybladeWielder().getMaterials().add(toAdd);
-				r.getStorageBuilding().setTroop(null);
-				this.builtService.saveForTroopDeleting(r.getStorageBuilding());
-				this.recruitedService.delete(r);
-			}
-
 			Collection<Built> recsBults = this.builtService.findAllBuiltWithTroop(t.getId());
 			for (Built b : recsBults) {
 				b.setTroop(null);
+				b.setActivationDate(null);
 				this.builtService.saveForTroopDeleting(b);
 			}
+			
+			for (Recruited r : recs) {
+				Prize p =this.prizeService.create();
+				p.setKeybladeWielder(r.getStorageBuilding().getKeybladeWielder());
+				p.setDescription("Sorry, we have deleted "+r.getTroop().getName()+ "from the game. We have given you a 110% of the cost that it had.");
+				p.setMaterials(toAdd);
+				this.prizeService.save(p);
+				this.recruitedService.delete(r);
+			}
+
+			
 		}
 		this.TroopRepository.delete(t);
 	}
