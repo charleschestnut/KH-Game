@@ -40,7 +40,7 @@
 	
 	<acme:textbox code="report.title" path="title"/><br/>
 	<acme:textarea code="report.content" path="content"/><br/>
-	<acme:textbox code="report.photos" path="photos"/><br/>
+	<acme:textbox placeholder="report.img.ph" code="report.photos" path="photos"/><br/>
 	
 	</security:authorize>
 	

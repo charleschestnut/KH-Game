@@ -110,11 +110,12 @@
 				</p>
 				
 				<div class="btn-group pagination-centered">
+				<jstl:if test="${row.lvl ne row.building.maxLvl}">
 				<div data-trigger="hover"
 		data-toggle="popover" data-trigger="focus" data-placement="top" data-content="${row.building.getTotalMaterials(row.lvl) }">
 							<acme:icon-button color="#83f52c" icon="arrow_upward" href="built/upgrade.do?builtId=${row.id }" title="built.upgrade"/>
 				</div>
-					
+				</jstl:if>
 					<jstl:if test="${row.lvl>0 }">
 			<%-- <a class="btn-sm btn btn-warning" href="built/display.do?builtId=${row.id}"><jstl:out value="${displayHeader}"></jstl:out></a> --%>
 			<acme:icon-button color="#f3f315" icon="visibility" href="built/display.do?builtId=${row.id}" title="master.page.display"/>
@@ -136,7 +137,7 @@
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.troop!=null && !row.haTerminado(row.troop.timeToRecruit) }">
 						<%-- <button type="button" class="btn-sm btn btn-primary" disabled><jstl:out value="${working }"></jstl:out></button> --%>
-						<button type="button" class="btn-sm btn btn-primary" disabled><i style="font-size:20px;vertical-align:middle;" class="fa fa-gear fa-spin"></i>&nbsp;&nbsp;<jstl:out value="${working }"></jstl:out></button>
+						<button type="button" class="btn-sm btn btn-primary" disabled><i style="font-size:20px;vertical-align:middle;" class="fa fa-gear fa-spin"></i></button>
 					</jstl:when>
 					<jstl:when test="${row.building.getClass()=='class domain.Recruiter' && row.activationDate!=null && row.gummiShip!=null && row.haTerminado(row.gummiShip.timeToRecruit)}">
 						<a class="btn-sm btn btn-primary" href="built/recruit.do?builtId=${row.id }"><jstl:out value="${recruit}"></jstl:out></a>
