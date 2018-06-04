@@ -3,7 +3,7 @@ package services;
 import java.util.Date;
 
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
+
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,14 +12,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import domain.Chatty;
-import domain.Configuration;
+
 import domain.Invitation;
-import domain.InvitationStatus;
-import domain.KeybladeWielder;
-import domain.Livelihood;
-import domain.Materials;
-import domain.OrgRange;
-import domain.Organization;
+
 
 import utilities.AbstractTest;
 
@@ -28,18 +23,12 @@ import utilities.AbstractTest;
 @Transactional
 public class ChattyServiceTest extends AbstractTest {
 
-	@Autowired
-	private OrganizationService organizationService;
+
 	
 	@Autowired
 	private InvitationService invitationService;
 	
-	@Autowired
-	private KeybladeWielderService keybladeWielderService;
-	
-	@Autowired
-	private ActorService actorService;
-	
+
 	@Autowired
 	private ChattyService chattyService;
 	
