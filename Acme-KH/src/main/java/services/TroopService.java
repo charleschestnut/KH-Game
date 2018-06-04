@@ -10,8 +10,12 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.BuiltRepository;
+import repositories.RecruitedRepository;
 import repositories.TroopRepository;
+import domain.Built;
 import domain.Materials;
+import domain.Recruited;
 import domain.Recruiter;
 import domain.Troop;
 
@@ -23,6 +27,12 @@ public class TroopService {
 
 	@Autowired
 	private TroopRepository	TroopRepository;
+	
+	@Autowired
+	private BuiltService builtService;
+	
+	@Autowired
+	private RecruitedService recruitedService;
 
 	@Autowired
 	Validator				validator;
@@ -129,6 +139,32 @@ public class TroopService {
 	
 	public Troop getTroopByName(String name){
 		return this.TroopRepository.getTroopByName(name);
+	}
+
+	public void deleteCompleto(Troop t) {
+		Assert.isTrue((t.getRecruiter().getIsFinal() && t.getRecruiter().getTroops().size()>1) || !t.getRecruiter().getIsFinal(), "error.message.restrictionsDeleteTroop");
+		
+		if (t.getRecruiter().getIsFinal() && t.getRecruiter().getTroops().size()>1) {
+			Collection<Recruited> recs = this.recruitedService.findAllRecruitedOfTroop(t.getId());
+			Materials toAdd = new Materials();
+			toAdd.setMunny((int) (t.getCost().getMunny() * 1.1));
+			toAdd.setMytrhil((int) (t.getCost().getMytrhil() * 1.1));
+			toAdd.setGummiCoal((int) (t.getCost().getGummiCoal() * 1.1));
+
+			for (Recruited r : recs) {
+				r.getStorageBuilding().getKeybladeWielder().getMaterials().add(toAdd);
+				r.getStorageBuilding().setTroop(null);
+				this.builtService.saveForTroopDeleting(r.getStorageBuilding());
+				this.recruitedService.delete(r);
+			}
+
+			Collection<Built> recsBults = this.builtService.findAllBuiltWithTroop(t.getId());
+			for (Built b : recsBults) {
+				b.setTroop(null);
+				this.builtService.saveForTroopDeleting(b);
+			}
+		}
+		this.TroopRepository.delete(t);
 	}
 
 }

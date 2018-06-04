@@ -136,34 +136,25 @@ public class TroopController extends AbstractController {
 	public ModelAndView delete(String troopId) {
 		ModelAndView result;
 		Troop t = this.troopService.findOne(Integer.parseInt(troopId));
-
-		if (t.getRecruiter().getIsFinal()) {
-			Collection<Recruited> recs = this.recruitedService.findAllRecruitedOfTroop(t.getId());
-			Materials toAdd = new Materials();
-			toAdd.setMunny((int) (t.getCost().getMunny() * 1.1));
-			toAdd.setMytrhil((int) (t.getCost().getMytrhil() * 1.1));
-			toAdd.setGummiCoal((int) (t.getCost().getGummiCoal() * 1.1));
-
-			for (Recruited r : recs) {
-				r.getStorageBuilding().getKeybladeWielder().getMaterials().add(toAdd);
-				r.getStorageBuilding().setTroop(null);
-				this.builtService.saveForTroopDeleting(r.getStorageBuilding());
-				this.recruitedService.delete(r);
-			}
-
-			Collection<Built> recsBults = this.builtService.findAllBuiltWithTroop(t.getId());
-			for (Built b : recsBults) {
-				b.setTroop(null);
-				this.builtService.saveForTroopDeleting(b);
-			}
-
+		result = new ModelAndView("troop/contentManager/list");
+		try{
+			this.troopService.deleteCompleto(t);
+			result = new ModelAndView("redirect:/troop/contentManager/list.do");
+		}catch(Throwable oops){
+			String msg = this.getErrorMessage(oops);
+			result = this.createListModelAndView(msg);
 		}
-		this.troopService.delete(t);
-
-		Collection<Troop> all = this.troopService.findAll();
-		result = new ModelAndView("redirect:/troop/contentManager/list.do");
-		result.addObject("troops", all);
+		result.addObject("troops", this.troopService.findAll());
 		return result;
+	}
+	
+	protected ModelAndView createListModelAndView(String msg){
+		ModelAndView res;
+		
+		res = new ModelAndView("troop/contentManager/list");
+		res.addObject("message", msg);
+		return res;
+		
 	}
 
 }
