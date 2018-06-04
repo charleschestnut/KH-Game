@@ -58,7 +58,7 @@ public class InvitationService {
 				"error.message.invitation.notBeMaster");
 		KeybladeWielder principal = (KeybladeWielder) this.actorService
 				.findByPrincipal();
-		Assert.isTrue(principal.getFaction().equals(invitation.getKeybladeWielder().getFaction()), "error.message.invitation.sameFaction");
+		//Assert.isTrue(principal.getFaction().equals(invitation.getKeybladeWielder().getFaction()), "error.message.invitation.sameFaction");
 
 		// QUERY DONDE COGEMOS LA ORGANIZACIÓN DEL USUARIO ACTUAL
 		Organization actual = this.organizationService

@@ -129,9 +129,11 @@ public class ChattyService {
 
 
 	public void deleteAll(Collection<Chatty> chattys) {
-		for(Chatty c: chattys){
-			this.chattyRepository.delete(c);
-		}
+		
+		if(chattys!=null)
+			for(Chatty c: chattys){
+				this.chattyRepository.delete(c);
+			}
 		
 	}
 	
