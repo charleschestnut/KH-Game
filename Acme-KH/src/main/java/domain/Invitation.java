@@ -37,7 +37,7 @@ public class Invitation extends DomainEntity {
 
 	//relations 
 
-	private Actor				keybladeWielder;
+	private KeybladeWielder				keybladeWielder;
 	private Organization		organization;
 
 
@@ -110,12 +110,12 @@ public class Invitation extends DomainEntity {
 	
 	@Valid
 	@ManyToOne(optional = false)
-	public Actor getKeybladeWielder() {
+	public KeybladeWielder getKeybladeWielder() {
 		return this.keybladeWielder;
 	}
 
 	
-	public void setKeybladeWielder( Actor keybladeWielder) {
+	public void setKeybladeWielder( KeybladeWielder keybladeWielder) {
 		this.keybladeWielder = keybladeWielder;
 	}
 	

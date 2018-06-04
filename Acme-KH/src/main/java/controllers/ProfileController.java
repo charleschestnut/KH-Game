@@ -108,9 +108,11 @@ public class ProfileController extends AbstractController {
 
 			//from: Carlos
 			result.addObject("hasOrganization", this.organizationService.keybladeWielderHasOrganization(user.getId()));
-			if (this.actorService.findByPrincipal() instanceof KeybladeWielder)
-				result.addObject("puedoEnviarInvitation", this.organizationService.getCanSendInvitation());
-			//end
+			if (this.actorService.findByPrincipal() instanceof KeybladeWielder){
+				KeybladeWielder kw = (KeybladeWielder) this.actorService.findByPrincipal();
+				result.addObject("puedoEnviarInvitation", this.organizationService.getCanSendInvitation() && (user.getFaction().equals(kw.getFaction())));
+			}
+				//end
 		} else
 			result.addObject("user", actor);
 
