@@ -58,6 +58,7 @@ public class ChattyService {
 		Assert.notNull(chatty);
 		Assert.isTrue(chatty.getId()==0);
 		Assert.notNull(chatty.getInvitation(), "error.message.chatty.invitation");
+		Assert.isTrue(!chatty.getContent().isEmpty());
 		KeybladeWielder actual = (KeybladeWielder) this.actorService.findByPrincipal();
 		Organization org = this.organizationService.findOrganizationByPlayer(actual.getId());
 		Invitation invActual = this.invitationService.findInvitationByKeybladeWielderInAnOrganization(actual.getId(), chatty.getInvitation().getOrganization().getId());
