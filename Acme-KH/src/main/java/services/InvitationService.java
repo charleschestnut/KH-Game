@@ -52,13 +52,14 @@ public class InvitationService {
 
 	public Invitation save(Invitation invitation) {
 		Assert.notNull(invitation);
+		Assert.notNull(invitation.getContent());
 		Assert.notNull(invitation.getInvitationStatus());
 		Assert.isTrue(canSendInvitationAgain(invitation.getKeybladeWielder().getId()));
 		Assert.isTrue(!invitation.getOrgRange().equals(OrgRange.MASTER),
 				"error.message.invitation.notBeMaster");
 		KeybladeWielder principal = (KeybladeWielder) this.actorService
 				.findByPrincipal();
-		//Assert.isTrue(principal.getFaction().equals(invitation.getKeybladeWielder().getFaction()), "error.message.invitation.sameFaction");
+		Assert.isTrue(principal.getFaction().equals(invitation.getKeybladeWielder().getFaction()), "error.message.invitation.sameFaction");
 
 		// QUERY DONDE COGEMOS LA ORGANIZACIÓN DEL USUARIO ACTUAL
 		Organization actual = this.organizationService
