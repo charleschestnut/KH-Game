@@ -39,10 +39,15 @@
 			  
 			  document.getElementById("timer"+id).innerHTML =  minutes + ":" + seconds;
 
+			 
+
 			  if (distance < 0) {
 			    clearInterval(x);
+			    document.getElementById("counter"+id).style.display =  'none';
+			    document.getElementById("shield").style.display =  'none';
 			  }
 			}, 1000);
+		
 	}
  </script>
  </jstl:if>
@@ -79,9 +84,9 @@
          <div class="world text-center">
          <jstl:if test="${ user.shield != null }">
 
-            <img src="./images/worlds/shield.png" alt="Skytsunami" style="width:100%; z-index:1; position:absolute; top:0; left:0"/>
+            <img src="./images/worlds/shield.png" alt="shield" id="shield" style="width:100%; z-index:1; position:absolute; top:0; left:0;"/>
             </jstl:if>
-            <img src="./images/worlds/(${user.getWorldImage()}).png" alt="Skytsunami" style="width:80%; height:auto; z-index:0"/>
+            <img src="./images/worlds/(${user.getWorldImage()}).png" alt="world" style="width:80%; height:auto; z-index:0"/>
 
          </div>
          <jstl:choose>
