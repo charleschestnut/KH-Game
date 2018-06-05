@@ -15,13 +15,22 @@
 	name="users" requestURI="administrator/banned/list.do" id="row">
 
 	<spring:message code="username" var="usernameH" />
-	<display:column property="userAccount.username" title="${usernameH}" />
+	<display:column property="actor.userAccount.username" title="${usernameH}" />
+	
+	<spring:message code="reason" var="reasonH" />
+	<display:column property="reason" title="${reasonH}" />
+	
+	<spring:message code="banDate" var="banDateH" />
+	<display:column property="banDate" title="${banDateH}" />
+	
+	<spring:message code="duration" var="durationH" />
+	<display:column property="duration" title="${durationH}" />
 	
 	<spring:message code="master.page.actions" var="actionsH" />
 	<display:column title="${actionsH}">
-	<a href="profile/actor/display.do?username=${row.userAccount.username}"><spring:message code="master.page.view"/></a>
+	<a href="profile/actor/display.do?username=${row.actor.userAccount.username}"><spring:message code="master.page.view"/></a>
 	|
-	<a href="administrator/banned/unban.do?username=${row.userAccount.username}"><spring:message code="unban"/></a>
+	<a href="administrator/banned/unban.do?username=${row.actor.userAccount.username}"><spring:message code="unban"/></a>
 	</display:column>
 </display:table>
 <br><br>

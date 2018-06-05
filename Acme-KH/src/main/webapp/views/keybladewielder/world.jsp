@@ -16,6 +16,37 @@
  <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
  <%@taglib prefix="display" uri="http://displaytag.sf.net"%><%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
  
+ <jstl:if test="${ user.shield != null }">
+ <script> 
+ function comparaFechaCreacion(year,month,day,hour,minutes,seconds,time,id){
+		var hoy= new Date();
+		var anho= parseInt(year) + 1900;
+		var min= parseInt(minutes)+ parseInt(time);
+		var fechaFin= new Date(anho,month,day,hour,min,seconds);
+		
+		
+		var x = setInterval(function() {
+			  var now = new Date().getTime();
+			  var distance = fechaFin - now;
+			  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+			  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+			  
+			  if(seconds < 10){
+				  seconds = "0" + seconds;
+			  }
+			  
+			  document.getElementById("timer"+id).innerHTML =  minutes + ":" + seconds;
+
+			  if (distance < 0) {
+			    clearInterval(x);
+			  }
+			}, 1000);
+	}
+ </script>
+ </jstl:if>
+ 
 <jstl:if test="${user.getClass().name  eq 'domain.KeybladeWielder'}">
    <h3 class="title-header" style="text-shadow: 0px 0px 15px rgba(0, 0, 0, 1);">
       <jstl:out value="${user.worldName}"/>
@@ -44,8 +75,14 @@
    </p>
    <div class="row">
       <div class="col">
-         <div class="world">
-            <img src="./images/worlds/(${user.getWorldImage()}).png" alt="Skytsunami" />
+      <br/><br/>
+         <div class="world text-center">
+         <jstl:if test="${ user.shield != null }">
+
+            <img src="./images/worlds/shield.png" alt="Skytsunami" style="width:100%; z-index:1; position:absolute; top:0; left:0"/>
+            </jstl:if>
+            <img src="./images/worlds/(${user.getWorldImage()}).png" alt="Skytsunami" style="width:80%; height:auto; z-index:0"/>
+
          </div>
          <jstl:choose>
             <jstl:when test="${user.worldCoordinates.z%2 == 0}">
@@ -81,6 +118,23 @@
                         width="50px" height="50px" /> <span class="badge badge-dark">${user.materials.gummiCoal}</span>
                   </div>
          </div>
+         <br />
+               <jstl:if test="${ user.shield != null }">
+               	<div id="${user.id}">
+							<script>
+								comparaFechaCreacion(
+										'${user.shield.date.getYear()}',
+										'${user.shield.date.getMonth()}',
+										'${user.shield.date.getDate()}',
+										'${user.shield.date.getHours()}',
+										'${user.shield.date.getMinutes()}',
+										'${user.shield.date.getSeconds()}',
+										'${user.shield.duration}',
+										'${user.id }');
+							</script>
+							<div id="counter${user.id}" class="centered"><i style="font-size:20px;vertical-align:middle;margin-right:5px;"class="material-icons">security</i><span id="timer${user.id}"></span></div>
+						</div>
+         </jstl:if>
       </div>
    </div>
 </jstl:if>

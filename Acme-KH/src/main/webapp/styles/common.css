@@ -354,7 +354,9 @@ footer{
 	overflow: hidden;
 	transform: translatey(0px);
 	animation: float 4.5s ease-in-out infinite;
-	img { width: 100%; height: auto; }
+	padding: 15px 15px 15px 15px;
+	width: 500px;
+	height: 500px;
 }
 
 .btn-material{

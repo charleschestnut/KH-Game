@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import domain.Actor;
 import domain.Banned;
 
 public interface BannedRepository extends JpaRepository<Banned, Integer> {
@@ -19,10 +18,10 @@ public interface BannedRepository extends JpaRepository<Banned, Integer> {
 	@Query("select b from Banned b where b.actor.id=?1 and b.isValid=1")
 	public Banned findToUnbanByActor(int actorId);
 
-	@Query("select b.actor from Banned b where b.isValid=1")
-	public Collection<Actor> findAllBannedUsers();
+	@Query("select b from Banned b where b.isValid=1")
+	public Collection<Banned> findAllBannedUsers();
 
-	@Query("select b.actor from Banned b where b.isValid=1")
-	public Page<Actor> findAllBannedUsers(Pageable pageables);
+	@Query("select b from Banned b where b.isValid=1")
+	public Page<Banned> findAllBannedUsers(Pageable pageables);
 
 }

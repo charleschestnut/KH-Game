@@ -103,7 +103,7 @@ public class AdministratorController extends AbstractController {
 	@RequestMapping(value = "/banned/list", method = RequestMethod.GET)
 	public ModelAndView bannedList(@RequestParam(required = false, defaultValue = "0") Integer page) {
 		ModelAndView result;
-		Page<Actor> bannedUsers;
+		Page<Banned> bannedUsers;
 		Pageable pageable;
 
 		pageable = new PageRequest(page, 5);

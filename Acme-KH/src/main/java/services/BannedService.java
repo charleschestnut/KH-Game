@@ -120,11 +120,11 @@ public class BannedService {
 		return this.bannedRepository.findToUnbanByActor(actorId);
 	}
 
-	public Collection<Actor> findAllBannedUsers() {
+	public Collection<Banned> findAllBannedUsers() {
 		return this.bannedRepository.findAllBannedUsers();
 	}
 
-	public Page<Actor> findAllBannedUsers(Pageable pageable) {
+	public Page<Banned> findAllBannedUsers(Pageable pageable) {
 		return this.bannedRepository.findAllBannedUsers(pageable);
 	}
 
