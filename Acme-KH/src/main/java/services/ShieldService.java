@@ -45,6 +45,7 @@ public class ShieldService {
 		Assert.notNull(item);
 		Assert.isTrue(this.itemService.myItems(this.actorService.findByPrincipal().getId()).contains(item));
 		Assert.isTrue(item.getType().equals(ItemType.SHIELD));
+
 		final Shield res = this.create();
 		res.setName(item.getName());
 		res.setDate(new Date(System.currentTimeMillis() - 1000));
@@ -52,7 +53,9 @@ public class ShieldService {
 		Shield saved;
 
 		KeybladeWielder keyBlader = (KeybladeWielder) this.actorService.findByPrincipal();
-
+		if (keyBlader.getShield() != null) {
+			this.delete(keyBlader.getShield());
+		}
 		saved = this.ShieldRepository.save(res);
 		keyBlader.setShield(saved);
 		this.actorService.save(keyBlader);
@@ -99,6 +102,13 @@ public class ShieldService {
 		KeybladeWielder keyW = (KeybladeWielder) this.actorService.findByPrincipal();
 		keyW.setShield(null);
 		this.actorService.save(keyW);
+		this.ShieldRepository.delete(Shield);
+	}
+
+	public void deleteDefender(final Shield Shield, KeybladeWielder defensor) {
+		Assert.notNull(Shield);
+		defensor.setShield(null);
+		this.actorService.save(defensor);
 		this.ShieldRepository.delete(Shield);
 	}
 

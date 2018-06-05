@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -134,10 +135,12 @@ public class BattleService {
 		//-----------------------------------Defensor tiene un escudo-------------------------------------------------------
 
 		if (defensor.getShield() != null) {
-			Long days = (long) defensor.getShield().getDuration();
-			Date expiration = new Date(System.currentTimeMillis() - days * 1000);
-			if (!defensor.getShield().getDate().after(expiration)) {
-				this.shieldService.delete(defensor.getShield());
+			int horas = defensor.getShield().getDuration();
+			Date today = new Date(System.currentTimeMillis() - 1000);
+			Date expiration = this.sumarRestarHorasFecha(defensor.getShield().getDate(), horas / 60);
+
+			if (today.after(expiration)) {
+				this.shieldService.deleteDefender(defensor.getShield(), defensor);
 			} else {
 				Assert.isTrue(false, "message.error.defenderShield");
 			}
@@ -591,5 +594,14 @@ public class BattleService {
 
 	public void flush() {
 		this.battleRepository.flush();
+	}
+
+	public Date sumarRestarHorasFecha(Date fecha, int horas) {
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha); // Configuramos la fecha que se recibe
+		calendar.add(Calendar.HOUR, horas);  // numero de horas a añadir, o restar en caso de horas<0
+		return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
+
 	}
 }
