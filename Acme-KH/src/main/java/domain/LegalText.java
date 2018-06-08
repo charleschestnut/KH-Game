@@ -42,7 +42,6 @@ public class LegalText extends DomainEntity {
 
 	@Lob
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getBody() {
 		return this.body;
 	}
