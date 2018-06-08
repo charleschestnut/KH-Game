@@ -37,7 +37,7 @@ public class ReportServiceTest extends AbstractTest {
 				"player1", "player1", null, "create", null
 			}, //A player creates a report
 			{
-				"player1", null, null, "create", NullPointerException.class
+				"player1", null, null, "create", AssertionError.class
 			}, //Report can't be created without player
 			{
 				"player1", "player1", null, "createNoStatus", ConstraintViolationException.class
