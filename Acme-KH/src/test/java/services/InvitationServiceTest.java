@@ -85,12 +85,12 @@ public class InvitationServiceTest extends AbstractTest {
 				super.authenticate(username1);
 				Organization o = this.organizationService.findOrganizationByPlayer(this.actorService.findByPrincipal().getId());
 				
-				Invitation i = this.invitationService.create();
+				Invitation i = this.invitationService.create(this.keybladeWielderService.findOne(this.getEntityId(username2)).getUserAccount().getUsername());
 				i.setOrganization(o);
 				i.setDate(new Date(System.currentTimeMillis()-10000));
 				i.setContent(description);
 				i.setInvitationStatus(InvitationStatus.PENDING);
-				i.setKeybladeWielder(this.keybladeWielderService.findOne(this.getEntityId(username2)));
+				
 				
 				if(orgRange.equals("guest"))
 					i.setOrgRange(OrgRange.GUEST);
@@ -111,12 +111,12 @@ public class InvitationServiceTest extends AbstractTest {
 				super.authenticate(username1);
 				Organization o = this.organizationService.findOrganizationByPlayer(this.actorService.findByPrincipal().getId());
 				
-				Invitation i = this.invitationService.create();
+				Invitation i = this.invitationService.create(this.keybladeWielderService.findOne(this.getEntityId(username2)).getUserAccount().getUsername());
 				i.setOrganization(o);
 				i.setDate(new Date(System.currentTimeMillis()-10000));
 				i.setContent(description);
 				i.setInvitationStatus(InvitationStatus.PENDING);
-				i.setKeybladeWielder(this.keybladeWielderService.findOne(this.getEntityId(username2)));
+	
 				
 				if(orgRange.equals("guest"))
 					i.setOrgRange(OrgRange.GUEST);
@@ -137,12 +137,12 @@ public class InvitationServiceTest extends AbstractTest {
 				
 				Organization o = this.organizationService.findOrganizationByPlayer(this.actorService.findByPrincipal().getId());
 				
-				Invitation i = this.invitationService.create();
+				Invitation i = this.invitationService.create(this.keybladeWielderService.findOne(this.getEntityId(username2)).getUserAccount().getUsername());
 				i.setOrganization(o);
 				i.setDate(new Date(System.currentTimeMillis()-10000));
 				i.setContent(description);
 				i.setInvitationStatus(InvitationStatus.PENDING);
-				i.setKeybladeWielder(this.keybladeWielderService.findOne(this.getEntityId(username2)));
+		
 				
 				if(orgRange.equals("guest"))
 					i.setOrgRange(OrgRange.GUEST);
@@ -160,7 +160,7 @@ public class InvitationServiceTest extends AbstractTest {
 				super.unauthenticate();super.authenticate(username1);
 				Organization o1 = this.organizationService.findOrganizationByPlayer(this.actorService.findByPrincipal().getId());
 				
-				Invitation i1 = this.invitationService.create();
+				Invitation i1 = this.invitationService.create(this.keybladeWielderService.findOne(this.getEntityId(username2)).getUserAccount().getUsername());
 				i1.setOrganization(o1);
 				i1.setDate(new Date(System.currentTimeMillis()-10000));
 				i1.setContent(description);

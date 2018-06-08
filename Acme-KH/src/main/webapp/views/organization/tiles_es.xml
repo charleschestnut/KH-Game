@@ -21,7 +21,7 @@
 		<put-attribute name="body" value="/views/organization/list.jsp" />
 	</definition>
 	
-	<definition name="organization/Memberslist" extends="master.page">	
+	<definition name="organization/membersList" extends="master.page">	
 		<put-attribute name="title" value="Miembros de la Organización" />
 		<put-attribute name="body" value="/views/organization/membersList.jsp" />
 	</definition>

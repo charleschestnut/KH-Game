@@ -77,7 +77,7 @@ public class InvitationController extends AbstractController {
 			return new ModelAndView("redirect:profile/actor/display.do?username="+username);
 		}
 		
-		Invitation i = this.invitationService.create();
+		Invitation i = this.invitationService.create(username);
 		
 		result = new ModelAndView("organization/invitation/edit");
 		result.addObject("invitation", i);
@@ -87,10 +87,9 @@ public class InvitationController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Invitation invitation, BindingResult binding,
-			@RequestParam (required=true) int invitedId) {
+	public ModelAndView save(Invitation invitation, BindingResult binding) {
 		ModelAndView result;
-		invitation = this.invitationService.reconstruct(invitation, invitedId, binding);
+		invitation = this.invitationService.reconstruct(invitation, binding);
 		
 		if(binding.hasErrors()){
 			result = createEditModelAndView(invitation);

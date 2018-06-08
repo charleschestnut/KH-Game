@@ -42,10 +42,12 @@ public class InvitationService {
 
 	// CRUD methods
 
-	public Invitation create() {
+	public Invitation create(String username) {
 		Invitation invitation;
 
 		invitation = new Invitation();
+		KeybladeWielder kw = (KeybladeWielder) this.actorService.findByUserAccountUsername(username);
+		invitation.setKeybladeWielder(kw);
 
 		return invitation;
 	}
@@ -213,7 +215,7 @@ public class InvitationService {
 
 	}
 
-	public Invitation reconstruct(Invitation invitation, int keybladeWielderId,
+	public Invitation reconstruct(Invitation invitation,
 			BindingResult binding) {
 
 		if (invitation.getId() == 0) {
@@ -222,7 +224,7 @@ public class InvitationService {
 			KeybladeWielder invited;
 
 			actor = actorService.findByPrincipal();
-			invited = this.keybladeWielderService.findOne(keybladeWielderId);
+			invited = invitation.getKeybladeWielder();
 			organitazion = this.organizationService.findOrganizationByPlayer(actor.getId());
 			
 			invitation.setKeybladeWielder(invited);
