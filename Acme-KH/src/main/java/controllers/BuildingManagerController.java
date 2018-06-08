@@ -142,7 +142,7 @@ public class BuildingManagerController extends AbstractController {
 		else
 			try {
 				if (defense.getId() != 0)
-					Assert.isTrue(!this.defenseService.findOne(defense.getId()).getIsFinal(), "error.message.building.");
+					Assert.isTrue(!this.defenseService.findOne(defense.getId()).getIsFinal(), "error.message.building.final");
 				if (saveFinal != null && saveFinal)
 					defense.setIsFinal(true);
 				this.defenseService.save(defense);
@@ -168,7 +168,7 @@ public class BuildingManagerController extends AbstractController {
 		else
 			try {
 				if (recruiter.getId() != 0)
-					Assert.isTrue(!this.recruiterService.findOne(recruiter.getId()).getIsFinal(), "error.message.building.");
+					Assert.isTrue(!this.recruiterService.findOne(recruiter.getId()).getIsFinal(), "error.message.building.final");
 				if (saveFinal != null && saveFinal)
 					recruiter.setIsFinal(true);
 				this.recruiterService.save(recruiter);
@@ -194,7 +194,7 @@ public class BuildingManagerController extends AbstractController {
 		else
 			try {
 				if (warehouse.getId() != 0)
-					Assert.isTrue(!this.warehouseService.findOne(warehouse.getId()).getIsFinal(), "error.message.building.");
+					Assert.isTrue(!this.warehouseService.findOne(warehouse.getId()).getIsFinal(), "error.message.building.final");
 				if (saveFinal != null && saveFinal)
 					warehouse.setIsFinal(true);
 				this.warehouseService.save(warehouse);
@@ -220,7 +220,7 @@ public class BuildingManagerController extends AbstractController {
 		else
 			try {
 				if (livelihood.getId() != 0)
-					Assert.isTrue(!this.livelihoodService.findOne(livelihood.getId()).getIsFinal(), "error.message.building.");
+					Assert.isTrue(!this.livelihoodService.findOne(livelihood.getId()).getIsFinal(), "error.message.building.final");
 				if (saveFinal != null && saveFinal)
 					livelihood.setIsFinal(true);
 				this.livelihoodService.save(livelihood);
