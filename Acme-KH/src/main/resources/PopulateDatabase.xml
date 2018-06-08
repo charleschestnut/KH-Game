@@ -15,7 +15,6 @@
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
-	
 	<!-- User accounts -->
 
 	<bean id="userAccount1" class="security.UserAccount">
@@ -539,10 +538,10 @@
 		<property name="building" ref="defense2" />
 	</bean>
 	
-	<bean id="built2.2" class="domain.Built">
+	<bean id="built222" class="domain.Built">
 		<property name="lvl" value="1" />
 		<property name="creationDate" value="05/04/2018" />
-		<!-- <property name="activationDate" value="05/04/2018 12:06" /> -->
+		<property name="activationDate" value="05/04/2018 12:06" />
 		<property name="keybladeWielder" ref="player2" />
 		<!-- <property name="troop" ref="" />
 		<property name="gummiShip" ref="" /> -->
