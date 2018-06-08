@@ -507,7 +507,6 @@
 	<bean id="built4" class="domain.Built">
 		<property name="lvl" value="1" />
 		<property name="creationDate" value="05/04/2018" />
-		<property name="activationDate" value="05/04/2018 12:08" />
 		<property name="keybladeWielder" ref="player1" />
 		<property name="troop" ref="troop1" />
 		<property name="building" ref="recruiter1" />
