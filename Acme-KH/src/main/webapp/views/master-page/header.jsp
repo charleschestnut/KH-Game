@@ -114,7 +114,8 @@
 							href="administrator/banned/list.do"><spring:message
 								code="master.page.banned" /></a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="administrator/dashboard.do">Dashboard</a>
+						<a class="dropdown-item" href="administrator/dashboard.do"><spring:message
+								code="master.page.dashboard" /></a>
 						<a class="dropdown-item"
 							href="configuration/administrator/edit.do"> <spring:message
 								code="master.page.configurationPage" />
