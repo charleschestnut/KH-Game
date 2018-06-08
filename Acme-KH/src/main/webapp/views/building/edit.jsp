@@ -50,7 +50,7 @@
 		<legend title="<spring:message code='building.miscelaneous'/>"><spring:message code='building.miscelaneous'/></legend>
 		<acme:textbox code="building.name" path="name"/>
 		<acme:textbox code="building.descritpion" path="description"/>
-		<acme:textbox code="building.photo" path="photo"/>
+		
 	</fieldset>
 	<br>
 	<fieldset>

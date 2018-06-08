@@ -91,6 +91,7 @@ public class DefenseService {
 		else
 			defense = original;
 
+		defense.setPhoto("./images/buildings/defense.png");
 		this.validator.validate(defense, binding);
 
 		return defense;

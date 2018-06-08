@@ -91,6 +91,7 @@ public class LivelihoodService {
 		else
 			l = original;
 
+		l.setPhoto("./images/buildings/livelihood.png");
 		this.validator.validate(l, binding);
 
 		return l;

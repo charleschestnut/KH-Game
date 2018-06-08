@@ -93,11 +93,12 @@ public class WarehouseService {
 		else
 			w = original;
 
+		w.setPhoto("./images/buildings/warehouse.png");
 		this.validator.validate(w, binding);
 
 		return w;
 	}
-	
+
 	public Collection<String> getWarehouseNames() {
 		return this.WarehouseRepository.getWarehouseNames();
 	}

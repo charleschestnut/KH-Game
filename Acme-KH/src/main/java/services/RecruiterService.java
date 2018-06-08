@@ -135,6 +135,7 @@ public class RecruiterService {
 		} else
 			recruiter = original;
 
+		recruiter.setPhoto("./images/buildings/recruiter.png");
 		this.validator.validate(recruiter, binding);
 
 		return recruiter;
