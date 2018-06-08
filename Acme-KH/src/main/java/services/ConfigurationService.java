@@ -91,7 +91,6 @@ public class ConfigurationService {
 		res.getDailyMaterials().setMunny(configuration.getDailyMaterials().getMunny());
 		res.getDailyMaterials().setMytrhil(configuration.getDailyMaterials().getMytrhil());
 		
-		res.setLostLvlsDeffender(configuration.getLostLvlsDeffender());
 		res.setOrgMessages(configuration.getOrgMessages());
 		res.setPercentageWinAttacker(configuration.getPercentageWinAttacker());
 		res.setPercentageWinDefender(configuration.getPercentageWinDefender());

@@ -36,7 +36,6 @@ public class ConfigurationServiceTest extends AbstractTest {
 		configuration.setBaseMaterials(materials);
 
 		configuration.setDailyMaterials(materials);
-		configuration.setLostLvlsDeffender(1);
 		configuration.setOrgMessages(20);
 		configuration.setPercentageWinAttacker(0.1);
 		configuration.setPercentageWinDefender(0.1);
@@ -61,7 +60,6 @@ public class ConfigurationServiceTest extends AbstractTest {
 		configuration.setBaseMaterials(materials);
 
 		configuration.setDailyMaterials(materials);
-		configuration.setLostLvlsDeffender(1);
 		configuration.setOrgMessages(20);
 		configuration.setPercentageWinAttacker(0.1);
 		configuration.setPercentageWinDefender(0.1);
@@ -86,7 +84,6 @@ public class ConfigurationServiceTest extends AbstractTest {
 		configuration.setBaseMaterials(materials);
 
 		configuration.setDailyMaterials(materials);
-		configuration.setLostLvlsDeffender(1);
 		configuration.setOrgMessages(20);
 		configuration.setPercentageWinAttacker(0.1);
 		configuration.setPercentageWinDefender(0.1);
@@ -111,7 +108,6 @@ public class ConfigurationServiceTest extends AbstractTest {
 		configuration.setBaseMaterials(materials);
 
 		configuration.setDailyMaterials(materials);
-		configuration.setLostLvlsDeffender(1);
 		configuration.setOrgMessages(20);
 		configuration.setPercentageWinAttacker(-0.2);
 		configuration.setPercentageWinDefender(2.5);

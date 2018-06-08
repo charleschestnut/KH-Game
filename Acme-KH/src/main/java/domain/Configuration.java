@@ -1,4 +1,3 @@
-
 package domain;
 
 import javax.persistence.Access;
@@ -18,49 +17,54 @@ import org.hibernate.validator.constraints.Range;
 @Access(AccessType.PROPERTY)
 public class Configuration extends DomainEntity {
 
-	private Materials	dailyMaterials;
-	private Materials	baseMaterials;
-	private Integer		orgMessages;
-	private Double		percentageWinAttacker;
-	private Double		percentageWinDefender;
-	private Integer		lostLvlsDeffender;
-	private Integer		worldSlots;
-
+	private Materials dailyMaterials;
+	private Materials baseMaterials;
+	private Integer orgMessages;
+	private Double percentageWinAttacker;
+	private Double percentageWinDefender;
+	private Integer worldSlots;
 
 	/**
 	 * 
-	 * @return los materiales que seran otorgado a los jugadores por iniciar sesión cada dia
+	 * @return los materiales que seran otorgado a los jugadores por iniciar
+	 *         sesión cada dia
 	 */
 	@AttributeOverrides({
-		@AttributeOverride(name = "munny", column = @Column(name = "dailyMunny")), @AttributeOverride(name = "mytrhil", column = @Column(name = "dailyMytrhil")), @AttributeOverride(name = "gummiCoal", column = @Column(name = "dailyGummiCoal"))
+			@AttributeOverride(name = "munny", column = @Column(name = "dailyMunny")),
+			@AttributeOverride(name = "mytrhil", column = @Column(name = "dailyMytrhil")),
+			@AttributeOverride(name = "gummiCoal", column = @Column(name = "dailyGummiCoal"))
 
 	})
-	
 	@Valid
 	public Materials getDailyMaterials() {
 		return this.dailyMaterials;
 	}
 
-	public void setDailyMaterials( Materials dailyMaterials) {
+	public void setDailyMaterials(Materials dailyMaterials) {
 		this.dailyMaterials = dailyMaterials;
 	}
+
 	/**
 	 * 
-	 * @return los materiales que puede conservar un jugador por defecto, a este valor se le ha de sumar el valor de cada jugador según sus edifcios.
+	 * @return los materiales que puede conservar un jugador por defecto, a este
+	 *         valor se le ha de sumar el valor de cada jugador según sus
+	 *         edifcios.
 	 */
 	@AttributeOverrides({
-		@AttributeOverride(name = "munny", column = @Column(name = "baseMunny")), @AttributeOverride(name = "mytrhil", column = @Column(name = "baseMytrhil")), @AttributeOverride(name = "gummiCoal", column = @Column(name = "baseGummiCoal"))
+			@AttributeOverride(name = "munny", column = @Column(name = "baseMunny")),
+			@AttributeOverride(name = "mytrhil", column = @Column(name = "baseMytrhil")),
+			@AttributeOverride(name = "gummiCoal", column = @Column(name = "baseGummiCoal"))
 
 	})
-	
 	@Valid
 	public Materials getBaseMaterials() {
 		return this.baseMaterials;
 	}
 
-	public void setBaseMaterials( Materials baseMaterials) {
+	public void setBaseMaterials(Materials baseMaterials) {
 		this.baseMaterials = baseMaterials;
 	}
+
 	/**
 	 * 
 	 * @return número de mensajes que serán almacenados en una organización
@@ -71,12 +75,14 @@ public class Configuration extends DomainEntity {
 		return this.orgMessages;
 	}
 
-	public void setOrgMessages( Integer orgMessages) {
+	public void setOrgMessages(Integer orgMessages) {
 		this.orgMessages = orgMessages;
 	}
+
 	/**
 	 * 
-	 * @return porcentaje de los recursos que se llevara el atacante del defensor si gana la batalla
+	 * @return porcentaje de los recursos que se llevara el atacante del
+	 *         defensor si gana la batalla
 	 */
 	@DecimalMin("0.1")
 	@DecimalMax("0.9")
@@ -85,12 +91,14 @@ public class Configuration extends DomainEntity {
 		return this.percentageWinAttacker;
 	}
 
-	public void setPercentageWinAttacker( Double percentageWinAttacker) {
+	public void setPercentageWinAttacker(Double percentageWinAttacker) {
 		this.percentageWinAttacker = percentageWinAttacker;
 	}
+
 	/**
 	 * 
-	 * @return porcentaje de los recursos que se llevara el defensor de los recursos que envie el atacante si gana la batalla
+	 * @return porcentaje de los recursos que se llevara el defensor de los
+	 *         recursos que envie el atacante si gana la batalla
 	 */
 	@DecimalMin("0.1")
 	@DecimalMax("0.9")
@@ -99,22 +107,10 @@ public class Configuration extends DomainEntity {
 		return this.percentageWinDefender;
 	}
 
-	public void setPercentageWinDefender( Double percentageWinDefender) {
+	public void setPercentageWinDefender(Double percentageWinDefender) {
 		this.percentageWinDefender = percentageWinDefender;
 	}
-	/**
-	 * 
-	 * @return niveles que bajaran los edificios del defensor si pierde una batalla
-	 */
-	@Range(min = 0)
-	@NotNull
-	public Integer getLostLvlsDeffender() {
-		return this.lostLvlsDeffender;
-	}
 
-	public void setLostLvlsDeffender( Integer lostLvlsDeffender) {
-		this.lostLvlsDeffender = lostLvlsDeffender;
-	}
 	/**
 	 * 
 	 * @return los huecos que tiene un mundo para edificios
@@ -126,7 +122,7 @@ public class Configuration extends DomainEntity {
 		return this.worldSlots;
 	}
 
-	public void setWorldSlots( Integer worldSlots) {
+	public void setWorldSlots(Integer worldSlots) {
 		this.worldSlots = worldSlots;
 	}
 

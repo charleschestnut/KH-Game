@@ -855,7 +855,6 @@
 		<property name="orgMessages" value="50" />
 		<property name="percentageWinAttacker" value="0.6" />
 		<property name="percentageWinDefender" value="0.5" />
-		<property name="lostLvlsDeffender" value="1" />
 		<property name="worldSlots" value="7" />
 	</bean>
 	

@@ -51,8 +51,6 @@
                 <form:option value="0.8">80%</form:option>
                 <form:option value="0.9">90%</form:option>
     </form:select>
-    
-	<acme:textbox code="lostLvlsDeffender" path="lostLvlsDeffender"/>
 	
 	<acme:textbox code="WorldSlots" path="worldSlots"/>
 	
