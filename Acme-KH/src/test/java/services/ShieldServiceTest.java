@@ -58,7 +58,7 @@ public class ShieldServiceTest extends AbstractTest {
 
 	}
 	// We activate an item which is other type of boost (restriction)
-	@Test(expected = javax.validation.ConstraintViolationException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void ShieldOtherBoostTest() {
 
 		super.authenticate("manager1");
